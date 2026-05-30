@@ -2,6 +2,14 @@
 
 All WS Facade Solutions brand assets. Reference via raw GitHub URL in any project.
 
+## ⚠️ BLOCKER — SVGs need replacing
+
+The SVG files currently in `logos/svg/` were scraped from the website and have rendering issues. **Guilherme to send Drive link with all correct SVG variants.** Do not use these in production until replaced.
+
+Needed: white, dark, petroleum, icon-only (3 variants), with tagline, horizontal.
+
+---
+
 ## SVG Logos (recommended — scalable, always sharp)
 
 | File | Description | Raw URL |
