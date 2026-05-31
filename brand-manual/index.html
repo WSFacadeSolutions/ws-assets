@@ -7,279 +7,371 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--petroleum:#1E2F38;--offwhite:#F5F2F0;--orange:#FF9D27;--lilac:#A490FF;--dark:#0f1e28;--mid:#162530}
-body{background:var(--dark);color:var(--offwhite);font-family:'Saira',sans-serif;scroll-behavior:smooth}
+:root{
+  --petroleum:#1E2F38;
+  --offwhite:#F5F2F0;
+  --orange:#FF9D27;
+  --lilac:#A490FF;
+  --black:#000;
+  --mid:#f0ede9;
+  --border:#e0dbd4;
+  --muted:#7a8a94;
+}
+html{scroll-behavior:smooth}
+body{background:#fff;color:var(--petroleum);font-family:'Saira',sans-serif;line-height:1}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#0a161fdd;backdrop-filter:blur(12px);border-bottom:1px solid #1e3040;padding:0 40px;display:flex;align-items:center;gap:0;height:58px}
-nav img{height:28px;margin-right:32px}
-nav a{color:var(--offwhite);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:0 16px;height:58px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:.2s;opacity:.7}
-nav a:hover,nav a.active{border-bottom-color:var(--orange);opacity:1;color:var(--orange)}
-.nav-badge{margin-left:auto;background:var(--orange);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:1px}
+/* ── NAV ───────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:#ffffffee;backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 60px;height:56px;
+  display:flex;align-items:center;gap:0;
+}
+.nav-logo{height:22px;margin-right:40px}
+nav a{
+  color:var(--petroleum);text-decoration:none;
+  font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  padding:0 18px;height:56px;display:flex;align-items:center;
+  border-bottom:2px solid transparent;opacity:.45;transition:.2s;
+}
+nav a:hover{opacity:1;border-bottom-color:var(--orange)}
+.nav-right{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
 
-/* HERO */
-.hero{padding:120px 80px 80px;background:linear-gradient(135deg,#0a161f 0%,#1E2F38 50%,#0a161f 100%);border-bottom:1px solid #1e3040;display:flex;align-items:center;justify-content:space-between;gap:60px}
-.hero-text h1{font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1;margin-bottom:12px}
-.hero-text h1 span{color:var(--orange)}
-.hero-text p{font-size:15px;font-weight:300;color:#8aa0b0;max-width:480px;line-height:1.7;margin-bottom:28px}
-.hero-text .version{font-size:11px;color:var(--orange);letter-spacing:2px;font-weight:600}
-.hero-logo{opacity:.9}
-.hero-logo img{height:120px}
-.btn{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--dark);padding:10px 24px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;text-transform:uppercase;transition:.2s}
-.btn:hover{background:#ffb347}
-.btn-ghost{background:transparent;border:1px solid var(--offwhite);color:var(--offwhite);margin-left:12px}
-.btn-ghost:hover{background:var(--offwhite);color:var(--dark)}
+/* ── HERO ──────────────────────────────────────────────────────── */
+.hero{
+  padding:140px 60px 100px;
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:80px;
+  border-bottom:1px solid var(--border);
+}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+.hero h1{font-size:64px;font-weight:900;line-height:.95;letter-spacing:-2px;color:var(--petroleum);margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{font-size:15px;font-weight:300;line-height:1.8;color:var(--muted);max-width:440px;margin-bottom:36px}
+.hero-logo-panel{
+  background:var(--petroleum);border-radius:4px;
+  padding:60px;display:flex;align-items:center;justify-content:center;
+  min-height:280px;
+}
+.hero-logo-panel img{width:100%;max-width:340px}
+.btn-dl{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--petroleum);color:#fff;
+  padding:12px 28px;border-radius:3px;
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  text-decoration:none;transition:.15s;
+}
+.btn-dl:hover{background:var(--orange);color:var(--petroleum)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--petroleum);
+  border:1.5px solid var(--border);
+  padding:12px 28px;border-radius:3px;
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  text-decoration:none;transition:.15s;margin-left:12px;
+}
+.btn-ghost:hover{border-color:var(--petroleum)}
 
-/* SECTIONS */
-section{padding:72px 80px;border-bottom:1px solid #1e3040}
-section h2{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:3px;font-weight:700;margin-bottom:8px}
-section h3{font-size:32px;font-weight:700;margin-bottom:36px;line-height:1.1}
-.section-desc{font-size:14px;color:#8aa0b0;font-weight:300;line-height:1.8;max-width:600px;margin-bottom:40px}
+/* ── SECTION SHELL ─────────────────────────────────────────────── */
+section{padding:80px 60px;border-bottom:1px solid var(--border)}
+.sec-eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.sec-title{font-size:38px;font-weight:900;letter-spacing:-1px;margin-bottom:16px}
+.sec-desc{font-size:14px;font-weight:300;line-height:1.9;color:var(--muted);max-width:580px;margin-bottom:48px}
 
-/* GRID */
+/* ── GRID UTILITIES ────────────────────────────────────────────── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.card{background:var(--mid);border-radius:12px;padding:28px;border:1px solid #1e3040}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 
-/* DNA */
-.dna-traits{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
-.trait{padding:8px 20px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:.5px}
-.trait.primary{background:var(--orange);color:var(--dark)}
-.trait.secondary{background:transparent;border:1px solid #2a3f50;color:var(--offwhite)}
+/* ── LOGO PANELS ───────────────────────────────────────────────── */
+.logo-block{display:flex;flex-direction:column;gap:10px}
+.logo-panel{
+  border-radius:3px;padding:36px 32px;
+  display:flex;align-items:center;justify-content:center;
+  min-height:120px;border:1px solid var(--border);
+}
+.logo-panel.bg-petroleum{background:var(--petroleum);border-color:var(--petroleum)}
+.logo-panel.bg-offwhite{background:var(--offwhite);border-color:var(--border)}
+.logo-panel.bg-white{background:#fff}
+.logo-panel.bg-black{background:#000;border-color:#000}
+.logo-panel.bg-orange{background:var(--orange);border-color:var(--orange)}
+.logo-panel img{max-height:52px;max-width:100%;width:auto}
+.logo-meta{display:flex;align-items:center;justify-content:space-between}
+.logo-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.logo-dl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--orange);text-decoration:none}
+.logo-dl:hover{text-decoration:underline}
+.logo-variant-tag{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:3px 8px;border:1px solid var(--border);border-radius:20px}
 
-/* COLOURS */
-.colour-card{background:var(--mid);border-radius:12px;overflow:hidden;border:1px solid #1e3040}
-.colour-swatch{height:100px;display:flex;align-items:center;justify-content:center}
-.colour-info{padding:16px}
-.colour-name{font-size:14px;font-weight:700;margin-bottom:4px}
-.colour-hex{font-size:20px;font-weight:900;margin-bottom:8px}
-.colour-refs{font-size:10px;color:#607080;line-height:1.6}
+/* ── COLOUR SYSTEM ─────────────────────────────────────────────── */
+.colour-card{border-radius:3px;overflow:hidden;border:1px solid var(--border)}
+.swatch{height:120px}
+.colour-body{padding:20px}
+.colour-name{font-size:14px;font-weight:700;margin-bottom:6px}
+.colour-hex{font-size:22px;font-weight:900;margin-bottom:10px}
+.colour-refs{font-size:10px;font-weight:400;color:var(--muted);line-height:1.8;text-transform:uppercase;letter-spacing:.5px}
 
-/* LOGO GRID */
-.logo-display{background:var(--petroleum);border-radius:12px;padding:40px;display:flex;align-items:center;justify-content:center;min-height:140px;border:1px solid #2a3f50}
-.logo-display.light-bg{background:var(--offwhite)}
-.logo-display.white-bg{background:#fff}
-.logo-label{font-size:10px;color:#607080;text-transform:uppercase;letter-spacing:1px;margin-top:12px;text-align:center}
-.logo-display img{max-height:60px;max-width:100%}
-.dl-btn{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--orange);text-decoration:none;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:8px;padding:4px 0;border-bottom:1px solid transparent;transition:.2s}
-.dl-btn:hover{border-bottom-color:var(--orange)}
+/* ── TYPOGRAPHY ────────────────────────────────────────────────── */
+.type-row{padding:28px 0;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:32px}
+.type-row:first-child{padding-top:0}
+.type-row:last-child{border-bottom:none}
+.type-role{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);min-width:140px}
+.type-spec{font-size:10px;color:var(--muted);min-width:140px;line-height:1.6}
+.type-sample-bold{font-size:36px;font-weight:900;letter-spacing:-1px}
+.type-sample-700{font-size:22px;font-weight:700}
+.type-sample-300{font-size:15px;font-weight:300;line-height:1.8;color:var(--muted)}
+.type-sample-400{font-size:12px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
 
-/* TYPOGRAPHY */
-.type-sample{background:var(--mid);border-radius:12px;padding:32px;border:1px solid #1e3040;margin-bottom:16px}
-.type-tag{font-size:10px;color:var(--orange);letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:12px}
-.type-big{font-size:40px;font-weight:900;line-height:1}
-.type-mid{font-size:24px;font-weight:700}
-.type-body{font-size:15px;font-weight:300;line-height:1.8;color:#c0d0dc}
-.type-small{font-size:13px;font-weight:400;color:#8aa0b0}
+/* ── USAGE RULES ───────────────────────────────────────────────── */
+.rule-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:3px;overflow:hidden}
+.rule-cell{background:#fff;padding:28px 24px}
+.rule-num{font-size:32px;font-weight:900;color:var(--border);margin-bottom:10px;line-height:1}
+.rule-text{font-size:12px;font-weight:400;line-height:1.7;color:var(--muted)}
+.rule-cell:hover .rule-num{color:var(--orange)}
 
-/* HIERARCHY */
-.h-row{display:flex;align-items:baseline;gap:24px;padding:12px 0;border-bottom:1px solid #1e3040}
-.h-style{font-size:10px;color:var(--orange);letter-spacing:1.5px;font-weight:700;min-width:120px;text-transform:uppercase}
-.h-preview{flex:1}
+/* ── SAFE ZONE ─────────────────────────────────────────────────── */
+.safezone{
+  background:var(--offwhite);border:2px dashed var(--border);
+  border-radius:3px;padding:64px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;margin-top:40px;
+}
+.safezone img{max-height:48px;max-width:360px;width:100%}
+.safezone::after{
+  content:'← protected zone →';
+  position:absolute;bottom:14px;
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--border);
+}
 
-/* INCORRECTS */
-.dont-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.dont-item{background:var(--mid);border-radius:8px;padding:20px;border:1px solid #1e3040;text-align:center}
-.dont-num{font-size:28px;font-weight:900;color:#1e3040;margin-bottom:8px}
-.dont-text{font-size:11px;color:#607080;line-height:1.5}
-.dont-item:hover .dont-num{color:var(--orange)}
+/* ── DESIGN ELEMENTS ───────────────────────────────────────────── */
+.element-panel{
+  background:var(--mid);border-radius:3px;padding:36px;
+  display:flex;align-items:center;justify-content:center;
+  min-height:140px;
+}
+.element-panel img{max-height:80px;max-width:80px}
+.element-panel.dark{background:var(--petroleum)}
 
-/* CAMPAIGNS */
-.campaign-card{background:var(--mid);border-radius:12px;border:1px solid #1e3040;overflow:hidden}
-.campaign-header{padding:20px 24px;border-bottom:1px solid #1e3040;display:flex;align-items:center;justify-content:space-between}
-.campaign-code{font-size:10px;color:var(--orange);letter-spacing:2px;font-weight:700}
-.campaign-name{font-size:16px;font-weight:700;margin-top:2px}
-.campaign-status{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:700;letter-spacing:.5px}
-.status-live{background:#4ade8022;color:#4ade80;border:1px solid #4ade8044}
-.status-progress{background:#FF9D2722;color:#FF9D27;border:1px solid #FF9D2744}
-.status-planned{background:#A490FF22;color:#A490FF;border:1px solid #A490FF44}
-.campaign-body{padding:24px}
-.campaign-desc{font-size:13px;color:#8aa0b0;line-height:1.7;margin-bottom:20px}
-.asset-slots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.asset-slot{border:1px dashed #2a3f50;border-radius:8px;padding:16px;text-align:center;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.2s;cursor:pointer}
-.asset-slot:hover{border-color:var(--orange);background:#FF9D2708}
-.asset-slot.filled{border-style:solid;border-color:#2a3f50}
-.asset-slot img{max-height:48px;max-width:100%;margin-bottom:8px}
-.slot-label{font-size:10px;color:#607080;letter-spacing:.5px}
-.slot-add{font-size:18px;color:#2a3f50;margin-bottom:6px}
-.asset-slot:hover .slot-add{color:var(--orange)}
+/* ── CAMPAIGN LOGOS ────────────────────────────────────────────── */
+.campaign-logo-section{margin-bottom:48px}
+.campaign-logo-section h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 
-/* DOWNLOADS */
-.dl-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--mid);border-radius:8px;border:1px solid #1e3040;margin-bottom:8px}
-.dl-info{display:flex;align-items:center;gap:12px}
-.dl-icon{font-size:20px}
-.dl-name{font-size:13px;font-weight:600}
-.dl-size{font-size:11px;color:#607080}
-.dl-actions{display:flex;gap:8px}
-.dl-tag{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700;letter-spacing:.5px}
-.tag-svg{background:#4ade8022;color:#4ade80}
-.tag-pdf{background:#f8717122;color:#f87171}
-.tag-jpg{background:#60a5fa22;color:#60a5fa}
+/* ── DOWNLOADS TABLE ───────────────────────────────────────────── */
+.dl-table{width:100%;border-collapse:collapse}
+.dl-table th{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:0 0 12px;border-bottom:2px solid var(--border);text-align:left}
+.dl-table td{padding:16px 0;border-bottom:1px solid var(--border);vertical-align:middle}
+.dl-table tr:last-child td{border-bottom:none}
+.dl-name{font-size:13px;font-weight:700;color:var(--petroleum)}
+.dl-desc{font-size:11px;font-weight:300;color:var(--muted);margin-top:3px}
+.dl-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-right:6px}
+.tag-svg{background:#1E2F3815;color:var(--petroleum)}
+.tag-pdf{background:#FF9D2720;color:#c07000}
+.tag-el{background:#A490FF20;color:#6040cc}
+.dl-link{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--orange);text-decoration:none}
+.dl-link:hover{text-decoration:underline}
 
-/* SAFE ZONE */
-.safezone-demo{background:var(--petroleum);border-radius:12px;padding:60px;display:flex;align-items:center;justify-content:center;position:relative;border:1px dashed #FF9D2766}
-.safezone-demo::before{content:'← area de proteção →';position:absolute;bottom:12px;font-size:10px;color:var(--orange);letter-spacing:1px}
+/* ── FOOTER ────────────────────────────────────────────────────── */
+footer{padding:40px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+footer img{height:20px;opacity:.5}
+footer p{font-size:10px;color:var(--muted);letter-spacing:.5px}
 
-@media(max-width:1000px){
-  .g2,.g3,.g4,.dont-grid{grid-template-columns:1fr 1fr}
-  section{padding:48px 28px}
-  .hero{padding:100px 28px 60px;flex-direction:column}
+/* ── DIVIDER LABEL ─────────────────────────────────────────────── */
+.divider-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:24px}
+
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;padding:120px 28px 60px}
+  section{padding:60px 28px}
+  nav{padding:0 28px}
+  .g3,.g4,.g5{grid-template-columns:1fr 1fr}
+  .rule-grid{grid-template-columns:1fr 1fr}
+  footer{padding:32px 28px;flex-direction:column;gap:16px;text-align:center}
 }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" alt="WS">
-  <a href="#dna">Brand DNA</a>
+  <img class="nav-logo" src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACK.svg" alt="WS">
   <a href="#logos">Logos</a>
   <a href="#colours">Colours</a>
   <a href="#typography">Typography</a>
-  <a href="#usage">Usage</a>
-  <a href="#campaigns">Campaigns</a>
+  <a href="#usage">Usage Rules</a>
+  <a href="#elements">Elements</a>
+  <a href="#campaigns">Campaign Logos</a>
   <a href="#downloads">Downloads</a>
-  <span class="nav-badge">v1.0 — 2023</span>
+  <span class="nav-right">v1.0 · 2023</span>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-text">
-    <div class="version">WS FACADE SOLUTIONS</div>
-    <h1>Brand <span>Manual</span><br>Living Edition</h1>
-    <p>A central reference for all visual identity guidelines. Every asset linked directly from GitHub — always current, never outdated.</p>
-    <a href="#logos" class="btn">View Logos</a>
-    <a href="https://github.com/WSFacadeSolutions/ws-assets" target="_blank" class="btn btn-ghost">GitHub Assets ↗</a>
+  <div>
+    <div class="hero-label">WS Facade Solutions</div>
+    <h1>Brand<br><em>Manual</em><br>Living Edition</h1>
+    <p>The single reference for all visual identity guidelines. Every asset linked directly from GitHub — always current, never outdated.</p>
+    <a href="#downloads" class="btn-dl">Download Assets</a>
+    <a href="https://github.com/WSFacadeSolutions/ws-assets" target="_blank" class="btn-ghost">GitHub ↗</a>
   </div>
-  <div class="hero-logo">
-    <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" alt="WS">
+  <div class="hero-logo-panel">
+    <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITE.svg" alt="WS Facade Solutions">
   </div>
 </div>
 
-<!-- DNA -->
-<section id="dna">
-  <h2>Foundation</h2>
-  <h3>Brand DNA</h3>
-  <p class="section-desc">The personality of WS is built around three primary attributes that guide every creative decision — from logo application to tone of voice.</p>
-  <div class="dna-traits">
-    <span class="trait primary">Cuidadosa</span>
-    <span class="trait primary">Inovadora</span>
-    <span class="trait primary">Dinâmica</span>
-    <span class="trait secondary">Elegante</span>
-    <span class="trait secondary">Confiável</span>
-    <span class="trait secondary">Clean</span>
-    <span class="trait secondary">Inteligente</span>
-    <span class="trait secondary">Coerente</span>
-    <span class="trait secondary">Promissora</span>
-    <span class="trait secondary">Transparente</span>
-    <span class="trait secondary">Resolutiva</span>
-  </div>
-  <div class="card" style="max-width:600px">
-    <p style="font-size:14px;color:#8aa0b0;line-height:1.8">A marca WS deve manter equilíbrio entre <strong style="color:var(--offwhite)">inovação, modernidade e sofisticação</strong>. Abordagem minimalista — não simplista. Esse meio-termo é essencial para uma boa aplicação.</p>
-  </div>
-</section>
-
 <!-- LOGOS -->
 <section id="logos">
-  <h2>Identity</h2>
-  <h3>Logo Configurations</h3>
-  <p class="section-desc">5 configurations. Use the horizontal complete as the primary signature. The symbol is reserved for avatars and reduced applications.</p>
-  <div class="g3" style="margin-bottom:24px">
-    <div>
-      <div class="logo-display">
-        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" alt="WS White">
+  <div class="sec-eyebrow">Identity</div>
+  <div class="sec-title">Logo System</div>
+  <p class="sec-desc">Two primary formats: the WS Square mark and the full WS Solutions Facade Contractors wordmark. Use the wordmark as the primary signature wherever space allows. The square mark is for constrained formats and avatars.</p>
+
+  <!-- WS SQUARE -->
+  <div class="divider-label">WS Square Mark — 4 colour variants</div>
+  <div class="g4" style="margin-bottom:48px">
+    <div class="logo-block">
+      <div class="logo-panel bg-offwhite">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_PETROLEUMBLUE.svg" alt="WS Square Petroleum">
       </div>
-      <div class="logo-label">Horizontal — White (preferred on dark)</div>
-      <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" class="dl-btn" target="_blank">↓ Download SVG</a>
+      <div class="logo-meta">
+        <div>
+          <div class="logo-label">Petroleum Blue</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px">#1E2F38 on white / off-white</div>
+        </div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_PETROLEUMBLUE.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
     </div>
-    <div>
-      <div class="logo-display light-bg">
-        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-dark.svg" alt="WS Dark">
+    <div class="logo-block">
+      <div class="logo-panel bg-petroleum">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_OFFWHITE.svg" alt="WS Square Off-White">
       </div>
-      <div class="logo-label">Horizontal — Dark (on light backgrounds)</div>
-      <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-dark.svg" class="dl-btn" target="_blank">↓ Download SVG</a>
+      <div class="logo-meta">
+        <div>
+          <div class="logo-label">Off-White</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px">#F5F2F0 on dark backgrounds</div>
+        </div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_OFFWHITE.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
     </div>
-    <div>
-      <div class="logo-display" style="background:#1E2F38">
-        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-petroleum.svg" alt="WS Petroleum">
+    <div class="logo-block">
+      <div class="logo-panel bg-offwhite">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_BLACK.svg" alt="WS Square Black">
       </div>
-      <div class="logo-label">Petroleum Blue version</div>
-      <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-petroleum.svg" class="dl-btn" target="_blank">↓ Download SVG</a>
+      <div class="logo-meta">
+        <div>
+          <div class="logo-label">Black</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px">#000 on light backgrounds</div>
+        </div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_BLACK.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
     </div>
-  </div>
-  <div class="g3">
-    <div>
-      <div class="logo-display" style="min-height:100px">
-        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/jpg/ws-icon-white.jpg" style="height:60px;border-radius:6px" alt="WS Icon">
+    <div class="logo-block">
+      <div class="logo-panel bg-petroleum">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_ORANGE.svg" alt="WS Square Orange">
       </div>
-      <div class="logo-label">Icon / Symbol — White</div>
-      <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/jpg/ws-icon-white.jpg" class="dl-btn" target="_blank">↓ JPG</a>
-    </div>
-    <div>
-      <div class="logo-display white-bg" style="min-height:100px">
-        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/jpg/ws-icon-dark.jpg" style="height:60px;border-radius:6px" alt="WS Icon Dark">
+      <div class="logo-meta">
+        <div>
+          <div class="logo-label">Orange</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px">#FF9D27 — accent use only</div>
+        </div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SQUARE_ORANGE.svg" class="logo-dl" target="_blank">↓ SVG</a>
       </div>
-      <div class="logo-label">Icon / Symbol — Dark</div>
-      <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/jpg/ws-icon-dark.jpg" class="dl-btn" target="_blank">↓ JPG</a>
-    </div>
-    <div style="opacity:.5">
-      <div class="logo-display" style="min-height:100px;border-style:dashed;border-color:#2a3f50;flex-direction:column;gap:8px">
-        <span style="font-size:28px;color:#2a3f50">+</span>
-        <span style="font-size:11px;color:#607080;text-align:center">SVG icon variants<br>pending — add to GitHub</span>
-      </div>
-      <div class="logo-label">Icon SVGs — coming soon</div>
     </div>
   </div>
 
-  <div style="margin-top:40px">
-    <h4 style="font-size:13px;color:#8aa0b0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px">Safe Zone / Área de Proteção</h4>
-    <div class="safezone-demo">
-      <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" style="height:50px">
+  <!-- FULL WORDMARK -->
+  <div class="divider-label">WS Solutions Facade Contractors — Full Wordmark (5 variants)</div>
+  <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:48px">
+    <div class="logo-block">
+      <div class="logo-panel bg-petroleum" style="padding:40px 60px">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITE.svg" alt="WS Wordmark Off-White">
+      </div>
+      <div class="logo-meta">
+        <div><div class="logo-label">Off-White — Primary on dark</div><div style="font-size:9px;color:var(--muted);margin-top:2px">Preferred on Petroleum Blue backgrounds</div></div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITE.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
     </div>
-    <p style="font-size:12px;color:#607080;margin-top:12px">Maintain clear space equal to the height of the icon element on all sides. No text, images, or other marks within this zone.</p>
+    <div class="logo-block">
+      <div class="logo-panel bg-offwhite" style="padding:40px 60px">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACK.svg" alt="WS Wordmark Black">
+      </div>
+      <div class="logo-meta">
+        <div><div class="logo-label">Black — Primary on light</div><div style="font-size:9px;color:var(--muted);margin-top:2px">On white or off-white backgrounds</div></div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACK.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
+    </div>
+    <div class="g3">
+      <div class="logo-block">
+        <div class="logo-panel bg-petroleum">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITETEXT_LILACBRICK.svg" alt="WS Wordmark Lilac">
+        </div>
+        <div class="logo-meta">
+          <div><div class="logo-label">Off-White + Lilac Brick</div></div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITETEXT_LILACBRICK.svg" class="logo-dl" target="_blank">↓ SVG</a>
+        </div>
+      </div>
+      <div class="logo-block">
+        <div class="logo-panel bg-offwhite">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACKTEXT_LILACBRICK.svg" alt="WS Wordmark Black Lilac">
+        </div>
+        <div class="logo-meta">
+          <div><div class="logo-label">Black + Lilac Brick</div></div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACKTEXT_LILACBRICK.svg" class="logo-dl" target="_blank">↓ SVG</a>
+        </div>
+      </div>
+      <div class="logo-block">
+        <div class="logo-panel bg-offwhite">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_PETROLEUMTEXT_ORGANGEBRICK.svg" alt="WS Wordmark Petroleum Orange">
+        </div>
+        <div class="logo-meta">
+          <div><div class="logo-label">Petroleum + Orange Brick</div></div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_PETROLEUMTEXT_ORGANGEBRICK.svg" class="logo-dl" target="_blank">↓ SVG</a>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- SAFE ZONE -->
+  <div class="divider-label">Safe Zone / Protected Area</div>
+  <div class="safezone">
+    <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACK.svg" alt="Safe zone">
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:16px;line-height:1.7">Maintain clear space equal to the height of the WS brick icon on all sides. No text, imagery, or competing marks within this zone. Minimum sizes: horizontal print 55mm · screen 180px — symbol print 12mm · screen 35px.</p>
 </section>
 
 <!-- COLOURS -->
 <section id="colours">
-  <h2>Identity</h2>
-  <h3>Colour System</h3>
-  <p class="section-desc">4 institutional colours. Petroleum Blue is the primary. Orange for accents and CTAs. Lilac for secondary highlights. Off-White for text on dark backgrounds.</p>
+  <div class="sec-eyebrow">Identity</div>
+  <div class="sec-title">Colour System</div>
+  <p class="sec-desc">Four institutional colours. Petroleum Blue is the primary. Orange drives accents and CTAs. Lilac for secondary highlights. Off-White as the text colour on dark backgrounds.</p>
   <div class="g4">
     <div class="colour-card">
-      <div class="colour-swatch" style="background:#1E2F38">
-        <div style="width:40px;height:40px;border-radius:50%;background:#F5F2F0;opacity:.3"></div>
-      </div>
-      <div class="colour-info">
+      <div class="swatch" style="background:#1E2F38"></div>
+      <div class="colour-body">
         <div class="colour-name">Petroleum Blue</div>
-        <div class="colour-hex" style="color:#F5F2F0">#1E2F38</div>
-        <div class="colour-refs">PANTONE 303C<br>CMYK 85 / 60 / 50 / 60<br>Primary background</div>
+        <div class="colour-hex" style="color:#1E2F38">#1E2F38</div>
+        <div class="colour-refs">PANTONE 303 C<br>CMYK 85 / 60 / 50 / 60<br>Primary · Backgrounds</div>
       </div>
     </div>
     <div class="colour-card">
-      <div class="colour-swatch" style="background:#F5F2F0">
-        <div style="width:40px;height:40px;border-radius:50%;background:#1E2F38;opacity:.3"></div>
-      </div>
-      <div class="colour-info">
+      <div class="swatch" style="background:#F5F2F0;border-bottom:1px solid var(--border)"></div>
+      <div class="colour-body">
         <div class="colour-name">Off-White</div>
-        <div class="colour-hex" style="color:#1E2F38">#F5F2F0</div>
-        <div class="colour-refs">PANTONE 663C<br>CMYK 4 / 5 / 5 / 0<br>Text on dark</div>
+        <div class="colour-hex" style="color:#9a9088">#F5F2F0</div>
+        <div class="colour-refs">PANTONE 663 C<br>CMYK 4 / 5 / 5 / 0<br>Text on dark · Backgrounds</div>
       </div>
     </div>
     <div class="colour-card">
-      <div class="colour-swatch" style="background:#FF9D27"></div>
-      <div class="colour-info">
+      <div class="swatch" style="background:#FF9D27"></div>
+      <div class="colour-body">
         <div class="colour-name">Orange</div>
         <div class="colour-hex" style="color:#FF9D27">#FF9D27</div>
-        <div class="colour-refs">PANTONE 144C<br>CMYK 0 / 40 / 86 / 0<br>Accents · CTAs</div>
+        <div class="colour-refs">PANTONE 144 C<br>CMYK 0 / 40 / 86 / 0<br>Accents · CTAs · Highlights</div>
       </div>
     </div>
     <div class="colour-card">
-      <div class="colour-swatch" style="background:#A490FF"></div>
-      <div class="colour-info">
+      <div class="swatch" style="background:#A490FF"></div>
+      <div class="colour-body">
         <div class="colour-name">Lilac</div>
         <div class="colour-hex" style="color:#A490FF">#A490FF</div>
-        <div class="colour-refs">PANTONE 2705C<br>CMYK 52 / 42 / 0 / 0<br>Secondary accent</div>
+        <div class="colour-refs">PANTONE 2705 C<br>CMYK 52 / 42 / 0 / 0<br>Secondary accent</div>
       </div>
     </div>
   </div>
@@ -287,220 +379,205 @@ section h3{font-size:32px;font-weight:700;margin-bottom:36px;line-height:1.1}
 
 <!-- TYPOGRAPHY -->
 <section id="typography">
-  <h2>Identity</h2>
-  <h3>Typography — Saira</h3>
-  <p class="section-desc">Saira is the exclusive typeface for all WS communications. Three weights in use: Bold for headings, Light for body text, Regular for captions and small text.</p>
-  <div class="type-sample">
-    <div class="type-tag">Saira Bold — Headings</div>
-    <div class="type-big">WS FACADE SOLUTIONS</div>
-  </div>
-  <div class="type-sample">
-    <div class="type-tag">Saira Bold — Subheadings</div>
-    <div class="type-mid">Precision. Performance. Trust.</div>
-  </div>
-  <div class="type-sample">
-    <div class="type-tag">Saira Light — Body</div>
-    <div class="type-body">We do not just deliver physical results. We deliver the tranquility of knowing the job is meticulously managed. We control the process so the client can sleep well at night.</div>
-  </div>
-  <div class="type-sample">
-    <div class="type-tag">Saira Regular — Small Text / Captions</div>
-    <div class="type-small">Sydney · ABN 12 345 678 901 · wssolutions.au · info@wssolutions.au</div>
-  </div>
-  <div style="margin-top:32px">
-    <div class="h-row"><span class="h-style">H1 / Title</span><span class="h-preview" style="font-size:28px;font-weight:900">Main heading of the piece</span></div>
-    <div class="h-row"><span class="h-style">H2 / Subtitle</span><span class="h-preview" style="font-size:20px;font-weight:700">Section or card title</span></div>
-    <div class="h-row"><span class="h-style">Body</span><span class="h-preview" style="font-size:14px;font-weight:300;color:#8aa0b0">Paragraph text, descriptions, long-form copy.</span></div>
-    <div class="h-row"><span class="h-style">Caption / Label</span><span class="h-preview" style="font-size:11px;font-weight:400;color:#607080;letter-spacing:1px;text-transform:uppercase">META INFORMATION · LABELS · TAGS</span></div>
+  <div class="sec-eyebrow">Identity</div>
+  <div class="sec-title">Typography — Saira</div>
+  <p class="sec-desc">Saira is the exclusive typeface for all WS communications. Three weights in active use. Do not substitute with any other typeface.</p>
+  <div>
+    <div class="type-row">
+      <div class="type-role">Saira Bold 900</div>
+      <div class="type-spec">Headings<br>−1px tracking</div>
+      <div class="type-sample-bold">WS FACADE SOLUTIONS</div>
+    </div>
+    <div class="type-row">
+      <div class="type-role">Saira Bold 700</div>
+      <div class="type-spec">Subheadings<br>Default tracking</div>
+      <div class="type-sample-700">Precision. Performance. Trust.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-role">Saira Light 300</div>
+      <div class="type-spec">Body copy<br>1.8 line height</div>
+      <div class="type-sample-300">We do not just deliver physical results. We deliver the tranquillity of knowing the job is meticulously managed, from the first coat to the final inspection.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-role">Saira Regular 400</div>
+      <div class="type-spec">Captions · Labels<br>+1.5px tracking · CAPS</div>
+      <div class="type-sample-400">Sydney · ABN 12 345 678 901 · wssolutions.au</div>
+    </div>
   </div>
 </section>
 
 <!-- USAGE RULES -->
 <section id="usage">
-  <h2>Guidelines</h2>
-  <h3>Logo Usage Rules</h3>
-  <p class="section-desc">Consistency builds recognition. Never alter any aspect of the logo — colours, proportions, rotation, or typography.</p>
-  <div class="dont-grid">
-    <div class="dont-item"><div class="dont-num">01</div><div class="dont-text">Do not alter the logo colour outside the approved palette</div></div>
-    <div class="dont-item"><div class="dont-num">02</div><div class="dont-text">Do not rotate the logo</div></div>
-    <div class="dont-item"><div class="dont-num">03</div><div class="dont-text">Do not distort or stretch proportions</div></div>
-    <div class="dont-item"><div class="dont-num">04</div><div class="dont-text">Do not apply on low-contrast backgrounds</div></div>
-    <div class="dont-item"><div class="dont-num">05</div><div class="dont-text">Do not use non-approved background colours</div></div>
-    <div class="dont-item"><div class="dont-num">06</div><div class="dont-text">No gradients or special effects on the logo</div></div>
-    <div class="dont-item"><div class="dont-num">07</div><div class="dont-text">No drop shadows</div></div>
-    <div class="dont-item"><div class="dont-num">08</div><div class="dont-text">Do not change the logo typeface</div></div>
+  <div class="sec-eyebrow">Guidelines</div>
+  <div class="sec-title">Logo Usage Rules</div>
+  <p class="sec-desc">Consistency builds recognition. Never alter any aspect of the logo — colour, proportions, rotation, or typography.</p>
+  <div class="rule-grid">
+    <div class="rule-cell"><div class="rule-num">01</div><div class="rule-text">Do not alter the logo colour outside the approved palette</div></div>
+    <div class="rule-cell"><div class="rule-num">02</div><div class="rule-text">Do not rotate the logo at any angle</div></div>
+    <div class="rule-cell"><div class="rule-num">03</div><div class="rule-text">Do not distort or stretch proportions</div></div>
+    <div class="rule-cell"><div class="rule-num">04</div><div class="rule-text">Do not apply on low-contrast or unapproved backgrounds</div></div>
+    <div class="rule-cell"><div class="rule-num">05</div><div class="rule-text">Do not use non-approved background colours</div></div>
+    <div class="rule-cell"><div class="rule-num">06</div><div class="rule-text">No gradients or special effects applied to the logo</div></div>
+    <div class="rule-cell"><div class="rule-num">07</div><div class="rule-text">No drop shadows or outer glow</div></div>
+    <div class="rule-cell"><div class="rule-num">08</div><div class="rule-text">Do not change or replace the logo typeface</div></div>
   </div>
-  <div class="card" style="margin-top:32px;max-width:500px">
-    <div style="font-size:11px;color:var(--orange);letter-spacing:2px;font-weight:700;margin-bottom:10px">SOCIAL MEDIA — AVATAR SPEC</div>
-    <p style="font-size:13px;color:#8aa0b0;line-height:1.7">Use the symbol (icon only) for all social avatars. Square format: <strong style="color:var(--offwhite)">1000 × 1000 px</strong>. Symbol at 477px height, 700px width, centred.</p>
+  <div style="margin-top:40px;padding:24px 28px;background:var(--mid);border-radius:3px;border-left:3px solid var(--orange)">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:8px">Social Media Avatar Spec</div>
+    <p style="font-size:13px;font-weight:300;line-height:1.8;color:var(--muted)">Use the WS Square mark for all social avatars. Canvas: <strong style="color:var(--petroleum);font-weight:700">1000 × 1000 px</strong>. Mark at 477px height × 700px width, centred on canvas.</p>
   </div>
 </section>
 
-<!-- CAMPAIGNS -->
+<!-- DESIGN ELEMENTS -->
+<section id="elements">
+  <div class="sec-eyebrow">Assets</div>
+  <div class="sec-title">Design Elements</div>
+  <p class="sec-desc">The WS Brick is a graphic device — a compositional element, not a standalone logo. Use to add texture and brand character in layouts, backgrounds, and campaigns. Available in four colours.</p>
+
+  <div class="divider-label">WS Brick — 4 colour variants</div>
+  <div class="g4" style="margin-bottom:40px">
+    <div class="logo-block">
+      <div class="element-panel" style="background:var(--offwhite)">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Petroleum_brick.svg" alt="Petroleum Brick">
+      </div>
+      <div class="logo-meta">
+        <div class="logo-label">Petroleum</div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Petroleum_brick.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
+    </div>
+    <div class="logo-block">
+      <div class="element-panel" style="background:var(--mid)">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Black_brick.svg" alt="Black Brick">
+      </div>
+      <div class="logo-meta">
+        <div class="logo-label">Black</div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Black_brick.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
+    </div>
+    <div class="logo-block">
+      <div class="element-panel dark">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Orange_brick.svg" alt="Orange Brick">
+      </div>
+      <div class="logo-meta">
+        <div class="logo-label">Orange</div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Orange_brick.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
+    </div>
+    <div class="logo-block">
+      <div class="element-panel dark">
+        <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Offwhite_brick.svg" alt="Off-White Brick">
+      </div>
+      <div class="logo-meta">
+        <div class="logo-label">Off-White</div>
+        <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/Offwhite_brick.svg" class="logo-dl" target="_blank">↓ SVG</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">Brick + Wordmark Composition</div>
+  <div class="logo-block" style="max-width:600px">
+    <div class="logo-panel bg-offwhite" style="padding:40px 60px">
+      <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/ORANGE%20BRICK%20%2B%20FACADE%20CONTRACTORS%20PETROLEUM%20BLUE.svg" alt="Orange Brick + Facade Contractors">
+    </div>
+    <div class="logo-meta">
+      <div><div class="logo-label">Orange Brick + Facade Contractors — compositional use</div><div style="font-size:9px;color:var(--muted);margin-top:2px">Not a primary logo — for campaign and layout compositions only</div></div>
+      <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/ORANGE%20BRICK%20%2B%20FACADE%20CONTRACTORS%20PETROLEUM%20BLUE.svg" class="logo-dl" target="_blank">↓ SVG</a>
+    </div>
+  </div>
+</section>
+
+<!-- CAMPAIGN LOGOS -->
 <section id="campaigns">
-  <h2>Campaigns</h2>
-  <h3>Brand in Action</h3>
-  <p class="section-desc">Campaign-specific visual assets are stored alongside the core brand. Each campaign has designated slots for logos, templates, and creative assets. Add files to the GitHub repo and they appear here automatically.</p>
+  <div class="sec-eyebrow">Campaigns</div>
+  <div class="sec-title">Campaign Logos</div>
+  <p class="sec-desc">Campaign-specific logotypes extend the core brand identity for individual marketing initiatives. Each campaign has its own visual language within the WS system.</p>
 
-  <div style="display:flex;flex-direction:column;gap:20px">
-
-    <!-- WSD002 -->
-    <div class="campaign-card">
-      <div class="campaign-header">
-        <div><div class="campaign-code">WSD002</div><div class="campaign-name">The Blame Game — UVP</div></div>
-        <span class="campaign-status status-live">LIVE</span>
+  <div class="campaign-logo-section">
+    <h4>WSD003 — WS Magnified</h4>
+    <div class="g2">
+      <div class="logo-block">
+        <div class="logo-panel bg-offwhite" style="padding:40px 60px">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_MAGNIFIED_BLACK.svg" alt="WS Magnified Black">
+        </div>
+        <div class="logo-meta">
+          <div class="logo-label">Black — on light backgrounds</div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_MAGNIFIED_BLACK.svg" class="logo-dl" target="_blank">↓ SVG</a>
+        </div>
       </div>
-      <div class="campaign-body">
-        <p class="campaign-desc">WS one-stop-shop UVP carousel series. Monthly deployment. Target: Josh (Builder). Tagline: "A one-stop shop cannot backcharge itself."</p>
-        <div class="asset-slots">
-          <div class="asset-slot filled">
-            <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg">
-            <span class="slot-label">Logo White</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Carousel Template</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Colour Palette</span>
-          </div>
+      <div class="logo-block">
+        <div class="logo-panel bg-petroleum" style="padding:40px 60px">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_MAGNIFIED_WHITE.svg" alt="WS Magnified White">
+        </div>
+        <div class="logo-meta">
+          <div class="logo-label">White — on dark backgrounds</div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_MAGNIFIED_WHITE.svg" class="logo-dl" target="_blank">↓ SVG</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- WSD003 -->
-    <div class="campaign-card">
-      <div class="campaign-header">
-        <div><div class="campaign-code">WSD003</div><div class="campaign-name">WS Magnified — Visual QC</div></div>
-        <span class="campaign-status status-planned">Q3 2026</span>
-      </div>
-      <div class="campaign-body">
-        <p class="campaign-desc">Macro photography campaign — highly designed motion video starting with a beautiful close-up of a finished surface, zooming in with microscope UI elements. Shows quality control at the detail level. Target: Emma, Josh, Victoria.</p>
-        <div class="asset-slots">
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Microscope UI Overlay</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Reel Template</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Cover Frame</span>
-          </div>
+  <div class="campaign-logo-section">
+    <h4>WSD009 — WS Estimations Engine</h4>
+    <div class="g2">
+      <div class="logo-block">
+        <div class="logo-panel bg-offwhite" style="padding:40px 60px">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_ESTIMATIONSENGINE_BLACK.svg" alt="WS Estimations Engine Black">
         </div>
-        <p style="font-size:11px;color:#607080;margin-top:12px">Add assets to <code style="color:var(--orange)">campaigns/WSD003/</code> in the ws-assets GitHub repo.</p>
-      </div>
-    </div>
-
-    <!-- WSD014 -->
-    <div class="campaign-card">
-      <div class="campaign-header">
-        <div><div class="campaign-code">WSD014</div><div class="campaign-name">Moving North — Byron Bay Expansion</div></div>
-        <span class="campaign-status status-live">LIVE from June 5</span>
-      </div>
-      <div class="campaign-body">
-        <p class="campaign-desc">Queensland expansion narrative. Byron Bay as the first pitstop — Secret Garden, JD Property Group, 22 luxury apartments. Target: developers and builders in QLD. Core message: "The work doesn't stop at the city limits."</p>
-        <div class="asset-slots">
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Site Photos</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Post Template</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Byron Bay Assets</span>
-          </div>
+        <div class="logo-meta">
+          <div class="logo-label">Black — on light backgrounds</div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_ESTIMATIONSENGINE_BLACK.svg" class="logo-dl" target="_blank">↓ SVG</a>
         </div>
-        <p style="font-size:11px;color:#607080;margin-top:12px">Add assets to <code style="color:var(--orange)">campaigns/WSD014/</code> in the ws-assets GitHub repo.</p>
       </div>
-    </div>
-
-    <!-- WSD005 -->
-    <div class="campaign-card">
-      <div class="campaign-header">
-        <div><div class="campaign-code">WSD005</div><div class="campaign-name">Labour Hire — Craftsman Acquisition</div></div>
-        <span class="campaign-status status-planned">Q3 2026</span>
-      </div>
-      <div class="campaign-body">
-        <p class="campaign-desc">PT-BR recruitment campaign targeting Brazilian craftsmen in Sydney via Facebook Groups and Meta Ads. Thomas on camera. Core message: "We respect the craft by managing the site properly."</p>
-        <div class="asset-slots">
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">FB Ad Creative</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Carousel PT-BR</span>
-          </div>
-          <div class="asset-slot">
-            <div class="slot-add">+</div>
-            <span class="slot-label">Video Brief</span>
-          </div>
+      <div class="logo-block">
+        <div class="logo-panel bg-petroleum" style="padding:40px 60px">
+          <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_ESTIMATIONSENGINE_OFFWHITE.svg" alt="WS Estimations Engine Off-White">
+        </div>
+        <div class="logo-meta">
+          <div class="logo-label">Off-White — on dark backgrounds</div>
+          <a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_ESTIMATIONSENGINE_OFFWHITE.svg" class="logo-dl" target="_blank">↓ SVG</a>
         </div>
       </div>
     </div>
-
-    <!-- TEMPLATE -->
-    <div class="campaign-card" style="opacity:.6;border-style:dashed">
-      <div class="campaign-header">
-        <div><div class="campaign-code">WSD0XX</div><div class="campaign-name">New Campaign — Add here</div></div>
-        <span class="campaign-status status-planned">TEMPLATE</span>
-      </div>
-      <div class="campaign-body">
-        <p class="campaign-desc">When a new campaign is created in Notion, add a section here and create a folder in ws-assets/campaigns/WSDxxx/ on GitHub.</p>
-        <div class="asset-slots">
-          <div class="asset-slot"><div class="slot-add">+</div><span class="slot-label">Primary Asset</span></div>
-          <div class="asset-slot"><div class="slot-add">+</div><span class="slot-label">Template</span></div>
-          <div class="asset-slot"><div class="slot-add">+</div><span class="slot-label">Supporting</span></div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
 <!-- DOWNLOADS -->
 <section id="downloads">
-  <h2>Assets</h2>
-  <h3>Downloads</h3>
-  <p class="section-desc">All files are version-controlled in GitHub. Always use the latest from the raw URL — never save local copies for production use.</p>
+  <div class="sec-eyebrow">Assets</div>
+  <div class="sec-title">Downloads</div>
+  <p class="sec-desc">All files are version-controlled in GitHub. Always reference the raw URL — never save local copies for production use.</p>
 
-  <div class="dl-row">
-    <div class="dl-info"><span class="dl-icon">◼</span><div><div class="dl-name">ws-logo-white.svg</div><div class="dl-size">White logo · Full horizontal · For dark backgrounds</div></div></div>
-    <div class="dl-actions"><span class="dl-tag tag-svg">SVG</span><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" class="dl-btn" target="_blank">↓</a></div>
-  </div>
-  <div class="dl-row">
-    <div class="dl-info"><span class="dl-icon">◻</span><div><div class="dl-name">ws-logo-dark.svg</div><div class="dl-size">Dark logo · Full horizontal · For light backgrounds</div></div></div>
-    <div class="dl-actions"><span class="dl-tag tag-svg">SVG</span><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-dark.svg" class="dl-btn" target="_blank">↓</a></div>
-  </div>
-  <div class="dl-row">
-    <div class="dl-info"><span class="dl-icon">◼</span><div><div class="dl-name">ws-logo-petroleum.svg</div><div class="dl-size">Petroleum Blue version</div></div></div>
-    <div class="dl-actions"><span class="dl-tag tag-svg">SVG</span><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-petroleum.svg" class="dl-btn" target="_blank">↓</a></div>
-  </div>
-  <div class="dl-row">
-    <div class="dl-info"><span class="dl-icon">🖼</span><div><div class="dl-name">ws-icon-white.jpg / ws-icon-dark.jpg</div><div class="dl-size">Icon symbol · JPG · For social media avatars</div></div></div>
-    <div class="dl-actions"><span class="dl-tag tag-jpg">JPG</span><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/jpg/ws-icon-white.jpg" class="dl-btn" target="_blank">↓</a></div>
-  </div>
-  <div class="dl-row">
-    <div class="dl-info"><span class="dl-icon">📄</span><div><div class="dl-name">WS-Visual-Identity-Manual.pdf</div><div class="dl-size">Full brand guidelines · v1.0 · Janeiro 2023</div></div></div>
-    <div class="dl-actions"><span class="dl-tag tag-pdf">PDF</span><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/manual/WS-Visual-Identity-Manual.pdf" class="dl-btn" target="_blank">↓</a></div>
-  </div>
+  <table class="dl-table">
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Type</th>
+        <th style="text-align:right">Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><div class="dl-name">WS Square — 4 colour variants</div><div class="dl-desc">Petroleum Blue · Off-White · Black · Orange</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr><td><div class="dl-name">WS Solutions Facade Contractors — 5 wordmark variants</div><div class="dl-desc">Full horizontal wordmark · multiple colour combinations</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr><td><div class="dl-name">WS Magnified — 2 variants</div><div class="dl-desc">WSD003 campaign logotype · Black · White</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr><td><div class="dl-name">WS Estimations Engine — 2 variants</div><div class="dl-desc">WSD009 campaign logotype · Black · Off-White</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr><td><div class="dl-name">WS Brick — 4 colour variants</div><div class="dl-desc">Design element · Petroleum · Black · Orange · Off-White</div></td><td><span class="dl-tag tag-el">Element</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/assets/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr><td><div class="dl-name">Orange Brick + Facade Contractors</div><div class="dl-desc">Compositional element — campaign and layout use only</div></td><td><span class="dl-tag tag-el">Element</span></td><td style="text-align:right"><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/ORANGE%20BRICK%20%2B%20FACADE%20CONTRACTORS%20PETROLEUM%20BLUE.svg" class="dl-link" target="_blank">↓ SVG</a></td></tr>
+      <tr><td><div class="dl-name">WS-Visual-Identity-Manual.pdf</div><div class="dl-desc">Full brand guidelines · v1.0 · January 2023</div></td><td><span class="dl-tag tag-pdf">PDF</span></td><td style="text-align:right"><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/manual/WS-Visual-Identity-Manual.pdf" class="dl-link" target="_blank">↓ PDF</a></td></tr>
+    </tbody>
+  </table>
 
-  <div style="margin-top:32px;padding:20px 24px;background:var(--mid);border-radius:10px;border-left:3px solid var(--orange)">
-    <div style="font-size:11px;color:var(--orange);letter-spacing:2px;font-weight:700;margin-bottom:6px">GITHUB REPO</div>
-    <code style="font-size:13px;color:var(--offwhite)">github.com/WSFacadeSolutions/ws-assets</code>
-    <p style="font-size:12px;color:#607080;margin-top:6px">To add new assets: drop files in the correct folder and push. This manual updates automatically.</p>
+  <div style="margin-top:40px;padding:24px 28px;background:var(--mid);border-radius:3px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:6px">GitHub Repository</div>
+      <code style="font-size:13px;color:var(--petroleum);font-weight:700">github.com/WSFacadeSolutions/ws-assets</code>
+      <p style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:300">Add new assets to the correct folder and push. This manual references GitHub directly.</p>
+    </div>
+    <a href="https://github.com/WSFacadeSolutions/ws-assets" target="_blank" class="btn-dl" style="white-space:nowrap">Open Repo ↗</a>
   </div>
 </section>
 
-<footer style="padding:32px 80px;background:#0a161f;border-top:1px solid #1e3040;display:flex;align-items:center;justify-content:space-between">
-  <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/ws-logo-white.svg" style="height:24px;opacity:.6">
-  <p style="font-size:11px;color:#607080">WS Facade Solutions · Brand Manual v1.0 · Living Edition · github.com/WSFacadeSolutions/ws-assets</p>
+<footer>
+  <img src="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/logos/svg/WS_SOLUTIONS_FACADE_CONTRACTORS_BLACK.svg" alt="WS Facade Solutions">
+  <p>WS Facade Solutions · Brand Manual v1.0 · Living Edition · github.com/WSFacadeSolutions/ws-assets</p>
 </footer>
 
 </body>
