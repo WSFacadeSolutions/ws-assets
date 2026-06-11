@@ -153,6 +153,9 @@ section{padding:80px 60px;border-bottom:1px solid var(--border)}
 .element-panel.dark{background:var(--petroleum)}
 
 /* ── CAMPAIGN LOGOS ────────────────────────────────────────────── */
+/* Campaign-only blocks are hidden on the public manual; the full internal
+   manual is served with ?internal=1 (see the head script below). */
+html.is-public .campaign-only{display:none !important}
 .campaign-logo-section{margin-bottom:48px}
 .campaign-logo-section h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 
@@ -187,6 +190,12 @@ footer p{font-size:10px;color:var(--muted);letter-spacing:.5px}
   footer{padding:32px 28px;flex-direction:column;gap:16px;text-align:center}
 }
 </style>
+<script>
+  /* Default = leaner public manual (campaign logotypes hidden). The internal
+     team opens the full manual with ?internal=1. Runs before paint, no flash. */
+  if(new URLSearchParams(location.search).get('internal')!=='1')
+    document.documentElement.classList.add('is-public');
+</script>
 </head>
 <body>
 
@@ -198,7 +207,7 @@ footer p{font-size:10px;color:var(--muted);letter-spacing:.5px}
   <a href="#typography">Typography</a>
   <a href="#usage">Usage Rules</a>
   <a href="#elements">Elements</a>
-  <a href="#campaigns">Campaign Logos</a>
+  <a href="#campaigns" class="campaign-only">Campaign Logos</a>
   <a href="#downloads">Downloads</a>
   <span class="nav-right">v1.0 · 2023</span>
 </nav>
@@ -486,7 +495,7 @@ footer p{font-size:10px;color:var(--muted);letter-spacing:.5px}
 </section>
 
 <!-- CAMPAIGN LOGOS -->
-<section id="campaigns">
+<section id="campaigns" class="campaign-only">
   <div class="sec-eyebrow">Campaigns</div>
   <div class="sec-title">Campaign Logos</div>
   <p class="sec-desc">Campaign-specific logotypes extend the core brand identity for individual marketing initiatives. Each campaign has its own visual language within the WS system.</p>
@@ -557,8 +566,8 @@ footer p{font-size:10px;color:var(--muted);letter-spacing:.5px}
     <tbody>
       <tr><td><div class="dl-name">WS Square — 4 colour variants</div><div class="dl-desc">Petroleum Blue · Off-White · Black · Orange</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
       <tr><td><div class="dl-name">WS Solutions Facade Contractors — 5 wordmark variants</div><div class="dl-desc">Full horizontal wordmark · multiple colour combinations</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
-      <tr><td><div class="dl-name">WS Magnified — 2 variants</div><div class="dl-desc">WSD003 campaign logotype · Black · White</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
-      <tr><td><div class="dl-name">WS Estimations Engine — 2 variants</div><div class="dl-desc">WSD009 campaign logotype · Black · Off-White</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr class="campaign-only"><td><div class="dl-name">WS Magnified — 2 variants</div><div class="dl-desc">WSD003 campaign logotype · Black · White</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
+      <tr class="campaign-only"><td><div class="dl-name">WS Estimations Engine — 2 variants</div><div class="dl-desc">WSD009 campaign logotype · Black · Off-White</div></td><td><span class="dl-tag tag-svg">SVG</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/logos/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
       <tr><td><div class="dl-name">WS Brick — 4 colour variants</div><div class="dl-desc">Design element · Petroleum · Black · Orange · Off-White</div></td><td><span class="dl-tag tag-el">Element</span></td><td style="text-align:right"><a href="https://github.com/WSFacadeSolutions/ws-assets/tree/main/assets/svg" class="dl-link" target="_blank">Browse ↗</a></td></tr>
       <tr><td><div class="dl-name">Orange Brick + Facade Contractors</div><div class="dl-desc">Compositional element — campaign and layout use only</div></td><td><span class="dl-tag tag-el">Element</span></td><td style="text-align:right"><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/assets/svg/ORANGE%20BRICK%20%2B%20FACADE%20CONTRACTORS%20PETROLEUM%20BLUE.svg" class="dl-link" target="_blank">↓ SVG</a></td></tr>
       <tr><td><div class="dl-name">WS-Visual-Identity-Manual.pdf</div><div class="dl-desc">Full brand guidelines · v1.0 · January 2023</div></td><td><span class="dl-tag tag-pdf">PDF</span></td><td style="text-align:right"><a href="https://raw.githubusercontent.com/WSFacadeSolutions/ws-assets/main/manual/WS-Visual-Identity-Manual.pdf" class="dl-link" target="_blank">↓ PDF</a></td></tr>
