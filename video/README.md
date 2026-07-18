@@ -50,6 +50,14 @@ and viewBox (written by `--freeze-assets`).
   group and its name. `<name>.kit.svg`, when present, is a Figma-facing variant
   of the same art (the frozen bg is a foreignObject/CSS gradient for pixel parity;
   its kit variant is a native SVG gradient Figma can edit).
+- **Relay reading trap (18 Jul 2026, resolved)**: a real Figma import keeps every
+  `asset.*` vector — verified by exporting the imported frames back out of a live
+  document, art intact. The earlier "import empties the asset groups" finding was
+  an artefact of reading the document through the WST014 TalkToFigma plugin:
+  its `filterFigmaNode` silently drops every VECTOR node, so intact groups
+  serialise as `children: []`. Never judge import health via `get_node_info` /
+  `read_my_design`; use `export_node_as_image` (or eyes on the canvas). A group
+  that exists at all is never empty — Figma auto-deletes empty groups.
 - **Pull (upload path only)**: `asset.*` groups in an uploaded frame export are
   extracted with every def they reference, re-rooted via slots.json and adopted
   ONLY when they genuinely changed — `svg_compare.js` rasterises old vs new and
