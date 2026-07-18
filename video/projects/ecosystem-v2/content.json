@@ -1,0 +1,346 @@
+{
+ "_note": "Canonical content for the WS Ecosystem Film family (film.html + film-ig.html). Strings may contain HTML. Edit here (or in the Figma content file via figma_sync.py) and regenerate content.js with: python3 figma_sync.py --local",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#9670D8",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "shared": {
+  "stages": [
+   "Estimate",
+   "Quote",
+   "Register",
+   "Schedule",
+   "GeoClock",
+   "Crew",
+   "HR",
+   "Pay"
+  ],
+  "codes": [
+   "CostX",
+   "WST002",
+   "WST026",
+   "WST025",
+   "WST034",
+   "WST030",
+   "WST030",
+   "WST039/41"
+  ]
+ },
+ "s0": {
+  "kicker": "WS Facade Solutions · Technology",
+  "headline": "From the site fence<br>to a paid invoice.",
+  "body": "The WS operations ecosystem — designed, built and run in-house."
+ },
+ "s1": {
+  "kicker": "One pipeline · Eight stages",
+  "headline": "Every hour travels one road."
+ },
+ "s2": {
+  "kicker": "Stage 01 · Estimate",
+  "headline": "It starts with the take-off.",
+  "body": "Measured quantities from <b style=\"font-weight:600;color:#F5F2F0\">CostX</b> become the working estimate — rates, margins and the pricing engine stay strictly in-house.",
+  "chip": "estimate.xlsx&nbsp;<span style=\"color:rgba(245,242,240,.5)\">· WS-Estimating drive · 01 Quotes</span>",
+  "dimH": "18.4 m",
+  "dimW": "32.0 m",
+  "area": "2,410 m²"
+ },
+ "s3": {
+  "kicker": "Stage 02 · Quote · <span class=\"wst\">WST002</span>",
+  "headline": "One spreadsheet in.<br>A signed quote out.",
+  "chips": [
+   "White-label web quote — the client's brand up top",
+   "Matching branded PDF, three design themes",
+   "Two-party e-signature with a tamper-evident audit trail",
+   "Sent by WhatsApp: spreadsheet in, live link back"
+  ],
+  "waAttach": "📎 estimate.xlsx &nbsp;·&nbsp; “WS0657”",
+  "waLink": "wssoltech.au/q/ws0657-a3f9c2",
+  "browserUrl": "quotesystem.wssoltech.au/q/ws0657-a3f9c2",
+  "client": "DEINCO<span style=\"font-weight:300;color:rgba(245,242,240,.55)\"> · Builders</span>",
+  "preparedBy": "Prepared by WS",
+  "title": "Facade Package — WS0657",
+  "rows": [
+   [
+    "Rendering — levels 1–4",
+    "A$ 96,400"
+   ],
+   [
+    "Substrate installation (Hebel)",
+    "A$ 52,800"
+   ],
+   [
+    "Caulking &amp; sealant",
+    "A$ 21,300"
+   ],
+   [
+    "Remedial concrete repair",
+    "A$ 14,100"
+   ]
+  ],
+  "totalLabel": "Total (ex GST)",
+  "total": "A$ 184,600",
+  "signLabel": "Accept &amp; sign",
+  "signature": "John Mitchell",
+  "signedNote": "✓ Signed · both parties"
+ },
+ "s4": {
+  "kicker": "Stage 03 · <span class=\"wst\">WST026 Project Register</span>",
+  "count": 670,
+  "label": "projects catalogued — every quote in the drive, numbered and flagged",
+  "wonChip": "Won jobs flagged · real project numbers on the website",
+  "token": "WS0657",
+  "tokenNote": "— one number threads the schedule, the geofence and the invoice"
+ },
+ "s5": {
+  "kicker": "Stage 04 · Scheduling · <span class=\"wst\">WST025 · Vikunja</span>",
+  "headline": "The COO plans the week. The system carries it.",
+  "body": "Every task on the self-hosted Gantt syncs to the shared <span class=\"mono\" style=\"color:#A490FF\">work_day</span> table every 15 minutes — and lands on each worker’s phone as “My day”.",
+  "chip": "schedule.wssoltech.au · sole writer of work_day",
+  "ganttUrl": "schedule.wssoltech.au — Field Operations Gantt",
+  "tasks": [
+   [
+    "WS0657 · Rendering ",
+    "#FF9D27",
+    0.06,
+    0.44
+   ],
+   [
+    "WS0641 · Caulking",
+    "#A490FF",
+    0.3,
+    0.58
+   ],
+   [
+    "WS0663 · Hebel ",
+    "#FF9D27",
+    0.44,
+    0.86
+   ],
+   [
+    "WS0652 · Remedial",
+    "#6040cc",
+    0.12,
+    0.36
+   ],
+   [
+    "WS0657 · Rendering ",
+    "#FF9D27",
+    0.58,
+    0.94
+   ],
+   [
+    "WS0644 · ",
+    "#A490FF",
+    0.66,
+    0.92
+   ]
+  ],
+  "cap": "⟳ bridge sync → work_day · every 15 minutes"
+ },
+ "s6": {
+  "kicker": "Stage 05 · GeoClock · <span class=\"wst\">WST034 Field Time Clock</span>",
+  "headline": "Hours validated at the site fence.",
+  "body": "GPS clock-in tied to real project numbers. Web tap, native geofence or WhatsApp — every event passes through one server-validated <span class=\"mono\" style=\"color:#FF9D27\">/clock</span> endpoint, and every attempt is logged.",
+  "chips": [
+   "184 project sites geofenced — circle and polygon",
+   "Auto clock-in on arrival, clock-out on leaving",
+   "Dispute-proof: full audit trail, 400-day retention"
+  ],
+  "heroLabel": "WS0657 · Padstow",
+  "badgeOut": "Outside fence · 06:57",
+  "badgeIn": "✓ Clocked in · 06:58"
+ },
+ "s7": {
+  "kicker": "Stage 06 · <span class=\"wst\">WS Crew</span>",
+  "headline": "One app for every worker.",
+  "features": [
+   [
+    "app",
+    "Progressive web app + native shell",
+    "installable on any phone; a 5.8 MB Capacitor shell wraps the live crew.wssoltech.au"
+   ],
+   [
+    "lang",
+    "Bilingual by design",
+    "Portuguese first, English always one tap away"
+   ],
+   [
+    "gps",
+    "Background auto clock-in",
+    "live on Android: arrive on site and the shift starts itself"
+   ],
+   [
+    "doc",
+    "Their own paperwork",
+    "site diary, materials, equipment, incidents — and a signed tax invoice at week’s end"
+   ]
+  ],
+  "hub": {
+   "title": "WS Crew",
+   "lang": "PT · EN",
+   "sub": "Many trades · one standard.",
+   "academyPct": 78,
+   "academyLabel": "Academy",
+   "cards": [
+    "📅 My day",
+    "⏱ GeoClock",
+    "📒 Site diary",
+    "🧾 Timesheet",
+    "🎓 Academy",
+    "⚠️ Incident",
+    "📖 Handbook",
+    "🧰 Materials"
+   ],
+   "banner": "● On site · WS0657 · shift running",
+   "version": "v0.6.2 · updates itself on every deploy"
+  },
+  "day": {
+   "title": "My day",
+   "sub": "Thursday · from the Vikunja schedule",
+   "code": "WS0657",
+   "job": "Facade package — Padstow",
+   "time": "07:00 – 15:30 · Rendering, level 2",
+   "tomorrow": "Tomorrow · WS0641 · Caulking"
+  },
+  "clock": {
+   "title": "GeoClock",
+   "sub": "On site · WS0657 · 14 m inside the fence",
+   "btn": "CLOCK IN",
+   "caption": "shift chronometer · runs in the notification tray",
+   "auto": "🛰 Auto mode: clock-in on arrival, clock-out on leaving — even with the app closed."
+  },
+  "ts": {
+   "title": "Timesheet",
+   "sub": "This week · from the clock, nothing typed",
+   "rows": [
+    [
+     "Mon",
+     "WS0657",
+     "8.0 h"
+    ],
+    [
+     "Tue",
+     "WS0657",
+     "8.4 h"
+    ],
+    [
+     "Wed",
+     "WS0641",
+     "8.1 h"
+    ],
+    [
+     "Thu",
+     "WS0657",
+     "9.2 h"
+    ],
+    [
+     "Fri",
+     "WS0663",
+     "8.2 h"
+    ]
+   ],
+   "totalLabel": "Week total",
+   "total": "41.9 h"
+  }
+ },
+ "s8": {
+  "kicker": "Stage 07 · HR · <span class=\"wst\">WST030 Onboarding &amp; HR Control</span>",
+  "headline": "From first sign-in to a counter-signed PDF.",
+  "chips": [
+   "HR approval gate — nobody works unverified",
+   "WS Academy: bilingual modules, quiz pass mark 70%",
+   "Two-party induction agreement, PDF emailed to both",
+   "Bank details and IDs encrypted at rest, fail-closed"
+  ],
+  "queueUrl": "hr.wssoltech.au — approval queue",
+  "rows": [
+   [
+    "J. Silva",
+    "White Card ✓ · Visa ✓",
+    "approve"
+   ],
+   [
+    "M. Santos",
+    "White Card ✓ · Bank ✓",
+    "approve"
+   ],
+   [
+    "R. Costa",
+    "Awaiting White Card",
+    "wait"
+   ]
+  ],
+  "btnApprove": "Approve",
+  "btnApproved": "✓ Approved",
+  "btnPending": "Approve",
+  "pdfNote": "Induction agreement — counter-signed → PDF emailed to "
+ },
+ "s9": {
+  "kicker": "Stage 08 · Pay · <span class=\"wst\">WST039 · WST041 · Xero-ready</span>",
+  "headline": "The clock is the source of truth.",
+  "steps": [
+   "GPS clock",
+   "Timesheet",
+   "Approval",
+   "Invoice PDF",
+   "“Paid.”"
+  ],
+  "invTitle": "TAX INVOICE",
+  "invRef": "WS0657 · week 28",
+  "invRows": [
+   [
+    "Site hours (GPS-verified)",
+    "8.0 h + 2.38 OT"
+   ],
+   [
+    "GST 10%",
+    "included"
+   ]
+  ],
+  "invTotalLabel": "Total payable",
+  "amount": 1479.76,
+  "currency": "A$",
+  "chips": [
+   "Payments queue · one tap: “Paid.”",
+   "Live in production since 2 July 2026"
+  ]
+ },
+ "s10": {
+  "kicker": "The WS operations ecosystem",
+  "headline": "One worked hour — from the<br>site fence to a paid invoice.",
+  "stats": [
+   [
+    "6+2",
+    "apps + native builds"
+   ],
+   [
+    "166",
+    "API endpoints"
+   ],
+   [
+    "26k",
+    "lines of code"
+   ],
+   [
+    "124",
+    "automated tests"
+   ],
+   [
+    "A$5,778",
+    "flat cost / year"
+   ]
+  ],
+  "tagline": "MANY TRADES · ONE STANDARD",
+  "foot": "Designed, built and operated in-house · wssoltech.au"
+ },
+ "ig": {
+  "s0kicker": "WS Facade Solutions · Technology",
+  "s0headline": "From the site fence to a paid invoice.",
+  "s1headline": "Every hour travels one road.",
+  "finaleCta": "wssoltech.au"
+ }
+}

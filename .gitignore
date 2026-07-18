@@ -25,5 +25,11 @@ video/__pycache__/
 video/*.mp4
 video/*.wav
 video/music/
-video/assets/fieldops-box/*.png
+video/footage/*/*.png
+video/footage/*/preview.mp4
 video/projects/*.log
+video/projects/*/frames*/
+video/projects/*/stills/
+video/projects/*/figma-upload/
+video/projects/*/*.mp4
+video/projects/*/*.wav

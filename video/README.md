@@ -273,6 +273,16 @@ FLOW 2 — fine-tune a finished film (copy + audio + theme + re-render + schedul
 5. Run "render completo SEM publicar" (~12 min); preview via "último render".
 6. Publish or schedule. Scheduled publishes are transient systemd timers — they
    do NOT survive a VPS reboot; reschedule if the box restarts.
+
+FLOW 3 — 3D cover footage for the film (no Claude session needed)
+1. Get the cover right first: WS VibeCAD card → edit in Figma / upload the SVG →
+   run the cover's build trigger (it writes the canonical box.glb).
+2. Same card → "🎞 gerar footage pro film" (~3 min): a deterministic turntable
+   renders the cover's box.glb into video/footage/<slug>/ — transparent PNGs +
+   sheet.png + sheet.json, the exact library format the compositions consume
+   (the film never plays <video>). A small dark preview.mp4 appears on the card
+   for human checking only; sheet.json records which GLB (md5) produced it.
+3. Re-running the trigger after a cover rebuild simply overwrites the library.
 <!-- /ops:film-flows -->
 
 ## Brand assets

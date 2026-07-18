@@ -19,6 +19,8 @@ Modes (combine freely; execution order is fixed pull -> local -> template -> sti
   --publish-stills  copy check stills behind CF Access for remote review
   --render          soundtrack (if the timeline changed) + full render + mux
   --deploy          copy MP4s to /var/www/wssoltech/media/ and purge Cloudflare
+  --clone SRC SLUG  duplicate project SRC into projects/<SLUG>/ (own registry,
+                    own deploy names, no Figma link) and stop
 
 Figma setup: put the file key in the project's figma env (ecosystem: figma.env,
 FILM_FIGMA_FILE_KEY=...); the API token comes from /root/.secrets/ws-vibecad.env.
@@ -633,6 +635,67 @@ def do_scaffold(reg):
             print(f'  {path}  =  {val}')
 
 
+def do_clone(reg, slug):
+    """Duplicate a project into projects/<slug>/ — the ecosystem-v2 pattern: edit the
+    copy, keep the original untouched for side-by-side comparison in the Mini-Premiere.
+    Copies the composition HTMLs + content.json + timeline.json + flat assets/ files;
+    fonts are shared through a relative symlink; deploy names gain the slug so a clone
+    can never overwrite the source's published MP4s. figma.env is NOT copied — pulls
+    are a no-op until a NEW Figma file is linked on the ops card (sharing the source's
+    file would leak its edits into the clone)."""
+    import os
+    import shutil
+    if not re.fullmatch(r'[a-z0-9-]{2,24}', slug):
+        sys.exit('clone slug must be 2-24 chars of a-z 0-9 hyphen, e.g. ecosystem-v2')
+    dst_reg = PROJECTS_DIR / f'{slug}.json'
+    dst = PROJECTS_DIR / slug
+    if dst_reg.exists() or dst.exists():
+        sys.exit(f'project {slug!r} already exists — clones never overwrite')
+    dst.mkdir(parents=True)
+    files = [reg['content'], reg.get('timeline', 'timeline.json')] + [c['html'] for c in reg['compositions']]
+    for rel in files:
+        shutil.copy2(ppath(reg, rel), dst / Path(rel).name)
+    # assets: the flat svg/json sources only — heavy PNG libraries (footage/, frames)
+    # stay where they are and are referenced, not duplicated
+    sa = assets_dir(reg)
+    if sa.is_dir():
+        (dst / 'assets').mkdir()
+        for p in sorted(sa.iterdir()):
+            if p.is_file() and p.suffix in ('.svg', '.json'):
+                shutil.copy2(p, dst / 'assets' / p.name)
+    fonts = reg['_dir'] / 'fonts'
+    if fonts.is_dir():
+        (dst / 'fonts').symlink_to(os.path.relpath(fonts, dst))
+    # uploaded music referenced by the timeline travels with the clone
+    tl = load_timeline(reg)
+    for comp in reg['compositions']:
+        src_m = ((tl.get(comp['id']) or {}).get('audio') or {}).get('music_src')
+        if src_m and ppath(reg, src_m).exists():
+            (dst / src_m).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ppath(reg, src_m), dst / src_m)
+    new = {
+        '_': f'Cloned from project "{reg["name"]}" by figma_sync.py --clone — edit this copy, '
+             'compare against the source in the Mini-Premiere.',
+        'name': slug,
+        'title': f'{reg["title"]} ({slug})',
+        'dir': slug,
+        'content': Path(reg['content']).name,
+        'timeline': Path(reg.get('timeline', 'timeline.json')).name,
+        'figma_env': 'figma.env',
+        'figma_env_var': reg.get('figma_env_var', 'FILM_FIGMA_FILE_KEY'),
+        'media_prefix': slug,
+        'compositions': [{**c, 'html': Path(c['html']).name, 'deploy': f'{slug}-{c["id"]}.mp4'}
+                         for c in reg['compositions']],
+    }
+    dst_reg.write_text(json.dumps(new, ensure_ascii=False, indent=1) + '\n')
+    gen_js(load_project(slug))
+    print(f'cloned {reg["name"]} -> {slug}: {dst}')
+    print(f'  registry projects/{slug}.json — the ops card, Mini-Premiere dropdown and '
+          f'film-{slug}-* triggers pick it up by themselves')
+    print(f'  deploys as {", ".join(c["deploy"] for c in new["compositions"])} (source MP4s are safe)')
+    print('  Figma NOT linked — paste a new file key on the ops card when needed')
+
+
 # ----------------------------------------------------------------- render ---
 def run(cmd, **kw):
     print('+', ' '.join(str(x) for x in cmd))
@@ -986,9 +1049,13 @@ if __name__ == '__main__':
     for flag in ['scaffold', 'pull', 'local', 'template', 'stills', 'publish-stills', 'render', 'deploy',
                  'freeze-assets']:
         ap.add_argument('--' + flag, action='store_true')
+    ap.add_argument('--clone', nargs=2, metavar=('SRC', 'SLUG'))
     a = ap.parse_args()
     if not any(v for k, v in vars(a).items() if k != 'project'):
         ap.print_help()
+        sys.exit(0)
+    if a.clone:
+        do_clone(load_project(a.clone[0]), a.clone[1])
         sys.exit(0)
     reg = load_project(a.project)
     if a.scaffold:
