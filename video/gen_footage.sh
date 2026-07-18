@@ -6,9 +6,11 @@
 #
 #   gen_footage.sh <cover.json> [frames=72] [size=900]
 #
-# The GLB is always the cover's CANONICAL build output (ws-vibecad/out/<slug>/box.glb),
-# never a published copy on the hotsite — that indirection is what let an old mock
-# GLB slip into the round-6 footage.
+# GLB source: the NEWEST showcase variant (variants.json[0] on the hotsite) — that
+# is the box the operator sees and approves on agents.wssoltech.au. out/<slug>/box.glb
+# is only a fallback: every build overwrites it, so a stray build (the round-6/7 mock)
+# leaves it carrying art that no longer matches the page. Variants archive box-lite.glb,
+# which is what the showcase viewer renders — footage matches the page by construction.
 set -euo pipefail
 CFG="${1:?usage: gen_footage.sh <cover.json> [frames] [size]}"
 FRAMES="${2:-72}"
@@ -16,9 +18,23 @@ SIZE="${3:-900}"
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
 SLUG=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['slug'])" "$CFG")
-GLB="/root/ws-vibecad/out/$SLUG/box.glb"
-if [ ! -f "$GLB" ]; then
-  echo "ERROR: $GLB not found — run the cover's VibeCAD trigger first (it builds box.glb)" >&2
+GLB=$(python3 - "$SLUG" <<'PY'
+import json, os, sys
+slug = sys.argv[1]
+vdir = f"/var/www/ws-agents-hotsite/vibecad/{slug}"
+man = f"{vdir}/variants.json"
+if os.path.exists(man):
+    for v in json.load(open(man)):          # newest first — what the page shows
+        p = f"{vdir}/{v['id']}/box-lite.glb"
+        if os.path.exists(p):
+            print(p)
+            sys.exit(0)
+fallback = f"/root/ws-vibecad/out/{slug}/box.glb"
+print(fallback if os.path.exists(fallback) else "")
+PY
+)
+if [ -z "$GLB" ] || [ ! -f "$GLB" ]; then
+  echo "ERROR: no GLB found for $SLUG — publish the cover first (VibeCAD trigger)" >&2
   exit 1
 fi
 
