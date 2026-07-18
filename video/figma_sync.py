@@ -662,6 +662,10 @@ def do_deploy(reg):
         print(f'  deployed {comp["out"]} -> {MEDIA_DIR / comp["deploy"]}')
     if not urls:
         return
+    purge_cloudflare(urls)
+
+
+def purge_cloudflare(urls):
     cf = read_env(SECRETS['cf'])
     token = cf.get('CF_API_TOKEN')
     if not token:
@@ -678,8 +682,9 @@ def do_deploy(reg):
     if not zones:
         print(f'  zone {CF_ZONE_NAME} not found — cache not purged')
         return
-    res = cf_api(f"/zones/{zones[0]['id']}/purge_cache", {'files': urls})
-    print('  Cloudflare purge:', 'ok' if res.get('success') else res.get('errors'))
+    for i in range(0, len(urls), 30):    # CF purge-by-URL caps at 30 files per call
+        res = cf_api(f"/zones/{zones[0]['id']}/purge_cache", {'files': urls[i:i + 30]})
+        print('  Cloudflare purge:', 'ok' if res.get('success') else res.get('errors'))
 
 
 def scene_spec(scenes):
@@ -873,6 +878,15 @@ def do_template(reg):
         '<p>One kit per composition — import each on its own Figma page. Shared leaves '
         '(<code>shared.*</code>, <code>theme.*</code>, extras) are named once, in the first kit only.</p>'
         f'<ul>{"".join(links)}</ul>')
+    # zips/SVGs keep the same names across regenerations, so Cloudflare serves the
+    # previous kit unless every published URL is purged
+    base = f'{PUBLIC_BASE}{reg["media_prefix"]}-template/'
+    urls = [base, base + 'index.html']
+    for comp_id, svgs in kits:
+        zname = f'{reg["name"]}-{comp_id}-figma-template.zip'
+        urls += [f'{base}{comp_id}/', f'{base}{comp_id}/index.html', f'{base}{comp_id}/{zname}']
+        urls += [f'{base}{comp_id}/{n}' for n, _ in svgs]
+    purge_cloudflare(urls)
     print(f'template kits: {PUBLIC_BASE}{reg["media_prefix"]}-template/')
 
 
