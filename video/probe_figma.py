@@ -57,14 +57,16 @@ v8 = f'<text id="asset.v8" x="{xs[7]}" y="{Y + 70}" font-family="sans-serif" fon
 
 labels = ''.join(f'<text x="{xs[i] + SQ / 2}" y="{Y + SQ + 40}" font-family="sans-serif" font-size="26" '
                  f'text-anchor="middle" fill="#111">v{i + 1}</text>' for i in range(8))
-legend = ('<text x="40" y="60" font-family="sans-serif" font-size="30" fill="#111">WS Film — Figma import probe · '
-          'importa este arquivo e diz quais quadrados v1–v8 aparecem (e quais camadas asset.v* têm filhos)</text>')
+legend = ('<text x="40" y="52" font-family="sans-serif" font-size="26" fill="#111">WS Film — Figma import probe · '
+          'importa este arquivo e diz quais quadrados v1–v8 aparecem</text>'
+          '<text x="40" y="86" font-family="sans-serif" font-size="26" fill="#111">'
+          '(e quais camadas asset.v* têm filhos)</text>')
 
 svg = (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
        f'width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
        f'{defs_root}<rect width="{W}" height="{H}" fill="#ECEFF1"/>'
        + v1 + v3 + v4 + v5 + v6 + v7 + v8
-       + f'<image width="{W}" height="{H}" xlink:href="data:image/png;base64,{veil_png()}"/>'
+       + f'<image width="{W}" height="{H}" preserveAspectRatio="none" xlink:href="data:image/png;base64,{veil_png()}"/>'
        + v2 + legend + labels + '</svg>')
 open(OUT, 'w').write(svg)
 print(f'probe written: {OUT} ({len(svg)} bytes)')
