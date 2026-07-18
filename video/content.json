@@ -32,7 +32,7 @@
  },
  "s0": {
   "kicker": "WS Facade Solutions · Technology",
-  "headline": "From the site fence",
+  "headline": "From the site fence<br>to a paid invoice.",
   "body": "The WS operations ecosystem — designed, built and run in-house."
  },
  "s1": {
@@ -41,8 +41,8 @@
  },
  "s2": {
   "kicker": "Stage 01 · Estimate",
-  "headline": "It starts with the ",
-  "body": "Measured quantities from CostX become the ",
+  "headline": "It starts with the take-off.",
+  "body": "Measured quantities from <b style=\"font-weight:600;color:#F5F2F0\">CostX</b> become the working estimate — rates, margins and the pricing engine stay strictly in-house.",
   "chip": "estimate.xlsx&nbsp;<span style=\"color:rgba(245,242,240,.5)\">· WS-Estimating drive · 01 Quotes</span>",
   "dimH": "18.4 m",
   "dimW": "32.0 m",
@@ -50,7 +50,7 @@
  },
  "s3": {
   "kicker": "Stage 02 · Quote · <span class=\"wst\">WST002</span>",
-  "headline": "One spreadsheet in.",
+  "headline": "One spreadsheet in.<br>A signed quote out.",
   "chips": [
    "White-label web quote — the client's brand up top",
    "Matching branded PDF, three design themes",
@@ -97,8 +97,8 @@
  },
  "s5": {
   "kicker": "Stage 04 · Scheduling · <span class=\"wst\">WST025 · Vikunja</span>",
-  "headline": "The COO plans the ",
-  "body": "Every task on the self-hosted Gantt syncs ",
+  "headline": "The COO plans the week. The system carries it.",
+  "body": "Every task on the self-hosted Gantt syncs to the shared <span class=\"mono\" style=\"color:#A490FF\">work_day</span> table every 15 minutes — and lands on each worker’s phone as “My day”.",
   "chip": "schedule.wssoltech.au · sole writer of work_day",
   "ganttUrl": "schedule.wssoltech.au — Field Operations Gantt",
   "tasks": [
@@ -142,9 +142,9 @@
   "cap": "⟳ bridge sync → work_day · every 15 minutes"
  },
  "s6": {
-  "kicker": "STAGE 05 · GEOCLOCK · WST034 ",
-  "headline": "Hours validated at ",
-  "body": "GPS clock-in tied to real project numbers. Web tap, ",
+  "kicker": "Stage 05 · GeoClock · <span class=\"wst\">WST034 Field Time Clock</span>",
+  "headline": "Hours validated at the site fence.",
+  "body": "GPS clock-in tied to real project numbers. Web tap, native geofence or WhatsApp — every event passes through one server-validated <span class=\"mono\" style=\"color:#FF9D27\">/clock</span> endpoint, and every attempt is logged.",
   "chips": [
    "184 project sites geofenced — circle and polygon",
    "Auto clock-in on arrival, clock-out on leaving",
@@ -156,12 +156,12 @@
  },
  "s7": {
   "kicker": "Stage 06 · <span class=\"wst\">WS Crew</span>",
-  "headline": "One app for every ",
+  "headline": "One app for every worker.",
   "features": [
    [
     "app",
     "Progressive web app + native shell",
-    "installable on any phone; a 5.8 MB Capacitor shell wraps "
+    "installable on any phone; a 5.8 MB Capacitor shell wraps the live crew.wssoltech.au"
    ],
    [
     "lang",
@@ -176,7 +176,7 @@
    [
     "doc",
     "Their own paperwork",
-    "site diary, materials, equipment, incidents — and a "
+    "site diary, materials, equipment, incidents — and a signed tax invoice at week’s end"
    ]
   ],
   "hub": {
@@ -249,7 +249,7 @@
  },
  "s8": {
   "kicker": "Stage 07 · HR · <span class=\"wst\">WST030 Onboarding &amp; HR Control</span>",
-  "headline": "From first sign-in to a ",
+  "headline": "From first sign-in to a counter-signed PDF.",
   "chips": [
    "HR approval gate — nobody works unverified",
    "WS Academy: bilingual modules, quiz pass mark 70%",
@@ -311,7 +311,7 @@
  },
  "s10": {
   "kicker": "The WS operations ecosystem",
-  "headline": "One worked hour — from the",
+  "headline": "One worked hour — from the<br>site fence to a paid invoice.",
   "stats": [
    [
     "6+2",

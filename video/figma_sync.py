@@ -184,15 +184,22 @@ def figma_file(reg):
         return json.loads(r.read())
 
 
-def _first_text(node):
-    """characters of node if it is TEXT, else of its first TEXT descendant"""
+def _all_texts(node, acc=None):
+    """characters of EVERY TEXT node under (or at) node, document order. Figma
+    sometimes imports a multi-line kit text as one layer per line — joining keeps
+    the second line (a real one-layer text is just a one-element join)."""
+    if acc is None:
+        acc = []
     if node.get('type') == 'TEXT':
-        return node.get('characters', '')
+        acc.append(node.get('characters', ''))
     for ch in node.get('children', []):
-        t = _first_text(ch)
-        if t is not None:
-            return t
-    return None
+        _all_texts(ch, acc)
+    return acc
+
+
+def _first_text(node):
+    texts = _all_texts(node)
+    return '\n'.join(texts) if texts else None
 
 
 def _first_fill(node):
@@ -242,6 +249,149 @@ def upload_files(reg):
     return sorted(d.glob('*.svg')) if d.is_dir() else []
 
 
+# ------------------------------------------------------------- art assets ---
+_ASSET_ID = re.compile(r'^asset[._](.+)$')
+_SVG_NS = 'http://www.w3.org/2000/svg'
+_XLINK_NS = 'http://www.w3.org/1999/xlink'
+
+
+def load_slots(reg):
+    p = assets_dir(reg) / 'slots.json'
+    return json.loads(p.read_text()) if p.exists() else {}
+
+
+def _slot_transform(slot, invert=False):
+    """kit placement transform for an asset slot (or its inverse, for re-rooting
+    art extracted from an exported frame back into slot-local coordinates)"""
+    vb = slot['vb']
+    sx, sy = slot['w'] / vb[2], slot['h'] / vb[3]
+    parts = []
+    if invert:
+        if abs(sx - 1) > 1e-6 or abs(sy - 1) > 1e-6:
+            parts.append(f'scale({1 / sx:.8g} {1 / sy:.8g})')
+        parts.append(f'translate({-slot["x"]:.2f} {-slot["y"]:.2f})')
+    else:
+        parts.append(f'translate({slot["x"]:.2f} {slot["y"]:.2f})')
+        if abs(sx - 1) > 1e-6 or abs(sy - 1) > 1e-6:
+            parts.append(f'scale({sx:.8g} {sy:.8g})')
+        if vb[0] or vb[1]:
+            parts.append(f'translate({-vb[0]:.2f} {-vb[1]:.2f})')
+    return ' '.join(parts)
+
+
+def kit_asset_group(reg, a, slot):
+    """embed assets/<name>.kit.svg (Figma-facing variant, if present) or
+    assets/<name>.svg as an editable <g id="asset.<name>"> at its measured slot"""
+    d = assets_dir(reg)
+    p = d / (a['name'] + '.kit.svg')
+    if not p.exists():
+        p = d / (a['name'] + '.svg')
+    if not p.exists():
+        return None
+    m = re.match(r'<svg([^>]*)>(.*)</svg>\s*$', p.read_text().strip(), re.S)
+    if not m:
+        return None
+    attrs, inner = m.groups()
+    keep = ''.join(f' {k}="{esc(v)}"' for k, v in
+                   re.findall(r'(fill|stroke|stroke-width|stroke-linecap|stroke-linejoin)="([^"]*)"', attrs))
+    return f'<g id="asset.{esc(a["name"])}" transform="{_slot_transform(slot or a)}"{keep}>{inner}</g>'
+
+
+def extract_upload_assets(path, out):
+    """collect asset.<name> group subtrees (plus every def they reference — Figma
+    hoists gradients and clip paths to the document root) from an exported frame"""
+    import xml.etree.ElementTree as ET
+    ET.register_namespace('', _SVG_NS)
+    ET.register_namespace('xlink', _XLINK_NS)
+    root = ET.parse(path).getroot()
+    idmap = {e.get('id'): e for e in root.iter() if e.get('id')}
+    for el in root.iter():
+        m = _ASSET_ID.match(el.get('id') or '')
+        if not m:
+            continue
+        name = m.group(1).replace('_', '.')   # Figma may mangle dots to underscores
+        refs, seen = set(), set()
+        for e in el.iter():
+            for v in e.attrib.values():
+                refs.update(re.findall(r'url\(#([^)"\s]+)\)', v))
+            h = e.get('href') or e.get(f'{{{_XLINK_NS}}}href') or ''
+            if h.startswith('#'):
+                refs.add(h[1:])
+        defs = []
+        queue = list(refs)
+        while queue:
+            rid = queue.pop()
+            if rid in seen or rid not in idmap:
+                continue
+            seen.add(rid)
+            node = idmap[rid]
+            defs.append(node)
+            for e in node.iter():
+                for v in e.attrib.values():
+                    queue.extend(re.findall(r'url\(#([^)"\s]+)\)', v))
+        out.setdefault(name, (el, defs))
+
+
+def rebuild_asset_svg(name, el, defs, slot):
+    """exported group (frame coordinates) -> standalone assets/<name>.svg in
+    slot-local coordinates, self-contained (referenced defs inlined)"""
+    import xml.etree.ElementTree as ET
+    ET.register_namespace('', _SVG_NS)
+    ET.register_namespace('xlink', _XLINK_NS)
+    vb = slot['vb']
+    body = ''.join(ET.tostring(d, encoding='unicode') for d in defs)
+    body += f'<g transform="{_slot_transform(slot, invert=True)}">' + \
+            ET.tostring(el, encoding='unicode') + '</g>'
+    return (f'<svg xmlns="{_SVG_NS}" xmlns:xlink="{_XLINK_NS}" '
+            f'width="{slot["w"]:g}" height="{slot["h"]:g}" '
+            f'viewBox="{vb[0]:g} {vb[1]:g} {vb[2]:g} {vb[3]:g}">{body}</svg>\n')
+
+
+def svgs_render_equal(a, b, w, h):
+    """True when two svg files rasterise identically. Figma re-serialises everything
+    on export, so text comparison is meaningless; the round-trip transforms also
+    shift antialiasing on a handful of pixels by ±2. Unchanged means: every channel
+    within ±1, OR within ±4 on fewer than 0.1% of the pixels. A real edit — even a
+    subtle colour tweak — moves far more than that."""
+    r = subprocess.run(['node', 'svg_compare.js', a, b, str(round(w)), str(round(h))],
+                       cwd=HERE, capture_output=True, text=True)
+    if r.returncode != 0:
+        print('  !! svg_compare failed, treating art as changed:', r.stderr.strip()[:200])
+        return False
+    d = json.loads(r.stdout.strip())
+    return d['maxdiff'] <= 1 or (d['maxdiff'] <= 4 and d['pixels'] <= max(16, w * h * 0.001))
+
+
+def adopt_upload_assets(reg, found_assets):
+    """write extracted art over assets/<name>.svg when it genuinely changed"""
+    import tempfile
+    slots = load_slots(reg)
+    adopted = 0
+    for name, (el, defs) in sorted(found_assets.items()):
+        slot = slots.get(name)
+        if not slot:
+            print(f'  ?? asset.{name} — no slot registered (freeze first), skipped')
+            continue
+        cur = assets_dir(reg) / f'{name}.svg'
+        candidate = rebuild_asset_svg(name, el, defs, slot)
+        with tempfile.NamedTemporaryFile('w', suffix='.svg', delete=False) as tf:
+            tf.write(candidate)
+            tmp = tf.name
+        try:
+            if cur.exists() and svgs_render_equal(str(cur), tmp, slot['w'], slot['h']):
+                print(f'  == asset.{name} unchanged (renders identical), kept')
+                continue
+            cur.write_text(candidate)
+            kit = assets_dir(reg) / f'{name}.kit.svg'
+            if kit.exists():
+                kit.unlink()   # the asset is Figma-native now — no separate kit variant
+            adopted += 1
+            print(f'  ** asset.{name} REPLACED from the uploaded frame ({len(candidate) // 1024} kB)')
+        finally:
+            Path(tmp).unlink(missing_ok=True)
+    return adopted
+
+
 _FIGMA_TECH_ID = re.compile(r'^(pattern|clip|image|filter|paint|mask)\d'
                             r'|^(Rectangle|Vector|Group|Frame|Ellipse|Line|Polygon|Star'
                             r'|Union|Subtract|Intersect|Exclude)( \d+)?$')
@@ -282,14 +432,15 @@ def parse_upload_svg(path, out, rx, outlined):
         return None
 
     def text_of(e):
-        if tag(e) == 'text':
-            lines = [''.join(ts.itertext()) for ts in e if tag(ts) == 'tspan']
-            return '\n'.join(lines) if lines else ''.join(e.itertext())
-        for ch in e:
-            v = text_of(ch)
-            if v is not None:
-                return v
-        return None
+        """join EVERY <text> under e (tspans are exported line boxes; Figma may also
+        split a multi-line text into sibling <text> layers — keep every line)"""
+        found = []
+        for t in ([e] if tag(e) == 'text' else e.iter()):
+            if tag(t) != 'text':
+                continue
+            lines = [''.join(ts.itertext()) for ts in t if tag(ts) == 'tspan']
+            found.append('\n'.join(lines) if lines else ''.join(t.itertext()))
+        return '\n'.join(found) if found else None
 
     def outlined_text_of(e):
         for ch in e.iter():
@@ -325,18 +476,21 @@ def parse_upload_svg(path, out, rx, outlined):
 def do_pull(reg):
     c = load_content(reg)
     rx = content_rx(c)
-    found, outlined = {}, set()
+    found, outlined, found_assets = {}, set(), {}
     ups = upload_files(reg)
     if ups:
         # frames uploaded from the desktop take priority — no API call at all
         for p in ups:
             parse_upload_svg(p, found, rx, outlined)
+            extract_upload_assets(p, found_assets)
         print(f'pull source: {len(ups)} SVG frame(s) uploaded from the desktop (no Figma API call)')
+        if found_assets:
+            adopt_upload_assets(reg, found_assets)
         if outlined:
             print(f'  !! {len(outlined)} layer(s) came as outlined vectors (Figma exports with '
                   f"'Outline text' ON by default) — numbers still sync, but string edits need a "
                   f"re-export with 'Outline text' UNTICKED in the export options")
-        if not found:
+        if not found and not found_assets:
             sys.exit('no dot-path layers found in the uploaded SVGs — export the frames again with '
                      "'Include id attribute' ticked (the files were kept for another try)")
     else:
@@ -359,6 +513,12 @@ def do_pull(reg):
         walk_figma(doc['document'], found, rx)
         if not found:
             sys.exit('no matching layers found in the Figma file — check the naming plan (--scaffold)')
+        def _has_asset(node):
+            return bool(_ASSET_ID.match(node.get('name', ''))) or \
+                any(_has_asset(ch) for ch in node.get('children', []))
+        if _has_asset(doc['document']):
+            print('  nb: asset.* art groups sync via the desktop SVG upload only (the REST file '
+                  'endpoint has no vectors — export the edited frames and use "enviar SVG")')
     changed = 0
     for path, values in sorted(found.items()):
         if len(set(values)) > 1:
@@ -604,10 +764,20 @@ def do_template(reg):
         w, h = m['stage']['w'], m['stage']['h']
         kdir = out / comp['id']
         kdir.mkdir(exist_ok=True)
+        slots = load_slots(reg)
         svgs = []
         for sc in m['scenes']:
             img = base64.b64encode((mdir / sc['still']).read_bytes()).decode()
-            texts, n_named = [], 0
+            mime = 'png' if sc['still'].endswith('.png') else 'jpeg'
+            # editable art groups sit UNDER the still: the still carries a transparent
+            # hole where each asset was hidden, so the art shows through exactly as
+            # rendered, with the baked vignette/grain still on top
+            agroups = []
+            for a in sc.get('assets') or []:
+                gsvg = kit_asset_group(reg, a, slots.get(a['name']))
+                if gsvg:
+                    agroups.append(gsvg)
+            texts, n_named = [], len(agroups)
             for t in sc['texts']:
                 try:
                     get_path(c, t['path'])
@@ -621,10 +791,11 @@ def do_template(reg):
             (kdir / name).write_text(
                 f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
                 f'width="{w}" height="{h}" viewBox="0 0 {w} {h}">'
-                f'<image width="{w}" height="{h}" xlink:href="data:image/jpeg;base64,{img}"/>'
+                + ''.join(agroups)
+                + f'<image width="{w}" height="{h}" xlink:href="data:image/{mime};base64,{img}"/>'
                 + ''.join(texts) + '</svg>')
             svgs.append((name, n_named))
-            print(f'  {comp["id"]}/{name}: {len(texts)} texts, {n_named} named layers')
+            print(f'  {comp["id"]}/{name}: {len(texts)} texts, {len(agroups)} art groups, {n_named} named layers')
         kits.append((comp['id'], svgs))
     if not kits:
         sys.exit('no kit built — every composition is missing timeline scenes')
@@ -671,9 +842,16 @@ def do_template(reg):
             '(<code>s2.headline</code>…) — check the left panel shows those group names before importing '
             'the rest. Texts are plain (inline bold/colour spans live only in content.json and survive a '
             'pull untouched unless the words change). The background still has the copy removed, so what '
-            'you type is exactly what shows. Edit in place, paste the file URL on the ops WS Film card and '
-            'run <b>stills</b> (~3 min) before <b>publicar</b>. If a Figma update ever stops honouring '
-            'SVG ids as group names, fall back to the WST014 plugin relay.</p>'
+            'you type is exactly what shows.</p>'
+            '<p><b>Art is editable too:</b> groups named <code>asset.…</code> (<code>asset.bg</code>, '
+            '<code>asset.s2.tower</code>, icons…) hold the real vectors, sitting under the still through '
+            'a transparent hole. Redraw or replace anything INSIDE the group — keep the group itself and '
+            'its name. Art only syncs through the desktop export: select the edited frames, Export → SVG '
+            'with “Include id attribute” ON and “Outline text” OFF, and upload them on the ops WS Film '
+            'card (“enviar SVG”). Copy edits also ride the same export, or the file URL + pull as before. '
+            'An untouched art group is detected (it renders identically) and never rewrites the asset.</p>'
+            '<p>Then run <b>stills</b> (~3 min) before <b>publicar</b>. If a Figma update ever stops '
+            'honouring SVG ids as group names, fall back to the WST014 plugin relay.</p>'
             f'<ul>{items}</ul>')
         links.append(f'<li><a href="{comp_id}/">{comp_id}/</a> — {len(svgs)} frames · '
                      f'<a href="{comp_id}/{zname}">⬇ {zname}</a></li>')

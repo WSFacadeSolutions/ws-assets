@@ -123,8 +123,52 @@ async function main() {
   // baselines), hide their text, screenshot the clean scene, restore.
   const { page: pb, sz } = await openPage(browser, false);
   const result = { stage: sz, scenes: [] };
+  const seenAssets = [];   // an asset ships as vectors ONCE — first scene it shows in
   for (const sc of SCENES) {
     await pb.evaluate(f => window.seek(f), Math.round(sc.t * fps));
+    // asset slots: hide the art (and remember its slot rect) so the still carries a
+    // transparent hole where figma_sync will embed the editable <g id="asset.NAME">.
+    // Later scenes keep the art baked into the still (visual only, like repeat texts).
+    const sceneAssets = await pb.evaluate((rootSel, seen) => {
+      window.__AHID = [];
+      const out = [];
+      for (const el of document.querySelectorAll('[data-asset]')) {
+        const name = el.getAttribute('data-asset');
+        if (seen.includes(name)) continue;
+        const scene = el.closest('.scene');
+        if (scene ? '#' + scene.id !== rootSel : false) continue;   // global slots (bg) always qualify
+        const r = el.getBoundingClientRect();
+        const frozenBg = !scene && !el.firstElementChild;   // frozen bg lives as #stage css background
+        if (!frozenBg && !r.width && !r.height) continue;
+        let vp;
+        if (el instanceof SVGSVGElement) vp = el;
+        else if (el instanceof SVGElement) vp = el.ownerSVGElement;
+        else vp = el.querySelector('svg');
+        let vr, vb;
+        if (vp) {
+          vr = vp.getBoundingClientRect();
+          const b = vp.viewBox && vp.viewBox.baseVal;
+          vb = b && b.width ? [b.x, b.y, b.width, b.height] : [0, 0, vr.width, vr.height];
+        } else if (frozenBg) {
+          const st = document.getElementById('stage');
+          vr = st.getBoundingClientRect();
+          vb = [0, 0, vr.width, vr.height];
+        } else continue;
+        if (frozenBg) {
+          const st = document.getElementById('stage');
+          window.__AHID.push(['bg', st, st.style.background]);
+          st.style.background = 'none';
+          document.documentElement.style.background = 'transparent';
+          document.body.style.background = 'transparent';
+        } else {
+          window.__AHID.push(['vis', el, el.style.visibility]);
+          el.style.visibility = 'hidden';
+        }
+        out.push({ name, x: vr.x, y: vr.y, w: vr.width, h: vr.height, vb });
+      }
+      return out;
+    }, '#' + sc.id, seenAssets);
+    seenAssets.push(...sceneAssets.map(a => a.name));
     const texts = await pb.evaluate((rootSel, items) => {
       const root = document.querySelector(rootSel);
       const ctx = document.createElement('canvas').getContext('2d');
@@ -222,15 +266,26 @@ async function main() {
       }
       return out;
     }, '#' + sc.id, located[sc.id] || []);
-    const png = `${sc.id}.jpg`;
-    await pb.screenshot({ path: path.join(OUTDIR, png), type: 'jpeg', quality: 82 });
+    // scenes with a hidden asset need alpha (the hole must stay transparent) -> png
+    const png = sceneAssets.length ? `${sc.id}.png` : `${sc.id}.jpg`;
+    await pb.screenshot(sceneAssets.length
+      ? { path: path.join(OUTDIR, png), type: 'png', omitBackground: true }
+      : { path: path.join(OUTDIR, png), type: 'jpeg', quality: 82 });
     await pb.evaluate(() => {  // restore in reverse — nested leaves snapshot each other
       for (const [e, css] of (window.__HIDDEN || []).reverse()) {
         if (css === null) e.removeAttribute('style'); else e.setAttribute('style', css);
       }
       window.__HIDDEN = [];
+      for (const [kind, el, prev] of (window.__AHID || []).reverse()) {
+        if (kind === 'bg') {
+          el.style.background = prev;
+          document.documentElement.style.background = '';
+          document.body.style.background = '';
+        } else el.style.visibility = prev;
+      }
+      window.__AHID = [];
     });
-    result.scenes.push({ id: sc.id, t: sc.t, still: png, texts });
+    result.scenes.push({ id: sc.id, t: sc.t, still: png, texts, assets: sceneAssets });
     console.log(`measured ${texts.length} texts in ${sc.id}`);
   }
   await pb.close();
