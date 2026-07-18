@@ -128,15 +128,17 @@ async function main() {
     await pb.evaluate(f => window.seek(f), Math.round(sc.t * fps));
     // asset slots: hide the art (and remember its slot rect) so the still carries a
     // transparent hole where figma_sync will embed the editable <g id="asset.NAME">.
-    // Later scenes keep the art baked into the still (visual only, like repeat texts).
+    // Later scenes keep the art baked into the still (visual only, like repeat texts) —
+    // EXCEPT global slots (bg): a hole is only transparent if nothing opaque is painted
+    // beneath it, so on any scene that ships editable art the bg is hidden too and
+    // returned with repeat:true for figma_sync to re-embed as unnamed vectors.
     const sceneAssets = await pb.evaluate((rootSel, seen) => {
       window.__AHID = [];
-      const out = [];
+      const cand = [];
       for (const el of document.querySelectorAll('[data-asset]')) {
         const name = el.getAttribute('data-asset');
-        if (seen.includes(name)) continue;
         const scene = el.closest('.scene');
-        if (scene ? '#' + scene.id !== rootSel : false) continue;   // global slots (bg) always qualify
+        if (scene && '#' + scene.id !== rootSel) continue;   // global slots (bg) always qualify
         const r = el.getBoundingClientRect();
         const frozenBg = !scene && !el.firstElementChild;   // frozen bg lives as #stage css background
         if (!frozenBg && !r.width && !r.height) continue;
@@ -154,21 +156,29 @@ async function main() {
           vr = st.getBoundingClientRect();
           vb = [0, 0, vr.width, vr.height];
         } else continue;
-        if (frozenBg) {
+        cand.push({ el, frozenBg, global: !scene,
+                    rec: { name, x: vr.x, y: vr.y, w: vr.width, h: vr.height, vb } });
+      }
+      if (!cand.some(c => !seen.includes(c.rec.name))) return [];   // no editable art here — still stays fully baked
+      const out = [];
+      for (const c of cand) {
+        const repeat = seen.includes(c.rec.name);
+        if (repeat && !c.global) continue;   // scene-local repeats stay baked into the still
+        if (c.frozenBg) {
           const st = document.getElementById('stage');
           window.__AHID.push(['bg', st, st.style.background]);
           st.style.background = 'none';
           document.documentElement.style.background = 'transparent';
           document.body.style.background = 'transparent';
         } else {
-          window.__AHID.push(['vis', el, el.style.visibility]);
-          el.style.visibility = 'hidden';
+          window.__AHID.push(['vis', c.el, c.el.style.visibility]);
+          c.el.style.visibility = 'hidden';
         }
-        out.push({ name, x: vr.x, y: vr.y, w: vr.width, h: vr.height, vb });
+        out.push(Object.assign({ repeat }, c.rec));
       }
       return out;
     }, '#' + sc.id, seenAssets);
-    seenAssets.push(...sceneAssets.map(a => a.name));
+    seenAssets.push(...sceneAssets.filter(a => !a.repeat).map(a => a.name));
     const texts = await pb.evaluate((rootSel, items) => {
       const root = document.querySelector(rootSel);
       const ctx = document.createElement('canvas').getContext('2d');

@@ -279,9 +279,10 @@ def _slot_transform(slot, invert=False):
     return ' '.join(parts)
 
 
-def kit_asset_group(reg, a, slot):
+def kit_asset_group(reg, a, slot, named=True):
     """embed assets/<name>.kit.svg (Figma-facing variant, if present) or
-    assets/<name>.svg as an editable <g id="asset.<name>"> at its measured slot"""
+    assets/<name>.svg as an editable <g id="asset.<name>"> at its measured slot;
+    named=False drops the id — a visual-only repeat the pull never reads back"""
     d = assets_dir(reg)
     p = d / (a['name'] + '.kit.svg')
     if not p.exists():
@@ -294,7 +295,8 @@ def kit_asset_group(reg, a, slot):
     attrs, inner = m.groups()
     keep = ''.join(f' {k}="{esc(v)}"' for k, v in
                    re.findall(r'(fill|stroke|stroke-width|stroke-linecap|stroke-linejoin)="([^"]*)"', attrs))
-    return f'<g id="asset.{esc(a["name"])}" transform="{_slot_transform(slot or a)}"{keep}>{inner}</g>'
+    gid = f' id="asset.{esc(a["name"])}"' if named else ''
+    return f'<g{gid} transform="{_slot_transform(slot or a)}"{keep}>{inner}</g>'
 
 
 def extract_upload_assets(path, out):
@@ -791,12 +793,14 @@ def do_template(reg):
             mime = 'png' if sc['still'].endswith('.png') else 'jpeg'
             # editable art groups sit UNDER the still: the still carries a transparent
             # hole where each asset was hidden, so the art shows through exactly as
-            # rendered, with the baked vignette/grain still on top
-            agroups = []
+            # rendered, with the baked vignette/grain still on top. Repeats (the bg on
+            # scenes after its first appearance) were hidden too so the hole is truly
+            # transparent — they ship as UNNAMED vectors below the editable groups.
+            agroups, repeats = [], []
             for a in sc.get('assets') or []:
-                gsvg = kit_asset_group(reg, a, slots.get(a['name']))
+                gsvg = kit_asset_group(reg, a, slots.get(a['name']), named=not a.get('repeat'))
                 if gsvg:
-                    agroups.append(gsvg)
+                    (repeats if a.get('repeat') else agroups).append(gsvg)
             texts, n_named = [], len(agroups)
             for t in sc['texts']:
                 try:
@@ -811,11 +815,12 @@ def do_template(reg):
             (kdir / name).write_text(
                 f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
                 f'width="{w}" height="{h}" viewBox="0 0 {w} {h}">'
-                + ''.join(agroups)
+                + ''.join(repeats) + ''.join(agroups)
                 + f'<image width="{w}" height="{h}" xlink:href="data:image/{mime};base64,{img}"/>'
                 + ''.join(texts) + '</svg>')
             svgs.append((name, n_named))
-            print(f'  {comp["id"]}/{name}: {len(texts)} texts, {len(agroups)} art groups, {n_named} named layers')
+            print(f'  {comp["id"]}/{name}: {len(texts)} texts, {len(agroups)} art groups'
+                  + (f' (+{len(repeats)} visual repeats)' if repeats else '') + f', {n_named} named layers')
         kits.append((comp['id'], svgs))
     if not kits:
         sys.exit('no kit built — every composition is missing timeline scenes')
