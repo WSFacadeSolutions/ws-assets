@@ -71,6 +71,15 @@ and viewBox (written by `--freeze-assets`).
   untouched. An unedited export is a provable no-op: 0 changes, stills
   byte-identical. The REST file endpoint has no vectors, so art never syncs via
   the API path.
+- **Export root paint travels with the group (18 Jul 2026 fix)**: Figma puts
+  `fill="none"` on the exported root `<svg>` and leaves stroke-only paths with
+  no fill attribute, so re-rooting a group without that attribute turned every
+  wireframe line into a black-filled blob (the tower/map "linhas com fill
+  preto" regression — it also made UNEDITED assets look changed, so one upload
+  spuriously replaced all ten film assets). The pull now copies the export
+  root's paint attributes onto the rebuilt asset's inner wrapper `<g>` — the
+  root `<svg>` is stripped by both consumers (composition injection and kit
+  re-embed), so the wrapper is the only place that survives every path.
 - **Baseline compensation (pending calibration)**: Figma converts our exact text
   baselines to layer tops with its own Saira metrics, so imported layers can sit
   a few px off per font weight. `SAIRA_BASELINE_COMP` in figma_sync.py applies a
@@ -164,6 +173,17 @@ markers and its own volume), mux volume, stills strip, and buttons for the
 stills/publish triggers. Saving validates (contiguous scenes ≥ 0.5 s, markers inside
 the cut, volumes in range, `music_src` present on disk) and regenerates
 `timeline.js`; the MP4 only changes on the next render.
+
+The editor has a real transport (18 Jul 2026): one orange playhead runs the whole
+timeline — ruler, Gantt and audio track — with the active scene lit; click or drag
+anywhere on those tracks to scrub, spacebar toggles play, and ▶ drives the live
+preview iframe frame-by-frame as before. The preview also plays SOUND: the LAST
+RENDER's stem wavs (`<soundtrack>-music.wav`/`-sfx.wav`, served with Range support
+via `/film-comp/`) synced to the playhead — music/SFX/mux sliders apply live
+(capped at 1×), a custom `music_src` plays the uploaded file itself (looped, no
+fades — preview approximation), and a badge warns whenever the wav is older than
+the timeline (saved or unsaved edits) so nobody trusts stale audio. Stem paths and
+mtimes come from `/api/film-timeline` (`audio_preview`).
 
 ## Headless project factory: `new_video.py` + the /film-new microsite
 

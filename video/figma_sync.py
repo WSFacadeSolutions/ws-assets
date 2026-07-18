@@ -301,11 +301,17 @@ def kit_asset_group(reg, a, slot, named=True):
 
 def extract_upload_assets(path, out):
     """collect asset.<name> group subtrees (plus every def they reference — Figma
-    hoists gradients and clip paths to the document root) from an exported frame"""
+    hoists gradients and clip paths to the document root) from an exported frame.
+    The export root's paint attributes travel with each group: Figma puts
+    fill="none" on the root <svg> and leaves stroke-only paths with no fill at
+    all, so re-rooting without them turns every wireframe line into a black
+    blob (the 18 Jul 2026 tower/map regression)."""
     import xml.etree.ElementTree as ET
     ET.register_namespace('', _SVG_NS)
     ET.register_namespace('xlink', _XLINK_NS)
     root = ET.parse(path).getroot()
+    root_paint = {k: v for k, v in root.attrib.items()
+                  if k in ('fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin')}
     idmap = {e.get('id'): e for e in root.iter() if e.get('id')}
     for el in root.iter():
         m = _ASSET_ID.match(el.get('id') or '')
@@ -331,18 +337,22 @@ def extract_upload_assets(path, out):
             for e in node.iter():
                 for v in e.attrib.values():
                     queue.extend(re.findall(r'url\(#([^)"\s]+)\)', v))
-        out.setdefault(name, (el, defs))
+        out.setdefault(name, (el, defs, root_paint))
 
 
-def rebuild_asset_svg(name, el, defs, slot):
+def rebuild_asset_svg(name, el, defs, slot, root_paint=None):
     """exported group (frame coordinates) -> standalone assets/<name>.svg in
-    slot-local coordinates, self-contained (referenced defs inlined)"""
+    slot-local coordinates, self-contained (referenced defs inlined). The
+    export root's paint attributes land on the inner wrapper <g> — the root
+    <svg> is stripped when compositions inject the art (ASSETIN) and when the
+    kit re-embeds it, so only the wrapper survives every consumer."""
     import xml.etree.ElementTree as ET
     ET.register_namespace('', _SVG_NS)
     ET.register_namespace('xlink', _XLINK_NS)
     vb = slot['vb']
+    paint = ''.join(f' {k}="{esc(v)}"' for k, v in (root_paint or {}).items())
     body = ''.join(ET.tostring(d, encoding='unicode') for d in defs)
-    body += f'<g transform="{_slot_transform(slot, invert=True)}">' + \
+    body += f'<g transform="{_slot_transform(slot, invert=True)}"{paint}>' + \
             ET.tostring(el, encoding='unicode') + '</g>'
     return (f'<svg xmlns="{_SVG_NS}" xmlns:xlink="{_XLINK_NS}" '
             f'width="{slot["w"]:g}" height="{slot["h"]:g}" '
@@ -369,13 +379,13 @@ def adopt_upload_assets(reg, found_assets):
     import tempfile
     slots = load_slots(reg)
     adopted = 0
-    for name, (el, defs) in sorted(found_assets.items()):
+    for name, (el, defs, root_paint) in sorted(found_assets.items()):
         slot = slots.get(name)
         if not slot:
             print(f'  ?? asset.{name} — no slot registered (freeze first), skipped')
             continue
         cur = assets_dir(reg) / f'{name}.svg'
-        candidate = rebuild_asset_svg(name, el, defs, slot)
+        candidate = rebuild_asset_svg(name, el, defs, slot, root_paint)
         with tempfile.NamedTemporaryFile('w', suffix='.svg', delete=False) as tf:
             tf.write(candidate)
             tmp = tf.name

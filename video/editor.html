@@ -1,11 +1,13 @@
 <!doctype html>
-<!-- WS Film Mini-Premiere v2: per-composition Gantt + audio track + LIVE preview.
-     Served by the WST038 panel at ops.wssoltech.au/film-editor?project=<name>
-     (operator-gated). Edits DATA only — timeline.json scene windows and audio
-     timings; the compositions time-warp their authored keyframes to fit. The
-     preview embeds the real composition (served via /film-comp/) and drives
-     window.seek() directly — zero tokens, zero render. UI copy is PT-BR like
-     the rest of the ops panel (live tooling, not a document). -->
+<!-- WS Film Mini-Premiere v3: per-composition Gantt + audio track + LIVE preview
+     with a real transport — the playhead runs the timeline itself (click/drag to
+     scrub, spacebar to play) and the preview plays SOUND: the last render's stem
+     wavs (music/sfx, via /film-comp/) synced to the playhead, with a dirty badge
+     when the timeline is newer than the wav. Served by the WST038 panel at
+     ops.wssoltech.au/film-editor?project=<name> (operator-gated). Edits DATA only —
+     timeline.json scene windows and audio timings; the compositions time-warp
+     their authored keyframes to fit. UI copy is PT-BR like the rest of the ops
+     panel (live tooling, not a document). -->
 <html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WS Film — Mini-Premiere</title>
@@ -47,7 +49,12 @@ select,input[type=number]{background:#0b141a;color:var(--txt);border:1px solid v
 .pctl{flex:1;min-width:280px}
 input[type=range].scrub{width:100%;accent-color:var(--orange)}
 input[type=range].vol{width:180px;accent-color:var(--orange);vertical-align:middle}
-.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--orange);opacity:.9;z-index:8;pointer-events:none}
+#tlwrap{position:relative}
+#tlwrap .gtrack,#tlwrap .atrack{cursor:crosshair}
+#gph{position:absolute;width:2px;background:var(--orange);opacity:.9;z-index:8;pointer-events:none}
+#gph::before{content:"";position:absolute;top:-1px;left:-4px;border:5px solid transparent;border-top-color:var(--orange)}
+.gbar.on{border-color:var(--orange);box-shadow:0 0 0 1px var(--orange) inset}
+#audwarn{font-size:12px;color:#ffb37a}
 .stills{display:flex;gap:8px;overflow-x:auto;padding:4px 0}
 .stills img{height:96px;border-radius:6px;background:#000}
 .stills figure{margin:0;text-align:center}.stills figcaption{font-size:11px;color:var(--muted)}
@@ -83,7 +90,9 @@ O preview roda a composição real no browser (zero token, zero render) — usa 
 <script>
 const PROJECT=new URLSearchParams(location.search).get('project')||'ecosystem';
 let DATA=null, TL=null, CUR=null;              // CUR = composition id being edited
-let PV={frame:0,playing:false,fps:30,total:1,scale:1,raf:0};
+let PV={frame:0,playing:false,fps:30,total:1,scale:1,raf:0,t0:0,_force:false};
+let AUD={mus:null,sfx:null,on:true,key:''};    // preview sound: last render's stems
+let DIRTY=false;                               // unsaved timeline edits (audio badge)
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const msg=(t,bad)=>{const m=document.getElementById('msg');m.textContent=t;m.style.color=bad?'#ff8f6b':'var(--ok)';setTimeout(()=>{if(m.textContent===t)m.textContent=''},7000)};
 const cut=()=>TL[CUR];
@@ -128,49 +137,55 @@ function render(){
   +(au.shimmer!=null?`<div class="amark sh" data-r="sh" style="left:${au.shimmer/D*100}%"><span>${(+au.shimmer).toFixed(1)}</span></div>`:'');
  document.getElementById('cutbox').innerHTML=`
  <div class="card" style="border-top-left-radius:0">
+  <div id="tlwrap">
   <h2>🎞 Vídeo — cenas</h2>
   <div class="ruler" id="ruler">${ticks}</div>
   <div id="gantt">${rows}</div>
   <h2 style="margin-top:20px">🔊 Áudio — soundtrack</h2>
-  <div class="atrack" id="atrack"><div class="awave"></div>${marks}
-   <div class="playhead" id="aph" style="left:0%"></div></div>
+  <div class="atrack" id="atrack"><div class="awave"></div>${marks}</div>
+  <div id="gph" style="left:110px;display:none"></div>
+  </div>
   <div class="muted" style="margin-left:110px;margin-top:4px">
    🎵 <b>música de fundo</b> — ${au.music_src?`<code>${esc(au.music_src.replace(/^music\//,''))}</code>
     <button onclick="clearMusic()" style="padding:2px 8px;font-size:12px">✖ voltar à procedural</button>`
     :`procedural (gerada) · <input type="file" id="musfile" accept="audio/*" style="max-width:190px;font-size:12px">
     <button onclick="upMusic()" style="padding:2px 8px;font-size:12px">⬆ trocar música</button>`}
    &nbsp;· vol <input type="range" class="vol" min="0" max="2" step="0.05" value="${au.music_vol??1}"
-     oninput="cut().audio.music_vol=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.music_vol??1}</b></div>
+     oninput="cut().audio.music_vol=+this.value;this.nextElementSibling.textContent=this.value;updAudioVol();markDirty()"> <b>${au.music_vol??1}</b></div>
   <div class="muted" style="margin-left:110px">
    💨 <b>swoosh/SFX</b> (risers + impactos)
    <button onclick="addRiser()" style="padding:2px 8px;font-size:12px">+ riser</button>
    <button onclick="delRiser()" style="padding:2px 8px;font-size:12px">− último riser</button>
    &nbsp;· vol <input type="range" class="vol" min="0" max="2" step="0.05" value="${au.sfx_vol??1}"
-     oninput="cut().audio.sfx_vol=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.sfx_vol??1}</b></div>
+     oninput="cut().audio.sfx_vol=+this.value;this.nextElementSibling.textContent=this.value;updAudioVol();markDirty()"> <b>${au.sfx_vol??1}</b></div>
   <div class="muted" style="margin-left:110px">
    🎚 volume do mux <input type="range" class="vol" min="0.1" max="1.5" step="0.05" value="${au.volume??0.9}"
-     oninput="cut().audio.volume=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.volume??0.9}</b>
+     oninput="cut().audio.volume=+this.value;this.nextElementSibling.textContent=this.value;updAudioVol();markDirty()"> <b>${au.volume??0.9}</b>
    &nbsp;· <span class="muted">trilhas independentes — o wav regenera no próximo render (determinístico)</span></div>
-  <h2 style="margin-top:20px">👁 Preview ao vivo <span class="muted" style="text-transform:none;letter-spacing:0">— timeline guardada · sem áudio (wav é do último render)</span></h2>
+  <h2 style="margin-top:20px">👁 Preview ao vivo <span class="muted" style="text-transform:none;letter-spacing:0">— timeline guardada</span></h2>
   <div class="pv">
    <div class="pwrap" id="pwrap"><iframe id="pframe"></iframe></div>
    <div class="pctl">
     <div style="margin-bottom:6px">
      <button id="playbtn" onclick="togglePlay()">▶ play</button>
      <button onclick="seekPv(0)">⏮</button>
+     <label class="muted" style="margin-left:6px"><input type="checkbox" id="audon" checked onchange="toggleAudio(this.checked)"> 🔊 som</label>
      <span class="muted" id="ptime" style="margin-left:8px">0.0 s</span>
     </div>
     <input type="range" class="scrub" id="scrub" min="0" max="100" value="0" oninput="seekPv(+this.value)">
-    <div class="muted" style="margin-top:8px">Dica: guarda a timeline e o preview recarrega sozinho com a edição aplicada.
-    O playhead laranja anda junto na trilha de áudio para afinar os risers de olho.</div>
+    <div id="audwarn" style="margin-top:6px"></div>
+    <div class="muted" style="margin-top:8px">Clica ou arrasta na timeline para levar o playhead lá · <b>espaço</b> = play/pausa.
+    Guarda a timeline e o preview recarrega sozinho com a edição aplicada.</div>
    </div>
   </div>
  </div>`;
  bindDrag();
- loadPreview(comp);
+ loadPreview(comp,PV._force);PV._force=false;
+ setupAudio(comp);
+ paintPh(PV.frame/PV.fps);
 }
-function addRiser(){const c=cut();(c.audio.risers=c.audio.risers||[]).push(+(dur(c)/2).toFixed(1));render()}
-function delRiser(){(cut().audio.risers||[]).pop();render()}
+function addRiser(){const c=cut();(c.audio.risers=c.audio.risers||[]).push(+(dur(c)/2).toFixed(1));markDirty();render()}
+function delRiser(){(cut().audio.risers||[]).pop();markDirty();render()}
 
 /* ---------- background-music swap: upload replaces the procedural music stem;
    the SFX stem (risers/impacts) stays procedural and independent ---------- */
@@ -184,8 +199,8 @@ async function upMusic(){
  const j=await r.json().catch(()=>({}));
  if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
  cut().audio.music_src=j.music_src;
- msg('✓ música de fundo trocada — entra no próximo render');render()}
-function clearMusic(){cut().audio.music_src=null;msg('trilha procedural de volta — 💾 guarda a timeline');render()}
+ markDirty();msg('✓ música de fundo trocada — entra no próximo render (o preview já toca ela)');render()}
+function clearMusic(){cut().audio.music_src=null;markDirty();msg('trilha procedural de volta — 💾 guarda a timeline');render()}
 
 /* ---------- dragging (listeners on document: render() replaces nodes mid-drag) ---------- */
 function bindDrag(){
@@ -205,20 +220,40 @@ function bindDrag(){
      t=Math.min(Math.max(t,0),dur(c));
      if(r==='sh')c.audio.shimmer=t;else c.audio.risers[+r]=t;
     }
-    render();
+    markDirty();render();
    };
    const up=()=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up)};
    document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);
   });
  });
+ // click/drag anywhere on the timeline (ruler, gantt tracks, audio track) = scrub:
+ // the playhead jumps there and the preview + sound follow. Handles keep priority.
+ const tw=document.getElementById('tlwrap');
+ if(tw)tw.addEventListener('pointerdown',e=>{
+  if(e.target.closest('.gh,.amark'))return;
+  if(!e.target.closest('.gtrack,.atrack,.ruler'))return;
+  e.preventDefault();
+  const at=document.getElementById('atrack'), r=at.getBoundingClientRect();
+  const go=ev=>{const f01=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
+   seekPv(Math.round(f01*dur(cut())*PV.fps))};
+  go(e);
+  const move=ev=>go(ev);
+  const up=()=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up)};
+  document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);
+ });
 }
 
 /* ---------- live preview: the real composition in an iframe, driven by seek() ---------- */
 function compUrl(f){return '/film-comp/'+encodeURIComponent(PROJECT)+'/'+f}
-async function loadPreview(comp){
- stopPlay();
+async function loadPreview(comp,force){
  const fr=document.getElementById('pframe');
- fr.src=compUrl(comp.html);
+ const src=compUrl(comp.html);
+ // soft path: same composition already live (render() runs on every drag tick —
+ // reloading the iframe each time would flicker and drop the playhead)
+ if(!force&&fr.dataset.src===src&&fr.contentWindow&&fr.contentWindow.seek){seekPv(PV.frame,true);return}
+ stopPlay();
+ fr.dataset.src=src;
+ fr.src=src+(force?'?r='+Date.now():'');   // query busts the same-src no-reload case
  fr.onload=async()=>{
   try{
    const cw=fr.contentWindow;
@@ -235,31 +270,101 @@ async function loadPreview(comp){
   }catch(e){msg('preview indisponível: '+e.message,1)}
  };
 }
-function seekPv(f){
+function seekPv(f,soft){
  PV.frame=Math.max(0,Math.min(f,PV.total-1));
  const cw=document.getElementById('pframe').contentWindow;
  try{cw.seek(PV.frame)}catch(e){}
  const t=PV.frame/PV.fps;
+ if(PV.playing&&!soft)PV.t0=performance.now()-t*1000;   // re-anchor the clock on scrub
  document.getElementById('scrub').value=PV.frame;
  document.getElementById('ptime').textContent=t.toFixed(1)+' s / '+((PV.total-1)/PV.fps).toFixed(1)+' s';
- const ph=document.getElementById('aph');if(ph)ph.style.left=(t/dur(cut())*100)+'%';
+ paintPh(t);
+ syncAudio(t,!soft);
+}
+/* global playhead: one orange line running the whole timeline (gantt + audio),
+   plus the active scene lit on the gantt — the Premiere feel */
+function paintPh(t){
+ const ph=document.getElementById('gph'), at=document.getElementById('atrack'),
+       ru=document.getElementById('ruler'), c=cut();
+ if(!ph||!at||!ru||!c)return;
+ const D=dur(c);
+ ph.style.display='block';
+ ph.style.top=(ru.offsetTop+13)+'px';
+ ph.style.height=(at.offsetTop+at.offsetHeight-ru.offsetTop-13)+'px';
+ ph.style.left=(at.offsetLeft+Math.min(1,t/D)*at.offsetWidth-1)+'px';
+ document.querySelectorAll('#gantt .gbar').forEach((b,i)=>{
+  const s=c.scenes[i];if(s)b.classList.toggle('on',t>=s.start&&t<s.end)});
 }
 function togglePlay(){PV.playing?stopPlay():startPlay()}
 function startPlay(){
+ if(PV.frame>=PV.total-1)PV.frame=0;                    // replay from the top
  PV.playing=true;document.getElementById('playbtn').textContent='⏸ pausa';
- const t0=performance.now()-PV.frame/PV.fps*1000;
+ PV.t0=performance.now()-PV.frame/PV.fps*1000;
+ syncAudio(PV.frame/PV.fps,true);
  const loop=()=>{
   if(!PV.playing)return;
-  const f=Math.floor((performance.now()-t0)/1000*PV.fps);
+  const f=Math.floor((performance.now()-PV.t0)/1000*PV.fps);
   if(f>=PV.total){stopPlay();return}
-  seekPv(f);PV.raf=requestAnimationFrame(loop);
+  seekPv(f,true);PV.raf=requestAnimationFrame(loop);
  };
  PV.raf=requestAnimationFrame(loop);
 }
 function stopPlay(){
  PV.playing=false;cancelAnimationFrame(PV.raf);
+ for(const a of [AUD.mus,AUD.sfx])if(a&&!a.paused)a.pause();
  const b=document.getElementById('playbtn');if(b)b.textContent='▶ play';
 }
+
+/* ---------- preview sound: the LAST RENDER's stem wavs synced to the playhead.
+   music = procedural stem, or the uploaded track (looped) when music_src is set;
+   sfx = riser/impact stem. Slider volumes apply live (capped at 1 — the element
+   can't boost). The wav is only as fresh as the last render: updAudioWarn says
+   so whenever the timeline is newer (saved or unsaved). ---------- */
+function setupAudio(comp,force){
+ const au=cut().audio||{}, ap=(comp||{}).audio_preview||{};
+ const key=CUR+'|'+(au.music_src||'');
+ AUD.ap=ap;
+ if(!force&&AUD.key===key){updAudioVol();updAudioWarn();return}
+ killAudio();AUD.key=key;
+ const mk=(src,loop)=>{const a=new Audio(compUrl(src));a.preload='auto';a.loop=!!loop;return a};
+ if(au.music_src)AUD.mus=mk(au.music_src,true);        // preview approximation: loop, no fades
+ else if(ap.music)AUD.mus=mk(ap.music);
+ if(ap.sfx)AUD.sfx=mk(ap.sfx);
+ updAudioVol();updAudioWarn();
+}
+function killAudio(){for(const k of ['mus','sfx']){if(AUD[k]){AUD[k].pause();AUD[k].removeAttribute('src');AUD[k]=null}}AUD.key=''}
+function updAudioVol(){
+ const au=cut().audio||{}, mux=Math.min(1,au.volume??0.9);
+ if(AUD.mus)AUD.mus.volume=Math.min(1,(au.music_vol??1)*mux);
+ if(AUD.sfx)AUD.sfx.volume=Math.min(1,(au.sfx_vol??1)*mux);
+}
+function updAudioWarn(){
+ const el=document.getElementById('audwarn');if(!el)return;
+ const ap=AUD.ap||{};
+ const stale=ap.tl_mtime&&((ap.music_mtime&&ap.tl_mtime>ap.music_mtime)||(ap.sfx_mtime&&ap.tl_mtime>ap.sfx_mtime));
+ el.textContent=(!AUD.mus&&!AUD.sfx)?'🔇 sem wav ainda — corre um render para o preview ter som'
+  :stale?'⚠ som do ÚLTIMO render — a timeline guardada é mais nova; re-render para ouvir a edição'
+  :DIRTY?'⚠ som do último render — tens edições não guardadas (💾 + re-render para ouvir)':'';
+}
+function markDirty(){DIRTY=true;updAudioWarn()}
+function syncAudio(t,hard){
+ for(const a of [AUD.mus,AUD.sfx]){
+  if(!a)continue;
+  if(!AUD.on||!PV.playing){if(!a.paused)a.pause();continue}
+  const D=a.duration||0;
+  const target=a.loop&&D?t%D:t;
+  if(!a.loop&&D&&target>=D-0.05){if(!a.paused)a.pause();continue}   // wav shorter than the cut
+  if(hard||Math.abs(a.currentTime-target)>0.15){try{a.currentTime=target}catch(e){}}
+  if(a.paused)a.play().catch(()=>{});
+ }
+}
+function toggleAudio(on){AUD.on=on;if(!on){for(const a of [AUD.mus,AUD.sfx])a&&a.pause()}else if(PV.playing)syncAudio(PV.frame/PV.fps,true)}
+/* spacebar = play/pause, anywhere that isn't a form control */
+document.addEventListener('keydown',e=>{
+ if(e.code!=='Space'||e.repeat)return;
+ if(/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName))return;
+ e.preventDefault();togglePlay();
+});
 
 /* ---------- persist ---------- */
 async function save(){
@@ -269,7 +374,9 @@ async function save(){
  const j=await r.json().catch(()=>({}));
  if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
  msg(j.changed?'✓ guardada — preview recarregando com a edição':'✓ nada mudou');
- if(j.changed)loadPreview(DATA.compositions.find(x=>x.id===CUR));   // timeline.js foi regenerado
+ DIRTY=false;
+ if(j.changed){PV._force=true;await loadAll()}   // timeline.js regenerado — recarrega preview + mtimes do som
+ else updAudioWarn();
 }
 async function trig(kind){
  const name=DATA.triggers[kind];
@@ -287,6 +394,7 @@ async function saveRender(){
   body:JSON.stringify({project:PROJECT,timeline:TL})});
  const j=await r.json().catch(()=>({}));
  if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ DIRTY=false;updAudioWarn();
  await trig('render');
 }
 loadAll();

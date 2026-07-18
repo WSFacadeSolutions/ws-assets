@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080"><g transform="translate(0.00 0.00)"><g xmlns="http://www.w3.org/2000/svg" id="asset.s1.pipeline">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080"><g transform="translate(0.00 0.00)" fill="none"><g xmlns="http://www.w3.org/2000/svg" id="asset.s1.pipeline">
 <path id="s1path" d="M255 566C356 566 356 714 457 714C558 714 558 566 659 566C760 566 760 714 861 714C962 714 962 566 1063 566C1164 566 1164 714 1265 714C1366 714 1366 566 1467 566C1568 566 1568 714 1669 714" stroke="white" stroke-opacity="0.85" stroke-width="4" stroke-linecap="round" />
 <g id="s1n0">
 <path id="Vector_2" d="M255 596C271.569 596 285 582.569 285 566C285 549.431 271.569 536 255 536C238.431 536 225 549.431 225 566C225 582.569 238.431 596 255 596Z" fill="#0F1A20" stroke="#9670D8" stroke-width="3" />
