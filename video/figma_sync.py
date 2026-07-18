@@ -760,6 +760,11 @@ def do_template(reg):
     are unnamed, visual only) so --pull is never ambiguous. theme swatches and
     off-screen extras join the first composition's kit."""
     import zipfile
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    built = datetime.now(ZoneInfo('Australia/Sydney'))
+    stamp = built.strftime('%d %b %Y %H:%M %Z')
+    ver = int(built.timestamp())
     c = load_content(reg)
     tl = load_timeline(reg)
     out = MEDIA_DIR / f'{reg["media_prefix"]}-template'
@@ -845,12 +850,17 @@ def do_template(reg):
         with zipfile.ZipFile(kdir / zname, 'w', zipfile.ZIP_DEFLATED) as z:
             for name, _ in svgs:
                 z.write(kdir / name, name)
+            z.writestr('VERSION.txt', f'{reg["title"]} — {comp_id} Figma kit\n'
+                                      f'generated {stamp} (v{ver})\n')
         items = ''.join(f'<li><a href="{n}">{n}</a> — {k} named layers</li>' for n, k in svgs)
         (kdir / 'index.html').write_text(
             f'<!doctype html><meta charset="utf-8"><title>{reg["title"]} — {comp_id} Figma kit</title>'
             '<body style="background:#0f1a20;color:#eee;font-family:sans-serif;max-width:900px;margin:24px auto;line-height:1.5">'
             f'<h2>{reg["title"]} — <code>{comp_id}</code> Figma import kit</h2>'
-            f'<p><a href="{zname}" style="color:#FF9D27;font-size:1.2em">⬇ {zname}</a></p>'
+            f'<p style="color:#9fb4bf">generated <b>{stamp}</b> · v{ver} — the zip carries a '
+            'VERSION.txt with the same stamp; if the page or the download shows an older one, '
+            'you are looking at a cached copy.</p>'
+            f'<p><a href="{zname}?v={ver}" style="color:#FF9D27;font-size:1.2em">⬇ {zname}</a></p>'
             '<p>Import this kit on its OWN Figma page (one page per composition — never import a kit '
             'twice, duplicate names make the pull ambiguous). Drag the SVGs in, then <b>verify with one '
             'scene first</b>: each editable text sits inside a group named by its dot-path '
@@ -868,13 +878,14 @@ def do_template(reg):
             '<p>Then run <b>stills</b> (~3 min) before <b>publicar</b>. If a Figma update ever stops '
             'honouring SVG ids as group names, fall back to the WST014 plugin relay.</p>'
             f'<ul>{items}</ul>')
-        links.append(f'<li><a href="{comp_id}/">{comp_id}/</a> — {len(svgs)} frames · '
-                     f'<a href="{comp_id}/{zname}">⬇ {zname}</a></li>')
+        links.append(f'<li><a href="{comp_id}/?v={ver}">{comp_id}/</a> — {len(svgs)} frames · '
+                     f'<a href="{comp_id}/{zname}?v={ver}">⬇ {zname}</a></li>')
         print(f'  kit {comp_id}: {PUBLIC_BASE}{reg["media_prefix"]}-template/{comp_id}/ ({zname})')
     (out / 'index.html').write_text(
         f'<!doctype html><meta charset="utf-8"><title>{reg["title"]} — Figma templates</title>'
         '<body style="background:#0f1a20;color:#eee;font-family:sans-serif;max-width:900px;margin:24px auto;line-height:1.5">'
         f'<h2>{reg["title"]} — Figma import kits</h2>'
+        f'<p style="color:#9fb4bf">generated <b>{stamp}</b> · v{ver}</p>'
         '<p>One kit per composition — import each on its own Figma page. Shared leaves '
         '(<code>shared.*</code>, <code>theme.*</code>, extras) are named once, in the first kit only.</p>'
         f'<ul>{"".join(links)}</ul>')
