@@ -720,6 +720,15 @@ def css_color(c):
     return '#%02X%02X%02X' % (r, g, b), (a if a is not None and a < 1 else None)
 
 
+# Per-weight baseline nudge (px per 100px of font size) applied to every kit text:
+# Figma converts our exact baseline to a layer top with ITS OWN metrics for Saira,
+# so imported layers sit a few px high/low depending on the weight. Calibrate with
+# baseline_probe.py against a REAL import once the Figma REST quota allows (it
+# prints this dict); zeros = no compensation, kit output unchanged. If a measured
+# table still does not close the drift, position via the WST014 plugin relay.
+SAIRA_BASELINE_COMP = {300: 0.0, 400: 0.0, 500: 0.0, 600: 0.0, 700: 0.0, 800: 0.0}
+
+
 def svg_text(t, named=True):
     """one measured text as SVG: exact per-line x/baseline from template.js. Named
     layers are wrapped in <g id="dot.path"> because Figma names imported TEXT nodes
@@ -727,7 +736,8 @@ def svg_text(t, named=True):
     proven behaviour). Repeat appearances of a leaf ship unnamed (visual only) so
     --pull never sees the same name twice within one kit."""
     fill, op = css_color(t['color'])
-    spans = ''.join(f'<tspan x="{l["x"]:.1f}" y="{l["y"]:.1f}">{esc(l["text"]) or " "}</tspan>'
+    dy = SAIRA_BASELINE_COMP.get(int(t.get('fontWeight') or 400), 0.0) * t['fontSize'] / 100.0
+    spans = ''.join(f'<tspan x="{l["x"]:.1f}" y="{l["y"] + dy:.1f}">{esc(l["text"]) or " "}</tspan>'
                     for l in t['lines'])
     ls = f' letter-spacing="{t["letterSpacing"]:.2f}"' if t.get('letterSpacing') else ''
     style = f' font-style="{t["fontStyle"]}"' if t.get('fontStyle', 'normal') != 'normal' else ''

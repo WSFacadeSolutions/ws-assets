@@ -27,10 +27,49 @@ trigger set per registered project automatically: `stills`, `template`, `deploy`
 (render + publish in one go), plus the split pair `render` (no publish) and `publish`
 (copy the last render to /media, seconds).
 
+## Editable art: asset slots (`assets/*.svg`)
+
+Every piece of scene art — the background gradient, the s0 logo, the s1 pipeline
+(road, nodes, module icons), the s2 tower wireframe, the s6 urban map with its
+satellite fences, the s7 feature icons, the s10 constellation and brand lockup,
+plus the IG twins (`ig.*`) — lives in `assets/<name>.svg` and is LOADED by the
+compositions (via the generated `assets.js`), never built in JS. Hosts carry
+`data-asset="<name>"`; `assets/slots.json` records each slot's stage rectangle
+and viewBox (written by `--freeze-assets`).
+
+- **Freeze** (`figma_sync.py --freeze-assets` → `freeze_assets.js`): serialises the
+  DOM each slot renders into its asset file, settled state folded into clean
+  attributes. Existing files are never overwritten. The switch from procedural
+  builders to injection was proven byte-identical on every check still.
+- **Choreography survives replacement**: animations target wrappers or optional
+  internal hooks (classes/ids) behind null-guards — replacement art from Figma
+  simply rides the scene crossfades instead of its bespoke entrance.
+- **Kit**: each asset ships in its scene frame as an editable `<g id="asset.<name>">`
+  UNDER the still, which carries a transparent hole where the art was hidden
+  (those scenes use alpha PNG stills). Edit anything inside the group; keep the
+  group and its name. `<name>.kit.svg`, when present, is a Figma-facing variant
+  of the same art (the frozen bg is a foreignObject/CSS gradient for pixel parity;
+  its kit variant is a native SVG gradient Figma can edit).
+- **Pull (upload path only)**: `asset.*` groups in an uploaded frame export are
+  extracted with every def they reference, re-rooted via slots.json and adopted
+  ONLY when they genuinely changed — `svg_compare.js` rasterises old vs new and
+  treats ≤±1 per channel (or ≤±4 on <0.1% of pixels, transform rounding) as
+  untouched. An unedited export is a provable no-op: 0 changes, stills
+  byte-identical. The REST file endpoint has no vectors, so art never syncs via
+  the API path.
+- **Baseline compensation (pending calibration)**: Figma converts our exact text
+  baselines to layer tops with its own Saira metrics, so imported layers can sit
+  a few px off per font weight. `SAIRA_BASELINE_COMP` in figma_sync.py applies a
+  per-weight nudge (zeros today = no-op); run `python3 baseline_probe.py` against
+  a real import once the REST quota allows and paste the printed table. Position
+  sync for moved groups (layout overrides) is deliberately deferred until that
+  calibration closes — otherwise import drift would read as intentional
+  repositioning. Fallback: the WST014 plugin relay.
+
 ## Driver: `figma_sync.py`
 
 All modes take `--project <name>` (default `ecosystem`); execution order is fixed
-pull → local → template → stills → render → deploy.
+pull → local → freeze-assets → template → stills → render → deploy.
 
 - `--scaffold` prints the Figma naming plan (layer name → current value).
 - `--pull` pulls named layers from the project's Figma file into content.json
@@ -72,8 +111,12 @@ edited frames on the desktop (Export → SVG, "Include id attribute" ON and
 "Outline text" OFF — Figma outlines text by default) and upload them on the ops
 WS Film card ("enviar SVG") — they stage in the project's `figma-upload/` and the
 next pull consumes them once instead of calling the API. Only the edited frames
-are needed; exported tspan line boxes are joined with newlines and the plain-word
-comparison keeps unedited values from churning. Outlined exports still sync
+are needed; this is also the ONLY path that syncs `asset.*` art (see above).
+Exported tspan line boxes are joined with newlines, and EVERY text layer inside a
+named group is joined too — Figma imports a multi-line kit text as one layer per
+line, and reading only the first one silently truncated 13 strings across the
+film on 18 Jul 2026 (all restored from the authored fallbacks; the plain-word
+comparison keeps unedited values from churning). Outlined exports still sync
 numbers and confirm unchanged strings (the auto layer name carries the words) but
 refuse string edits — the name may be truncated. A quota 429 on the API path is
 non-fatal: the trigger continues with local content and says so in the log.
@@ -130,9 +173,11 @@ FLOW 1 — new video from a brief (AI build)
 2. The new project appears by itself on the WS Film card, in the Mini-Premiere
    dropdown and in the trigger list.
 3. Run the project's "stills de conferência" trigger and review every frame.
-4. Adjust — copy/colours: "gerar template Figma" trigger → import the kit (one
-   Figma page per composition) → edit → paste the file URL on the card → stills
-   again. Timings/audio: Mini-Premiere.
+4. Adjust — copy, colours AND art: "gerar template Figma" trigger → import the
+   kit (one Figma page per composition) → edit texts in place and redraw inside
+   the asset.* groups (background, tower, map, icons…) → export the edited
+   frames (SVG, "Include id attribute" ON, "Outline text" OFF) → "enviar SVG"
+   on the card → stills again. Timings/audio: Mini-Premiere.
 5. Run "render completo SEM publicar" (~12 min) and preview the MP4 with the
    "último render" link on the card.
 6. Publish now ("publicar o último render", seconds) or schedule it on the card
@@ -144,7 +189,8 @@ FLOW 2 — fine-tune a finished film (copy + audio + re-render + schedule)
    one (repeat to remove them all), volume slider sets the mix. Save — the
    soundtrack rebuilds itself on the next render (timeline newer than the wav).
 2. Copy: for a few words, edit content.json + `python3 figma_sync.py --local`
-   (or ask Claude); for visual editing use the Figma kit flow as in flow 1 step 4.
+   (or ask Claude); for visual editing — texts or the asset.* art — use the
+   Figma kit flow as in flow 1 step 4.
 3. Run "stills de conferência" (~3 min) and check the changed frames.
 4. Run "render completo SEM publicar" (~12 min); preview via "último render".
 5. Publish or schedule. Scheduled publishes are transient systemd timers — they
