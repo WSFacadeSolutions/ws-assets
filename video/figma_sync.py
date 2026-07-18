@@ -93,6 +93,20 @@ def load_timeline(reg):
     return json.loads(p.read_text()) if p.exists() else {}
 
 
+def assets_dir(reg):
+    return reg['_dir'] / 'assets'
+
+
+def load_assets(reg):
+    """assets/<name>.svg -> {name: full svg text}. <name>.kit.svg files are the
+    Figma-facing variants (used only by --template) and never reach assets.js."""
+    d = assets_dir(reg)
+    if not d.is_dir():
+        return {}
+    return {p.name[:-4]: p.read_text().strip() for p in sorted(d.glob('*.svg'))
+            if not p.name.endswith('.kit.svg')}
+
+
 def gen_js(reg):
     c = load_content(reg)
     (ppath(reg, 'content.js')).write_text(
@@ -102,7 +116,12 @@ def gen_js(reg):
     (ppath(reg, 'timeline.js')).write_text(
         '/* GENERATED from timeline.json — do not edit by hand. Regenerate: figma_sync.py --local */\n'
         'window.TIMELINE = ' + json.dumps(tl, ensure_ascii=False, indent=1) + ';\n')
-    print(f'content.js + timeline.js regenerated in {reg["_dir"]}')
+    assets = load_assets(reg)
+    if assets:
+        (ppath(reg, 'assets.js')).write_text(
+            '/* GENERATED from assets/*.svg — do not edit by hand. Regenerate: figma_sync.py --local */\n'
+            'window.ASSETS = ' + json.dumps(assets, ensure_ascii=False) + ';\n')
+    print(f'content.js + timeline.js{" + assets.js" if assets else ""} regenerated in {reg["_dir"]}')
 
 
 def leaf_paths(node, prefix=''):
@@ -503,6 +522,29 @@ def do_deploy(reg):
     print('  Cloudflare purge:', 'ok' if res.get('success') else res.get('errors'))
 
 
+def scene_spec(scenes):
+    """capture instant per scene: late in the window (animations settled, crossfade
+    not yet started) — shared by --template and --freeze-assets"""
+    return ','.join(f'{s["id"]}:{s["end"] - max(0.7, min(1.5, (s["end"] - s["start"]) * 0.25)):.1f}'
+                    for s in scenes)
+
+
+def do_freeze_assets(reg):
+    """Serialise every [data-asset] slot of every composition into assets/<name>.svg
+    (existing files are kept — freezing is one-way) and refresh assets/slots.json.
+    Run once when new procedural art gains a slot; then switch the builder to inject
+    window.ASSETS and prove the check stills byte-identical."""
+    tl = load_timeline(reg)
+    adir = assets_dir(reg)
+    for comp in reg['compositions']:
+        scenes = (tl.get(comp['id']) or {}).get('scenes') or []
+        if not scenes:
+            print(f'  !! no timeline scenes for {comp["id"]}, skipped')
+            continue
+        run(['node', 'freeze_assets.js', ppath(reg, comp['html']), scene_spec(scenes), adir])
+    gen_js(reg)
+
+
 # --------------------------------------------------------------- template ---
 def esc(s):
     return html_mod.escape(str(s), quote=True)
@@ -556,11 +598,8 @@ def do_template(reg):
         if not scenes:
             print(f'  !! no timeline scenes for {comp["id"]}, skipped')
             continue
-        # measure late in each scene (animations settled, crossfade not yet started)
-        spec = ','.join(f'{s["id"]}:{s["end"] - max(0.7, min(1.5, (s["end"] - s["start"]) * 0.25)):.1f}'
-                        for s in scenes)
         mdir = reg['_dir'] / 'template' / comp['id']
-        run(['node', 'template.js', ppath(reg, comp['html']), mdir, spec])
+        run(['node', 'template.js', ppath(reg, comp['html']), mdir, scene_spec(scenes)])
         m = json.loads((mdir / 'measure.json').read_text())
         w, h = m['stage']['w'], m['stage']['h']
         kdir = out / comp['id']
@@ -652,7 +691,8 @@ def do_template(reg):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--project', default='ecosystem')
-    for flag in ['scaffold', 'pull', 'local', 'template', 'stills', 'publish-stills', 'render', 'deploy']:
+    for flag in ['scaffold', 'pull', 'local', 'template', 'stills', 'publish-stills', 'render', 'deploy',
+                 'freeze-assets']:
         ap.add_argument('--' + flag, action='store_true')
     a = ap.parse_args()
     if not any(v for k, v in vars(a).items() if k != 'project'):
@@ -665,6 +705,8 @@ if __name__ == '__main__':
         do_pull(reg)
     if a.pull or a.local:
         gen_js(reg)
+    if getattr(a, 'freeze_assets'):
+        do_freeze_assets(reg)
     if a.template:
         do_template(reg)
     if a.stills:
