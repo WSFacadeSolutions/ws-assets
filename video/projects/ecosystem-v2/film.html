@@ -287,6 +287,15 @@ svg text{font-family:Saira,sans-serif}
     </div>
   </div>
 
+  <!-- ============ SBOX PRODUCT (Field Ops box · footage/ws-fieldops) ============ -->
+  <div class="scene" id="sbox">
+    <div id="sboxk" class="kicker" style="position:absolute;left:140px;top:248px">The product · <span class="wst">WS Field Ops</span></div>
+    <h1 id="sboxh" style="position:absolute;left:140px;top:302px;font-size:78px;width:860px">Crew, HR and geolocation.<br>One suite for the site.</h1>
+    <div id="sboxb" style="position:absolute;left:140px;top:606px;font-size:32px;width:660px;font-weight:300;color:rgba(var(--off-rgb),.78);line-height:1.5">The platform this pipeline runs on — modelled, textured and rendered end-to-end by <b style="font-weight:600;color:var(--off)">WS VibeCAD</b>.</div>
+    <div id="sboxchip" class="chip" style="position:absolute;left:140px;top:786px"><span class="dot" style="background:var(--lilac)"></span>agents.wssoltech.au/fieldops-box</div>
+    <div id="sboxtt" style="position:absolute;right:90px;top:100px;width:880px;height:880px;filter:drop-shadow(0 60px 110px rgba(0,0,0,.6))"></div>
+  </div>
+
   <!-- ============ S10 FINALE ============ -->
   <div class="scene" id="s10">
     <svg id="s10svg" width="1920" height="1080" style="position:absolute;inset:0"></svg>
@@ -391,7 +400,8 @@ const SC=[
   ['#s7',  71.5, 86.0],
   ['#s8',  86.0, 94.5],
   ['#s9',  94.5,104.0],
-  ['#s10',104.0,116.0],
+  ['#sbox',104.0,112.0],
+  ['#s10',112.0,124.0],
 ];
 const TL=(window.TIMELINE&&window.TIMELINE.film)||null;
 const SC_EDIT=SC.map(([sel,a,b])=>{
@@ -433,7 +443,7 @@ STAGES.forEach((s,i)=>{
   spine.appendChild(n);
 });
 const STAGE_T=[19.5,29.5,42.5,51.0,60.5,71.5,86.0,94.5]; // when each stage begins
-anims.push({t0:0,t1:0.01,ease:E.lin,fn:(p,t)=>{const i=c01((t-10.5)/0.8),o=c01((t-104.0)/0.8);spine.style.opacity=(0.95*i*(1-o)).toFixed(3);}});
+anims.push({t0:0,t1:0.01,ease:E.lin,fn:(p,t)=>{const i=c01((t-10.5)/0.8),o=c01((t-112.0)/0.8);spine.style.opacity=(0.95*i*(1-o)).toFixed(3);}});
 STAGE_T.forEach((st,i)=>{
   at(st,0.01,p=>{$(`#spd${i}`).classList.toggle('on',p>=1);},E.lin);
   if(i<7)at(st+0.2,STAGE_T[i+1]?STAGE_T[i+1]-st-0.4:2,p=>{$(`#sps${i}`).style.transform=`scaleX(${p})`;},E.lin);
@@ -706,6 +716,33 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   riseKeep($('#s9paid'),100.4,0.9,30,'translateX(-50%)');
 }
 
+/* ============================== SBOX PRODUCT (Field Ops turntable) ============================== */
+{
+  // 72-frame transparent turntable library from footage/ws-fieldops (gen_footage.sh —
+  // regenerating the cover's footage updates this scene with no code change). Played
+  // on twos; 72 frames = one seamless 360°, so the loop never jumps.
+  const tt=$('#sboxtt');
+  const N=72,imgs=[];
+  for(let i=0;i<N;i++){
+    const im=document.createElement('img');
+    im.src=`../../footage/ws-fieldops/f${String(i).padStart(3,'0')}.png`;
+    im.style.cssText='position:absolute;inset:0;width:100%;height:100%;visibility:hidden';
+    tt.appendChild(im);imgs.push(im);
+  }
+  window.SBOX_READY=Promise.all(imgs.map(im=>im.decode().catch(()=>{})));
+  let cur=-1;
+  anims.push({t0:0,t1:0.01,ease:E.lin,fn:(p,t)=>{
+    const lf=Math.max(0,Math.floor((t-104.0)*FPS));
+    const idx=Math.floor(lf/2)%N;
+    if(idx!==cur){if(imgs[cur])imgs[cur].style.visibility='hidden';imgs[idx].style.visibility='visible';cur=idx;}
+  }});
+  rise($('#sboxk'),104.4,0.8,30);
+  rise($('#sboxh'),104.7,1.0,50);
+  rise($('#sboxb'),105.1,0.9,40);
+  rise($('#sboxchip'),105.5,0.9,30);
+  pop(tt,104.6,0.9);
+}
+
 /* ============================== S10 FINALE ============================== */
 {
   // constellation art from assets/s10.constellation.svg; official brand lockup from
@@ -713,23 +750,23 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const svg=$('#s10svg');
   svg.innerHTML=`<g data-asset="s10.constellation">${ASSETIN('s10.constellation')}</g>`;svg.style.opacity=0;
   $('#s10lockup').innerHTML=ASSET('s10.lockup');
-  at(104.5,2.0,p=>{svg.style.opacity=p*0.9;},E.o);
-  rise($('#s10k'),104.8,0.8,30);
-  rise($('#s10h'),105.1,1.0,50);
+  at(112.5,2.0,p=>{svg.style.opacity=p*0.9;},E.o);
+  rise($('#s10k'),112.8,0.8,30);
+  rise($('#s10h'),113.1,1.0,50);
   const stats=C.s10.stats;
   $('#s10stats').innerHTML=stats.map((s,i)=>`
     <div class="s10s" style="text-align:center">
       <div style="font-weight:800;font-size:76px;color:var(--orange)">${T(s[0])}</div>
       <div style="font-size:23px;color:rgba(var(--off-rgb),.65);margin-top:4px;letter-spacing:.06em">${T(s[1])}</div>
     </div>`).join('');
-  [...document.querySelectorAll('.s10s')].forEach((s,i)=>pop(s,106.0+i*0.3,0.7));
-  rise($('#s10tag'),108.2,1.0,40);
-  rise($('#s10foot'),109.0,0.9,20);
+  [...document.querySelectorAll('.s10s')].forEach((s,i)=>pop(s,114.0+i*0.3,0.7));
+  rise($('#s10tag'),116.2,1.0,40);
+  rise($('#s10foot'),117.0,0.9,20);
   // final fade to black
   const fadeEl=document.createElement('div');
   fadeEl.style.cssText='position:absolute;inset:0;background:#050a0d;opacity:0;z-index:99';
   $('#stage').appendChild(fadeEl);
-  at(114.6,1.4,p=>{fadeEl.style.opacity=p;},E.io);
+  at(122.6,1.4,p=>{fadeEl.style.opacity=p;},E.io);
 }
 
 /* ============================== APPLY CONTENT ============================== */
@@ -811,7 +848,7 @@ window.seek=function(frame){
 };
 window.readyP=Promise.all(
   [300,400,500,600,700,800].map(w=>document.fonts.load(`${w} 20px Saira`)).concat([document.fonts.load('400 44px GreatVibes')])
-).then(()=>document.fonts.ready).then(()=>{window.seek(0);return true;});
+).then(()=>document.fonts.ready).then(()=>window.SBOX_READY).then(()=>{window.seek(0);return true;});
 /* preview mode in a normal browser: append #play to the URL */
 if(location.hash==='#play'){
   const start=performance.now();

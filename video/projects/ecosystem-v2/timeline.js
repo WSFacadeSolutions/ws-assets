@@ -53,9 +53,14 @@ window.TIMELINE = {
     "end": 104
    },
    {
-    "id": "s10",
+    "id": "sbox",
     "start": 104,
-    "end": 116
+    "end": 112
+   },
+   {
+    "id": "s10",
+    "start": 112,
+    "end": 124
    }
   ],
   "audio": {
@@ -69,9 +74,10 @@ window.TIMELINE = {
     71.5,
     86,
     94.5,
-    104
+    104,
+    112
    ],
-   "shimmer": 105.5,
+   "shimmer": 113.5,
    "volume": 0.1
   }
  },

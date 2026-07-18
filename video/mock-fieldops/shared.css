@@ -1,0 +1,19 @@
+/* Field Ops A/B/C mockups — shared tokens, mirrors film.html idiom (theme = purple). */
+@font-face{font-family:Saira;src:url(../fonts/saira-300.woff2) format('woff2');font-weight:300}
+@font-face{font-family:Saira;src:url(../fonts/saira-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Saira;src:url(../fonts/saira-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Saira;src:url(../fonts/saira-600.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Saira;src:url(../fonts/saira-700.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Saira;src:url(../fonts/saira-800.woff2) format('woff2');font-weight:800}
+:root{--petrol:#1E2F38;--off:#F5F2F0;--off-rgb:245,242,240;--accent:#9670D8;--lilac:#A490FF}
+html,body{margin:0;background:#000;width:1920px;height:1080px;overflow:hidden}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;
+  font-family:Saira,sans-serif;color:var(--off);background-size:1920px 1080px}
+.kicker{font-weight:600;font-size:26px;letter-spacing:.42em;color:var(--accent);text-transform:uppercase}
+.kicker .wst{color:var(--lilac)}
+h1{font-weight:800;color:var(--off);line-height:1.04;letter-spacing:-.01em;margin:0}
+.body{font-weight:300;color:rgba(var(--off-rgb),.78);line-height:1.5}
+.chip{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(var(--off-rgb),.22);
+  border-radius:999px;padding:12px 26px;font-weight:500;font-size:26px;color:var(--off)}
+.chip .dot{width:12px;height:12px;border-radius:50%;background:var(--lilac)}
+.box{position:absolute;filter:drop-shadow(0 60px 110px rgba(0,0,0,.6))}
