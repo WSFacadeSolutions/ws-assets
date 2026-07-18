@@ -1,0 +1,26 @@
+
+# secrets — never commit (WST031 security audit 2026-06-22)
+.env
+*.env
+.env.*
+.secrets/
+*.key
+*.pem
+id_rsa
+id_ed25519
+*credential*
+*_secret*
+*secret.*
+auth_info*
+*.htpasswd
+.credentials.json
+
+# video pipeline — heavy build artifacts (code and sources only in git)
+video/node_modules/
+video/frames*/
+video/stills/
+video/template/
+video/figma-upload/
+video/__pycache__/
+video/*.mp4
+video/*.wav

@@ -1,0 +1,31 @@
+{
+ "_": "WS Film project registry entry — one JSON per video project (VibeCAD covers/*.json pattern). dir is relative to projects/; the ecosystem film lives in the video root. Each composition renders its own MP4 from the shared content.json + timeline.json of the project. figma_sync.py --project <name> drives everything.",
+ "name": "ecosystem",
+ "title": "WS Ecosystem Film",
+ "dir": "..",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "film",
+ "compositions": [
+  {
+   "id": "film",
+   "html": "film.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS-Ecosystem-Film.mp4",
+   "deploy": "ws-ecosystem-film.mp4",
+   "still_times": [3.5, 25, 48, 75, 111]
+  },
+  {
+   "id": "ig",
+   "html": "film-ig.html",
+   "frames": "frames-ig",
+   "soundtrack": "soundtrack-ig.wav",
+   "out": "WS-Ecosystem-Film-IG.mp4",
+   "deploy": "ws-ecosystem-film-ig.mp4",
+   "still_times": [2.5, 11, 16.5, 24.9, 30]
+  }
+ ]
+}

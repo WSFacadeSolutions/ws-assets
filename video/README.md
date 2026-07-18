@@ -1,0 +1,178 @@
+# WS Film — modular video software
+
+Code-rendered motion graphics with AI in the middle. Every video is a **project**
+registered in `projects/<name>.json`: one or more HTML compositions sharing a
+`content.json` (copy, figures, colours) and a `timeline.json` (scene windows and
+soundtrack timings). One rig, N videos.
+
+## The ecosystem project (first resident)
+
+| Composition | Format | Length | Output |
+|---|---|---|---|
+| `film.html` | 1920×1080 @ 30 fps | 116 s | `WS-Ecosystem-Film.mp4` → `app.wssoltech.au/media/ws-ecosystem-film.mp4` |
+| `film-ig.html` | 1080×1920 @ 30 fps (Reels) | 32 s | `WS-Ecosystem-Film-IG.mp4` → `app.wssoltech.au/media/ws-ecosystem-film-ig.mp4` |
+
+A motion-graphics showcase of the WS operations pipeline: CostX estimate → WST002 quote →
+WST026 register → WST025 Vikunja schedule → WST034 GeoClock → WS Crew → WST030 HR →
+WST039/WST041 pay. Figures from the July 2026 audits and the vx034 case study.
+Both URLs sit behind Cloudflare Access; nginx serves `/media/` with `Cache-Control: no-cache`.
+
+## Project registry (`projects/*.json`)
+
+One JSON per video, VibeCAD `covers/*.json` style — see `ecosystem.json` for the schema:
+`dir` (project folder; the ecosystem lives in the video root), `content`, `timeline`,
+`figma_env` + `figma_env_var`, `media_prefix`, and `compositions[]` each with
+`html/frames/soundtrack/out/deploy/still_times`. The ops panel builds one card and one
+trigger set per registered project automatically: `stills`, `template`, `deploy`
+(render + publish in one go), plus the split pair `render` (no publish) and `publish`
+(copy the last render to /media, seconds).
+
+## Driver: `figma_sync.py`
+
+All modes take `--project <name>` (default `ecosystem`); execution order is fixed
+pull → local → template → stills → render → deploy.
+
+- `--scaffold` prints the Figma naming plan (layer name → current value).
+- `--pull` pulls named layers from the project's Figma file into content.json
+  (no-op with a note if no file key is linked yet).
+- `--local` regenerates `content.js` **and** `timeline.js` after manual JSON edits.
+- `--template` builds the **Figma import kits** — one kit (folder + zip) per
+  composition, published under `app.wssoltech.au/media/<prefix>-template/`. Each
+  scene SVG carries the rendered still with the copy REMOVED as background, plus
+  every content leaf as a `<text>` at its exact rendered position: real line
+  breaks, exact baselines (font metrics), uppercase transforms applied, inline
+  markup flattened to plain words and numbers shown formatted — exactly as on
+  screen. Each text sits inside a `<g id="dot.path">`: Figma names imported TEXT
+  layers after their content but keeps GROUP ids as layer names (the behaviour the
+  VibeCAD round-trip proves), so the pull matches the group. A leaf is named once
+  across the whole project (repeats ship unnamed, visual only), keeping the pull
+  order-independent; import each kit on its own Figma page and verify layer names
+  with ONE scene before importing the rest. `theme.svg` (palette swatches read by
+  fill) and `extras.svg` (leaves never visible at the capture instant, e.g. the s7
+  phone sub-screens) join the first composition's kit. If a Figma update ever
+  stops honouring group ids, fall back to the WST014 plugin relay.
+- `--stills` renders check stills (always review before a full render);
+  `--publish-stills` copies them behind CF Access for remote review.
+- `--render` rebuilds each composition's soundtrack from `timeline.json` whenever the
+  timeline is newer than the wav (deterministic — seeded rng), renders frames and muxes
+  the MP4s (mux volume also comes from the timeline). `--deploy` copies to
+  `/var/www/wssoltech/media/` and purges the Cloudflare cache.
+
+Figma: file key in the project's figma env (`FILM_FIGMA_FILE_KEY=` for the ecosystem),
+token from `/root/.secrets/ws-vibecad.env`. Pull rules: a dot-path name may sit on a
+TEXT layer or on a group holding one; duplicates warn and the first (document order)
+wins. Layer text is compared as plain words against what the current value renders —
+a match keeps the value, so inline markup (`<b>`, spans, entities) survives untouched;
+a real edit replaces it (HTML escaped, newlines become `<br>`). Numeric values are
+parsed back from the formatted layer text ("A$ 1,479.76" → 1479.76); `theme.*` layers
+contribute their FILL colour. Australian English only.
+
+Offline pull (the Figma REST quota workaround, same idea as VibeCAD's): export the
+edited frames on the desktop (Export → SVG, "Include id attribute" ON and
+"Outline text" OFF — Figma outlines text by default) and upload them on the ops
+WS Film card ("enviar SVG") — they stage in the project's `figma-upload/` and the
+next pull consumes them once instead of calling the API. Only the edited frames
+are needed; exported tspan line boxes are joined with newlines and the plain-word
+comparison keeps unedited values from churning. Outlined exports still sync
+numbers and confirm unchanged strings (the auto layer name carries the words) but
+refuse string edits — the name may be truncated. A quota 429 on the API path is
+non-fatal: the trigger continues with local content and says so in the log.
+
+## Timeline + Mini-Premiere
+
+`timeline.json` is the single home of scene windows (real seconds) and audio timings
+(`risers`, `shimmer`, `volume`) per composition. The compositions keep their authored
+keyframes and **time-warp** them piecewise-linearly to the edited windows — dragging a
+scene boundary stretches everything inside it; no timeline.js means identity (the
+authored cut, byte-identical output).
+
+The **Mini-Premiere** (`editor.html`, served operator-only at
+`ops.wssoltech.au/film-editor?project=<name>`) edits that data visually: draggable
+Gantt of scenes, draggable riser/shimmer markers, mux volume, stills strip, and
+buttons for the stills/publish triggers. Saving validates (contiguous scenes ≥ 0.5 s,
+markers inside the cut) and regenerates `timeline.js`; the MP4 only changes on the
+next render.
+
+## Headless project factory: `new_video.py` + the /film-new microsite
+
+```bash
+python3 new_video.py --slug spring-promo --brief "30 s Reels teaser for ..."
+```
+
+Operators do not need the CLI: **ops.wssoltech.au/film-new** (served by the WST038
+panel, operator-gated like the Mini-Premiere) takes slug + format + creative brief,
+runs this script in the background under the `ws-film-<slug>` deploy lock, streams
+the build log to the page and shows the run cost at the end. One build at a time;
+an existing slug is refused outright (the panel never passes `--force`), so current
+projects can never be overwritten. The finished project appears automatically on the
+WS Film card, in the Mini-Premiere dropdown and in the trigger list.
+
+Sources `/root/.secrets/anthropic/<env>.env` (default `ws-film`; managed write-only on
+the ops panel "Claude API keys" card — `ANTHROPIC_API_KEY` + `ANTHROPIC_MODEL`, default
+`claude-fable-5`) and drives a headless Claude run that creates the composition,
+content.json, timeline.json, the registry entry and check stills. It never renders the
+full MP4 and never deploys — the operator reviews stills and publishes from the panel.
+`--dry-run` prints the task prompt without spending tokens; every run logs to
+`projects/<slug>.build.log` and prints its cost.
+
+**Cost guide** (claude-fable-5, US$10/MTok in · US$50/MTok out — 2× Opus 4.8): a full
+build typically costs **US$6–20 ≈ AUD 9–30 per generated video**. Mind the AUD 100
+credit budget.
+
+## Operator flows (shown live on the ops panel WS Film section)
+
+<!-- ops:film-flows -->
+FLOW 1 — new video from a brief (AI build)
+1. ops.wssoltech.au/film-new — slug + format + creative brief → Gerar projeto.
+   Costs ~AUD 9–30 in tokens (ws-film key), takes 10–25 min and never overwrites
+   an existing project. The build log and the final cost stream on the page.
+   (Alternative: ask Claude in a normal session — same rig, no per-run key.)
+2. The new project appears by itself on the WS Film card, in the Mini-Premiere
+   dropdown and in the trigger list.
+3. Run the project's "stills de conferência" trigger and review every frame.
+4. Adjust — copy/colours: "gerar template Figma" trigger → import the kit (one
+   Figma page per composition) → edit → paste the file URL on the card → stills
+   again. Timings/audio: Mini-Premiere.
+5. Run "render completo SEM publicar" (~12 min) and preview the MP4 with the
+   "último render" link on the card.
+6. Publish now ("publicar o último render", seconds) or schedule it on the card
+   ("agendar publicação", Sydney time).
+
+FLOW 2 — fine-tune a finished film (copy + audio + re-render + schedule)
+1. Audio (the swooshes are the lilac riser markers): Mini-Premiere → pick the
+   composition tab → drag a riser to move it, "− último riser" removes the last
+   one (repeat to remove them all), volume slider sets the mix. Save — the
+   soundtrack rebuilds itself on the next render (timeline newer than the wav).
+2. Copy: for a few words, edit content.json + `python3 figma_sync.py --local`
+   (or ask Claude); for visual editing use the Figma kit flow as in flow 1 step 4.
+3. Run "stills de conferência" (~3 min) and check the changed frames.
+4. Run "render completo SEM publicar" (~12 min); preview via "último render".
+5. Publish or schedule. Scheduled publishes are transient systemd timers — they
+   do NOT survive a VPS reboot; reschedule if the box restarts.
+<!-- /ops:film-flows -->
+
+## Brand assets
+
+- Official logos live in `/root/ws-assets/logos/svg/` (see WSD000). The finale uses the
+  official `WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITETEXT_LILACBRICK.svg` lockup inlined —
+  the "ns" knocked out of the lilac brick is deliberate brand design. Never compose
+  mark + typed brand text.
+- WS·TECH mark: `ws-tech-white.svg` / `ws-tech-dark.svg` (cold open + watermark).
+- Saira type; Petroleum Blue `#1E2F38`, Off-White `#F5F2F0`, Orange `#FF9D27`,
+  Lilac `#A490FF`. Preview any composition with `#play` appended to the file URL.
+
+## How it renders (fully code-rendered, no external video tools)
+
+- Every animation is a pure function of the frame via `window.seek(frame)`; pages
+  expose `window.FPS`, `window.TOTAL_FRAMES`, `window.readyP`, `#stage`.
+- `render_par.js` — parallel frame renderer (3 × headless Chrome, JPEG q92).
+- `capture.js` — single-instance stills/MP4 tool; stills land next to the composition.
+- `template.js` — the measurer behind `--template` (sentinel pass to locate each
+  content leaf in the DOM, real pass to screenshot and measure).
+- `soundtrack.py` — procedural score (numpy under `/root/ws-agents/bin/python3`,
+  48 kHz stereo): neutral bed, risers, shimmer; no beat by design (17 Jul 2026).
+  Seeded rng — same timeline, same wav.
+
+Manual full run: `python3 figma_sync.py --pull --render --deploy` (add `--project x`).
+Requires `puppeteer-core` (npm) and the chrome-headless-shell under `/root/.cache/puppeteer/`.
+Saira woff2 subsets: take the LAST url in Google Fonts css2 responses (the first is not latin).

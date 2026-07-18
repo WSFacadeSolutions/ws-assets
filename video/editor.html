@@ -1,0 +1,267 @@
+<!doctype html>
+<!-- WS Film Mini-Premiere v2: per-composition Gantt + audio track + LIVE preview.
+     Served by the WST038 panel at ops.wssoltech.au/film-editor?project=<name>
+     (operator-gated). Edits DATA only — timeline.json scene windows and audio
+     timings; the compositions time-warp their authored keyframes to fit. The
+     preview embeds the real composition (served via /film-comp/) and drives
+     window.seek() directly — zero tokens, zero render. UI copy is PT-BR like
+     the rest of the ops panel (live tooling, not a document). -->
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WS Film — Mini-Premiere</title>
+<style>
+:root{--bg:#0f1a20;--card:#16242c;--line:#24343d;--txt:#e8e4e0;--muted:#8fa0a8;--orange:#FF9D27;--lilac:#A490FF;--ok:#5fc88f}
+*{box-sizing:border-box}body{margin:0 auto;background:var(--bg);color:var(--txt);font:15px/1.45 system-ui,sans-serif;padding:20px;max-width:1240px}
+h1{font-size:20px;margin:0}h2{font-size:15px;margin:0 0 10px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em}
+.muted{color:var(--muted);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0}
+button{background:#1e313b;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:7px 13px;cursor:pointer;font-size:14px}
+button:hover{border-color:var(--orange)}button.primary{background:var(--orange);color:#0f1a20;font-weight:600;border-color:var(--orange)}
+select,input[type=number]{background:#0b141a;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:14px}
+.top{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.tabs{display:flex;gap:6px;margin:14px 0 0}
+.tabs button{border-radius:8px 8px 0 0;border-bottom:none;padding:8px 18px}
+.tabs button.on{background:var(--card);color:var(--orange);font-weight:600}
+/* ---- gantt ---- */
+.ruler{position:relative;height:18px;margin-left:110px}
+.ruler s{position:absolute;font-size:10px;color:var(--muted);text-decoration:none;transform:translateX(-50%);top:0}
+.ruler i{position:absolute;top:14px;bottom:-999px;width:1px;background:var(--line);z-index:0}
+.grow{display:flex;align-items:center;height:30px;position:relative}
+.grow>b{width:104px;flex:none;font-size:12px;color:var(--muted);font-weight:600;text-align:right;padding-right:10px}
+.gtrack{position:relative;flex:1;height:24px;background:#0b141a;border-radius:5px}
+.gbar{position:absolute;top:0;bottom:0;border-radius:5px;background:linear-gradient(180deg,#2a4757,#1d3441);border:1px solid #35566a;z-index:1}
+.gbar i{position:absolute;right:7px;top:3px;font-size:10.5px;font-style:normal;color:var(--muted);white-space:nowrap}
+.gh{position:absolute;top:-3px;bottom:-3px;width:14px;cursor:ew-resize;z-index:6}
+.gh::after{content:"";position:absolute;left:6px;top:0;bottom:0;width:3px;background:var(--orange);border-radius:2px;opacity:.85}
+/* ---- audio ---- */
+.atrack{position:relative;height:46px;background:#0b141a;border-radius:6px;margin:16px 0 4px 110px}
+.awave{position:absolute;inset:0;border-radius:6px;background:repeating-linear-gradient(90deg,#14232c 0 3px,#0b141a 3px 6px)}
+.amark{position:absolute;top:0;bottom:0;width:14px;margin-left:-7px;cursor:ew-resize;z-index:5}
+.amark::after{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2.5px;background:var(--lilac);border-radius:2px}
+.amark span{position:absolute;top:-15px;left:-13px;width:40px;text-align:center;font-size:10px;color:var(--lilac)}
+.amark.sh::after{background:var(--ok)}.amark.sh span{color:var(--ok)}
+/* ---- preview ---- */
+.pwrap{position:relative;background:#000;border-radius:8px;overflow:hidden;flex:none}
+.pwrap iframe{border:0;transform-origin:0 0;pointer-events:none}
+.pv{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.pctl{flex:1;min-width:280px}
+input[type=range].scrub{width:100%;accent-color:var(--orange)}
+input[type=range].vol{width:180px;accent-color:var(--orange);vertical-align:middle}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--orange);opacity:.9;z-index:8;pointer-events:none}
+.stills{display:flex;gap:8px;overflow-x:auto;padding:4px 0}
+.stills img{height:96px;border-radius:6px;background:#000}
+.stills figure{margin:0;text-align:center}.stills figcaption{font-size:11px;color:var(--muted)}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}
+#msg{margin-left:6px;font-size:13px}
+a{color:var(--lilac)}
+</style></head><body>
+<div class="top">
+ <h1>🎬 Mini-Premiere</h1>
+ <label class="muted">projeto <select id="projSel" onchange="location='/film-editor?project='+this.value"></select></label>
+ <span id="ptitle" class="muted"></span>
+ <a href="/" style="margin-left:auto">← voltar ao ops</a>
+</div>
+<div class="muted">Um corte de cada vez (abas). Arrasta as <b style="color:var(--orange)">bordas laranja</b> no Gantt — as animações
+internas acompanham (time-warp). Na trilha de áudio, <b style="color:var(--lilac)">lilás</b> = risers, <b style="color:var(--ok)">verde</b> = shimmer.
+O preview roda a composição real no browser (zero token, zero render) — usa a timeline <b>guardada</b>: guarda para ver a edição.</div>
+
+<div class="tabs" id="tabs"></div>
+<div id="cutbox"></div>
+
+<h2 style="margin-top:22px">Stills de conferência</h2>
+<div class="stills" id="stills"></div>
+
+<div class="bar">
+ <button class="primary" onclick="save()">💾 Guardar timeline</button>
+ <button onclick="trig('stills')">▶ Stills (~3 min)</button>
+ <button class="primary" onclick="saveRender()">🎞 Guardar + render SEM publicar (~12 min)</button>
+ <button onclick="trig('deploy')">🚀 Render + publicar (~12 min)</button>
+ <button onclick="loadAll()">↺ Recarregar do disco</button>
+ <span id="msg"></span>
+</div>
+
+<script>
+const PROJECT=new URLSearchParams(location.search).get('project')||'ecosystem';
+let DATA=null, TL=null, CUR=null;              // CUR = composition id being edited
+let PV={frame:0,playing:false,fps:30,total:1,scale:1,raf:0};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const msg=(t,bad)=>{const m=document.getElementById('msg');m.textContent=t;m.style.color=bad?'#ff8f6b':'var(--ok)';setTimeout(()=>{if(m.textContent===t)m.textContent=''},7000)};
+const cut=()=>TL[CUR];
+const dur=c=>c.scenes[c.scenes.length-1].end;
+
+async function loadAll(){
+ const r=await fetch('/api/film-timeline?project='+encodeURIComponent(PROJECT));
+ if(!r.ok){msg('não deu para carregar: '+((await r.json().catch(()=>({}))).error||r.status),1);return}
+ DATA=await r.json(); TL=DATA.timeline;
+ document.getElementById('projSel').innerHTML=(DATA.projects||[PROJECT]).map(p=>
+  `<option ${p===PROJECT?'selected':''}>${esc(p)}</option>`).join('');
+ document.getElementById('ptitle').textContent='· '+DATA.title;
+ document.title='Mini-Premiere — '+DATA.title;
+ const ids=DATA.compositions.map(c=>c.id).filter(id=>TL[id]);
+ if(!ids.includes(CUR))CUR=ids[0];
+ document.getElementById('tabs').innerHTML=ids.map(id=>
+  `<button class="${id===CUR?'on':''}" onclick="switchCut('${id}')">🎞 ${esc(id)} <span class="muted">${dur(TL[id]).toFixed(0)}s</span></button>`).join('');
+ render();
+ document.getElementById('stills').innerHTML=(DATA.stills||[]).map(f=>
+  `<figure><img loading="lazy" src="/api/film-still?project=${encodeURIComponent(PROJECT)}&f=${encodeURIComponent(f)}"><figcaption>${esc(f.replace(/^t/,'').replace('_','.').replace('.png',''))} s</figcaption></figure>`).join('')
+  ||'<span class="muted">sem stills ainda — corre o trigger.</span>';
+}
+function switchCut(id){stopPlay();CUR=id;PV.frame=0;loadAll()}
+
+/* ---------- render one cut: gantt rows + audio track + preview ---------- */
+function render(){
+ const c=cut(), D=dur(c), au=c.audio||(c.audio={risers:[],volume:0.9});
+ const comp=DATA.compositions.find(x=>x.id===CUR);
+ const step=D>60?10:5;
+ const ticks=[...Array(Math.floor(D/step)+1)].map((_,i)=>
+  `<s style="left:${i*step/D*100}%">${i*step}s</s><i style="left:${i*step/D*100}%;height:${c.scenes.length*30+70}px"></i>`).join('');
+ const rows=c.scenes.map((s,i)=>{
+  const l=s.start/D*100, w=(s.end-s.start)/D*100;
+  return `<div class="grow"><b>${esc(s.id)}</b><div class="gtrack">
+   <div class="gbar" style="left:${l}%;width:${w}%"><i>${(s.end-s.start).toFixed(1)}s</i></div>
+   ${i>0?`<div class="gh" data-b="${i}" style="left:calc(${l}% - 7px)"></div>`:''}
+   ${i===c.scenes.length-1?`<div class="gh" data-b="end" style="left:calc(${l+w}% - 7px)"></div>`:''}
+  </div></div>`;
+ }).join('');
+ const marks=(au.risers||[]).map((t,i)=>
+   `<div class="amark" data-r="${i}" style="left:${t/D*100}%"><span>${(+t).toFixed(1)}</span></div>`).join('')
+  +(au.shimmer!=null?`<div class="amark sh" data-r="sh" style="left:${au.shimmer/D*100}%"><span>${(+au.shimmer).toFixed(1)}</span></div>`:'');
+ document.getElementById('cutbox').innerHTML=`
+ <div class="card" style="border-top-left-radius:0">
+  <h2>🎞 Vídeo — cenas</h2>
+  <div class="ruler" id="ruler">${ticks}</div>
+  <div id="gantt">${rows}</div>
+  <h2 style="margin-top:20px">🔊 Áudio — soundtrack</h2>
+  <div class="atrack" id="atrack"><div class="awave"></div>${marks}
+   <div class="playhead" id="aph" style="left:0%"></div></div>
+  <div class="muted" style="margin-left:110px">
+   <button onclick="addRiser()" style="padding:2px 8px;font-size:12px">+ riser</button>
+   <button onclick="delRiser()" style="padding:2px 8px;font-size:12px">− último riser</button>
+   &nbsp;· volume do mux <input type="range" class="vol" min="0.1" max="1.5" step="0.05" value="${au.volume??0.9}"
+     oninput="cut().audio.volume=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.volume??0.9}</b>
+   &nbsp;· <span class="muted">o wav regenera no próximo render (determinístico)</span></div>
+  <h2 style="margin-top:20px">👁 Preview ao vivo <span class="muted" style="text-transform:none;letter-spacing:0">— timeline guardada · sem áudio (wav é do último render)</span></h2>
+  <div class="pv">
+   <div class="pwrap" id="pwrap"><iframe id="pframe"></iframe></div>
+   <div class="pctl">
+    <div style="margin-bottom:6px">
+     <button id="playbtn" onclick="togglePlay()">▶ play</button>
+     <button onclick="seekPv(0)">⏮</button>
+     <span class="muted" id="ptime" style="margin-left:8px">0.0 s</span>
+    </div>
+    <input type="range" class="scrub" id="scrub" min="0" max="100" value="0" oninput="seekPv(+this.value)">
+    <div class="muted" style="margin-top:8px">Dica: guarda a timeline e o preview recarrega sozinho com a edição aplicada.
+    O playhead laranja anda junto na trilha de áudio para afinar os risers de olho.</div>
+   </div>
+  </div>
+ </div>`;
+ bindDrag();
+ loadPreview(comp);
+}
+function addRiser(){const c=cut();(c.audio.risers=c.audio.risers||[]).push(+(dur(c)/2).toFixed(1));render()}
+function delRiser(){(cut().audio.risers||[]).pop();render()}
+
+/* ---------- dragging (listeners on document: render() replaces nodes mid-drag) ---------- */
+function bindDrag(){
+ document.querySelectorAll('.gh,.amark').forEach(h=>{
+  h.addEventListener('pointerdown',e=>{
+   e.preventDefault();stopPlay();
+   const c=cut(), D0=dur(c);
+   const track=h.closest('.gtrack,.atrack'), rect=track.getBoundingClientRect();
+   const isB=h.dataset.b!==undefined, b=h.dataset.b, r=h.dataset.r;
+   const move=ev=>{
+    let t=Math.round(((ev.clientX-rect.left)/rect.width*D0)*10)/10;
+    if(isB){
+     if(b==='end'){const last=c.scenes[c.scenes.length-1];last.end=Math.max(last.start+0.5,t)}
+     else{const i=+b,a=c.scenes[i-1],s=c.scenes[i];
+      t=Math.min(Math.max(t,a.start+0.5),s.end-0.5);a.end=t;s.start=t}
+    }else{
+     t=Math.min(Math.max(t,0),dur(c));
+     if(r==='sh')c.audio.shimmer=t;else c.audio.risers[+r]=t;
+    }
+    render();
+   };
+   const up=()=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up)};
+   document.addEventListener('pointermove',move);document.addEventListener('pointerup',up);
+  });
+ });
+}
+
+/* ---------- live preview: the real composition in an iframe, driven by seek() ---------- */
+function compUrl(f){return '/film-comp/'+encodeURIComponent(PROJECT)+'/'+f}
+async function loadPreview(comp){
+ stopPlay();
+ const fr=document.getElementById('pframe');
+ fr.src=compUrl(comp.html);
+ fr.onload=async()=>{
+  try{
+   const cw=fr.contentWindow;
+   await cw.readyP;
+   PV.fps=cw.FPS;PV.total=cw.TOTAL_FRAMES;
+   const st=cw.document.getElementById('stage');
+   const w=st.offsetWidth,h=st.offsetHeight;
+   PV.scale=Math.min(560/w,480/h);
+   fr.style.width=w+'px';fr.style.height=h+'px';fr.style.transform=`scale(${PV.scale})`;
+   const wrap=document.getElementById('pwrap');
+   wrap.style.width=(w*PV.scale)+'px';wrap.style.height=(h*PV.scale)+'px';
+   const sc=document.getElementById('scrub');sc.max=PV.total-1;sc.value=Math.min(PV.frame,PV.total-1);
+   seekPv(+sc.value);
+  }catch(e){msg('preview indisponível: '+e.message,1)}
+ };
+}
+function seekPv(f){
+ PV.frame=Math.max(0,Math.min(f,PV.total-1));
+ const cw=document.getElementById('pframe').contentWindow;
+ try{cw.seek(PV.frame)}catch(e){}
+ const t=PV.frame/PV.fps;
+ document.getElementById('scrub').value=PV.frame;
+ document.getElementById('ptime').textContent=t.toFixed(1)+' s / '+((PV.total-1)/PV.fps).toFixed(1)+' s';
+ const ph=document.getElementById('aph');if(ph)ph.style.left=(t/dur(cut())*100)+'%';
+}
+function togglePlay(){PV.playing?stopPlay():startPlay()}
+function startPlay(){
+ PV.playing=true;document.getElementById('playbtn').textContent='⏸ pausa';
+ const t0=performance.now()-PV.frame/PV.fps*1000;
+ const loop=()=>{
+  if(!PV.playing)return;
+  const f=Math.floor((performance.now()-t0)/1000*PV.fps);
+  if(f>=PV.total){stopPlay();return}
+  seekPv(f);PV.raf=requestAnimationFrame(loop);
+ };
+ PV.raf=requestAnimationFrame(loop);
+}
+function stopPlay(){
+ PV.playing=false;cancelAnimationFrame(PV.raf);
+ const b=document.getElementById('playbtn');if(b)b.textContent='▶ play';
+}
+
+/* ---------- persist ---------- */
+async function save(){
+ stopPlay();
+ const r=await fetch('/api/film-timeline',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,timeline:TL})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ msg(j.changed?'✓ guardada — preview recarregando com a edição':'✓ nada mudou');
+ if(j.changed)loadPreview(DATA.compositions.find(x=>x.id===CUR));   // timeline.js foi regenerado
+}
+async function trig(kind){
+ const name=DATA.triggers[kind];
+ if(!name){msg('✗ trigger indisponível — recarrega a página',1);return}
+ if(kind==='deploy'&&!confirm('Render completo + PUBLICAR nos links permanentes (~12 min). Continuar?'))return;
+ const r=await fetch('/api/trigger',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name})});
+ const j=await r.json().catch(()=>({}));
+ msg(r.ok?'✓ iniciado: '+name+' — acompanha o log no ops':'✗ '+(j.error||r.status),!r.ok);
+}
+async function saveRender(){
+ // o fluxo do "desligar o swoosh": guarda a timeline e já re-renderiza local —
+ // nada vai ao ar; o MP4 novo aparece no card WS Film como "último render"
+ stopPlay();
+ const r=await fetch('/api/film-timeline',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,timeline:TL})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ await trig('render');
+}
+loadAll();
+</script></body></html>

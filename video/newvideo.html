@@ -1,0 +1,133 @@
+<!doctype html>
+<!-- WS Film — "novo vídeo com IA": operator microsite served by the WST038 panel at
+     ops.wssoltech.au/film-new (CF Access + operator gate, same as /film-editor).
+     Form (slug + brief + format) → POST /api/film-new spawns new_video.py headless
+     in the background under the ws-film-<slug> deploy lock, using the ws-film key
+     from the Claude API keys card. The page streams the build log and surfaces the
+     run cost at the end. It NEVER renders the full MP4 and NEVER overwrites an
+     existing project — the operator reviews stills and publishes from the panel.
+     UI copy is PT-BR like the rest of the ops tooling (live tool, not a document). -->
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WS Film — novo vídeo com IA</title>
+<style>
+:root{--bg:#0f1a20;--card:#16242c;--line:#24343d;--txt:#e8e4e0;--muted:#8fa0a8;--orange:#FF9D27;--lilac:#A490FF;--ok:#5fc88f;--bad:#e07b6a}
+*{box-sizing:border-box}body{margin:0 auto;background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,sans-serif;padding:20px;max-width:900px}
+h1{font-size:20px;margin:0}h2{font-size:14px;margin:0 0 10px;color:var(--orange);text-transform:uppercase;letter-spacing:.06em}
+.muted{color:var(--muted);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:14px 0}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 4px}
+input[type=text],textarea{width:100%;background:#0b141a;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14.5px;font-family:inherit}
+textarea{min-height:150px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--orange)}
+.fmt{display:flex;gap:8px;flex-wrap:wrap}
+.fmt input{display:none}
+.fmt span{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px}
+.fmt input:checked+span{background:var(--orange);color:#0f1a20;font-weight:600;border-color:var(--orange)}
+button.go{background:var(--orange);color:#0f1a20;font-weight:700;border:none;border-radius:8px;padding:11px 22px;font-size:15px;cursor:pointer;margin-top:16px}
+button.go:disabled{opacity:.45;cursor:default}
+pre.log{background:#0b141a;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:12.5px;line-height:1.45;max-height:440px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.cost{font-size:17px;color:var(--ok);font-weight:700}
+.warn{background:rgba(255,157,39,.08);border:1px solid rgba(255,157,39,.35);border-radius:8px;padding:10px 13px;font-size:13px;margin-top:14px}
+.err{color:var(--bad)}
+a{color:var(--lilac)}
+.steps li{margin:6px 0}
+#status b{color:var(--orange)}
+</style></head><body>
+<div style="display:flex;gap:14px;align-items:baseline;flex-wrap:wrap">
+ <h1>🎬 WS Film — novo vídeo com IA</h1>
+ <a class="muted" href="/">← painel</a>
+ <a class="muted" href="/film-editor">Mini-Premiere</a>
+</div>
+<div class="muted" style="margin-top:6px">Descreve o vídeo e um agente Claude headless constrói o projeto inteiro no VPS:
+composição HTML (mesmo motor dos filmes do ecosystem), content.json, timeline.json, registo e stills de conferência.
+Nada é publicado — tu revês os stills e publicas pelo painel. Projetos existentes nunca são sobrescritos.</div>
+
+<div class="card" id="form">
+ <h2>Brief</h2>
+ <label>slug do projeto (a-z, 0-9, hífens — vira <code>projects/&lt;slug&gt;/</code>)</label>
+ <input type="text" id="slug" placeholder="ex.: spring-promo" maxlength="31" autocomplete="off">
+ <label>formato</label>
+ <div class="fmt">
+  <label><input type="radio" name="fmt" value="desk" checked><span>🖥 Desktop 1920×1080</span></label>
+  <label><input type="radio" name="fmt" value="reels"><span>📱 Reels 1080×1920</span></label>
+  <label><input type="radio" name="fmt" value="both"><span>🖥+📱 Os dois</span></label>
+ </div>
+ <label>brief criativo (duração, cenas, números, tom — quanto mais concreto, melhor o resultado)</label>
+ <textarea id="brief" placeholder="ex.: Reels de 30 s para o Instagram da WS: teaser do GeoClock — abre com o problema (horas anotadas à mão), mostra o clock-in GPS na cerca da obra, fecha com o número de sites geofenced e o wssoltech.au. Tom sóbrio, sem hype."></textarea>
+ <div class="warn">💰 Cada geração custa <b>~AUD 9–30</b> em tokens (claude-fable-5, key <code>ws-film</code>) e leva
+  <b>~10–25 min</b>. O custo real aparece no fim do log. Orçamento do projeto: AUD 100 — usa com parcimônia.</div>
+ <button class="go" id="go" onclick="start()">🚀 Gerar projeto</button>
+ <span id="formmsg" class="err"></span>
+</div>
+
+<div class="card" id="run" style="display:none">
+ <h2>Build</h2>
+ <div id="status" class="muted">…</div>
+ <pre class="log" id="log"></pre>
+ <div id="after" style="display:none">
+  <div class="cost" id="cost"></div>
+  <div style="margin-top:10px"><b>Próximos passos</b></div>
+  <ol class="steps muted">
+   <li>O projeto já apareceu no card <b>WS Film</b> do painel, no dropdown do Mini-Premiere e nos triggers.</li>
+   <li>Corre o trigger <b>stills de conferência</b> do projeto novo e revê os quadros.</li>
+   <li>Gera o <b>template Figma</b> (trigger), importa, edita copy/cores — ou ajusta a timeline no
+       <a href="#" id="edlink">Mini-Premiere</a>.</li>
+   <li>Só então <b>publicar</b> (render completo, ~12 min).</li>
+  </ol>
+ </div>
+</div>
+
+<script>
+let SLUG=null,timer=null;
+const $=s=>document.querySelector(s);
+function fmtVal(){return document.querySelector('input[name=fmt]:checked').value}
+async function start(){
+ const slug=$('#slug').value.trim().toLowerCase(), brief=$('#brief').value.trim();
+ $('#formmsg').textContent='';
+ if(!/^[a-z0-9][a-z0-9-]{1,30}$/.test(slug)){$('#formmsg').textContent='slug inválido — só a-z, 0-9 e hífens (2–31)';return}
+ if(brief.length<20){$('#formmsg').textContent='o brief está curto demais — descreve o vídeo';return}
+ if(!confirm(`Gerar o projeto "${slug}" agora?\n\nIsto gasta tokens de verdade (~AUD 9–30) e leva 10–25 min.`))return;
+ $('#go').disabled=true;
+ try{
+  const r=await fetch('/api/film-new',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({slug,brief,format:fmtVal()})});
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.error||r.status);
+  SLUG=slug;$('#run').style.display='';$('#after').style.display='none';$('#log').textContent='';
+  $('#edlink').href='/film-editor?project='+encodeURIComponent(slug);
+  poll();timer=setInterval(poll,4000);
+ }catch(e){$('#formmsg').textContent=''+(e.message||e);$('#go').disabled=false}
+}
+async function poll(){
+ if(!SLUG)return;
+ try{
+  const r=await fetch('/api/film-new-log?slug='+encodeURIComponent(SLUG));
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.error||r.status);
+  const el=$('#log'),atEnd=el.scrollTop+el.clientHeight>=el.scrollHeight-30;
+  el.textContent=d.log||'(a arrancar…)';
+  if(atEnd)el.scrollTop=el.scrollHeight;
+  if(d.running){$('#status').innerHTML=`⏳ a construir <b>${SLUG}</b> — pode fechar a página, o build continua no VPS`;}
+  else{
+   clearInterval(timer);timer=null;$('#go').disabled=false;
+   const ok=d.exit===0&&d.registered;
+   $('#status').innerHTML=ok?`✅ projeto <b>${SLUG}</b> criado`
+     :`<span class="err">✖ build terminou com problema (exit ${d.exit===null?'?':d.exit}${d.registered?'':' · projeto não registado'}) — vê o log</span>`;
+   if(d.cost)$('#cost').textContent='Custo do run: '+d.cost;
+   else $('#cost').textContent='';
+   if(ok)$('#after').style.display='';
+  }
+ }catch(e){$('#status').innerHTML='<span class="err">não deu para ler o estado: '+(e.message||e)+'</span>'}
+}
+// resume: if a build is already running (or just finished) show it on load
+(async()=>{
+ try{
+  const r=await fetch('/api/film-new-log');
+  const d=await r.json();
+  const b=(d.builds||[])[0];
+  if(b){SLUG=b.slug;$('#run').style.display='';$('#edlink').href='/film-editor?project='+encodeURIComponent(b.slug);
+   poll();if(b.running){$('#go').disabled=true;timer=setInterval(poll,4000);}}
+ }catch(e){}
+})();
+</script></body></html>
