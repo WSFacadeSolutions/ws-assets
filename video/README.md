@@ -211,6 +211,26 @@ full MP4 and never deploys — the operator reviews stills and publishes from th
 build typically costs **US$6–20 ≈ AUD 9–30 per generated video**. Mind the AUD 100
 credit budget.
 
+### Scene patcher: `patch_scene.py`
+
+```bash
+python3 patch_scene.py --project ecosystem --comp film --scene s2 --brief "..."   # edit one scene
+python3 patch_scene.py --project ecosystem --comp film --add s11 --after s9 --brief "..."
+```
+
+The cheap sibling of `new_video.py` for videos that already exist: a headless run
+scoped to ONE scene, with the full scene contract in the prompt (seek purity, SC
+authored windows vs the timeline warp, content keys, asset slots) and verification
+by scoped stills only — 4-6 times inside the affected window plus neighbour-scene
+identity checks. Typical cost **US$1–3** instead of a full rebuild. Two modes:
+**edit** (touches one scene block + its content key; resizes go through
+timeline.json, never the SC table) and **insert** (opens a window in authored time
+by mechanically shifting later SC entries + keyframes by the new duration — gated
+by byte-identical neighbour stills at the shifted real times). Same credentials,
+logging and `--dry-run` as `new_video.py`; logs to
+`projects/<project>.<comp>.<scene>.patch.log`. CLI-only for now — trigger it from a
+Claude session or SSH; it never renders the full MP4 and never deploys.
+
 ## Operator flows (shown live on the ops panel WS Film section)
 
 <!-- ops:film-flows -->
@@ -234,7 +254,7 @@ FLOW 1 — new video from a brief (AI build)
 6. Publish now ("publicar o último render", seconds) or schedule it on the card
    ("agendar publicação", Sydney time).
 
-FLOW 2 — fine-tune a finished film (copy + audio + re-render + schedule)
+FLOW 2 — fine-tune a finished film (copy + audio + theme + re-render + schedule)
 1. Audio: Mini-Premiere → pick the composition tab. Two independent tracks:
    background music (volume slider; "trocar música" swaps in your own mp3/wav,
    looped/trimmed to the cut with the film's fades; "voltar à procedural"
@@ -244,9 +264,14 @@ FLOW 2 — fine-tune a finished film (copy + audio + re-render + schedule)
 2. Copy: for a few words, edit content.json + `python3 figma_sync.py --local`
    (or ask Claude); for visual editing — texts or the asset.* art — use the
    Figma kit flow as in flow 1 step 4.
-3. Run "stills de conferência" (~3 min) and check the changed frames.
-4. Run "render completo SEM publicar" (~12 min); preview via "último render".
-5. Publish or schedule. Scheduled publishes are transient systemd timers — they
+3. Brand colours: Mini-Premiere → "🎨 Tema" card — six pickers (petrol, deep,
+   off, orange, lilac, violet) drive every composition of the project. The
+   preview recolours as you drag; "💾 Guardar tema" writes content.json and
+   regenerates content.js ("↩ paleta padrão" previews the stock palette).
+   Then stills → render as usual to see it in the MP4.
+4. Run "stills de conferência" (~3 min) and check the changed frames.
+5. Run "render completo SEM publicar" (~12 min); preview via "último render".
+6. Publish or schedule. Scheduled publishes are transient systemd timers — they
    do NOT survive a VPS reboot; reschedule if the box restarts.
 <!-- /ops:film-flows -->
 
@@ -259,6 +284,28 @@ FLOW 2 — fine-tune a finished film (copy + audio + re-render + schedule)
 - WS·TECH mark: `ws-tech-white.svg` / `ws-tech-dark.svg` (cold open + watermark).
 - Saira type; Petroleum Blue `#1E2F38`, Off-White `#F5F2F0`, Orange `#FF9D27`,
   Lilac `#A490FF`. Preview any composition with `#play` appended to the file URL.
+
+### Theming (CSS vars, 18 Jul 2026)
+
+All chrome colour in both compositions references `:root` CSS vars (`--orange`,
+`--lilac`, … plus `--<name>-rgb` triples for alpha tints); a theme boot writes
+`content.json` `theme.*` onto those vars at load (`window.applyTheme(theme)` — the
+Mini-Premiere pokes the same function for live preview). Three colour paths, one rule:
+
+1. **Authored chrome** (stylesheets, static inline styles, JS style strings) →
+   `var(--x)` / `rgba(var(--x-rgb),a)`.
+2. **SVG presentation attributes** (which cannot take `var()`) and per-frame
+   `setAttribute` handlers → interpolate `C.theme.x` / `RGB(C.theme.x)` directly.
+3. **Content data and asset art** → bound through `T()`, a string map from the
+   stock palette to `C.theme` (identity while the theme is stock). Assets pass
+   through `ASSET()`→`T()`, so frozen art with baked stock hexes follows the theme.
+
+`--orange-hi` (the GeoClock button gradient highlight) stays the hand-tuned
+`#ffb658` while orange is stock, otherwise it is recomputed as orange mixed 28%
+toward white. History: the old load-time DOM walk missed elements whose inline
+style JS re-serialised before it ran (`#FF9D27` → `rgb(255, 157, 39)`, which the
+hex map never matched) — the stuck-orange class fixed by this refactor. Gate for
+any change here: with the stock theme the render must be byte-identical.
 
 ## How it renders (fully code-rendered, no external video tools)
 

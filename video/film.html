@@ -11,50 +11,62 @@
 @font-face{font-family:Saira;src:url(fonts/saira-700.woff2) format('woff2');font-weight:700}
 @font-face{font-family:Saira;src:url(fonts/saira-800.woff2) format('woff2');font-weight:800}
 @font-face{font-family:GreatVibes;src:url(fonts/greatvibes-400.woff2) format('woff2');font-weight:400}
+/* brand palette — every chrome colour references these vars; the theme boot in the
+   ENGINE section overwrites them from C.theme, so retheming is just setting vars.
+   Defaults below ARE the authored palette (content.json theme.* at its stock values). */
+:root{
+  --petrol:#1E2F38; --petrol-rgb:30,47,56;
+  --deep:#0f1a20;   --deep-rgb:15,26,32;
+  --off:#F5F2F0;    --off-rgb:245,242,240;
+  --orange:#FF9D27; --orange-rgb:255,157,39;
+  --lilac:#A490FF;  --lilac-rgb:164,144,255;
+  --violet:#6040cc; --violet-rgb:96,64,204;
+  --orange-hi:#ffb658; /* clock-button gradient highlight; recomputed when orange is themed */
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#000;width:1920px;height:1080px;overflow:hidden}
 #stage{position:relative;width:1920px;height:1080px;overflow:hidden;
-  font-family:Saira,sans-serif;color:#F5F2F0}
+  font-family:Saira,sans-serif;color:var(--off)}
 #bg{position:absolute;inset:0}
 .scene{position:absolute;inset:0;display:none}
-.kicker{font-weight:600;font-size:26px;letter-spacing:.42em;color:#FF9D27;text-transform:uppercase}
-.kicker .wst{color:#A490FF}
-h1{font-weight:800;color:#F5F2F0;line-height:1.04;letter-spacing:-.01em}
-.body{font-weight:300;color:rgba(245,242,240,.78);line-height:1.5}
-.chip{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(245,242,240,.22);
-  border-radius:999px;padding:12px 26px;font-weight:500;font-size:26px;color:#F5F2F0;
-  background:rgba(15,26,32,.55);white-space:nowrap}
+.kicker{font-weight:600;font-size:26px;letter-spacing:.42em;color:var(--orange);text-transform:uppercase}
+.kicker .wst{color:var(--lilac)}
+h1{font-weight:800;color:var(--off);line-height:1.04;letter-spacing:-.01em}
+.body{font-weight:300;color:rgba(var(--off-rgb),.78);line-height:1.5}
+.chip{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(var(--off-rgb),.22);
+  border-radius:999px;padding:12px 26px;font-weight:500;font-size:26px;color:var(--off);
+  background:rgba(var(--deep-rgb),.55);white-space:nowrap}
 svg text{font-family:Saira,sans-serif}
-.chip .dot{width:10px;height:10px;border-radius:50%;background:#FF9D27;flex:0 0 auto}
+.chip .dot{width:10px;height:10px;border-radius:50%;background:var(--orange);flex:0 0 auto}
 .mono{font-family:'DejaVu Sans Mono',monospace}
 /* persistent layers */
 #grid{position:absolute;inset:0;opacity:.5;
-  background-image:linear-gradient(rgba(245,242,240,.033) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(245,242,240,.033) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(var(--off-rgb),.033) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(var(--off-rgb),.033) 1px,transparent 1px);
   background-size:96px 96px}
 #vig{position:absolute;inset:0;background:radial-gradient(1300px 800px at 50% 46%,transparent 55%,rgba(5,10,13,.55) 100%)}
 #grain{position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay}
 #spine{position:absolute;left:0;right:0;bottom:0;height:86px;display:flex;align-items:center;
   justify-content:center;gap:0;opacity:0}
 .sp-node{display:flex;align-items:center}
-.sp-dot{width:12px;height:12px;border-radius:50%;background:rgba(245,242,240,.22);position:relative}
-.sp-dot.on{background:#FF9D27;box-shadow:0 0 14px rgba(255,157,39,.9)}
+.sp-dot{width:12px;height:12px;border-radius:50%;background:rgba(var(--off-rgb),.22);position:relative}
+.sp-dot.on{background:var(--orange);box-shadow:0 0 14px rgba(var(--orange-rgb),.9)}
 .sp-lbl{position:absolute;top:-34px;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;
-  letter-spacing:.18em;color:rgba(245,242,240,.42);white-space:nowrap;text-transform:uppercase}
-.sp-dot.on .sp-lbl{color:#F5F2F0}
-.sp-seg{width:150px;height:2px;background:rgba(245,242,240,.14);position:relative;overflow:hidden}
-.sp-seg i{position:absolute;inset:0;background:#FF9D27;transform:scaleX(0);transform-origin:left}
+  letter-spacing:.18em;color:rgba(var(--off-rgb),.42);white-space:nowrap;text-transform:uppercase}
+.sp-dot.on .sp-lbl{color:var(--off)}
+.sp-seg{width:150px;height:2px;background:rgba(var(--off-rgb),.14);position:relative;overflow:hidden}
+.sp-seg i{position:absolute;inset:0;background:var(--orange);transform:scaleX(0);transform-origin:left}
 #wm{position:absolute;top:40px;right:56px;opacity:0}
 #wm svg{width:62px;height:65px;display:block}
 /* browser + phone frames */
-.browser{background:#0f1a20;border:1px solid rgba(245,242,240,.14);border-radius:18px;overflow:hidden;
+.browser{background:var(--deep);border:1px solid rgba(var(--off-rgb),.14);border-radius:18px;overflow:hidden;
   box-shadow:0 40px 90px rgba(0,0,0,.5)}
 .browser .bar{height:56px;background:#16242c;display:flex;align-items:center;padding:0 22px;gap:10px;
-  border-bottom:1px solid rgba(245,242,240,.08)}
-.browser .bar .b{width:14px;height:14px;border-radius:50%;background:rgba(245,242,240,.16)}
+  border-bottom:1px solid rgba(var(--off-rgb),.08)}
+.browser .bar .b{width:14px;height:14px;border-radius:50%;background:rgba(var(--off-rgb),.16)}
 .browser .bar .url{margin-left:14px;flex:1;height:32px;border-radius:8px;background:#0c161b;
-  display:flex;align-items:center;padding:0 16px;font-size:19px;color:rgba(245,242,240,.6)}
-.phone{width:380px;height:790px;background:#0c161b;border-radius:48px;border:3px solid rgba(245,242,240,.16);
+  display:flex;align-items:center;padding:0 16px;font-size:19px;color:rgba(var(--off-rgb),.6)}
+.phone{width:380px;height:790px;background:#0c161b;border-radius:48px;border:3px solid rgba(var(--off-rgb),.16);
   box-shadow:0 50px 100px rgba(0,0,0,.55);overflow:hidden;position:relative}
 .phone .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:120px;height:26px;
   border-radius:14px;background:#050a0d;z-index:5}
@@ -84,8 +96,8 @@ svg text{font-family:Saira,sans-serif}
     <div id="s2k" class="kicker" style="position:absolute;left:140px;top:210px">Stage 01 · Estimate</div>
     <h1 id="s2h" style="position:absolute;left:140px;top:262px;font-size:84px;width:760px">It starts with the take-off.</h1>
     <div id="s2b" class="body" style="position:absolute;left:140px;top:520px;font-size:33px;width:720px">
-      Measured quantities from <b style="font-weight:600;color:#F5F2F0">CostX</b> become the working estimate — rates, margins and the pricing engine stay strictly in-house.</div>
-    <div id="s2chip" class="chip" style="position:absolute;left:140px;top:742px"><span class="dot"></span>estimate.xlsx&nbsp;<span style="color:rgba(245,242,240,.5)">· WS-Estimating drive · 01 Quotes</span></div>
+      Measured quantities from <b style="font-weight:600;color:var(--off)">CostX</b> become the working estimate — rates, margins and the pricing engine stay strictly in-house.</div>
+    <div id="s2chip" class="chip" style="position:absolute;left:140px;top:742px"><span class="dot"></span>estimate.xlsx&nbsp;<span style="color:rgba(var(--off-rgb),.5)">· WS-Estimating drive · 01 Quotes</span></div>
     <svg id="s2svg" width="820" height="740" viewBox="0 0 820 740" style="position:absolute;right:110px;top:180px"></svg>
   </div>
 
@@ -100,30 +112,30 @@ svg text{font-family:Saira,sans-serif}
       <div class="chip s3c"><span class="dot"></span>Sent by WhatsApp: spreadsheet in, live link back</div>
     </div>
     <div id="s3wa" style="position:absolute;left:140px;top:824px;display:flex;gap:18px;align-items:center">
-      <div style="background:#12262e;border:1px solid rgba(245,242,240,.15);border-radius:6px 22px 22px 22px;padding:14px 24px;font-size:25px">📎 estimate.xlsx &nbsp;·&nbsp; “WS0657”</div>
-      <div id="s3arrow" style="font-size:30px;color:#FF9D27">⟶</div>
-      <div id="s3link" class="mono" style="background:rgba(255,157,39,.12);border:1px solid rgba(255,157,39,.5);border-radius:22px 6px 22px 22px;padding:14px 24px;font-size:23px;color:#FF9D27;white-space:nowrap">wssoltech.au/q/ws0657-a3f9c2</div>
+      <div style="background:#12262e;border:1px solid rgba(var(--off-rgb),.15);border-radius:6px 22px 22px 22px;padding:14px 24px;font-size:25px">📎 estimate.xlsx &nbsp;·&nbsp; “WS0657”</div>
+      <div id="s3arrow" style="font-size:30px;color:var(--orange)">⟶</div>
+      <div id="s3link" class="mono" style="background:rgba(var(--orange-rgb),.12);border:1px solid rgba(var(--orange-rgb),.5);border-radius:22px 6px 22px 22px;padding:14px 24px;font-size:23px;color:var(--orange);white-space:nowrap">wssoltech.au/q/ws0657-a3f9c2</div>
     </div>
     <div id="s3browser" class="browser" style="position:absolute;right:100px;top:200px;width:740px;height:700px">
       <div class="bar"><div class="b"></div><div class="b"></div><div class="b"></div>
         <div class="url">quotesystem.wssoltech.au/q/ws0657-a3f9c2</div></div>
       <div style="padding:38px 44px;position:relative;height:644px">
         <div id="q-cl" style="display:flex;justify-content:space-between;align-items:center">
-          <div style="font-weight:800;font-size:34px;color:#A490FF">DEINCO<span style="font-weight:300;color:rgba(245,242,240,.55)"> · Builders</span></div>
-          <div style="font-size:19px;color:rgba(245,242,240,.4)">Prepared by WS</div>
+          <div style="font-weight:800;font-size:34px;color:var(--lilac)">DEINCO<span style="font-weight:300;color:rgba(var(--off-rgb),.55)"> · Builders</span></div>
+          <div style="font-size:19px;color:rgba(var(--off-rgb),.4)">Prepared by WS</div>
         </div>
         <div id="q-t" style="margin-top:26px;font-weight:700;font-size:38px">Facade Package — WS0657</div>
         <div id="q-rows" style="margin-top:26px;display:flex;flex-direction:column;gap:14px"></div>
-        <div id="q-tot" style="margin-top:24px;display:flex;justify-content:space-between;border-top:1px solid rgba(245,242,240,.18);padding-top:18px">
-          <div style="font-weight:600;font-size:27px">Total (ex GST)</div><div style="font-weight:800;font-size:27px;color:#FF9D27">A$ 184,600</div>
+        <div id="q-tot" style="margin-top:24px;display:flex;justify-content:space-between;border-top:1px solid rgba(var(--off-rgb),.18);padding-top:18px">
+          <div style="font-weight:600;font-size:27px">Total (ex GST)</div><div style="font-weight:800;font-size:27px;color:var(--orange)">A$ 184,600</div>
         </div>
-        <div id="q-sign" style="position:absolute;left:44px;right:44px;bottom:34px;height:120px;border:1px dashed rgba(164,144,255,.5);border-radius:14px;padding:14px 20px">
-          <div style="font-size:18px;letter-spacing:.2em;color:#A490FF;text-transform:uppercase;font-weight:600">Accept &amp; sign</div>
+        <div id="q-sign" style="position:absolute;left:44px;right:44px;bottom:34px;height:120px;border:1px dashed rgba(var(--lilac-rgb),.5);border-radius:14px;padding:14px 20px">
+          <div style="font-size:18px;letter-spacing:.2em;color:var(--lilac);text-transform:uppercase;font-weight:600">Accept &amp; sign</div>
           <svg width="360" height="60" viewBox="0 0 360 60" style="position:absolute;left:20px;bottom:8px">
             <defs><clipPath id="q-sigclip"><rect id="q-sigcr" x="0" y="0" width="0" height="60"/></clipPath></defs>
-            <text x="8" y="44" clip-path="url(#q-sigclip)" fill="#F5F2F0" font-family="GreatVibes" font-size="44">John Mitchell</text>
+            <text x="8" y="44" clip-path="url(#q-sigclip)" style="fill:var(--off)" font-family="GreatVibes" font-size="44">John Mitchell</text>
           </svg>
-          <div id="q-signed" style="position:absolute;right:20px;bottom:16px;font-size:20px;color:#FF9D27;font-weight:600">✓ Signed · both parties</div>
+          <div id="q-signed" style="position:absolute;right:20px;bottom:16px;font-size:20px;color:var(--orange);font-weight:600">✓ Signed · both parties</div>
         </div>
       </div>
     </div>
@@ -132,11 +144,11 @@ svg text{font-family:Saira,sans-serif}
   <!-- ============ S4 REGISTER WST026 ============ -->
   <div class="scene" id="s4">
     <div id="s4k" class="kicker" style="position:absolute;left:0;right:0;top:190px;text-align:center">Stage 03 · <span class="wst">WST026 Project Register</span></div>
-    <div id="s4n" style="position:absolute;left:0;right:0;top:270px;text-align:center;font-weight:800;font-size:300px;letter-spacing:-.02em;color:#F5F2F0">0</div>
+    <div id="s4n" style="position:absolute;left:0;right:0;top:270px;text-align:center;font-weight:800;font-size:300px;letter-spacing:-.02em;color:var(--off)">0</div>
     <div id="s4l" class="body" style="position:absolute;left:0;right:0;top:620px;text-align:center;font-size:36px">projects catalogued — every quote in the drive, numbered and flagged</div>
-    <div id="s4won" class="chip" style="position:absolute;left:50%;top:706px;transform:translateX(-50%)"><span class="dot" style="background:#A490FF"></span>Won jobs flagged · real project numbers on the website</div>
+    <div id="s4won" class="chip" style="position:absolute;left:50%;top:706px;transform:translateX(-50%)"><span class="dot" style="background:var(--lilac)"></span>Won jobs flagged · real project numbers on the website</div>
     <div id="s4tok" style="position:absolute;left:50%;top:806px;transform:translateX(-50%);display:flex;align-items:center;gap:20px">
-      <div class="mono" style="border:2px solid #FF9D27;color:#FF9D27;border-radius:12px;padding:10px 26px;font-size:34px;font-weight:700;box-shadow:0 0 40px rgba(255,157,39,.35)">WS0657</div>
+      <div class="mono" style="border:2px solid var(--orange);color:var(--orange);border-radius:12px;padding:10px 26px;font-size:34px;font-weight:700;box-shadow:0 0 40px rgba(var(--orange-rgb),.35)">WS0657</div>
       <div class="body" style="font-size:27px;white-space:nowrap">— one number threads the schedule, the geofence and the invoice</div>
     </div>
   </div>
@@ -145,7 +157,7 @@ svg text{font-family:Saira,sans-serif}
   <div class="scene" id="s5">
     <div id="s5k" class="kicker" style="position:absolute;left:140px;top:190px">Stage 04 · Scheduling · <span class="wst">WST025 · Vikunja</span></div>
     <h1 id="s5h" style="position:absolute;left:140px;top:242px;font-size:74px;width:780px">The COO plans the week. The system carries it.</h1>
-    <div id="s5b" class="body" style="position:absolute;left:140px;top:560px;font-size:32px;width:640px">Every task on the self-hosted Gantt syncs to the shared <span class="mono" style="color:#A490FF">work_day</span> table every 15 minutes — and lands on each worker's phone as “My day”.</div>
+    <div id="s5b" class="body" style="position:absolute;left:140px;top:560px;font-size:32px;width:640px">Every task on the self-hosted Gantt syncs to the shared <span class="mono" style="color:var(--lilac)">work_day</span> table every 15 minutes — and lands on each worker's phone as “My day”.</div>
     <div id="s5chip" class="chip" style="position:absolute;left:140px;top:780px"><span class="dot"></span>schedule.wssoltech.au · sole writer of work_day</div>
     <div id="s5gantt" class="browser" style="position:absolute;right:100px;top:230px;width:800px;height:600px">
       <div class="bar"><div class="b"></div><div class="b"></div><div class="b"></div><div class="url">schedule.wssoltech.au — Field Operations Gantt</div></div>
@@ -159,7 +171,7 @@ svg text{font-family:Saira,sans-serif}
     <div id="s6panel" style="position:absolute;left:120px;top:205px;width:760px">
       <div id="s6k" class="kicker">Stage 05 · GeoClock · <span class="wst">WST034 Field Time Clock</span></div>
       <h1 id="s6h" style="font-size:80px;margin-top:16px">Hours validated at the site fence.</h1>
-      <div id="s6b" class="body" style="font-size:31px;margin-top:26px;width:720px">GPS clock-in tied to real project numbers. Web tap, native geofence or WhatsApp — every event passes through one server-validated <span class="mono" style="color:#FF9D27">/clock</span> endpoint, and every attempt is logged.</div>
+      <div id="s6b" class="body" style="font-size:31px;margin-top:26px;width:720px">GPS clock-in tied to real project numbers. Web tap, native geofence or WhatsApp — every event passes through one server-validated <span class="mono" style="color:var(--orange)">/clock</span> endpoint, and every attempt is logged.</div>
       <div id="s6chips" style="margin-top:26px;display:flex;flex-direction:column;gap:14px;align-items:flex-start">
         <div class="chip s6c"><span class="dot"></span>184 project sites geofenced — circle and polygon</div>
         <div class="chip s6c"><span class="dot"></span>Auto clock-in on arrival, clock-out on leaving</div>
@@ -177,14 +189,14 @@ svg text{font-family:Saira,sans-serif}
       <div class="notch"></div>
       <!-- Hub -->
       <div class="pscreen" id="p-hub">
-        <div style="display:flex;align-items:center;gap:12px"><div style="font-weight:800;font-size:24px">WS Crew</div><div style="margin-left:auto;font-size:15px;color:rgba(245,242,240,.5)">PT · EN</div></div>
-        <div style="margin-top:6px;font-size:15px;color:rgba(245,242,240,.5)">Many trades · one standard.</div>
+        <div style="display:flex;align-items:center;gap:12px"><div style="font-weight:800;font-size:24px">WS Crew</div><div style="margin-left:auto;font-size:15px;color:rgba(var(--off-rgb),.5)">PT · EN</div></div>
+        <div style="margin-top:6px;font-size:15px;color:rgba(var(--off-rgb),.5)">Many trades · one standard.</div>
         <div style="margin-top:22px;display:flex;justify-content:center">
           <svg width="150" height="150" viewBox="0 0 150 150">
-            <circle cx="75" cy="75" r="64" stroke="rgba(245,242,240,.14)" stroke-width="10" fill="none"/>
-            <circle id="p-ring" cx="75" cy="75" r="64" stroke="#FF9D27" stroke-width="10" fill="none" stroke-linecap="round" transform="rotate(-90 75 75)" stroke-dasharray="402" stroke-dashoffset="402"/>
-            <text x="75" y="70" text-anchor="middle" fill="#F5F2F0" font-size="30" font-weight="700" font-family="Saira">78%</text>
-            <text x="75" y="94" text-anchor="middle" fill="rgba(245,242,240,.5)" font-size="13" font-family="Saira">Academy</text>
+            <circle cx="75" cy="75" r="64" style="stroke:rgba(var(--off-rgb),.14)" stroke-width="10" fill="none"/>
+            <circle id="p-ring" cx="75" cy="75" r="64" style="stroke:var(--orange)" stroke-width="10" fill="none" stroke-linecap="round" transform="rotate(-90 75 75)" stroke-dasharray="402" stroke-dashoffset="402"/>
+            <text x="75" y="70" text-anchor="middle" style="fill:var(--off)" font-size="30" font-weight="700" font-family="Saira">78%</text>
+            <text x="75" y="94" text-anchor="middle" style="fill:rgba(var(--off-rgb),.5)" font-size="13" font-family="Saira">Academy</text>
           </svg>
         </div>
         <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -197,40 +209,40 @@ svg text{font-family:Saira,sans-serif}
           <div class="hubcard" style="background:#13242c;border-radius:14px;padding:14px;font-size:16px;font-weight:600">📖 Handbook</div>
           <div class="hubcard" style="background:#13242c;border-radius:14px;padding:14px;font-size:16px;font-weight:600">🧰 Materials</div>
         </div>
-        <div style="margin-top:20px;background:rgba(255,157,39,.1);border:1px solid rgba(255,157,39,.35);border-radius:14px;padding:14px 16px;font-size:15px;color:#FF9D27;font-weight:600">● On site · WS0657 · shift running</div>
-        <div style="margin-top:14px;text-align:center;font-size:13px;color:rgba(245,242,240,.35)">v0.6.2 · updates itself on every deploy</div>
+        <div style="margin-top:20px;background:rgba(var(--orange-rgb),.1);border:1px solid rgba(var(--orange-rgb),.35);border-radius:14px;padding:14px 16px;font-size:15px;color:var(--orange);font-weight:600">● On site · WS0657 · shift running</div>
+        <div style="margin-top:14px;text-align:center;font-size:13px;color:rgba(var(--off-rgb),.35)">v0.6.2 · updates itself on every deploy</div>
       </div>
       <!-- My day -->
       <div class="pscreen" id="p-day">
         <div style="font-weight:700;font-size:24px">My day</div>
-        <div style="font-size:15px;color:rgba(245,242,240,.5)">Thursday · from the Vikunja schedule</div>
-        <div style="margin-top:24px;background:#13242c;border-radius:16px;padding:20px;border-left:4px solid #FF9D27">
-          <div class="mono" style="color:#FF9D27;font-weight:700;font-size:18px">WS0657</div>
+        <div style="font-size:15px;color:rgba(var(--off-rgb),.5)">Thursday · from the Vikunja schedule</div>
+        <div style="margin-top:24px;background:#13242c;border-radius:16px;padding:20px;border-left:4px solid var(--orange)">
+          <div class="mono" style="color:var(--orange);font-weight:700;font-size:18px">WS0657</div>
           <div style="font-weight:600;font-size:20px;margin-top:6px">Facade package — Padstow</div>
-          <div style="font-size:16px;color:rgba(245,242,240,.6);margin-top:8px">07:00 – 15:30 · Rendering, level 2</div>
+          <div style="font-size:16px;color:rgba(var(--off-rgb),.6);margin-top:8px">07:00 – 15:30 · Rendering, level 2</div>
         </div>
         <div style="margin-top:16px;background:#13242c;border-radius:16px;padding:20px;opacity:.55">
-          <div style="font-size:16px;color:rgba(245,242,240,.6)">Tomorrow · WS0641 · Caulking</div>
+          <div style="font-size:16px;color:rgba(var(--off-rgb),.6)">Tomorrow · WS0641 · Caulking</div>
         </div>
       </div>
       <!-- GeoClock -->
       <div class="pscreen" id="p-clock">
         <div style="font-weight:700;font-size:24px">GeoClock</div>
-        <div style="font-size:15px;color:rgba(245,242,240,.5)">On site · WS0657 · 14 m inside the fence</div>
+        <div style="font-size:15px;color:rgba(var(--off-rgb),.5)">On site · WS0657 · 14 m inside the fence</div>
         <div style="margin-top:34px;display:flex;justify-content:center">
-          <div id="p-btn" style="width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb658,#FF9D27);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:26px;color:#1E2F38;box-shadow:0 0 60px rgba(255,157,39,.45)">CLOCK IN</div>
+          <div id="p-btn" style="width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--orange-hi),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:26px;color:var(--petrol);box-shadow:0 0 60px rgba(var(--orange-rgb),.45)">CLOCK IN</div>
         </div>
-        <div id="p-chrono" class="mono" style="margin-top:30px;text-align:center;font-size:44px;font-weight:700;color:#F5F2F0">00:00:00</div>
-        <div style="margin-top:8px;text-align:center;font-size:15px;color:rgba(245,242,240,.5)">shift chronometer · runs in the notification tray</div>
-        <div style="margin-top:26px;background:#13242c;border-radius:14px;padding:14px;font-size:15px;color:rgba(245,242,240,.7)">🛰 Auto mode: clock-in on arrival, clock-out on leaving — even with the app closed.</div>
+        <div id="p-chrono" class="mono" style="margin-top:30px;text-align:center;font-size:44px;font-weight:700;color:var(--off)">00:00:00</div>
+        <div style="margin-top:8px;text-align:center;font-size:15px;color:rgba(var(--off-rgb),.5)">shift chronometer · runs in the notification tray</div>
+        <div style="margin-top:26px;background:#13242c;border-radius:14px;padding:14px;font-size:15px;color:rgba(var(--off-rgb),.7)">🛰 Auto mode: clock-in on arrival, clock-out on leaving — even with the app closed.</div>
       </div>
       <!-- Timesheet -->
       <div class="pscreen" id="p-ts">
         <div style="font-weight:700;font-size:24px">Timesheet</div>
-        <div style="font-size:15px;color:rgba(245,242,240,.5)">This week · from the clock, nothing typed</div>
+        <div style="font-size:15px;color:rgba(var(--off-rgb),.5)">This week · from the clock, nothing typed</div>
         <div id="p-tsrows" style="margin-top:22px;display:flex;flex-direction:column;gap:12px"></div>
-        <div style="margin-top:20px;display:flex;justify-content:space-between;border-top:1px solid rgba(245,242,240,.16);padding-top:14px">
-          <div style="font-weight:600;font-size:18px">Week total</div><div style="font-weight:800;font-size:18px;color:#FF9D27">41.9 h</div>
+        <div style="margin-top:20px;display:flex;justify-content:space-between;border-top:1px solid rgba(var(--off-rgb),.16);padding-top:14px">
+          <div style="font-weight:600;font-size:18px">Week total</div><div style="font-weight:800;font-size:18px;color:var(--orange)">41.9 h</div>
         </div>
       </div>
     </div>
@@ -244,7 +256,7 @@ svg text{font-family:Saira,sans-serif}
       <div class="chip s8c"><span class="dot"></span>HR approval gate — nobody works unverified</div>
       <div class="chip s8c"><span class="dot"></span>WS Academy: bilingual modules, quiz pass mark 70%</div>
       <div class="chip s8c"><span class="dot"></span>Two-party induction agreement, PDF emailed to both</div>
-      <div class="chip s8c"><span class="dot" style="background:#A490FF"></span>Bank details and IDs encrypted at rest, fail-closed</div>
+      <div class="chip s8c"><span class="dot" style="background:var(--lilac)"></span>Bank details and IDs encrypted at rest, fail-closed</div>
     </div>
     <div id="s8q" class="browser" style="position:absolute;right:100px;top:250px;width:740px;height:560px">
       <div class="bar"><div class="b"></div><div class="b"></div><div class="b"></div><div class="url">hr.wssoltech.au — approval queue</div></div>
@@ -257,21 +269,21 @@ svg text{font-family:Saira,sans-serif}
     <div id="s9k" class="kicker" style="position:absolute;left:0;right:0;top:150px;text-align:center">Stage 08 · Pay · <span class="wst">WST039 · WST041 · Xero-ready</span></div>
     <h1 id="s9h" style="position:absolute;left:0;right:0;top:202px;text-align:center;font-size:76px">The clock is the source of truth.</h1>
     <div id="s9flow" style="position:absolute;left:0;right:0;top:370px;display:flex;justify-content:center;gap:26px;align-items:center"></div>
-    <div id="s9inv" style="position:absolute;left:50%;top:522px;transform:translateX(-50%);width:640px;background:#F5F2F0;color:#1E2F38;border-radius:18px;padding:34px 44px;box-shadow:0 50px 110px rgba(0,0,0,.55)">
+    <div id="s9inv" style="position:absolute;left:50%;top:522px;transform:translateX(-50%);width:640px;background:var(--off);color:var(--petrol);border-radius:18px;padding:34px 44px;box-shadow:0 50px 110px rgba(0,0,0,.55)">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div style="font-weight:800;font-size:28px">TAX INVOICE</div>
-        <div class="mono" style="font-size:20px;color:#6040cc">WS0657 · week 28</div>
+        <div class="mono" style="font-size:20px;color:var(--violet)">WS0657 · week 28</div>
       </div>
       <div style="margin-top:18px;display:flex;justify-content:space-between;font-size:22px"><span>Site hours (GPS-verified)</span><b>8.0 h + 2.38 OT</b></div>
       <div style="margin-top:10px;display:flex;justify-content:space-between;font-size:22px"><span>GST 10%</span><b>included</b></div>
-      <div style="margin-top:18px;border-top:2px solid #1E2F38;padding-top:16px;display:flex;justify-content:space-between;align-items:center">
+      <div style="margin-top:18px;border-top:2px solid var(--petrol);padding-top:16px;display:flex;justify-content:space-between;align-items:center">
         <span style="font-weight:600;font-size:24px">Total payable</span>
-        <span id="s9amt" style="font-weight:800;font-size:44px;color:#FF9D27">A$ 0.00</span>
+        <span id="s9amt" style="font-weight:800;font-size:44px;color:var(--orange)">A$ 0.00</span>
       </div>
     </div>
     <div id="s9paid" style="position:absolute;left:50%;top:872px;transform:translateX(-50%);display:flex;gap:22px;align-items:center">
       <div class="chip"><span class="dot"></span>Payments queue · one tap: “Paid.”</div>
-      <div class="chip"><span class="dot" style="background:#A490FF"></span>Live in production since 2 July 2026</div>
+      <div class="chip"><span class="dot" style="background:var(--lilac)"></span>Live in production since 2 July 2026</div>
     </div>
   </div>
 
@@ -284,8 +296,8 @@ svg text{font-family:Saira,sans-serif}
     <div id="s10tag" style="position:absolute;left:0;right:0;top:790px;text-align:center">
       <!-- official WS Facade Solutions lockup — WS_SOLUTIONS_FACADE_CONTRACTORS_OFFWHITETEXT_LILACBRICK.svg (never compose mark + typed brand text) -->
       <div id="s10lockup" data-asset="s10.lockup" style="display:inline-block"></div>
-      <div id="s10tagline" style="margin-top:20px;font-size:22px;color:rgba(245,242,240,.6);letter-spacing:.30em">MANY TRADES · ONE STANDARD</div>
-      <div id="s10foot" style="margin-top:22px;font-size:24px;color:rgba(245,242,240,.5)">Designed, built and operated in-house · wssoltech.au</div>
+      <div id="s10tagline" style="margin-top:20px;font-size:22px;color:rgba(var(--off-rgb),.6);letter-spacing:.30em">MANY TRADES · ONE STANDARD</div>
+      <div id="s10foot" style="margin-top:22px;font-size:24px;color:rgba(var(--off-rgb),.5)">Designed, built and operated in-house · wssoltech.au</div>
     </div>
   </div>
 
@@ -318,12 +330,36 @@ const E = {
 };
 function seeded(seed){let s=seed>>>0;return ()=> (s=(s*1664525+1013904223)>>>0)/4294967296;}
 
+/* ---------- theme boot ----------
+   C.theme lands on the :root CSS vars declared in <style>; all chrome colour is
+   var()-based (or interpolates C.theme directly where SVG attributes are animated),
+   so retheming IS this block. T() additionally maps stock-palette literals living
+   inside CONTENT data (chip markup, gantt bar colours) — identity while the theme
+   is stock. Live preview: the Mini-Premiere pokes these same vars + C.theme. */
+const TDEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
+window.applyTheme=function(theme){
+  const r=document.documentElement.style;
+  for(const k in TDEF){const v=(theme[k]||TDEF[k]);r.setProperty('--'+k,v);r.setProperty('--'+k+'-rgb',RGB(v));}
+  /* clock-button gradient highlight: hand-tuned var(--orange-hi) while orange is stock,
+     otherwise the themed orange mixed 28% toward white */
+  if((theme.orange||TDEF.orange).toLowerCase()!==TDEF.orange.toLowerCase()){
+    const h=theme.orange;
+    r.setProperty('--orange-hi','#'+[1,3,5].map(i=>Math.round(lerp(parseInt(h.slice(i,i+2),16),255,0.28)).toString(16).padStart(2,'0')).join(''));
+  }else r.removeProperty('--orange-hi');
+};
+window.applyTheme(C.theme);
+const TMAP=[];
+for(const k in TDEF){const v=C.theme[k];if(v&&v.toLowerCase()!==TDEF[k].toLowerCase())TMAP.push([new RegExp(TDEF[k],'gi'),v]);}
+{const RGBA={orange:'255,157,39',lilac:'164,144,255',off:'245,242,240'};
+ for(const k in RGBA){const v=C.theme[k];if(v&&RGB(v)!==RGBA[k])TMAP.push([new RegExp('rgba\\('+RGBA[k],'g'),'rgba('+RGB(v)]);}}
+const T=s=>{if(s==null)return s;let o=String(s);for(const[a,b]of TMAP)o=o.replace(a,b);return o;};
+
 /* asset slots — window.ASSETS comes from assets.js (generated from assets/*.svg by
    figma_sync.py --local). Hosts carry data-asset="<name>"; art is LOADED, not built.
    Anything the choreography touches inside an asset is optional and null-guarded, so
    replacement art pulled from Figma can never break the film — it simply rides the
    scene crossfades instead of its bespoke entrance. */
-const ASSET=n=>((window.ASSETS||{})[n]||'');
+const ASSET=n=>T(((window.ASSETS||{})[n]||''));  // assets retheme through T() like all markup
 const ASSETIN=n=>ASSET(n).replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,'');
 
 /* timeline: list of {t0,t1,ease,fn(p,t)} in ABSOLUTE seconds */
@@ -438,10 +474,10 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // from Figma while the stage labels stay content-bound
   svg.innerHTML=`<g data-asset="s1.pipeline">${ASSETIN('s1.pipeline')}</g><g id="s1lbls">`+
     nodes.map((n,i)=>`<g class="s1lbl" opacity="0">
-      <text x="${n.x}" y="${n.y+(n.y<640?-52:74)}" text-anchor="middle" fill="#F5F2F0" font-family="Saira" font-weight="600" font-size="27">${n.label}</text>
-      <text x="${n.x}" y="${n.y+(n.y<640?-88:110)}" text-anchor="middle" fill="rgba(164,144,255,.9)" font-family="Saira" font-weight="500" font-size="19">${C.shared.codes[i]}</text>
+      <text x="${n.x}" y="${n.y+(n.y<640?-52:74)}" text-anchor="middle" fill="${C.theme.off}" font-family="Saira" font-weight="600" font-size="27">${n.label}</text>
+      <text x="${n.x}" y="${n.y+(n.y<640?-88:110)}" text-anchor="middle" fill="rgba(${RGB(C.theme.lilac)},.9)" font-family="Saira" font-weight="500" font-size="19">${C.shared.codes[i]}</text>
     </g>`).join('')+`</g>`+
-    `<circle id="s1puck" r="12" fill="#F5F2F0" opacity="0"/>`;
+    `<circle id="s1puck" r="12" fill="${C.theme.off}" opacity="0"/>`;
   rise($('#s1k'),10.4,0.8,30);
   rise($('#s1h'),10.7,1.0,50);
   const path=svg.querySelector('#s1path');
@@ -463,9 +499,9 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // the area badge stay content-bound JS layers on top
   const svg=$('#s2svg');
   svg.innerHTML=`<g data-asset="s2.tower">${ASSETIN('s2.tower')}</g>`+
-   `<text id="s2d1" x="676" y="368" fill="#FF9D27" font-family="Saira" font-size="26" font-weight="600" opacity="0">${C.s2.dimH}</text>
-    <text id="s2d2" x="330" y="712" fill="#FF9D27" font-family="Saira" font-size="26" font-weight="600" opacity="0">${C.s2.dimW}</text>
-    <g id="s2m2" opacity="0"><rect x="248" y="348" width="222" height="70" rx="16" fill="rgba(15,26,32,.82)" stroke="rgba(255,157,39,.6)" stroke-width="2"/><text x="359" y="396" text-anchor="middle" fill="#F5F2F0" font-family="Saira" font-size="44" font-weight="800">${C.s2.area}</text></g>`;
+   `<text id="s2d1" x="676" y="368" fill="${C.theme.orange}" font-family="Saira" font-size="26" font-weight="600" opacity="0">${C.s2.dimH}</text>
+    <text id="s2d2" x="330" y="712" fill="${C.theme.orange}" font-family="Saira" font-size="26" font-weight="600" opacity="0">${C.s2.dimW}</text>
+    <g id="s2m2" opacity="0"><rect x="248" y="348" width="222" height="70" rx="16" fill="rgba(${RGB(C.theme.deep)},.82)" stroke="rgba(${RGB(C.theme.orange)},.6)" stroke-width="2"/><text x="359" y="396" text-anchor="middle" fill="${C.theme.off}" font-family="Saira" font-size="44" font-weight="800">${C.s2.area}</text></g>`;
   [...svg.querySelectorAll('.wire')].forEach((w,i)=>{
     const l=w.getTotalLength();w.style.strokeDasharray=l;w.style.strokeDashoffset=l;
     at(20.3+i*0.11,1.0,p=>{w.style.strokeDashoffset=l*(1-p);},E.io);
@@ -494,7 +530,7 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   rise($('#q-cl'),31.6,0.7,24);
   rise($('#q-t'),31.9,0.7,24);
   const rows=C.s3.rows;
-  $('#q-rows').innerHTML=rows.map((r,i)=>`<div class="qr" style="display:flex;justify-content:space-between;font-size:23px;color:rgba(30,47,56,0)"><span style="color:rgba(245,242,240,.85)">${r[0]}</span><b style="color:#F5F2F0">${r[1]}</b></div>`).join('');
+  $('#q-rows').innerHTML=rows.map((r,i)=>`<div class="qr" style="display:flex;justify-content:space-between;font-size:23px;color:rgba(var(--petrol-rgb),0)"><span style="color:rgba(var(--off-rgb),.85)">${T(r[0])}</span><b style="color:var(--off)">${T(r[1])}</b></div>`).join('');
   [...document.querySelectorAll('.qr')].forEach((r,i)=>riseX(r,32.2+i*0.3,0.6,40));
   rise($('#q-tot'),33.6,0.7,20);
   rise($('#q-sign'),34.4,0.7,20);
@@ -525,16 +561,16 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const tasks=C.s5.tasks;
   $('#s5rows').innerHTML=tasks.map((t,i)=>`
     <div style="display:flex;align-items:center;gap:18px">
-      <div style="width:210px;font-size:19px;color:rgba(245,242,240,.75)" class="mono">${t[0]}</div>
-      <div style="flex:1;height:34px;background:rgba(245,242,240,.06);border-radius:8px;position:relative">
-        <div class="gbar" id="gb${i}" style="position:absolute;top:0;bottom:0;left:${t[2]*100}%;width:${(t[3]-t[2])*100}%;background:${t[1]};border-radius:8px;transform:scaleX(0);transform-origin:left"></div>
+      <div style="width:210px;font-size:19px;color:rgba(var(--off-rgb),.75)" class="mono">${T(t[0])}</div>
+      <div style="flex:1;height:34px;background:rgba(var(--off-rgb),.06);border-radius:8px;position:relative">
+        <div class="gbar" id="gb${i}" style="position:absolute;top:0;bottom:0;left:${t[2]*100}%;width:${(t[3]-t[2])*100}%;background:${T(t[1])};border-radius:8px;transform:scaleX(0);transform-origin:left"></div>
       </div>
     </div>`).join('');
   tasks.forEach((t,i)=>{at(52.8+i*0.28,0.8,p=>{document.getElementById(`gb${i}`).style.transform=`scaleX(${p})`;},E.oq);});
   // sync pulse caption
   const cap=document.createElement('div');
-  cap.id='s5cap';cap.style.cssText='padding:6px 30px 0;font-size:19px;color:#FF9D27;font-weight:600;opacity:0';
-  cap.innerHTML=C.s5.cap;
+  cap.id='s5cap';cap.style.cssText='padding:6px 30px 0;font-size:19px;color:var(--orange);font-weight:600;opacity:0';
+  cap.innerHTML=T(C.s5.cap);
   $('#s5rows').after(cap);
   at(56.4,0.7,p=>{cap.style.opacity=p;});
   at(57.2,2.4,p=>{cap.style.opacity=1-0.35*Math.abs(Math.sin(p*Math.PI*3));},E.lin);
@@ -549,20 +585,20 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const hx=1430,hy=520;
   svg.innerHTML=`<g data-asset="s6.map">${ASSETIN('s6.map')}</g>`+
    `<g id="s6hero" opacity="0">
-      <circle id="s6fence" cx="${hx}" cy="${hy}" r="120" fill="rgba(255,157,39,.10)" stroke="#FF9D27" stroke-width="3.5"/>
-      <circle id="s6ring" cx="${hx}" cy="${hy}" r="120" fill="none" stroke="#F5F2F0" stroke-width="2" opacity="0"/>
-      <circle id="s6ring2" cx="${hx}" cy="${hy}" r="120" fill="none" stroke="#FF9D27" stroke-width="2" opacity="0"/>
-      <text x="${hx}" y="${hy-138}" text-anchor="middle" fill="#FF9D27" font-family="Saira" font-weight="700" font-size="25">${C.s6.heroLabel}</text>
+      <circle id="s6fence" cx="${hx}" cy="${hy}" r="120" fill="rgba(${RGB(C.theme.orange)},.10)" stroke="${C.theme.orange}" stroke-width="3.5"/>
+      <circle id="s6ring" cx="${hx}" cy="${hy}" r="120" fill="none" stroke="${C.theme.off}" stroke-width="2" opacity="0"/>
+      <circle id="s6ring2" cx="${hx}" cy="${hy}" r="120" fill="none" stroke="${C.theme.orange}" stroke-width="2" opacity="0"/>
+      <text x="${hx}" y="${hy-138}" text-anchor="middle" fill="${C.theme.orange}" font-family="Saira" font-weight="700" font-size="25">${C.s6.heroLabel}</text>
     </g>
     <g id="s6worker" opacity="0">
-      <circle id="s6wh" r="24" fill="none" stroke="#A490FF" stroke-width="2" opacity=".6"/>
-      <circle r="13" fill="#A490FF"/><circle id="s6wdo" r="13" fill="#FF9D27" opacity="0"/>
+      <circle id="s6wh" r="24" fill="none" stroke="${C.theme.lilac}" stroke-width="2" opacity=".6"/>
+      <circle r="13" fill="${C.theme.lilac}"/><circle id="s6wdo" r="13" fill="${C.theme.orange}" opacity="0"/>
     </g>
     <g id="s6badge" opacity="0">
-      <rect id="s6brect" x="${hx-165}" y="${hy+150}" width="330" height="56" rx="28" fill="#0f1a20" stroke="rgba(245,242,240,.35)" stroke-width="2"/>
-      <circle id="s6bdot" cx="${hx-131}" cy="${hy+178}" r="7" fill="rgba(245,242,240,.35)"/>
-      <text id="s6btxt1" x="${hx+16}" y="${hy+187}" text-anchor="middle" fill="rgba(245,242,240,.75)" font-family="Saira" font-weight="600" font-size="24">${C.s6.badgeOut}</text>
-      <text id="s6btxt2" x="${hx+16}" y="${hy+187}" text-anchor="middle" fill="#F5F2F0" font-family="Saira" font-weight="600" font-size="24" opacity="0">${C.s6.badgeIn}</text>
+      <rect id="s6brect" x="${hx-165}" y="${hy+150}" width="330" height="56" rx="28" fill="${C.theme.deep}" stroke="rgba(${RGB(C.theme.off)},.35)" stroke-width="2"/>
+      <circle id="s6bdot" cx="${hx-131}" cy="${hy+178}" r="7" fill="rgba(${RGB(C.theme.off)},.35)"/>
+      <text id="s6btxt1" x="${hx+16}" y="${hy+187}" text-anchor="middle" fill="rgba(${RGB(C.theme.off)},.75)" font-family="Saira" font-weight="600" font-size="24">${C.s6.badgeOut}</text>
+      <text id="s6btxt2" x="${hx+16}" y="${hy+187}" text-anchor="middle" fill="${C.theme.off}" font-family="Saira" font-weight="600" font-size="24" opacity="0">${C.s6.badgeIn}</text>
     </g>`;
   [...svg.querySelectorAll('.fence')].forEach((f,i)=>{at(61.6+i*0.12,0.6,p=>{f.setAttribute('opacity',p*0.9);},E.o);});
   at(63.3,0.8,p=>{$('#s6hero').setAttribute('opacity',p);});
@@ -581,7 +617,7 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   at(TX,0.8,p=>{$('#s6fence').setAttribute('fill',`rgba(${RGB(C.theme.orange)},${(0.10+0.15*Math.sin(p*Math.PI)).toFixed(3)})`);},E.lin);
   at(TX,0.45,p=>{
     $('#s6wdo').setAttribute('opacity',p);
-    if(p>0.5){$('#s6wh').setAttribute('stroke','#FF9D27');$('#s6brect').setAttribute('stroke','#FF9D27');$('#s6bdot').setAttribute('fill','#FF9D27');}
+    if(p>0.5){$('#s6wh').setAttribute('stroke',C.theme.orange);$('#s6brect').setAttribute('stroke',C.theme.orange);$('#s6bdot').setAttribute('fill',C.theme.orange);}
     $('#s6btxt1').setAttribute('opacity',1-p);$('#s6btxt2').setAttribute('opacity',p);
     const k=1+0.07*Math.sin(p*Math.PI);
     $('#s6badge').setAttribute('transform',`translate(${hx*(1-k)} ${(hy+178)*(1-k)}) scale(${k})`);
@@ -600,11 +636,11 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const feats=C.s7.features;
   $('#s7feat').innerHTML=feats.map((f,i)=>`
     <div class="s7f" style="display:flex;gap:24px;margin-bottom:30px;align-items:flex-start">
-      <div style="width:64px;height:64px;flex:0 0 auto;border-radius:16px;background:rgba(255,157,39,.1);border:1px solid rgba(255,157,39,.4);display:flex;align-items:center;justify-content:center">
-        <svg data-asset="icon.${f[0]}" width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#FF9D27" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">${ASSETIN('icon.'+f[0])}</svg>
+      <div style="width:64px;height:64px;flex:0 0 auto;border-radius:16px;background:rgba(var(--orange-rgb),.1);border:1px solid rgba(var(--orange-rgb),.4);display:flex;align-items:center;justify-content:center">
+        <svg data-asset="icon.${f[0]}" width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="${C.theme.orange}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">${ASSETIN('icon.'+f[0])}</svg>
       </div>
-      <div><div style="font-weight:700;font-size:29px">${f[1]}</div>
-      <div class="body" style="font-size:24px;margin-top:4px;width:620px">${f[2]}</div></div>
+      <div><div style="font-weight:700;font-size:29px">${T(f[1])}</div>
+      <div class="body" style="font-size:24px;margin-top:4px;width:620px">${T(f[2])}</div></div>
     </div>`).join('');
   [...document.querySelectorAll('.s7f')].forEach((f,i)=>riseX(f,73.0+i*0.85,0.9,-60));
   riseKeep($('#s7phone'),72.4,1.1,80,'');
@@ -626,7 +662,7 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // timesheet rows
   const ts=C.s7.ts.rows;
   $('#p-tsrows').innerHTML=ts.map((r,i)=>`<div class="tsr" style="display:flex;justify-content:space-between;background:#13242c;border-radius:12px;padding:12px 16px;font-size:17px">
-    <span style="color:rgba(245,242,240,.6)">${r[0]}</span><span class="mono" style="color:#A490FF">${r[1]}</span><b>${r[2]}</b></div>`).join('');
+    <span style="color:rgba(var(--off-rgb),.6)">${T(r[0])}</span><span class="mono" style="color:var(--lilac)">${T(r[1])}</span><b>${T(r[2])}</b></div>`).join('');
   [...document.querySelectorAll('.tsr')].forEach((r,i)=>riseX(r,83.0+i*0.22,0.5,40));
 }
 
@@ -639,14 +675,14 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const rows=C.s8.rows;
   $('#s8rows').innerHTML=rows.map((r,i)=>`
     <div class="s8r" style="display:flex;align-items:center;gap:20px;background:#13242c;border-radius:14px;padding:20px 24px">
-      <div style="width:52px;height:52px;border-radius:50%;background:#1E2F38;border:2px solid rgba(245,242,240,.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px">${r[0].split(' ').map(w=>w[0]).join('')}</div>
-      <div style="flex:1"><div style="font-weight:600;font-size:24px">${r[0]}</div>
-      <div style="font-size:18px;color:rgba(245,242,240,.55)">${r[1]}</div></div>
-      <div class="s8btn" id="s8b${i}" style="border-radius:10px;padding:10px 22px;font-weight:700;font-size:19px;${r[2]==='approve'?'background:#FF9D27;color:#1E2F38':'background:rgba(245,242,240,.1);color:rgba(245,242,240,.6)'}">${r[2]==='approve'?C.s8.btnApprove:C.s8.btnPending}</div>
+      <div style="width:52px;height:52px;border-radius:50%;background:var(--petrol);border:2px solid rgba(var(--off-rgb),.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px">${r[0].split(' ').map(w=>w[0]).join('')}</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:24px">${T(r[0])}</div>
+      <div style="font-size:18px;color:rgba(var(--off-rgb),.55)">${T(r[1])}</div></div>
+      <div class="s8btn" id="s8b${i}" style="border-radius:10px;padding:10px 22px;font-weight:700;font-size:19px;${r[2]==='approve'?'background:var(--orange);color:var(--petrol)':'background:rgba(var(--off-rgb),.1);color:rgba(var(--off-rgb),.6)'}">${r[2]==='approve'?C.s8.btnApprove:C.s8.btnPending}</div>
     </div>`).join('')+
     `<div id="s8pdf" style="display:flex;align-items:center;gap:16px;margin-top:8px;opacity:0">
       <div style="font-size:34px">📄</div>
-      <div style="font-size:21px;color:rgba(245,242,240,.75)">${C.s8.pdfNote}</div>
+      <div style="font-size:21px;color:rgba(var(--off-rgb),.75)">${T(C.s8.pdfNote)}</div>
     </div>`;
   [...document.querySelectorAll('.s8r')].forEach((r,i)=>rise(r,87.8+i*0.4,0.7,34));
   at(89.6,0.4,p=>{$('#s8b0').style.transform=`scale(${1-0.15*Math.sin(p*Math.PI)})`;},E.lin);
@@ -661,8 +697,8 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const steps=C.s9.steps;
   $('#s9flow').innerHTML=steps.map((s,i)=>`
     <div class="s9s" style="display:flex;align-items:center;gap:26px">
-      <div style="border:2px solid ${i===4?'#FF9D27':'rgba(245,242,240,.3)'};border-radius:14px;padding:16px 30px;font-weight:600;font-size:27px;background:rgba(15,26,32,.6);${i===4?'color:#FF9D27':''}">${s}</div>
-      ${i<4?'<div style="color:#FF9D27;font-size:30px">→</div>':''}
+      <div style="border:2px solid ${i===4?'var(--orange)':'rgba(var(--off-rgb),.3)'};border-radius:14px;padding:16px 30px;font-weight:600;font-size:27px;background:rgba(var(--deep-rgb),.6);${i===4?'color:var(--orange)':''}">${T(s)}</div>
+      ${i<4?'<div style="color:var(--orange);font-size:30px">→</div>':''}
     </div>`).join('');
   [...document.querySelectorAll('.s9s')].forEach((s,i)=>pop(s,95.8+i*0.4,0.6));
   riseKeep($('#s9inv'),97.6,1.0,70,'translateX(-50%)');
@@ -683,8 +719,8 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const stats=C.s10.stats;
   $('#s10stats').innerHTML=stats.map((s,i)=>`
     <div class="s10s" style="text-align:center">
-      <div style="font-weight:800;font-size:76px;color:#FF9D27">${s[0]}</div>
-      <div style="font-size:23px;color:rgba(245,242,240,.65);margin-top:4px;letter-spacing:.06em">${s[1]}</div>
+      <div style="font-weight:800;font-size:76px;color:var(--orange)">${T(s[0])}</div>
+      <div style="font-size:23px;color:rgba(var(--off-rgb),.65);margin-top:4px;letter-spacing:.06em">${T(s[1])}</div>
     </div>`).join('');
   [...document.querySelectorAll('.s10s')].forEach((s,i)=>pop(s,106.0+i*0.3,0.7));
   rise($('#s10tag'),108.2,1.0,40);
@@ -697,11 +733,12 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
 }
 
 /* ============================== APPLY CONTENT ============================== */
-/* Overwrites the static fallback copy in the HTML with window.CONTENT, then
-   remaps the default brand palette to C.theme (no-op while theme is unchanged). */
+/* Overwrites the static fallback copy in the HTML with window.CONTENT; values bind
+   through T() so stock-palette literals inside the data follow C.theme too. Chrome
+   colour needs no pass here — it references the :root vars set by the theme boot. */
 {
-  const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=html;};
-  const chip=(el,text,lilac)=>{if(el&&text!=null)el.innerHTML=`<span class="dot"${lilac?` style="background:${C.theme.lilac}"`:''}></span>`+text;};
+  const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=T(html);};
+  const chip=(el,text,lilac)=>{if(el&&text!=null)el.innerHTML=`<span class="dot"${lilac?` style="background:${C.theme.lilac}"`:''}></span>`+T(text);};
   // s0–s2
   set('#s0k',C.s0.kicker);set('#s0h',C.s0.headline);set('#s0b',C.s0.body);
   set('#s1k',C.s1.kicker);set('#s1h',C.s1.headline);
@@ -745,9 +782,9 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   set('#p-clock > div:nth-child(1)',K.title);set('#p-clock > div:nth-child(2)',K.sub);
   set('#p-btn',K.btn);
   set('#p-clock > div:nth-child(5)',K.caption);set('#p-clock > div:nth-child(6)',K.auto);
-  const T=C.s7.ts;
-  set('#p-ts > div:nth-child(1)',T.title);set('#p-ts > div:nth-child(2)',T.sub);
-  set('#p-ts > div:nth-child(4) > div:first-child',T.totalLabel);set('#p-ts > div:nth-child(4) > div:last-child',T.total);
+  const TS=C.s7.ts;
+  set('#p-ts > div:nth-child(1)',TS.title);set('#p-ts > div:nth-child(2)',TS.sub);
+  set('#p-ts > div:nth-child(4) > div:first-child',TS.totalLabel);set('#p-ts > div:nth-child(4) > div:last-child',TS.total);
   // s8
   set('#s8k',C.s8.kicker);set('#s8h',C.s8.headline);
   [...document.querySelectorAll('.s8c')].forEach((el,i)=>chip(el,C.s8.chips[i],i===3));
@@ -762,20 +799,6 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // s10
   set('#s10k',C.s10.kicker);set('#s10h',C.s10.headline);
   set('#s10tagline',C.s10.tagline);set('#s10foot',C.s10.foot);
-  /* ------- retheme: remap default palette wherever it appears ------- */
-  const DEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
-  const map=[];
-  for(const k in DEF){const v=C.theme[k];if(v&&v.toLowerCase()!==DEF[k].toLowerCase())map.push([DEF[k],v]);}
-  const RGBA={orange:'255,157,39',lilac:'164,144,255',off:'245,242,240'};
-  for(const k in RGBA){const v=C.theme[k];if(v&&RGB(v)!==RGBA[k])map.push(['rgba('+RGBA[k],'rgba('+RGB(v)]);}
-  if(map.length){
-    const rep=s=>{let o=s;for(const[a,b]of map)o=o.replace(new RegExp(a.replace(/[()]/g,'\\$&'),'gi'),b);return o;};
-    document.querySelectorAll('style').forEach(st=>{st.textContent=rep(st.textContent);});
-    document.querySelectorAll('*').forEach(el=>{
-      const sty=el.getAttribute&&el.getAttribute('style');if(sty){const r=rep(sty);if(r!==sty)el.setAttribute('style',r);}
-      for(const a of ['fill','stroke']){const v=el.getAttribute&&el.getAttribute(a);if(v){const r=rep(v);if(r!==v)el.setAttribute(a,r);}}
-    });
-  }
 }
 
 /* ============================== DRIVER ============================== */

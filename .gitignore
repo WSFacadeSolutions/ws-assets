@@ -25,3 +25,5 @@ video/__pycache__/
 video/*.mp4
 video/*.wav
 video/music/
+video/assets/fieldops-box/*.png
+video/projects/*.log

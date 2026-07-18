@@ -75,6 +75,19 @@ O preview roda a composição real no browser (zero token, zero render) — usa 
 <div class="tabs" id="tabs"></div>
 <div id="cutbox"></div>
 
+<div class="card" id="themecard" style="display:none">
+ <h2>🎨 Tema — todas as composições do projeto</h2>
+ <div id="swatches" style="display:flex;gap:18px;flex-wrap:wrap"></div>
+ <div class="muted" style="margin-top:8px">Mexe numa cor e o preview atualiza <b>na hora</b> (aproximação ao vivo — arte congelada
+ e alguns atributos construídos no load só entram no reload). 💾 <b>Guardar tema</b> regrava o content.json,
+ regenera o content.js e recarrega o preview completo — stills/render para ver no MP4.</div>
+ <div style="margin-top:10px">
+  <button class="primary" onclick="saveTheme()">💾 Guardar tema</button>
+  <button onclick="resetTheme()">↩ paleta padrão</button>
+  <span id="thdirty" class="muted"></span>
+ </div>
+</div>
+
 <h2 style="margin-top:22px">Stills de conferência</h2>
 <div class="stills" id="stills"></div>
 
@@ -93,6 +106,7 @@ let DATA=null, TL=null, CUR=null;              // CUR = composition id being edi
 let PV={frame:0,playing:false,fps:30,total:1,scale:1,raf:0,t0:0,_force:false};
 let AUD={mus:null,sfx:null,on:true,key:''};    // preview sound: last render's stems
 let DIRTY=false;                               // unsaved timeline edits (audio badge)
+let THM=null,THMDIRTY=false;                   // theme colours (content.json theme.*)
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const msg=(t,bad)=>{const m=document.getElementById('msg');m.textContent=t;m.style.color=bad?'#ff8f6b':'var(--ok)';setTimeout(()=>{if(m.textContent===t)m.textContent=''},7000)};
 const cut=()=>TL[CUR];
@@ -102,6 +116,7 @@ async function loadAll(){
  const r=await fetch('/api/film-timeline?project='+encodeURIComponent(PROJECT));
  if(!r.ok){msg('não deu para carregar: '+((await r.json().catch(()=>({}))).error||r.status),1);return}
  DATA=await r.json(); TL=DATA.timeline;
+ THM=Object.assign({},DATA.theme_stock||{},DATA.theme||{});THMDIRTY=false;renderTheme();
  document.getElementById('projSel').innerHTML=(DATA.projects||[PROJECT]).map(p=>
   `<option ${p===PROJECT?'selected':''}>${esc(p)}</option>`).join('');
  document.getElementById('ptitle').textContent='· '+DATA.title;
@@ -267,6 +282,7 @@ async function loadPreview(comp,force){
    wrap.style.width=(w*PV.scale)+'px';wrap.style.height=(h*PV.scale)+'px';
    const sc=document.getElementById('scrub');sc.max=PV.total-1;sc.value=Math.min(PV.frame,PV.total-1);
    seekPv(+sc.value);
+   if(THMDIRTY)applyThemeLive();   // unsaved theme edits survive an iframe reload
   }catch(e){msg('preview indisponível: '+e.message,1)}
  };
 }
@@ -365,6 +381,56 @@ document.addEventListener('keydown',e=>{
  if(/^(INPUT|SELECT|TEXTAREA|BUTTON)$/.test(e.target.tagName))return;
  e.preventDefault();togglePlay();
 });
+
+/* ---------- theme: content.json theme.* edited live (editor-edits-DATA) ----------
+   Live path: pokes the composition's applyTheme() + CONTENT.theme in the iframe, so
+   CSS-var chrome and per-frame handlers follow instantly; markup baked at load only
+   catches up on the reload after saving (content.js regenerated server-side). */
+const THMKEYS=['petrol','deep','off','orange','lilac','violet'];
+function renderTheme(){
+ const card=document.getElementById('themecard');if(!card||!THM)return;
+ card.style.display='';
+ document.getElementById('swatches').innerHTML=THMKEYS.map(k=>
+  `<label style="display:flex;align-items:center;gap:8px;font-size:13px">
+    <input type="color" value="${esc((THM[k]||'#000000').toLowerCase())}" data-k="${k}"
+     oninput="THM[this.dataset.k]=this.value;THMDIRTY=true;applyThemeLive();updThemeDirty()"
+     style="width:44px;height:30px;border:1px solid var(--line);border-radius:6px;background:#0b141a;padding:2px;cursor:pointer">
+    <span><b>${k}</b><br><span class="muted" style="font-size:11px">${esc((THM[k]||'').toLowerCase())}</span></span>
+   </label>`).join('');
+ updThemeDirty();
+}
+function updThemeDirty(){
+ const el=document.getElementById('thdirty');if(!el)return;
+ el.textContent=THMDIRTY?'⚠ tema editado — só no preview até guardares':'';
+ renderThemeHexes();
+}
+function renderThemeHexes(){
+ document.querySelectorAll('#swatches input[type=color]').forEach(i=>{
+  const s=i.parentElement.querySelector('span span');if(s)s.textContent=(THM[i.dataset.k]||'').toLowerCase();
+  if(i.value!==(THM[i.dataset.k]||'').toLowerCase())i.value=(THM[i.dataset.k]||'#000000').toLowerCase();
+ });
+}
+function applyThemeLive(){
+ const fr=document.getElementById('pframe');
+ try{
+  const cw=fr.contentWindow;
+  if(cw&&cw.applyTheme&&cw.CONTENT){Object.assign(cw.CONTENT.theme,THM);cw.applyTheme(cw.CONTENT.theme);cw.seek(PV.frame);}
+ }catch(e){}
+}
+function resetTheme(){
+ THM=Object.assign({},DATA.theme_stock||{});THMDIRTY=true;
+ renderTheme();applyThemeLive();
+ msg('paleta padrão no preview — 💾 guarda o tema para valer');
+}
+async function saveTheme(){
+ const r=await fetch('/api/film-theme',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,theme:THM})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ THMDIRTY=false;updThemeDirty();
+ msg(j.changed?'✓ tema guardado — preview recarregando com o content.js novo':'✓ tema já estava assim');
+ if(j.changed){PV._force=true;await loadAll()}
+}
 
 /* ---------- persist ---------- */
 async function save(){

@@ -10,25 +10,36 @@
 @font-face{font-family:Saira;src:url(fonts/saira-600.woff2) format('woff2');font-weight:600}
 @font-face{font-family:Saira;src:url(fonts/saira-700.woff2) format('woff2');font-weight:700}
 @font-face{font-family:Saira;src:url(fonts/saira-800.woff2) format('woff2');font-weight:800}
+/* brand palette vars — same contract as film.html: the theme boot overwrites these
+   from C.theme, so retheming is just setting vars */
+:root{
+  --petrol:#1E2F38; --petrol-rgb:30,47,56;
+  --deep:#0f1a20;   --deep-rgb:15,26,32;
+  --off:#F5F2F0;    --off-rgb:245,242,240;
+  --orange:#FF9D27; --orange-rgb:255,157,39;
+  --lilac:#A490FF;  --lilac-rgb:164,144,255;
+  --violet:#6040cc; --violet-rgb:96,64,204;
+  --orange-hi:#ffb658;
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#000;width:1080px;height:1920px;overflow:hidden}
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden;
-  font-family:Saira,sans-serif;color:#F5F2F0}
+  font-family:Saira,sans-serif;color:var(--off)}
 #bg{position:absolute;inset:0}
 .scene{position:absolute;inset:0;display:none}
-.kicker{font-weight:600;font-size:26px;letter-spacing:.4em;color:#FF9D27;text-transform:uppercase}
-.kicker .wst{color:#A490FF}
-h1{font-weight:800;color:#F5F2F0;line-height:1.06;letter-spacing:-.01em}
-.body{font-weight:300;color:rgba(245,242,240,.78);line-height:1.5}
-.chip{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(245,242,240,.22);
-  border-radius:999px;padding:12px 26px;font-weight:500;font-size:26px;color:#F5F2F0;
-  background:rgba(15,26,32,.55);white-space:nowrap}
-.chip .dot{width:10px;height:10px;border-radius:50%;background:#FF9D27;flex:0 0 auto}
+.kicker{font-weight:600;font-size:26px;letter-spacing:.4em;color:var(--orange);text-transform:uppercase}
+.kicker .wst{color:var(--lilac)}
+h1{font-weight:800;color:var(--off);line-height:1.06;letter-spacing:-.01em}
+.body{font-weight:300;color:rgba(var(--off-rgb),.78);line-height:1.5}
+.chip{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(var(--off-rgb),.22);
+  border-radius:999px;padding:12px 26px;font-weight:500;font-size:26px;color:var(--off);
+  background:rgba(var(--deep-rgb),.55);white-space:nowrap}
+.chip .dot{width:10px;height:10px;border-radius:50%;background:var(--orange);flex:0 0 auto}
 .mono{font-family:'DejaVu Sans Mono',monospace}
 svg text{font-family:Saira,sans-serif}
 #grid{position:absolute;inset:0;opacity:.5;
-  background-image:linear-gradient(rgba(245,242,240,.033) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(245,242,240,.033) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(var(--off-rgb),.033) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(var(--off-rgb),.033) 1px,transparent 1px);
   background-size:96px 96px}
 #vig{position:absolute;inset:0;background:radial-gradient(900px 1300px at 50% 46%,transparent 55%,rgba(5,10,13,.55) 100%)}
 #grain{position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay}
@@ -66,16 +77,16 @@ svg text{font-family:Saira,sans-serif}
     <div id="s9k" class="kicker" style="position:absolute;left:0;right:0;top:180px;text-align:center;font-size:21px;letter-spacing:.3em"></div>
     <h1 id="s9h" style="position:absolute;left:0;right:0;top:228px;text-align:center;font-size:62px"></h1>
     <div id="s9flow" style="position:absolute;left:60px;right:60px;top:430px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;row-gap:20px"></div>
-    <div id="s9inv" style="position:absolute;left:50%;top:720px;transform:translateX(-50%);width:840px;background:#F5F2F0;color:#1E2F38;border-radius:22px;padding:46px 56px;box-shadow:0 50px 110px rgba(0,0,0,.55)">
+    <div id="s9inv" style="position:absolute;left:50%;top:720px;transform:translateX(-50%);width:840px;background:var(--off);color:var(--petrol);border-radius:22px;padding:46px 56px;box-shadow:0 50px 110px rgba(0,0,0,.55)">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div id="s9invt" style="font-weight:800;font-size:36px"></div>
-        <div id="s9invref" class="mono" style="font-size:25px;color:#6040cc"></div>
+        <div id="s9invref" class="mono" style="font-size:25px;color:var(--violet)"></div>
       </div>
       <div id="s9r0" style="margin-top:26px;display:flex;justify-content:space-between;font-size:28px"><span></span><b></b></div>
       <div id="s9r1" style="margin-top:14px;display:flex;justify-content:space-between;font-size:28px"><span></span><b></b></div>
-      <div style="margin-top:24px;border-top:2px solid #1E2F38;padding-top:22px;display:flex;justify-content:space-between;align-items:center">
+      <div style="margin-top:24px;border-top:2px solid var(--petrol);padding-top:22px;display:flex;justify-content:space-between;align-items:center">
         <span id="s9totlbl" style="font-weight:600;font-size:30px"></span>
-        <span id="s9amt" style="font-weight:800;font-size:56px;color:#FF9D27">A$ 0.00</span>
+        <span id="s9amt" style="font-weight:800;font-size:56px;color:var(--orange)">A$ 0.00</span>
       </div>
     </div>
     <div id="s9paid" style="position:absolute;left:0;right:0;top:1300px;display:flex;flex-direction:column;gap:22px;align-items:center"></div>
@@ -89,8 +100,8 @@ svg text{font-family:Saira,sans-serif}
     <div id="s10stats" style="position:absolute;left:60px;right:60px;top:640px;display:flex;justify-content:center;gap:56px;flex-wrap:wrap;row-gap:44px"></div>
     <div id="s10tag" style="position:absolute;left:0;right:0;top:1210px;text-align:center">
       <div id="s10lockup" data-asset="ig.s10.lockup" style="display:inline-block"></div>
-      <div id="s10tagline" style="margin-top:26px;font-size:24px;color:rgba(245,242,240,.6);letter-spacing:.30em"></div>
-      <div id="s10foot" style="margin-top:26px;font-size:25px;color:rgba(245,242,240,.5)"></div>
+      <div id="s10tagline" style="margin-top:26px;font-size:24px;color:rgba(var(--off-rgb),.6);letter-spacing:.30em"></div>
+      <div id="s10foot" style="margin-top:26px;font-size:25px;color:rgba(var(--off-rgb),.5)"></div>
     </div>
   </div>
 
@@ -123,8 +134,26 @@ function seeded(seed){let s=seed>>>0;return ()=> (s=(s*1664525+1013904223)>>>0)/
    figma_sync.py --local). Hosts carry data-asset="<name>"; art is LOADED, not built.
    Everything the choreography touches inside an asset is null-guarded, so replacement
    art pulled from Figma can never break the film. */
-const ASSET=n=>((window.ASSETS||{})[n]||'');
+const ASSET=n=>T(((window.ASSETS||{})[n]||''));  // assets retheme through T() like all markup
 const ASSETIN=n=>ASSET(n).replace(/^<svg[^>]*>/,'').replace(/<\/svg>\s*$/,'');
+
+/* theme boot + T() — same contract as film.html */
+const TDEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
+window.applyTheme=function(theme){
+  const r=document.documentElement.style;
+  for(const k in TDEF){const v=(theme[k]||TDEF[k]);r.setProperty('--'+k,v);r.setProperty('--'+k+'-rgb',RGB(v));}
+  if((theme.orange||TDEF.orange).toLowerCase()!==TDEF.orange.toLowerCase()){
+    const h=theme.orange;
+    r.setProperty('--orange-hi','#'+[1,3,5].map(i=>Math.round(lerp(parseInt(h.slice(i,i+2),16),255,0.28)).toString(16).padStart(2,'0')).join(''));
+  }else r.removeProperty('--orange-hi');
+};
+window.applyTheme(C.theme);
+const TMAP=[];
+for(const k in TDEF){const v=C.theme[k];if(v&&v.toLowerCase()!==TDEF[k].toLowerCase())TMAP.push([new RegExp(TDEF[k],'gi'),v]);}
+{const RGBA={orange:'255,157,39',lilac:'164,144,255',off:'245,242,240'};
+ for(const k in RGBA){const v=C.theme[k];if(v&&RGB(v)!==RGBA[k])TMAP.push([new RegExp('rgba\\('+RGBA[k],'g'),'rgba('+RGB(v)]);}}
+const T=s=>{if(s==null)return s;let o=String(s);for(const[a,b]of TMAP)o=o.replace(a,b);return o;};
+
 const anims=[];
 function at(t0,dur,fn,ease){anims.push({t0,t1:t0+dur,ease:ease||E.o,fn});}
 function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0)):(t>=a.t0?1:0);a.fn(a.ease(p),t);}}
@@ -204,10 +233,10 @@ at(6.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   svg.innerHTML=`<g data-asset="ig.s1.pipeline">${ASSETIN('ig.s1.pipeline')}</g><g id="s1lbls">`+
     nodes.map((n,i)=>{const side=n.x<540?1:-1;const tx=n.x+side*74;const anchor=side>0?'start':'end';
       return `<g class="s1lbl" opacity="0">
-      <text x="${tx}" y="${n.y+2}" text-anchor="${anchor}" fill="#F5F2F0" font-family="Saira" font-weight="600" font-size="34">${n.label}</text>
-      <text x="${tx}" y="${n.y+40}" text-anchor="${anchor}" fill="rgba(164,144,255,.9)" font-family="Saira" font-weight="500" font-size="23">${C.shared.codes[i]}</text>
+      <text x="${tx}" y="${n.y+2}" text-anchor="${anchor}" fill="${C.theme.off}" font-family="Saira" font-weight="600" font-size="34">${n.label}</text>
+      <text x="${tx}" y="${n.y+40}" text-anchor="${anchor}" fill="rgba(${RGB(C.theme.lilac)},.9)" font-family="Saira" font-weight="500" font-size="23">${C.shared.codes[i]}</text>
     </g>`;}).join('')+`</g>`+
-    `<circle id="s1puck" r="12" fill="#F5F2F0" opacity="0"/>`;
+    `<circle id="s1puck" r="12" fill="${C.theme.off}" opacity="0"/>`;
   rise($('#s1k'),6.4,0.8,30);
   rise($('#s1h'),6.7,1.0,50);
   const path=svg.querySelector('#s1path');
@@ -226,20 +255,20 @@ at(6.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   const hx=540,hy=1000;
   svg.innerHTML=`<g data-asset="ig.s6.map">${ASSETIN('ig.s6.map')}</g>`+
    `<g id="s6hero" opacity="0">
-      <circle id="s6fence" cx="${hx}" cy="${hy}" r="150" fill="rgba(255,157,39,.10)" stroke="#FF9D27" stroke-width="3.5"/>
-      <circle id="s6ring" cx="${hx}" cy="${hy}" r="150" fill="none" stroke="#F5F2F0" stroke-width="2" opacity="0"/>
-      <circle id="s6ring2" cx="${hx}" cy="${hy}" r="150" fill="none" stroke="#FF9D27" stroke-width="2" opacity="0"/>
-      <text x="${hx}" y="${hy-176}" text-anchor="middle" fill="#FF9D27" font-family="Saira" font-weight="700" font-size="30">${C.s6.heroLabel}</text>
+      <circle id="s6fence" cx="${hx}" cy="${hy}" r="150" fill="rgba(${RGB(C.theme.orange)},.10)" stroke="${C.theme.orange}" stroke-width="3.5"/>
+      <circle id="s6ring" cx="${hx}" cy="${hy}" r="150" fill="none" stroke="${C.theme.off}" stroke-width="2" opacity="0"/>
+      <circle id="s6ring2" cx="${hx}" cy="${hy}" r="150" fill="none" stroke="${C.theme.orange}" stroke-width="2" opacity="0"/>
+      <text x="${hx}" y="${hy-176}" text-anchor="middle" fill="${C.theme.orange}" font-family="Saira" font-weight="700" font-size="30">${C.s6.heroLabel}</text>
     </g>
     <g id="s6worker" opacity="0">
-      <circle id="s6wh" r="26" fill="none" stroke="#A490FF" stroke-width="2" opacity=".6"/>
-      <circle r="14" fill="#A490FF"/><circle id="s6wdo" r="14" fill="#FF9D27" opacity="0"/>
+      <circle id="s6wh" r="26" fill="none" stroke="${C.theme.lilac}" stroke-width="2" opacity=".6"/>
+      <circle r="14" fill="${C.theme.lilac}"/><circle id="s6wdo" r="14" fill="${C.theme.orange}" opacity="0"/>
     </g>
     <g id="s6badge" opacity="0">
-      <rect id="s6brect" x="${hx-205}" y="${hy+206}" width="410" height="66" rx="33" fill="#0f1a20" stroke="rgba(245,242,240,.35)" stroke-width="2"/>
-      <circle id="s6bdot" cx="${hx-165}" cy="${hy+239}" r="8" fill="rgba(245,242,240,.35)"/>
-      <text id="s6btxt1" x="${hx+18}" y="${hy+249}" text-anchor="middle" fill="rgba(245,242,240,.75)" font-family="Saira" font-weight="600" font-size="28">${C.s6.badgeOut}</text>
-      <text id="s6btxt2" x="${hx+18}" y="${hy+249}" text-anchor="middle" fill="#F5F2F0" font-family="Saira" font-weight="600" font-size="28" opacity="0">${C.s6.badgeIn}</text>
+      <rect id="s6brect" x="${hx-205}" y="${hy+206}" width="410" height="66" rx="33" fill="${C.theme.deep}" stroke="rgba(${RGB(C.theme.off)},.35)" stroke-width="2"/>
+      <circle id="s6bdot" cx="${hx-165}" cy="${hy+239}" r="8" fill="rgba(${RGB(C.theme.off)},.35)"/>
+      <text id="s6btxt1" x="${hx+18}" y="${hy+249}" text-anchor="middle" fill="rgba(${RGB(C.theme.off)},.75)" font-family="Saira" font-weight="600" font-size="28">${C.s6.badgeOut}</text>
+      <text id="s6btxt2" x="${hx+18}" y="${hy+249}" text-anchor="middle" fill="${C.theme.off}" font-family="Saira" font-weight="600" font-size="28" opacity="0">${C.s6.badgeIn}</text>
     </g>`;
   [...svg.querySelectorAll('.fence')].forEach((f,i)=>{at(14.4+i*0.12,0.6,p=>{f.setAttribute('opacity',p*0.9);},E.o);});
   at(15.2,0.8,p=>{$('#s6hero').setAttribute('opacity',p);});
@@ -270,16 +299,16 @@ at(6.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   rise($('#s9h'),21.2,1.0,50);
   $('#s9flow').innerHTML=C.s9.steps.map((s,i)=>`
     <div class="s9s" style="display:flex;align-items:center;gap:18px">
-      <div style="border:2px solid ${i===C.s9.steps.length-1?'#FF9D27':'rgba(245,242,240,.3)'};border-radius:14px;padding:12px 22px;font-weight:600;font-size:25px;background:rgba(15,26,32,.6);${i===C.s9.steps.length-1?'color:#FF9D27':''}">${s}</div>
-      ${i<C.s9.steps.length-1?'<div style="color:#FF9D27;font-size:26px">→</div>':''}
+      <div style="border:2px solid ${i===C.s9.steps.length-1?'var(--orange)':'rgba(var(--off-rgb),.3)'};border-radius:14px;padding:12px 22px;font-weight:600;font-size:25px;background:rgba(var(--deep-rgb),.6);${i===C.s9.steps.length-1?'color:var(--orange)':''}">${T(s)}</div>
+      ${i<C.s9.steps.length-1?'<div style="color:var(--orange);font-size:26px">→</div>':''}
     </div>`).join('');
   [...document.querySelectorAll('.s9s')].forEach((s,i)=>pop(s,21.7+i*0.3,0.55));
-  $('#s9invt').innerHTML=C.s9.invTitle;$('#s9invref').innerHTML=C.s9.invRef;
-  C.s9.invRows.forEach((r,i)=>{const el=$('#s9r'+i);el.children[0].innerHTML=r[0];el.children[1].innerHTML=r[1];});
-  $('#s9totlbl').innerHTML=C.s9.invTotalLabel;
+  $('#s9invt').innerHTML=T(C.s9.invTitle);$('#s9invref').innerHTML=T(C.s9.invRef);
+  C.s9.invRows.forEach((r,i)=>{const el=$('#s9r'+i);el.children[0].innerHTML=T(r[0]);el.children[1].innerHTML=T(r[1]);});
+  $('#s9totlbl').innerHTML=T(C.s9.invTotalLabel);
   riseKeep($('#s9inv'),22.6,1.0,70,'translateX(-50%)');
   at(23.4,1.6,p=>{$('#s9amt').textContent=C.s9.currency+' '+(C.s9.amount*p).toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});},E.oe);
-  $('#s9paid').innerHTML=C.s9.chips.map((c,i)=>`<div class="chip"><span class="dot"${i===1?` style="background:${C.theme.lilac}"`:''}></span>${c}</div>`).join('');
+  $('#s9paid').innerHTML=C.s9.chips.map((c,i)=>`<div class="chip"><span class="dot"${i===1?` style="background:${C.theme.lilac}"`:''}></span>${T(c)}</div>`).join('');
   [...document.querySelectorAll('#s9paid .chip')].forEach((c,i)=>rise(c,24.5+i*0.35,0.8,30));
 }
 
@@ -293,8 +322,8 @@ at(6.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   rise($('#s10h'),27.0,1.0,50);
   $('#s10stats').innerHTML=C.s10.stats.map((s,i)=>`
     <div class="s10s" style="text-align:center">
-      <div style="font-weight:800;font-size:66px;color:#FF9D27">${s[0]}</div>
-      <div style="font-size:23px;color:rgba(245,242,240,.65);margin-top:2px;letter-spacing:.06em">${s[1]}</div>
+      <div style="font-weight:800;font-size:66px;color:var(--orange)">${T(s[0])}</div>
+      <div style="font-size:23px;color:rgba(var(--off-rgb),.65);margin-top:2px;letter-spacing:.06em">${T(s[1])}</div>
     </div>`).join('');
   [...document.querySelectorAll('.s10s')].forEach((s,i)=>pop(s,27.7+i*0.25,0.65));
   rise($('#s10tag'),29.2,1.0,40);
@@ -306,27 +335,15 @@ at(6.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
 
 /* ============================== APPLY CONTENT ============================== */
 {
-  const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=html;};
+  /* values bind through T() so stock-palette literals inside the data follow C.theme;
+     chrome colour needs no pass — it references the :root vars set by the theme boot */
+  const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=T(html);};
   set('#s0k',C.s0.kicker);set('#s0h',C.s0.headline);set('#s0b',C.s0.body);
   set('#s1k',C.s1.kicker);set('#s1h',C.s1.headline);
   set('#s6k',C.s6.kicker);set('#s6h',C.s6.headline);
   set('#s9k',C.s9.kicker);set('#s9h',C.s9.headline);
   set('#s10k',C.s10.kicker);set('#s10h',C.s10.headline);
   set('#s10tagline',C.s10.tagline);set('#s10foot',C.s10.foot);
-  /* retheme — same contract as film.html */
-  const DEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
-  const map=[];
-  for(const k in DEF){const v=C.theme[k];if(v&&v.toLowerCase()!==DEF[k].toLowerCase())map.push([DEF[k],v]);}
-  const RGBA={orange:'255,157,39',lilac:'164,144,255',off:'245,242,240'};
-  for(const k in RGBA){const v=C.theme[k];if(v&&RGB(v)!==RGBA[k])map.push(['rgba('+RGBA[k],'rgba('+RGB(v)]);}
-  if(map.length){
-    const rep=s=>{let o=s;for(const[a,b]of map)o=o.replace(new RegExp(a.replace(/[()]/g,'\\$&'),'gi'),b);return o;};
-    document.querySelectorAll('style').forEach(st=>{st.textContent=rep(st.textContent);});
-    document.querySelectorAll('*').forEach(el=>{
-      const sty=el.getAttribute&&el.getAttribute('style');if(sty){const r=rep(sty);if(r!==sty)el.setAttribute('style',r);}
-      for(const a of ['fill','stroke']){const v=el.getAttribute&&el.getAttribute(a);if(v){const r=rep(v);if(r!==v)el.setAttribute(a,r);}}
-    });
-  }
 }
 
 /* ============================== DRIVER ============================== */
