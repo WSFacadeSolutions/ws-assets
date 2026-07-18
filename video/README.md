@@ -49,7 +49,13 @@ and viewBox (written by `--freeze-assets`).
   (those scenes use alpha PNG stills). Edit anything inside the group; keep the
   group and its name. `<name>.kit.svg`, when present, is a Figma-facing variant
   of the same art (the frozen bg is a foreignObject/CSS gradient for pixel parity;
-  its kit variant is a native SVG gradient Figma can edit).
+  its kit variant is a native SVG gradient Figma can edit). A hole is only
+  transparent if nothing opaque is painted beneath it, so on every scene that
+  ships editable art the GLOBAL slots (the bg) are hidden at capture too, and
+  re-embedded as UNNAMED visual-only groups below the named ones — the pull
+  ignores them (18 Jul 2026 fix; before it, scenes after s0 baked the bg into
+  the still and the editable vectors sat invisible under an opaque image,
+  which read as "the import dropped the illustrations").
 - **Relay reading trap (18 Jul 2026, resolved)**: a real Figma import keeps every
   `asset.*` vector — verified by exporting the imported frames back out of a live
   document, art intact. The earlier "import empties the asset groups" finding was
