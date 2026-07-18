@@ -134,12 +134,23 @@ function render(){
   <h2 style="margin-top:20px">🔊 Áudio — soundtrack</h2>
   <div class="atrack" id="atrack"><div class="awave"></div>${marks}
    <div class="playhead" id="aph" style="left:0%"></div></div>
+  <div class="muted" style="margin-left:110px;margin-top:4px">
+   🎵 <b>música de fundo</b> — ${au.music_src?`<code>${esc(au.music_src.replace(/^music\//,''))}</code>
+    <button onclick="clearMusic()" style="padding:2px 8px;font-size:12px">✖ voltar à procedural</button>`
+    :`procedural (gerada) · <input type="file" id="musfile" accept="audio/*" style="max-width:190px;font-size:12px">
+    <button onclick="upMusic()" style="padding:2px 8px;font-size:12px">⬆ trocar música</button>`}
+   &nbsp;· vol <input type="range" class="vol" min="0" max="2" step="0.05" value="${au.music_vol??1}"
+     oninput="cut().audio.music_vol=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.music_vol??1}</b></div>
   <div class="muted" style="margin-left:110px">
+   💨 <b>swoosh/SFX</b> (risers + impactos)
    <button onclick="addRiser()" style="padding:2px 8px;font-size:12px">+ riser</button>
    <button onclick="delRiser()" style="padding:2px 8px;font-size:12px">− último riser</button>
-   &nbsp;· volume do mux <input type="range" class="vol" min="0.1" max="1.5" step="0.05" value="${au.volume??0.9}"
+   &nbsp;· vol <input type="range" class="vol" min="0" max="2" step="0.05" value="${au.sfx_vol??1}"
+     oninput="cut().audio.sfx_vol=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.sfx_vol??1}</b></div>
+  <div class="muted" style="margin-left:110px">
+   🎚 volume do mux <input type="range" class="vol" min="0.1" max="1.5" step="0.05" value="${au.volume??0.9}"
      oninput="cut().audio.volume=+this.value;this.nextElementSibling.textContent=this.value"> <b>${au.volume??0.9}</b>
-   &nbsp;· <span class="muted">o wav regenera no próximo render (determinístico)</span></div>
+   &nbsp;· <span class="muted">trilhas independentes — o wav regenera no próximo render (determinístico)</span></div>
   <h2 style="margin-top:20px">👁 Preview ao vivo <span class="muted" style="text-transform:none;letter-spacing:0">— timeline guardada · sem áudio (wav é do último render)</span></h2>
   <div class="pv">
    <div class="pwrap" id="pwrap"><iframe id="pframe"></iframe></div>
@@ -160,6 +171,21 @@ function render(){
 }
 function addRiser(){const c=cut();(c.audio.risers=c.audio.risers||[]).push(+(dur(c)/2).toFixed(1));render()}
 function delRiser(){(cut().audio.risers||[]).pop();render()}
+
+/* ---------- background-music swap: upload replaces the procedural music stem;
+   the SFX stem (risers/impacts) stays procedural and independent ---------- */
+async function upMusic(){
+ const f=(document.getElementById('musfile')||{}).files?.[0];
+ if(!f){msg('escolhe o arquivo de música primeiro (mp3/wav/m4a)',1);return}
+ msg('enviando '+f.name+'…');
+ const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
+ const r=await fetch('/api/film-music',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,comp:CUR,name:f.name,data})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ cut().audio.music_src=j.music_src;
+ msg('✓ música de fundo trocada — entra no próximo render');render()}
+function clearMusic(){cut().audio.music_src=null;msg('trilha procedural de volta — 💾 guarda a timeline');render()}
 
 /* ---------- dragging (listeners on document: render() replaces nodes mid-drag) ---------- */
 function bindDrag(){

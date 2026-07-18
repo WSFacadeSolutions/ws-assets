@@ -5,7 +5,7 @@ window.CONTENT = {
   "petrol": "#1E2F38",
   "deep": "#0f1a20",
   "off": "#F5F2F0",
-  "orange": "#FF9D27",
+  "orange": "#9670D8",
   "lilac": "#A490FF",
   "violet": "#6040cc"
  },

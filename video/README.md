@@ -126,29 +126,44 @@ edited frames on the desktop (Export → SVG, "Include id attribute" ON and
 WS Film card ("enviar SVG") — they stage in the project's `figma-upload/` and the
 next pull consumes them once instead of calling the API. Only the edited frames
 are needed; this is also the ONLY path that syncs `asset.*` art (see above).
-Exported tspan line boxes are joined with newlines, and EVERY text layer inside a
-named group is joined too — Figma imports a multi-line kit text as one layer per
-line, and reading only the first one silently truncated 13 strings across the
-film on 18 Jul 2026 (all restored from the authored fallbacks; the plain-word
-comparison keeps unedited values from churning). Outlined exports still sync
+Exported tspan line boxes and sibling text layers inside a named group are joined
+by VISUAL position (same baseline ±4 px = one line left-to-right, distinct
+baselines top-to-bottom as newlines) — never by document order. Figma imports a
+multi-line kit text as one layer per line (reading only the first silently
+truncated 13 strings across the film on 18 Jul 2026, all restored) and exports a
+styled inline run (a kit `<span>`) as its own text layer with no order guarantee
+(document-order joining scrambled `s5.body` on 18 Jul 2026 — the positional join
+is the fix; the plain-word comparison keeps unedited values from churning). Outlined exports still sync
 numbers and confirm unchanged strings (the auto layer name carries the words) but
 refuse string edits — the name may be truncated. A quota 429 on the API path is
 non-fatal: the trigger continues with local content and says so in the log.
 
 ## Timeline + Mini-Premiere
 
-`timeline.json` is the single home of scene windows (real seconds) and audio timings
-(`risers`, `shimmer`, `volume`) per composition. The compositions keep their authored
-keyframes and **time-warp** them piecewise-linearly to the edited windows — dragging a
-scene boundary stretches everything inside it; no timeline.js means identity (the
-authored cut, byte-identical output).
+`timeline.json` is the single home of scene windows (real seconds) and audio data
+(`risers`, `shimmer`, `volume`, `music_src`, `music_vol`, `sfx_vol`) per composition.
+The compositions keep their authored keyframes and **time-warp** them
+piecewise-linearly to the edited windows — dragging a scene boundary stretches
+everything inside it; no timeline.js means identity (the authored cut,
+byte-identical output).
+
+The soundtrack is two independent stems: **music** (harmonic bed + finale shimmer)
+and **sfx** (scene-change risers + impacts). `soundtrack.py --stems` writes both
+next to the mix with a shared normalisation, so music + sfx sums back to the
+historic mix — with no custom music and both volumes at 1 the wav is byte-identical
+to the old single-file output. `audio.music_src` (a file under the project's
+`music/`, uploaded from the Mini-Premiere) replaces the music stem for the next
+render: looped or trimmed to the cut, given the film's 1 s/3.5 s fades, then mixed
+with the untouched sfx stem at `music_vol`/`sfx_vol`.
 
 The **Mini-Premiere** (`editor.html`, served operator-only at
 `ops.wssoltech.au/film-editor?project=<name>`) edits that data visually: draggable
-Gantt of scenes, draggable riser/shimmer markers, mux volume, stills strip, and
-buttons for the stills/publish triggers. Saving validates (contiguous scenes ≥ 0.5 s,
-markers inside the cut) and regenerates `timeline.js`; the MP4 only changes on the
-next render.
+Gantt of scenes, two audio tracks (background music with per-track volume and a
+"trocar música" upload → `/api/film-music`, swoosh/SFX with draggable riser/shimmer
+markers and its own volume), mux volume, stills strip, and buttons for the
+stills/publish triggers. Saving validates (contiguous scenes ≥ 0.5 s, markers inside
+the cut, volumes in range, `music_src` present on disk) and regenerates
+`timeline.js`; the MP4 only changes on the next render.
 
 ## Headless project factory: `new_video.py` + the /film-new microsite
 
@@ -190,18 +205,22 @@ FLOW 1 — new video from a brief (AI build)
 4. Adjust — copy, colours AND art: "gerar template Figma" trigger → import the
    kit (one Figma page per composition) → edit texts in place and redraw inside
    the asset.* groups (background, tower, map, icons…) → export the edited
-   frames (SVG, "Include id attribute" ON, "Outline text" OFF) → "enviar SVG"
-   on the card → stills again. Timings/audio: Mini-Premiere.
+   frames (SVG, "Include id attribute" ON, "Outline text" OFF) → "enviar e
+   gerar stills" on the card — the upload rejects id-less exports on the spot,
+   the pull + stills run with the live log open on the card, and the toast
+   says how it ended. Timings/audio: Mini-Premiere.
 5. Run "render completo SEM publicar" (~12 min) and preview the MP4 with the
    "último render" link on the card.
 6. Publish now ("publicar o último render", seconds) or schedule it on the card
    ("agendar publicação", Sydney time).
 
 FLOW 2 — fine-tune a finished film (copy + audio + re-render + schedule)
-1. Audio (the swooshes are the lilac riser markers): Mini-Premiere → pick the
-   composition tab → drag a riser to move it, "− último riser" removes the last
-   one (repeat to remove them all), volume slider sets the mix. Save — the
-   soundtrack rebuilds itself on the next render (timeline newer than the wav).
+1. Audio: Mini-Premiere → pick the composition tab. Two independent tracks:
+   background music (volume slider; "trocar música" swaps in your own mp3/wav,
+   looped/trimmed to the cut with the film's fades; "voltar à procedural"
+   restores the generated score) and swoosh/SFX (the lilac riser markers — drag
+   to move, "− último riser" removes the last one — plus its own volume).
+   Save — the soundtrack rebuilds itself on the next render.
 2. Copy: for a few words, edit content.json + `python3 figma_sync.py --local`
    (or ask Claude); for visual editing — texts or the asset.* art — use the
    Figma kit flow as in flow 1 step 4.

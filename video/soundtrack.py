@@ -13,6 +13,9 @@ ap.add_argument('--dur', type=float, default=116.0)
 ap.add_argument('--risers', type=str, default='10.5,19.5,29.5,42.5,51.0,60.5,71.5,86.0,94.5,104.0')
 ap.add_argument('--shimmer', type=float, default=105.5)
 ap.add_argument('--out', type=str, default='soundtrack.wav')
+ap.add_argument('--stems', action='store_true',
+                help='also write <out>-music.wav (bed+shimmer) and <out>-sfx.wav (risers+impacts); '
+                     'both share the mix normalisation, so music+sfx sums back to the mix')
 args = ap.parse_args()
 
 SR = 48000
@@ -21,7 +24,11 @@ N = int(SR * DUR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(7)
 
-mix = np.zeros((N, 2))
+# two stems, editable independently in the Mini-Premiere: 'music' (harmonic bed +
+# finale shimmer) and 'sfx' (scene-change risers + impacts). mix = their sum.
+music = np.zeros((N, 2))
+sfx = np.zeros((N, 2))
+mix = music   # default target for place(); switched before the riser section
 
 def note_hz(semis_from_a3):
     return 220.0 * 2 ** (semis_from_a3 / 12.0)
@@ -143,7 +150,8 @@ while tt0 < song_end - 0.1:
     tt0 += seg
 
 # ------------------------------------------------------------- risers ------
-# noise swells into each major scene change
+# noise swells into each major scene change — these land on the SFX stem
+mix = sfx
 for st in [float(x) for x in args.risers.split(',')]:
     dur_r = 2.2
     n = int(dur_r * SR)
@@ -159,7 +167,8 @@ for st in [float(x) for x in args.risers.split(',')]:
     imp = np.sin(ph) * np.exp(-np.arange(n2) / (0.12 * SR))
     place(imp, st, gain=0.16)
 
-# final chord lift + shimmer at finale
+# final chord lift + shimmer at finale — back on the music stem
+mix = music
 n = int(9 * SR)
 shimmer = np.zeros(n)
 for s in [12, 15, 19, 24, 27]:
@@ -171,20 +180,33 @@ place(shimmer, args.shimmer, gain=0.10)
 
 # ------------------------------------------------------------- master ------
 
-# master fades
+# master fades on both stems, so any stem subset keeps the film's envelope
 fade_in = int(1.0 * SR)
-mix[:fade_in] *= np.linspace(0, 1, fade_in)[:, None]
 fade_out = int(3.5 * SR)
-mix[-fade_out:] *= np.linspace(1, 0, fade_out)[:, None]
+for stem in (music, sfx):
+    stem[:fade_in] *= np.linspace(0, 1, fade_in)[:, None]
+    stem[-fade_out:] *= np.linspace(1, 0, fade_out)[:, None]
 
-# soft-clip + normalise to -14 LUFS-ish peak headroom
-mix = np.tanh(mix * 1.4)
-mix *= 0.89 / np.max(np.abs(mix))
+# soft-clip + normalise to -14 LUFS-ish peak headroom. The gain comes from the
+# COMBINED mix and is shared by the stems: music+sfx sums back to the mix (the
+# per-stem tanh is a hair gentler than clipping the sum, inaudible at ~0.4 peak).
+mix = np.tanh((music + sfx) * 1.4)
+g = 0.89 / np.max(np.abs(mix))
+mix *= g
 
-pcm = (mix * 32767).astype(np.int16)
-with wave.open(args.out, 'wb') as w:
-    w.setnchannels(2)
-    w.setsampwidth(2)
-    w.setframerate(SR)
-    w.writeframes(pcm.tobytes())
-print('wrote', args.out, pcm.shape)
+
+def write_wav(path, buf):
+    pcm = (buf * 32767).astype(np.int16)
+    with wave.open(path, 'wb') as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(SR)
+        w.writeframes(pcm.tobytes())
+    print('wrote', path, pcm.shape)
+
+
+write_wav(args.out, mix)
+if args.stems:
+    base = args.out[:-4] if args.out.endswith('.wav') else args.out
+    write_wav(base + '-music.wav', np.tanh(music * 1.4) * g)
+    write_wav(base + '-sfx.wav', np.tanh(sfx * 1.4) * g)

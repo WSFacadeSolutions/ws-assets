@@ -24,3 +24,4 @@ video/figma-upload/
 video/__pycache__/
 video/*.mp4
 video/*.wav
+video/music/

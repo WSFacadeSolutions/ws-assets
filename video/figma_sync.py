@@ -433,16 +433,54 @@ def parse_upload_svg(path, out, rx, outlined):
                 return v
         return None
 
+    def _num(v):
+        m = re.match(r'\s*(-?[\d.]+)', v or '')
+        return float(m.group(1)) if m else 0.0
+
+    def _xlate(el):
+        tr = el.get('transform') or ''
+        tx = ty = 0.0
+        m = re.search(r'translate\(\s*(-?[\d.]+)(?:[ ,]\s*(-?[\d.]+))?', tr)
+        if m:
+            tx, ty = float(m.group(1)), float(m.group(2) or 0)
+        m = re.search(r'matrix\((?:\s*-?[\d.]+[ ,]){4}\s*(-?[\d.]+)[ ,]\s*(-?[\d.]+)', tr)
+        if m:
+            tx, ty = tx + float(m.group(1)), ty + float(m.group(2))
+        return tx, ty
+
     def text_of(e):
-        """join EVERY <text> under e (tspans are exported line boxes; Figma may also
-        split a multi-line text into sibling <text> layers — keep every line)"""
-        found = []
-        for t in ([e] if tag(e) == 'text' else e.iter()):
-            if tag(t) != 'text':
-                continue
-            lines = [''.join(ts.itertext()) for ts in t if tag(ts) == 'tspan']
-            found.append('\n'.join(lines) if lines else ''.join(t.itertext()))
-        return '\n'.join(found) if found else None
+        """join EVERY <text> under e by VISUAL position, never document order: Figma
+        exports a styled inline run (a kit <span>) as its own <text> layer with no
+        sibling-order guarantee, so the words only line up via x/y. tspans are the
+        exported line boxes — same baseline (±4px) is one line, parts joined with
+        spaces left-to-right; distinct baselines become newlines top-to-bottom."""
+        parts = []   # (baseline y, x, words)
+
+        def walk(el, tx, ty):
+            dx, dy = _xlate(el)
+            tx, ty = tx + dx, ty + dy
+            if tag(el) == 'text':
+                boxes = [ts for ts in el if tag(ts) == 'tspan']
+                for ts in (boxes or [el]):
+                    s = ''.join(ts.itertext())
+                    if s.strip():
+                        parts.append((_num(ts.get('y') or el.get('y')) + ty,
+                                      _num(ts.get('x') or el.get('x')) + tx, s))
+                return
+            for ch in el:
+                walk(ch, tx, ty)
+
+        walk(e, 0.0, 0.0)
+        if not parts:
+            return None
+        parts.sort(key=lambda p: p[0])
+        lines, base = [], None
+        for y, x, s in parts:
+            if base is None or y - base > 4:
+                lines.append([])
+                base = y
+            lines[-1].append((x, s.strip()))
+        return '\n'.join(' '.join(s for _x, s in sorted(ln)) for ln in lines)
 
     def outlined_text_of(e):
         for ch in e.iter():
@@ -618,24 +656,50 @@ def do_publish_stills(reg):
 
 def ensure_soundtrack(reg, comp):
     """(Re)build the composition's wav from timeline.json audio whenever the
-    timeline is newer than the wav — the Mini-Premiere edits data, not code."""
+    timeline (or an uploaded music file) is newer than the wav — the Mini-Premiere
+    edits data, not code. Two independent stems: music (harmonic bed + shimmer,
+    swappable for an uploaded track via audio.music_src) and sfx (risers +
+    impacts), mixed per audio.music_vol / audio.sfx_vol. With no custom music and
+    both volumes at 1 the wav is the historic procedural mix, byte-identical."""
     tl = load_timeline(reg).get(comp['id']) or {}
+    audio, scenes = tl.get('audio') or {}, tl.get('scenes') or []
     wav = ppath(reg, comp['soundtrack'])
     tlp = ppath(reg, reg.get('timeline', 'timeline.json'))
-    if wav.exists() and (not tlp.exists() or tlp.stat().st_mtime <= wav.stat().st_mtime):
+    src = audio.get('music_src')
+    srcp = ppath(reg, src) if src else None
+    if srcp is not None and not srcp.exists():
+        sys.exit(f'{comp["id"]}: música de fundo {src} não existe mais — envia de novo '
+                 'no Mini-Premiere ou volta à trilha procedural')
+    if wav.exists() and (not tlp.exists() or tlp.stat().st_mtime <= wav.stat().st_mtime) \
+            and (srcp is None or srcp.stat().st_mtime <= wav.stat().st_mtime):
         return
-    audio, scenes = tl.get('audio') or {}, tl.get('scenes') or []
     if not scenes:
         if wav.exists():
             return
         sys.exit(f'{wav} missing and no timeline for {comp["id"]} to build it from')
     dur = max(s['end'] for s in scenes)
-    cmd = [VENV_PY, 'soundtrack.py', '--dur', dur, '--out', wav]
+    cmd = [VENV_PY, 'soundtrack.py', '--dur', dur, '--out', wav, '--stems']
     if audio.get('risers'):
         cmd += ['--risers', ','.join(str(x) for x in audio['risers'])]
     if audio.get('shimmer') is not None:
         cmd += ['--shimmer', audio['shimmer']]
     run(cmd)
+    mv, sv = float(audio.get('music_vol', 1)), float(audio.get('sfx_vol', 1))
+    if srcp is None and mv == 1 and sv == 1:
+        return   # nothing custom — keep the procedural mix untouched
+    base = str(wav)[:-4]
+    if srcp is None:
+        mfilt = f'volume={mv}'          # procedural music stem already carries the fades
+        m_in = ['-i', f'{base}-music.wav']
+    else:
+        # uploaded track: loop if shorter, trim to the cut, film fades, then gain
+        mfilt = (f'aresample=48000,aformat=channel_layouts=stereo,atrim=0:{dur},'
+                 f'afade=t=in:d=1,afade=t=out:st={max(dur - 3.5, 0)}:d=3.5,volume={mv}')
+        m_in = ['-stream_loop', '-1', '-i', srcp]
+    run(['ffmpeg', '-y', '-hide_banner', '-loglevel', 'error', *m_in, '-i', f'{base}-sfx.wav',
+         '-filter_complex', f'[0:a]{mfilt}[m];[1:a]volume={sv}[s];'
+                            f'[m][s]amix=inputs=2:duration=longest:normalize=0',
+         '-c:a', 'pcm_s16le', wav])
 
 
 def do_render(reg):
