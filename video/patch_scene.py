@@ -149,6 +149,7 @@ def main():
     ap.add_argument('--brief', help='creative brief text')
     ap.add_argument('--brief-file', help='file containing the brief')
     ap.add_argument('--env', default='ws-film', help='key env under /root/.secrets/anthropic/ (default ws-film)')
+    ap.add_argument('--model', help=f'Claude model for this run (overrides ANTHROPIC_MODEL in the env file; default {DEFAULT_MODEL})')
     ap.add_argument('--dry-run', action='store_true', help='print the task prompt and exit (no tokens spent)')
     a = ap.parse_args()
 
@@ -182,14 +183,14 @@ def main():
     envp = SECRETS_DIR / f'{a.env}.env'
     if a.dry_run:
         print(prompt)
-        print(f'\n[dry run] would use {envp} · model from ANTHROPIC_MODEL (default {DEFAULT_MODEL})')
+        print(f'\n[dry run] would use {envp} · model {a.model or f"from ANTHROPIC_MODEL (default {DEFAULT_MODEL})"}')
         return
     if not envp.exists():
         sys.exit(f'{envp} missing — paste the project key on the ops panel (Claude API keys card)')
     creds = read_env(envp)
     if not creds.get('ANTHROPIC_API_KEY'):
         sys.exit(f'ANTHROPIC_API_KEY not set in {envp}')
-    model = creds.get('ANTHROPIC_MODEL') or DEFAULT_MODEL
+    model = a.model or creds.get('ANTHROPIC_MODEL') or DEFAULT_MODEL
 
     env = dict(os.environ, ANTHROPIC_API_KEY=creds['ANTHROPIC_API_KEY'], ANTHROPIC_MODEL=model)
     log = HERE / 'projects' / f'{a.project}.{comp}.{scene}.patch.log'

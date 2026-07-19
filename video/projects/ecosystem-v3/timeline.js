@@ -1,0 +1,131 @@
+/* GENERATED from timeline.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.TIMELINE = {
+ "film": {
+  "scenes": [
+   {
+    "id": "s0",
+    "start": 0,
+    "end": 10
+   },
+   {
+    "id": "s1",
+    "start": 10,
+    "end": 19.5
+   },
+   {
+    "id": "s2",
+    "start": 19.5,
+    "end": 29.5
+   },
+   {
+    "id": "s3",
+    "start": 29.5,
+    "end": 42.5
+   },
+   {
+    "id": "s4",
+    "start": 42.5,
+    "end": 51
+   },
+   {
+    "id": "s5",
+    "start": 51,
+    "end": 60.5
+   },
+   {
+    "id": "s6",
+    "start": 60.5,
+    "end": 71.5
+   },
+   {
+    "id": "s7",
+    "start": 71.5,
+    "end": 86
+   },
+   {
+    "id": "s8",
+    "start": 86,
+    "end": 94.5
+   },
+   {
+    "id": "s9",
+    "start": 94.5,
+    "end": 104
+   },
+   {
+    "id": "sbox",
+    "start": 104,
+    "end": 112
+   },
+   {
+    "id": "s10",
+    "start": 112,
+    "end": 124
+   }
+  ],
+  "audio": {
+   "risers": [
+    10.5,
+    19.5,
+    29.5,
+    42.5,
+    51,
+    60.5,
+    71.5,
+    86,
+    94.5,
+    104,
+    112
+   ],
+   "shimmer": 113.5,
+   "volume": 0.1,
+   "sfx_vol": 0.1
+  }
+ },
+ "ig": {
+  "scenes": [
+   {
+    "id": "s0",
+    "start": 0,
+    "end": 6
+   },
+   {
+    "id": "s1",
+    "start": 6,
+    "end": 14
+   },
+   {
+    "id": "s6",
+    "start": 14,
+    "end": 21
+   },
+   {
+    "id": "s9",
+    "start": 21,
+    "end": 27.5
+   },
+   {
+    "id": "sbox",
+    "start": 27.5,
+    "end": 36
+   },
+   {
+    "id": "s10",
+    "start": 36,
+    "end": 45
+   }
+  ],
+  "audio": {
+   "risers": [
+    6,
+    14,
+    21,
+    27.5,
+    36
+   ],
+   "shimmer": 37.5,
+   "volume": 0.1,
+   "sfx_vol": 0.1
+  }
+ }
+};

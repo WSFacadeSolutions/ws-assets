@@ -1,4 +1,5 @@
-{
+/* GENERATED from timeline.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.TIMELINE = {
  "teaser": {
   "scenes": [
    {
@@ -29,4 +30,4 @@
    "sfx_vol": 0.1
   }
  }
-}
+};
