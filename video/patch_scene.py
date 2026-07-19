@@ -164,8 +164,8 @@ def main():
     html = comps[comp]['html'] if proj_dir == HERE else f'projects/{reg["dir"]}/{comps[comp]["html"]}'
 
     scene = a.scene or a.add
-    if not re.fullmatch(r's[0-9]+[a-z]?', scene or ''):
-        sys.exit('scene id must look like s2 / s11')
+    if not re.fullmatch(r's[a-z0-9]{1,8}', scene or ''):
+        sys.exit('scene id must look like s2 / s11 / sbox')
     if a.add and not a.after:
         sys.exit('--add needs --after <existing scene id>')
     brief = (a.brief or (Path(a.brief_file).read_text() if a.brief_file else '')).strip()

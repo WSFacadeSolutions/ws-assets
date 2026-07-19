@@ -274,6 +274,27 @@ FLOW 2 — fine-tune a finished film (copy + audio + theme + re-render + schedul
 6. Publish or schedule. Scheduled publishes are transient systemd timers — they
    do NOT survive a VPS reboot; reschedule if the box restarts.
 
+FLOW 2b — scene surgery in the Mini-Premiere (delete free · add/replace with AI)
+1. Delete a scene: 🗑 on its Gantt row — free, DATA-level and reversible. The
+   scene's timeline window collapses to zero (the composition's time-warp skips
+   empty windows, so it simply never shows), everything after it slides back,
+   and the boundary riser goes with it. The scene's code, art and copy stay in
+   the composition; ↩ restores it whole (duration, risers and shimmer come back
+   from the `cut` record saved inside timeline.json). Save to apply; the last
+   live scene can never be cut.
+2. Add a scene: the "🤖 Cena com IA" card — briefing + which scene it follows.
+   The dollar cost estimate (US$1–3, ws-film key) shows BEFORE you confirm; the
+   patch runs headless (patch_scene.py --add) under the project's deploy lock
+   with the live log on the page, and only lands check stills — render and
+   publish stay on your buttons.
+3. Replace a scene: ✏️ on its Gantt row — same briefing + cost flow, and it
+   asks WHERE first: in a fresh copy of the project (figma_sync --clone, auto
+   slug like ecosystem-v3 — the original stays untouched, the v1→v2 pattern) or
+   in place (the previous version stays in git). The copy appears by itself in
+   the project dropdown when the patch finishes.
+   Scene REORDER stays out of the Mini-Premiere on purpose: the time-warp must
+   stay monotonic, so reordering is code surgery — ask Claude in a session.
+
 FLOW 3 — 3D cover footage for the film (no Claude session needed)
 1. Get the cover right first: WS VibeCAD card → edit in Figma / upload the SVG →
    run the cover's build trigger (it writes the canonical box.glb). Hero renders

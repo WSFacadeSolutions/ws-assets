@@ -124,7 +124,8 @@ window.TIMELINE = {
     36
    ],
    "shimmer": 37.5,
-   "volume": 0.9
+   "volume": 0.1,
+   "sfx_vol": 0.1
   }
  }
 };
