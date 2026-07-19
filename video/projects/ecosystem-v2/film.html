@@ -841,6 +841,9 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   C.s9.invRows.forEach((r,i)=>{set(`#s9inv > div:nth-child(${i+2}) > span`,r[0]);set(`#s9inv > div:nth-child(${i+2}) > b`,r[1]);});
   set('#s9inv > div:nth-child(4) > span:first-child',C.s9.invTotalLabel);
   [...document.querySelectorAll('#s9paid .chip')].forEach((el,i)=>chip(el,C.s9.chips[i],i===1));
+  // sbox
+  set('#sboxk',C.sbox.kicker);set('#sboxh',C.sbox.headline);set('#sboxb',C.sbox.body);
+  chip($('#sboxchip'),C.sbox.chip,true);
   // s10
   set('#s10k',C.s10.kicker);set('#s10h',C.s10.headline);
   set('#s10tagline',C.s10.tagline);set('#s10foot',C.s10.foot);
