@@ -45,6 +45,8 @@ STEPS
    - timeline.json — scene windows per composition id plus audio {{risers, shimmer, volume}}.
    - brand colours as :root CSS vars applied by a window.applyTheme(theme) boot, with content data binding through the T() mapper — never raw brand hexes in <style> or inline styles;
    - any 3D box footage read from the pre-rendered libraries in video/footage/<cover>/ via a footage symlink in the project dir (plain footage/... paths, frames from window.FOOTAGE, angle-driven, seek-pure); extend readyP to await every image decode.
+   - scattered decorative art (satellite geofences, constellation dots and the like) must keep a minimum spacing — enforce a distance of at least the elements' combined radii between placements; two markers overlapping reads as a bug in the stills (WS Film round 11 lesson).
+   - vertical/Reels compositions: scene motion must never travel downward — it fights the viewer's own scroll. Prefer horizontal movement or in-place pulses/traces.
 3. Register the project: /root/ws-assets/video/projects/{slug}.json mirroring ecosystem.json (dir "{slug}", media_prefix "{slug}", compositions with html/frames/soundtrack/out/deploy/still_times).
 4. Brand: Saira type; Petroleum Blue #1E2F38, Off-White #F5F2F0, Orange #FF9D27, Lilac #A490FF; official logos ONLY from /root/ws-assets/logos/svg/ (inline the SVG; never compose mark + typed brand text); reuse the fonts/ setup of the existing compositions.
 5. From /root/ws-assets/video run: python3 figma_sync.py --project {slug} --local --stills — fix any PAGE ERROR and iterate until the stills render clean. Then run --scaffold and confirm every scene's keys appear, and --template to build and publish the Figma kit.
