@@ -12,15 +12,15 @@
   "kicker": "WS Facade Solutions · Technology"
  },
  "s1": {
-  "flashes": [
-   "Your crew, on site.",
-   "Clock in at the site fence.",
-   "The office sees it live."
+  "lines": [
+   "We build facades.",
+   "Now we build our own software.",
+   "The first of a family."
   ]
  },
  "s2": {
   "title": "Field Ops",
-  "sub": "One suite for the site — coming soon.",
+  "sub": "Built in-house. Coming soon.",
   "foot": "wssoltech.au"
  }
 }

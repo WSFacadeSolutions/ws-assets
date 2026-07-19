@@ -2,7 +2,6 @@
 <title>WS Field Ops — Instagram Teaser</title>
 <script src="content.js"></script>
 <script src="timeline.js"></script>
-<script src="footage/ws-fieldops/sheet.js"></script>
 <style>
 @font-face{font-family:Saira;src:url(fonts/saira-300.woff2) format('woff2');font-weight:300}
 @font-face{font-family:Saira;src:url(fonts/saira-400.woff2) format('woff2');font-weight:400}
@@ -56,26 +55,45 @@ h1{font-weight:800;color:var(--petrol);line-height:1.06;letter-spacing:-.01em}
     <div id="s0k" class="kicker" style="position:absolute;left:0;right:0;top:1096px;text-align:center"></div>
   </div>
 
-  <!-- persistent turntable — lives across s1 and s2, so it sits outside the scenes -->
-  <div id="ttwrap" style="position:absolute;left:110px;top:430px;width:860px;height:860px;opacity:0;
-       filter:drop-shadow(0 46px 80px rgba(var(--petrol-rgb),.28))">
-    <div id="tt" style="position:absolute;inset:0;filter:brightness(0)"></div>
-  </div>
+  <!-- persistent DRAW layer — the single continuous line lives across s1 and s2
+       (facade sketch → phone → in-app wireframe → exit → FIELD OPS underline),
+       so it sits outside the scenes like the old turntable did. #g1 is the
+       shrink wrapper: the finished drawing scales up-stage for the reveal. -->
+  <svg id="draw" width="1080" height="1920" viewBox="0 0 1080 1920" fill="none"
+       style="position:absolute;inset:0">
+    <g id="g1">
+      <rect id="p_fill" x="310" y="450" width="460" height="880" rx="64" fill="#fff" opacity="0"/>
+      <path id="p_fac"  d="M375 970 H435 V615 H460 V590 H620 V615 H645 V970 H705" stroke="var(--petrol)"/>
+      <path id="p_grid2" d="M497 615 V965 M583 615 V965 M437 705 H643 M437 795 H643 M437 885 H643" stroke="var(--petrol)"/>
+      <path id="p_phone" d="M770 860 V514 A64 64 0 0 0 706 450 H374 A64 64 0 0 0 310 514 V1266 A64 64 0 0 0 374 1330 H706 A64 64 0 0 0 770 1266 V860" stroke="var(--petrol)"/>
+      <path id="p_spk"  d="M505 495 H575" stroke="var(--petrol)" stroke-linecap="round"/>
+      <path id="p_fence" d="M390 555 L690 528 L722 770 L635 1000 L395 975 Z" stroke="var(--petrol)" stroke-linejoin="round"/>
+      <circle id="p_ring" cx="475" cy="930" r="10" stroke="var(--lilac)" stroke-width="3" opacity="0"/>
+      <circle id="p_dot" cx="475" cy="930" r="8" fill="var(--lilac)" opacity="0"/>
+      <rect id="p_cardf" x="360" y="1080" width="360" height="150" rx="24" fill="var(--lilac)" opacity="0"/>
+      <rect id="p_card" x="360" y="1080" width="360" height="150" rx="24" stroke="var(--petrol)"/>
+      <path id="p_clock" d="M459 1155 A34 34 0 1 1 425 1121 M425 1155 V1133 M425 1155 L441 1163" stroke="var(--petrol)" stroke-linecap="round"/>
+      <path id="p_lines" d="M485 1140 H640 M485 1175 H600" stroke="rgba(var(--petrol-rgb),.38)" stroke-linecap="round"/>
+      <circle id="p_tickc" cx="677" cy="1155" r="26" stroke="var(--petrol)"/>
+      <path id="p_tick" d="M664 1155 L673 1164 L690 1145" stroke="var(--petrol)" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path id="p_exit" d="M677 1155 C820 1270 780 1440 540 1490 C400 1518 330 1420 350 1288" stroke="var(--lilac)" stroke-width="5" stroke-linecap="round"/>
+    <path id="p_under" d="M350 1288 H730" stroke="var(--lilac)" stroke-width="6" stroke-linecap="round"/>
+    <circle id="pen" r="8" fill="var(--lilac)" opacity="0"/>
+  </svg>
 
-  <!-- ============ S1 SILHOUETTE FLASHES ============ -->
+  <!-- ============ S1 THE LINE BUILDS — copy cartelas under the drawing ============ -->
   <div class="scene" id="s1">
-    <svg id="s1rings" width="1080" height="1920" style="position:absolute;inset:0"></svg>
-    <div id="s1bar" style="position:absolute;left:50%;top:1392px;transform:translateX(-50%);width:64px;height:6px;border-radius:3px;background:var(--lilac);opacity:0"></div>
-    <div id="s1flashes"></div>
+    <div id="s1lines"></div>
   </div>
 
   <!-- ============ S2 REVEAL — Field Ops + brand lockup ============ -->
   <div class="scene" id="s2">
-    <h1 id="s2t" style="position:absolute;left:0;right:0;top:1140px;text-align:center;font-size:148px;text-transform:uppercase;letter-spacing:.01em"></h1>
-    <div id="s2sub" style="position:absolute;left:0;right:0;top:1348px;text-align:center;font-size:33px;font-weight:300;color:rgba(var(--petrol-rgb),.72)"></div>
+    <h1 id="s2t" style="position:absolute;left:0;right:0;top:1120px;text-align:center;font-size:148px;text-transform:uppercase;letter-spacing:.01em"></h1>
+    <div id="s2sub" style="position:absolute;left:0;right:0;top:1322px;text-align:center;font-size:33px;font-weight:300;color:rgba(var(--petrol-rgb),.72)"></div>
     <!-- official WS Facade Solutions lockup — BLACKTEXT_LILACBRICK variant
          (never compose mark + typed brand text) -->
-    <div id="s2lockup" style="position:absolute;left:0;right:0;top:1508px;text-align:center">
+    <div id="s2lockup" style="position:absolute;left:0;right:0;top:1470px;text-align:center">
       <svg viewBox="0 0 431 120" fill="none" style="width:470px;height:131px;display:inline-block"><g clip-path="url(#clip0_1000_1575)">
 <path d="M2.20005 106.61V111.907H9.81057V113.774H2.20005V119.916H0.03125V104.719H10.7451V106.606H2.20005V106.61Z" fill="black"/>
 <path d="M24.5225 116.119H16.4546L14.7866 119.916H12.5547L19.4278 104.719H21.573L28.4697 119.916H26.1945L24.5265 116.119H24.5225ZM23.7654 114.382L20.4925 106.937L17.2196 114.382H23.7694H23.7654Z" fill="black"/>
@@ -121,7 +139,7 @@ h1{font-weight:800;color:var(--petrol);line-height:1.06;letter-spacing:-.01em}
 </clipPath>
 </defs></svg>
     </div>
-    <div id="s2foot" style="position:absolute;left:0;right:0;top:1704px;text-align:center;font-size:27px;font-weight:500;color:rgba(var(--petrol-rgb),.5);letter-spacing:.08em"></div>
+    <div id="s2foot" style="position:absolute;left:0;right:0;top:1700px;text-align:center;font-size:27px;font-weight:500;color:rgba(var(--petrol-rgb),.5);letter-spacing:.08em"></div>
   </div>
 
   <!-- persistent chrome -->
@@ -174,15 +192,14 @@ function at(t0,dur,fn,ease){anims.push({t0,t1:t0+dur,ease:ease||E.o,fn});}
 function atg(t0,dur,fn,ease){at(t0,dur,(p,t)=>{if(t>=t0)fn(p,t);},ease);}
 function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0)):(t>=a.t0?1:0);a.fn(a.ease(p),t);}}
 function rise(el,t0,dur,dy=60,ease=E.oq){el.style.opacity=0;at(t0,dur,p=>{el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`;},ease);}
-function pop(el,t0,dur=0.7){el.style.opacity=0;at(t0,dur,p=>{el.style.opacity=Math.min(1,p*1.6);el.style.transform=`scale(${lerp(.82,1,p)})`;},E.ob);}
 
-/* scene windows — 14 s Reels teaser: cold open → silhouette flashes → reveal.
+/* scene windows — 20 s Reels teaser: cold open → the line builds → reveal.
    AUTHORED seconds; live windows come from timeline.json (timeline.js), which
    time-warps the whole animation — same pattern as film-ig.html. */
 const SC=[
-  ['#s0',  0.0,  2.8],
-  ['#s1',  2.8,  8.6],
-  ['#s2',  8.6, 14.0],
+  ['#s0',  0.0,  3.0],
+  ['#s1',  3.0, 13.0],
+  ['#s2', 13.0, 20.0],
 ];
 const TL=(window.TIMELINE&&window.TIMELINE.teaser)||null;
 const SC_EDIT=SC.map(([sel,a,b])=>{
@@ -227,47 +244,121 @@ at(3.3,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   rise($('#s0k'),1.2,0.9,30);
 }
 
-/* ============================== TURNTABLE (footage/ws-fieldops) ============================== */
+/* ============================== THE LINE (persistent draw layer) ==============================
+   One continuous lilac-tipped stroke draws the whole story: a facade elevation,
+   the phone around it, the geofence around the site, the clock-in card, the
+   approval tick — then leaves the phone and becomes the FIELD OPS underline.
+   Every write below is a pure function of t (both branches written), so
+   parallel renderers can seek any frame cold. */
 {
-  // Transparent turntable library from footage/ws-fieldops (gen_footage.sh) — the
-  // same consumption pattern as the ecosystem sbox scene. Silhouette (brightness 0)
-  // through s1, revealed at the s2 cut; missing footage degrades to no box.
-  const tt=$('#tt');
-  const SHEET=(window.FOOTAGE||{})['ws-fieldops'];
-  const N=SHEET?SHEET.frames:0,imgs=[];
-  for(let i=0;i<N;i++){
-    const im=document.createElement('img');
-    im.src=`footage/ws-fieldops/f${String(i).padStart(3,'0')}.png`;
-    im.style.cssText='position:absolute;inset:0;width:100%;height:100%;visibility:hidden';
-    tt.appendChild(im);imgs.push(im);
-  }
-  window.TT_READY=Promise.all(imgs.map(im=>im.decode().catch(()=>{})));
-  // one slow revolution across s1, then an eased settle onto the hero angle (f030)
-  const angle=t=>{
-    if(t<=8.6)return c01((t-2.8)/5.8);
-    return lerp(1.0,1.125,E.o(c01((t-8.6)/1.9)));
-  };
-  let cur=-1;
-  anims.push({t0:0,t1:0.01,ease:E.lin,fn:(p,t)=>{
-    if(!N)return;
-    const idx=((Math.floor(angle(t)*N)%N)+N)%N;
-    if(idx!==cur){if(imgs[cur])imgs[cur].style.visibility='hidden';imgs[idx].style.visibility='visible';cur=idx;}
+  const PEN=[   // [id, t0, t1, drawn stroke width]
+    ['p_fac',   3.35, 4.55, 4],
+    ['p_grid2', 4.55, 5.45, 3],
+    ['p_phone', 5.90, 7.30, 5],
+    ['p_spk',   7.35, 7.50, 4],
+    ['p_fence', 7.70, 8.90, 4],
+    ['p_card',  9.50,10.40, 4],
+    ['p_clock',10.45,10.90, 4],
+    ['p_lines',10.95,11.25, 5],
+    ['p_tickc',11.30,11.60, 4],
+    ['p_tick', 11.65,11.95, 5],
+    ['p_exit', 12.70,13.60, 5],
+    ['p_under',13.70,14.30, 6],
+  ];
+  const segs=PEN.map(([id,t0,t1,w])=>{
+    const el=$('#'+id);
+    const len=el.getTotalLength();
+    el.setAttribute('stroke-width',w);
+    if(id!=='p_exit'&&id!=='p_under'){
+      // draw-on: dash the full length, retract the offset with t
+      at(t0,t1-t0,(p)=>{
+        el.style.strokeDashoffset=(1-p)*len;
+      },E.io);
+      el.setAttribute('stroke-dasharray',len);
+      el.style.strokeDashoffset=len;
+    }
+    return {id,el,len,t0,t1};
+  });
+
+  // fence: solid while drawn, "sets" to dashed lilac once complete — both
+  // branches written every tick, so scrubbing backwards restores the solid line
+  const fence=$('#p_fence'),FL=fence.getTotalLength();
+  at(8.9,0.5,(p,t)=>{
+    if(t>=8.95){fence.setAttribute('stroke-dasharray','16 13');fence.style.strokeDashoffset=0;
+                fence.setAttribute('stroke','var(--lilac)');}
+    else{fence.setAttribute('stroke-dasharray',FL);fence.setAttribute('stroke','var(--petrol)');}
+  },E.lin);
+
+  // worker dot inside the fence + ONE sober ring pulse (the GeoClock nod);
+  // gated — an ungated decreasing anim would show the ring from t=0
+  at(9.0,0.5,p=>{$('#p_dot').setAttribute('opacity',p);},E.oq);
+  atg(9.15,1.2,p=>{const r=$('#p_ring');r.setAttribute('opacity',(1-p)*0.6);r.setAttribute('r',10+p*70);},E.o);
+
+  // phone screen solidifies once its outline closes
+  at(7.3,0.6,p=>{$('#p_fill').setAttribute('opacity',p*0.92);},E.o);
+
+  // approval: tick sets lilac, card floor tint fades in
+  at(11.95,0.4,(p,t)=>{
+    const on=t>=11.95;
+    $('#p_tick').setAttribute('stroke',on?'var(--lilac)':'var(--petrol)');
+    $('#p_tickc').setAttribute('stroke',on?'var(--lilac)':'var(--petrol)');
+    $('#p_cardf').setAttribute('opacity',on?p*0.07:0);
+  },E.o);
+
+  // exit swoosh: a travelling dash segment — the head advances, the tail
+  // follows, nothing remains (the line "leaves" the phone)
+  const ex=$('#p_exit'),EL=ex.getTotalLength(),SEG=170;
+  ex.setAttribute('stroke-dasharray',`${SEG} ${EL+SEG}`);
+  ex.style.strokeDashoffset=SEG;
+  at(12.70,0.90,p=>{ex.style.strokeDashoffset=SEG-p*(EL+SEG);},E.io);
+
+  // underline under FIELD OPS: normal draw-on, stays
+  const un=$('#p_under'),UL=un.getTotalLength();
+  un.setAttribute('stroke-dasharray',UL);
+  un.style.strokeDashoffset=UL;
+  at(13.70,0.60,p=>{un.style.strokeDashoffset=(1-p)*UL;},E.io);
+  // the whole draw layer bows out with the end fade
+  atg(19.0,0.8,p=>{$('#draw').style.opacity=1-p;},E.io);
+
+  // reveal shrink: the finished drawing scales up-stage to make room for the
+  // title block. Same transform maths feed the pen position mapping below.
+  const shrink=t=>{const p=E.io(c01((t-13.0)/1.1));return {s:lerp(1,0.80,p),dy:lerp(0,-230,p)};};
+  at(13.0,1.1,(p,t)=>{
+    const {s,dy}=shrink(t);
+    $('#g1').setAttribute('transform',`translate(0 ${dy}) translate(540 900) scale(${s}) translate(-540 -900)`);
+  },E.lin);
+
+  // pen tip: one lilac dot rides the active path (getPointAtLength is pure in t);
+  // wrapper paths are mapped through the same shrink transform
+  const pen=$('#pen');
+  anims.push({t0:0,t1:0.01,ease:E.lin,fn:(_,t)=>{
+    let seg=null,pp=0;
+    for(const s of segs){
+      if(t>=s.t0&&t<=s.t1+0.12){seg=s;pp=c01((t-s.t0)/(s.t1-s.t0));break;}
+    }
+    if(!seg||t<PEN[0][1]-0.02){pen.setAttribute('opacity',0);return;}
+    let pt;
+    if(seg.id==='p_exit'){
+      // follow the head of the travelling dash
+      pt=seg.el.getPointAtLength(Math.min(E.io(pp)*(seg.len+SEG),seg.len));
+    }else{
+      pt=seg.el.getPointAtLength(E.io(pp)*seg.len);
+    }
+    let x=pt.x,y=pt.y;
+    if(seg.id!=='p_exit'&&seg.id!=='p_under'){
+      const {s,dy}=shrink(t);
+      x=540+(x-540)*s; y=900+(y-900)*s+dy;
+    }
+    pen.setAttribute('cx',x);pen.setAttribute('cy',y);
+    pen.setAttribute('opacity',t<=seg.t1?0.95:c01(1-(t-seg.t1)/0.12)*0.95);
   }});
-  pop($('#ttwrap'),2.9,0.9);
-  // reveal: silhouette lifts as s2 opens
-  at(8.7,1.0,p=>{tt.style.filter=p>=1?'none':`brightness(${p})`;},E.io);
-  // settle a touch higher to clear the title block
-  at(8.6,1.3,p=>{$('#ttwrap').style.transform=`translateY(${lerp(0,-130,p)}px) scale(${lerp(1,.95,p)})`;},E.io);
-  // fade with the end card (gated — an ungated 1-p would force opacity 1 before 13.2)
-  atg(13.2,0.8,p=>{$('#ttwrap').style.opacity=1-p;},E.io);
 }
 
-/* ============================== S1 SILHOUETTE FLASHES ============================== */
+/* ============================== S1 COPY CARTELAS ============================== */
 {
-  // three quick cartelas under the silhouette, one riser each
-  const W=[[2.95,4.7],[4.7,6.6],[6.6,8.45]];
-  $('#s1flashes').innerHTML=C.s1.flashes.map((f,i)=>
-    `<h1 class="s1f" style="position:absolute;left:60px;right:60px;top:1430px;text-align:center;font-size:72px;opacity:0">${T(f)}</h1>`).join('');
+  const W=[[3.6,6.1],[6.3,9.2],[9.4,12.5]];
+  $('#s1lines').innerHTML=C.s1.lines.map(f=>
+    `<h1 class="s1f" style="position:absolute;left:70px;right:70px;top:1430px;text-align:center;font-size:62px;line-height:1.15;opacity:0">${T(f)}</h1>`).join('');
   [...document.querySelectorAll('.s1f')].forEach((el,i)=>{
     const [a,b]=W[i];
     // one windowed anim per cartela: eased entrance × exit, pure function of t
@@ -277,31 +368,19 @@ at(3.3,0.8,p=>{$('#wm').style.opacity=p*0.9;});
       el.style.transform=`translateY(${(1-pin)*40-pout*20}px)`;
     },E.lin);
   });
-  // lilac bar pulses on each swap
-  const bar=$('#s1bar');
-  W.forEach(([a],i)=>{atg(a+0.1,0.5,p=>{bar.style.opacity=Math.min(1,p*1.5);bar.style.transform=`translateX(-50%) scaleX(${lerp(.4,1,p)})`;},E.oq);});
-  atg(8.3,0.3,p=>{bar.style.opacity=1-p;},E.io);
-  // GeoClock nod: two lilac fence-ring pulses behind the box during the clock-in cartela
-  const svg=$('#s1rings');
-  svg.innerHTML=`<circle class="ring" cx="540" cy="860" r="350" fill="none" stroke="${C.theme.lilac}" stroke-width="3" opacity="0"/>`+
-                `<circle class="ring" cx="540" cy="860" r="350" fill="none" stroke="${C.theme.lilac}" stroke-width="3" opacity="0"/>`;
-  const rings=[...svg.querySelectorAll('.ring')];
-  [[4.85,0],[5.75,1]].forEach(([t0,i])=>{
-    atg(t0,1.1,p=>{rings[i].setAttribute('opacity',(1-p)*0.7);rings[i].setAttribute('r',350+p*140);},E.o);
-  });
 }
 
 /* ============================== S2 REVEAL ============================== */
 {
-  rise($('#s2t'),9.4,1.0,55);
-  rise($('#s2sub'),9.9,0.9,40);
-  rise($('#s2lockup'),10.5,1.0,40);
-  rise($('#s2foot'),10.9,0.9,25);
+  rise($('#s2t'),13.9,1.0,55);
+  rise($('#s2sub'),14.6,0.9,40);
+  rise($('#s2lockup'),15.3,1.0,40);
+  rise($('#s2foot'),15.9,0.9,25);
   // end on white — loops cleanly back into the white cold open
   const fadeEl=document.createElement('div');
   fadeEl.style.cssText='position:absolute;inset:0;background:#fff;opacity:0;z-index:99';
   $('#stage').appendChild(fadeEl);
-  at(13.3,0.7,p=>{fadeEl.style.opacity=p;},E.io);
+  at(19.2,0.8,p=>{fadeEl.style.opacity=p;},E.io);
 }
 
 /* ============================== APPLY CONTENT ============================== */
@@ -321,7 +400,7 @@ window.seek=function(frame){
 };
 window.readyP=Promise.all(
   [300,400,500,600,700,800].map(w=>document.fonts.load(`${w} 20px Saira`))
-).then(()=>document.fonts.ready).then(()=>window.TT_READY).then(()=>{window.seek(0);return true;});
+).then(()=>document.fonts.ready).then(()=>{window.seek(0);return true;});
 if(location.hash==='#play'){
   const start=performance.now();
   (function loop(){const t=(performance.now()-start)/1000;if(t<DUR){window.seek(Math.floor(t*FPS));requestAnimationFrame(loop);}})();
