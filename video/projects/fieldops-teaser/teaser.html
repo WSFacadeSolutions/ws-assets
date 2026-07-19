@@ -68,8 +68,24 @@ h1{font-weight:800;color:var(--petrol);line-height:1.06;letter-spacing:-.01em}
       <path id="p_phone" d="M770 860 V514 A64 64 0 0 0 706 450 H374 A64 64 0 0 0 310 514 V1266 A64 64 0 0 0 374 1330 H706 A64 64 0 0 0 770 1266 V860" stroke="var(--petrol)"/>
       <path id="p_spk"  d="M505 495 H575" stroke="var(--petrol)" stroke-linecap="round"/>
       <path id="p_fence" d="M540 545 H685 Q725 545 725 585 V975 Q725 1015 685 1015 H395 Q355 1015 355 975 V585 Q355 545 395 545 Z" stroke="var(--petrol)" stroke-linejoin="round"/>
-      <circle id="p_ring" cx="475" cy="930" r="10" stroke="var(--lilac)" stroke-width="3" opacity="0"/>
-      <circle id="p_dot" cx="475" cy="930" r="8" fill="var(--lilac)" opacity="0"/>
+      <circle id="p_ring" cx="475" cy="935" r="10" stroke="var(--lilac)" stroke-width="3" opacity="0"/>
+      <!-- worker pin: map-pin drop with a clock face in the head — the crew
+           member clocked in inside the fence. White-filled head keeps the
+           clock legible over the facade grid. -->
+      <g id="p_pin" opacity="0">
+        <path d="M475 935 C452 906 443 893 443 877 A32 32 0 1 1 507 877 C507 893 498 906 475 935 Z" fill="#fff" stroke="var(--lilac)" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M475 877 V860 M475 877 L488 884" stroke="var(--petrol)" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <!-- two smaller crew pins — plain heads, quieter stroke: the rest of the
+           crew inside the fence without stealing from the clock pin -->
+      <g id="p_pin2" opacity="0">
+        <path d="M615 795 C601 777 596 769 596 759 A19 19 0 1 1 634 759 C634 769 629 777 615 795 Z" fill="#fff" stroke="var(--lilac)" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="615" cy="759" r="5.5" fill="var(--lilac)"/>
+      </g>
+      <g id="p_pin3" opacity="0">
+        <path d="M672 955 C658 937 653 929 653 919 A19 19 0 1 1 691 919 C691 929 686 937 672 955 Z" fill="#fff" stroke="var(--lilac)" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="672" cy="919" r="5.5" fill="var(--lilac)"/>
+      </g>
       <rect id="p_cardf" x="360" y="1080" width="360" height="150" rx="24" fill="var(--lilac)" opacity="0"/>
       <rect id="p_card" x="360" y="1080" width="360" height="150" rx="24" stroke="var(--petrol)"/>
       <path id="p_clock" d="M459 1155 A34 34 0 1 1 425 1121 M425 1155 V1133 M425 1155 L441 1163" stroke="var(--petrol)" stroke-linecap="round"/>
@@ -79,7 +95,7 @@ h1{font-weight:800;color:var(--petrol);line-height:1.06;letter-spacing:-.01em}
     </g>
     <path id="p_exit" d="M677 1155 C820 1270 780 1440 540 1490 C400 1518 330 1420 350 1288" stroke="var(--lilac)" stroke-width="5" stroke-linecap="round"/>
     <path id="p_under" d="M350 1288 H730" stroke="var(--lilac)" stroke-width="6" stroke-linecap="round"/>
-    <circle id="pen" r="8" fill="var(--lilac)" opacity="0"/>
+    <circle id="pen" r="5.5" fill="var(--lilac)" opacity="0"/>
   </svg>
 
   <!-- ============ S1 THE LINE BUILDS — copy cartelas under the drawing ============ -->
@@ -289,10 +305,17 @@ at(3.3,0.8,p=>{$('#wm').style.opacity=p*0.9;});
     else{fence.setAttribute('stroke-dasharray',FL);fence.setAttribute('stroke','var(--petrol)');}
   },E.lin);
 
-  // worker dot inside the fence + ONE sober ring pulse (the GeoClock nod);
-  // gated — an ungated decreasing anim would show the ring from t=0
-  at(9.0,0.5,p=>{$('#p_dot').setAttribute('opacity',p);},E.oq);
-  atg(9.15,1.2,p=>{const r=$('#p_ring');r.setAttribute('opacity',(1-p)*0.6);r.setAttribute('r',10+p*70);},E.o);
+  // worker pin drops inside the fence + ONE sober ring pulse at its tip (the
+  // GeoClock nod); ring is gated — an ungated decreasing anim would show it from t=0
+  const pinDrop=(id,tip,t0,dy)=>at(t0,0.55,p=>{
+    const g=$(id);
+    g.setAttribute('opacity',Math.min(1,p*1.6));
+    g.setAttribute('transform',`translate(${tip[0]} ${tip[1]}) scale(${lerp(.4,1,p)}) translate(${-tip[0]} ${-tip[1]}) translate(0 ${(1-p)*-dy})`);
+  },E.ob);
+  pinDrop('#p_pin',[475,935],9.0,46);
+  pinDrop('#p_pin2',[615,795],9.35,34);
+  pinDrop('#p_pin3',[672,955],9.5,34);
+  atg(9.25,1.2,p=>{const r=$('#p_ring');r.setAttribute('opacity',(1-p)*0.6);r.setAttribute('r',10+p*70);},E.o);
 
   // phone screen solidifies once its outline closes
   at(7.3,0.6,p=>{$('#p_fill').setAttribute('opacity',p*0.92);},E.o);
