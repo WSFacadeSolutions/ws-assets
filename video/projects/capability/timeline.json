@@ -1,0 +1,28 @@
+{
+ "film": {
+  "scenes": [
+   {"id": "s0", "start": 0, "end": 6},
+   {"id": "s1", "start": 6, "end": 14},
+   {"id": "s2", "start": 14, "end": 17.5},
+   {"id": "s3", "start": 17.5, "end": 21},
+   {"id": "s4", "start": 21, "end": 24.5},
+   {"id": "s5", "start": 24.5, "end": 28},
+   {"id": "s6", "start": 28, "end": 31.5},
+   {"id": "s7", "start": 31.5, "end": 35},
+   {"id": "s8", "start": 35, "end": 38.5},
+   {"id": "s9", "start": 38.5, "end": 42},
+   {"id": "s10", "start": 42, "end": 50},
+   {"id": "s11", "start": 50, "end": 57},
+   {"id": "s12", "start": 57, "end": 63},
+   {"id": "s13", "start": 63, "end": 68},
+   {"id": "s14", "start": 68, "end": 72}
+  ],
+  "audio": {
+   "music_src": "music-capability.wav",
+   "music_vol": 1,
+   "sfx_vol": 0,
+   "risers": [],
+   "volume": 0.9
+  }
+ }
+}

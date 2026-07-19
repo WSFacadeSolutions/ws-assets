@@ -1,0 +1,179 @@
+/* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.CONTENT = {
+ "_note": "Canonical content for the WS capability statement film (film.html). Strings may contain HTML. Edit here and regenerate content.js with: python3 figma_sync.py --local --project capability",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#FF9D27",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "s0": {
+  "kicker": "Capability Statement · Sydney NSW",
+  "headline": "Work that <em>speaks</em> for itself.",
+  "chips": [
+   "Precision",
+   "Performance",
+   "Trust"
+  ]
+ },
+ "s1": {
+  "kicker": "Who we are",
+  "title": "One contractor for the whole finishing package.",
+  "lead": "Specialist facade contractors delivering finishing packages across high-end residential, commercial and industrial projects.",
+  "lead2": "Cosmetic and aesthetic finishing, closely managed. That focus keeps liability clear and our attention on the parts of the build people see and touch every day.",
+  "stats": [
+   {
+    "num": "7",
+    "label": "Service lines, from rendering to asset conservation"
+   },
+   {
+    "num": "1st",
+    "label": "Certified Basroc installer in NSW"
+   },
+   {
+    "num": "3",
+    "label": "Pillars: strict compliance, on-site presence, precise execution"
+   }
+  ]
+ },
+ "deliver": {
+  "kicker": "What we deliver"
+ },
+ "svc": [
+  {
+   "name": "Rendering",
+   "body": "Acrylic, texture, sand and cement, lime and pool rendering, including high-complexity facades and bespoke architectural elements.",
+   "tag": "Finished to impress",
+   "photo": "drummoyne-3.jpg"
+  },
+  {
+   "name": "Decorative Finishes",
+   "body": "Venetian plaster and Marmorino, microcement, concrete finishes, white set, lime and French wash for high-end interiors and facades.",
+   "tag": "Certified applicators",
+   "photo": "peakhurst-17.jpg"
+  },
+  {
+   "name": "Painting",
+   "body": "Interior and exterior coating systems and epoxy floors, built to protect the substrate against UV and moisture over the long term.",
+   "tag": "Preservation and character",
+   "photo": "peakhurst-21.jpg"
+  },
+  {
+   "name": "Substrate Installations",
+   "body": "Hebel, fibre cement, EPS cladding, mouldings and Basroc. The first certified Basroc installer in NSW.",
+   "tag": "What you don't see matters most",
+   "photo": "substrate.jpg"
+  },
+  {
+   "name": "Caulking and Sealant",
+   "body": "Window perimeters, technical joints, material junctions and fire-rated caulking. An architectural finish, not only a compliance requirement.",
+   "tag": "Exposed technical joints",
+   "photo": "the-crescent-8.jpg"
+  },
+  {
+   "name": "Remedial and Concrete Repair",
+   "body": "Concrete spalling repair, controlled demolition of compromised sections, and rendering over waterproofing membranes.",
+   "tag": "Precise remedial solutions",
+   "photo": "remedial.jpg"
+  },
+  {
+   "name": "Asset Conservation",
+   "body": "Maintenance programs for strata managers, body corporates and home owners. Predictive and preventive care for your long-term investment.",
+   "tag": "Protect the investment",
+   "photo": "dover-heights-15.jpg"
+  },
+  {
+   "name": "Labour Hire",
+   "body": "A specialised workforce trained to WS standards, allocated to your project when you need the trade hands and not the full package.",
+   "tag": "Trained to WS standards",
+   "photo": "cecil-hills-7.jpg"
+  }
+ ],
+ "s10": {
+  "kicker": "The WS standard",
+  "title": "Compliance focus in every layer.",
+  "pillars": [
+   {
+    "n": "01",
+    "h": "Strict compliance",
+    "p": "Fire-rated work, certified systems and material compatibility handled as non-negotiable, layer by layer."
+   },
+   {
+    "n": "02",
+    "h": "On-site presence",
+    "p": "Continuous presence on the job, from the first coat to the final inspection."
+   },
+   {
+    "n": "03",
+    "h": "Precise execution",
+    "p": "The human touch is the difference. Peace of mind through careful management, not factory-line claims."
+   }
+  ],
+  "quote": "We don't gamble with people's dreams and resources."
+ },
+ "s11": {
+  "kicker": "Why WS",
+  "title": "What sets the work apart.",
+  "diffs": [
+   {
+    "b": "First certified Basroc installer in NSW",
+    "s": "Fire-rated mineral sheet systems, with curving and bending capability."
+   },
+   {
+    "b": "Many trades, one contract",
+    "s": "One cohesive approach managing several trades at once."
+   },
+   {
+    "b": "System-compliant applications",
+    "s": "Certified applicators delivering manufacturer-backed finishing systems."
+   },
+   {
+    "b": "High-end and high-complexity",
+    "s": "Bespoke geometries kept true to the architect's design intent."
+   }
+  ]
+ },
+ "s12": {
+  "kicker": "Certified applicators",
+  "title": "The systems we're certified to apply.",
+  "capBasroc": "First certified installer in NSW",
+  "capKnauf": "Permarock system"
+ },
+ "s13": {
+  "kicker": "Get in touch",
+  "title": "Precise solutions, assured peace of mind.",
+  "fields": [
+   {
+    "l": "Trading as",
+    "v": "WS Facade Solutions"
+   },
+   {
+    "l": "Location",
+    "v": "Alma Rd, Padstow NSW 2211"
+   },
+   {
+    "l": "Phone",
+    "v": "(02) 8005 7756"
+   },
+   {
+    "l": "Email",
+    "v": "admin@wssolutions.au"
+   },
+   {
+    "l": "Web",
+    "v": "wssolutions.au"
+   },
+   {
+    "l": "Instagram",
+    "v": "@wssolutions_"
+   }
+  ],
+  "note": "ABN, licensing and current insurances available on request. Serving Sydney and surrounds."
+ },
+ "s14": {
+  "line": "Precision. Performance. Trust.",
+  "url": "wssolutions.au"
+ }
+};

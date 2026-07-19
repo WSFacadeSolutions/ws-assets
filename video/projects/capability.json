@@ -1,0 +1,37 @@
+{
+ "name": "capability",
+ "title": "WS Facade Solutions — Capability Statement",
+ "dir": "capability",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "capability",
+ "compositions": [
+  {
+   "id": "film",
+   "html": "film.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS-Capability-Statement.mp4",
+   "deploy": "capability-statement.mp4",
+   "still_times": [
+    3.2,
+    10,
+    15.8,
+    19.4,
+    22.8,
+    26.3,
+    29.8,
+    33.2,
+    36.8,
+    40.2,
+    46,
+    53.5,
+    60,
+    65.5,
+    70.5
+   ]
+  }
+ ]
+}
