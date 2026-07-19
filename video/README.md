@@ -276,13 +276,20 @@ FLOW 2 — fine-tune a finished film (copy + audio + theme + re-render + schedul
 
 FLOW 3 — 3D cover footage for the film (no Claude session needed)
 1. Get the cover right first: WS VibeCAD card → edit in Figma / upload the SVG →
-   run the cover's build trigger (it writes the canonical box.glb).
-2. Same card → "🎞 gerar footage pro film" (~3 min): a deterministic turntable
-   renders the cover's box.glb into video/footage/<slug>/ — transparent PNGs +
-   sheet.png + sheet.json, the exact library format the compositions consume
-   (the film never plays <video>). A small dark preview.mp4 appears on the card
-   for human checking only; sheet.json records which GLB (md5) produced it.
-3. Re-running the trigger after a cover rebuild simply overwrites the library.
+   run the cover's build trigger (it writes the canonical box.glb). Hero renders
+   and the film footage now share ONE engine (the model-viewer rig of the
+   showcase page), so what you approve on agents.wssoltech.au is what the film
+   gets.
+2. Same card → "🎞 gerar footage pro film" (~8 min): a deterministic turntable
+   renders the newest showcase variant into video/footage/<slug>/ — 240
+   transparent PNGs (smooth on-ones rotation) + sheet.png + sheet.json +
+   sheet.js, the exact library format the compositions consume (the film never
+   plays <video>). A small dark preview.mp4 appears on the card for human
+   checking only; sheet.json records which GLB (md5) produced it.
+3. Publishing a new cover variant auto-refreshes the footage of covers that
+   already have a library (detached, logged to vibecad-footage-<slug>-auto.log);
+   new covers still opt in via the 🎞 button. Old libraries can be deleted from
+   the generated-assets inventory on the panel.
 <!-- /ops:film-flows -->
 
 ## Brand assets

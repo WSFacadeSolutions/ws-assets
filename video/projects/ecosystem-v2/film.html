@@ -3,6 +3,7 @@
 <script src="content.js"></script>
 <script src="timeline.js"></script>
 <script src="assets.js"></script>
+<script src="footage/ws-fieldops/sheet.js"></script>
 <style>
 @font-face{font-family:Saira;src:url(fonts/saira-300.woff2) format('woff2');font-weight:300}
 @font-face{font-family:Saira;src:url(fonts/saira-400.woff2) format('woff2');font-weight:400}
@@ -718,22 +719,29 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
 
 /* ============================== SBOX PRODUCT (Field Ops turntable) ============================== */
 {
-  // 72-frame transparent turntable library from footage/ws-fieldops (gen_footage.sh —
-  // regenerating the cover's footage updates this scene with no code change). Played
-  // on twos; 72 frames = one seamless 360°, so the loop never jumps.
+  // Transparent turntable library from footage/ws-fieldops (gen_footage.sh — the
+  // 🎞 button on the VibeCAD card regenerates it and this scene follows with no code
+  // change). Frame count comes from sheet.js, so denser libraries play smoother
+  // automatically; the box turns exactly one 360° across the scene, angle-driven —
+  // the speed is identical at any frame count. Missing footage degrades to no box.
+  // Paths go through the projects/<slug>/footage -> ../../footage symlink so the
+  // URL stays inside /film-comp for the Mini-Premiere live preview.
   const tt=$('#sboxtt');
-  const N=72,imgs=[];
+  const SHEET=(window.FOOTAGE||{})['ws-fieldops'];
+  const N=SHEET?SHEET.frames:0,imgs=[];
+  const SBOX_T0=104.0,SBOX_LEN=8.0;
   for(let i=0;i<N;i++){
     const im=document.createElement('img');
-    im.src=`../../footage/ws-fieldops/f${String(i).padStart(3,'0')}.png`;
+    im.src=`footage/ws-fieldops/f${String(i).padStart(3,'0')}.png`;
     im.style.cssText='position:absolute;inset:0;width:100%;height:100%;visibility:hidden';
     tt.appendChild(im);imgs.push(im);
   }
   window.SBOX_READY=Promise.all(imgs.map(im=>im.decode().catch(()=>{})));
   let cur=-1;
   anims.push({t0:0,t1:0.01,ease:E.lin,fn:(p,t)=>{
-    const lf=Math.max(0,Math.floor((t-104.0)*FPS));
-    const idx=Math.floor(lf/2)%N;
+    if(!N)return;
+    const rev=Math.max(0,(t-SBOX_T0))/SBOX_LEN;      // one full revolution per scene
+    const idx=Math.floor(rev*N)%N;
     if(idx!==cur){if(imgs[cur])imgs[cur].style.visibility='hidden';imgs[idx].style.visibility='visible';cur=idx;}
   }});
   rise($('#sboxk'),104.4,0.8,30);

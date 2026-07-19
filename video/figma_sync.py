@@ -666,6 +666,12 @@ def do_clone(reg, slug):
     fonts = reg['_dir'] / 'fonts'
     if fonts.is_dir():
         (dst / 'fonts').symlink_to(os.path.relpath(fonts, dst))
+    # footage library rides along the same way — compositions reference it as
+    # footage/<slug>/fNNN.png so the URL stays inside /film-comp in the Mini-Premiere
+    # (a ../../ path escapes the route prefix in the browser before the request is made)
+    footage = HERE / 'footage'
+    if footage.is_dir() and not (dst / 'footage').exists():
+        (dst / 'footage').symlink_to(os.path.relpath(footage, dst))
     # uploaded music referenced by the timeline travels with the clone
     tl = load_timeline(reg)
     for comp in reg['compositions']:
