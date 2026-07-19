@@ -67,7 +67,7 @@ h1{font-weight:800;color:var(--petrol);line-height:1.06;letter-spacing:-.01em}
       <path id="p_grid2" d="M497 615 V965 M583 615 V965 M437 705 H643 M437 795 H643 M437 885 H643" stroke="var(--petrol)"/>
       <path id="p_phone" d="M770 860 V514 A64 64 0 0 0 706 450 H374 A64 64 0 0 0 310 514 V1266 A64 64 0 0 0 374 1330 H706 A64 64 0 0 0 770 1266 V860" stroke="var(--petrol)"/>
       <path id="p_spk"  d="M505 495 H575" stroke="var(--petrol)" stroke-linecap="round"/>
-      <path id="p_fence" d="M390 555 L690 528 L722 770 L635 1000 L395 975 Z" stroke="var(--petrol)" stroke-linejoin="round"/>
+      <path id="p_fence" d="M540 545 H685 Q725 545 725 585 V975 Q725 1015 685 1015 H395 Q355 1015 355 975 V585 Q355 545 395 545 Z" stroke="var(--petrol)" stroke-linejoin="round"/>
       <circle id="p_ring" cx="475" cy="930" r="10" stroke="var(--lilac)" stroke-width="3" opacity="0"/>
       <circle id="p_dot" cx="475" cy="930" r="8" fill="var(--lilac)" opacity="0"/>
       <rect id="p_cardf" x="360" y="1080" width="360" height="150" rx="24" fill="var(--lilac)" opacity="0"/>
@@ -284,7 +284,7 @@ at(3.3,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // branches written every tick, so scrubbing backwards restores the solid line
   const fence=$('#p_fence'),FL=fence.getTotalLength();
   at(8.9,0.5,(p,t)=>{
-    if(t>=8.95){fence.setAttribute('stroke-dasharray','16 13');fence.style.strokeDashoffset=0;
+    if(t>=8.95){fence.setAttribute('stroke-dasharray','12 10');fence.style.strokeDashoffset=0;
                 fence.setAttribute('stroke','var(--lilac)');}
     else{fence.setAttribute('stroke-dasharray',FL);fence.setAttribute('stroke','var(--petrol)');}
   },E.lin);
