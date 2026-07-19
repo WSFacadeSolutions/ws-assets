@@ -510,10 +510,19 @@ at(10.5,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // the area badge stay content-bound JS layers on top
   const svg=$('#s2svg');
   svg.innerHTML=`<g data-asset="s2.tower">${ASSETIN('s2.tower')}</g>`+
+   // dimension lines are choreography, not art — they lived inside the pre-freeze
+   // builder and were dropped when the tower froze into its asset (round 11 fix);
+   // as JS layers they survive any Figma replacement of the tower
+   `<g class="dim" stroke="${C.theme.orange}" stroke-width="2.5" fill="none"><path d="M650 113 L650 620" stroke-dasharray="6 8"/><path d="M638 113 L662 113"/><path d="M638 620 L662 620"/></g>
+    <g class="dim" stroke="${C.theme.orange}" stroke-width="2.5" fill="none"><path d="M180 660 L600 660" stroke-dasharray="6 8"/><path d="M180 648 L180 672"/><path d="M600 648 L600 672"/></g>`+
    `<text id="s2d1" x="676" y="368" fill="${C.theme.orange}" font-family="Saira" font-size="26" font-weight="600" opacity="0">${C.s2.dimH}</text>
     <text id="s2d2" x="330" y="712" fill="${C.theme.orange}" font-family="Saira" font-size="26" font-weight="600" opacity="0">${C.s2.dimW}</text>
     <g id="s2m2" opacity="0"><rect x="248" y="348" width="222" height="70" rx="16" fill="rgba(${RGB(C.theme.deep)},.82)" stroke="rgba(${RGB(C.theme.orange)},.6)" stroke-width="2"/><text x="359" y="396" text-anchor="middle" fill="${C.theme.off}" font-family="Saira" font-size="44" font-weight="800">${C.s2.area}</text></g>`;
-  [...svg.querySelectorAll('.wire')].forEach((w,i)=>{
+  // the tower is Figma-owned art: class hooks (.wire) do not survive the export
+  // round-trip, which is how the draw-on silently died at the freeze — so the
+  // trace targets EVERY stroked path inside the slot (null-guarded: art with no
+  // stroked paths simply rides the scene crossfade)
+  [...svg.querySelectorAll('[data-asset="s2.tower"] path[stroke]')].forEach((w,i)=>{
     const l=w.getTotalLength();w.style.strokeDasharray=l;w.style.strokeDashoffset=l;
     at(20.3+i*0.11,1.0,p=>{w.style.strokeDashoffset=l*(1-p);},E.io);
   });

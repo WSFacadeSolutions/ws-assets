@@ -1,25 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920"><path id="s1path" d="M 412 452 C 412 543, 668 543, 668 634 C 668 725, 412 725, 412 816 C 412 907, 668 907, 668 998 C 668 1089, 412 1089, 412 1180 C 412 1271, 668 1271, 668 1362 C 668 1453, 412 1453, 412 1544 C 412 1635, 668 1635, 668 1726" stroke="rgba(255,157,39,.85)" stroke-width="4" fill="none" stroke-linecap="round"></path><g id="s1n0" opacity="1">
-      <circle cx="412" cy="452" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="412" cy="452" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(394 434) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z"></path><path d="M8 8h8M8 11.5h5"></path></g>
     </g><g id="s1n1" opacity="1">
-      <circle cx="668" cy="634" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="668" cy="634" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(650 616) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6V3Z"></path><path d="M14 3v4h4M9 12h6M9 16h6"></path></g>
     </g><g id="s1n2" opacity="1">
-      <circle cx="412" cy="816" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="412" cy="816" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(394 798) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="7" ry="2.5"></ellipse><path d="M5 5v14c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V5"></path><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"></path></g>
     </g><g id="s1n3" opacity="1">
-      <circle cx="668" cy="998" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
-      <g transform="translate(650 980) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M4 16h16"></path><circle cx="9" cy="8" r="2.2" fill="#0f1a20"></circle><circle cx="15" cy="16" r="2.2" fill="#0f1a20"></circle></g>
+      <circle cx="668" cy="998" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
+      <g transform="translate(650 980) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16M4 16h16"></path><circle cx="9" cy="8" r="2.2" fill="#ffffff"></circle><circle cx="15" cy="16" r="2.2" fill="#ffffff"></circle></g>
     </g><g id="s1n4" opacity="1">
-      <circle cx="412" cy="1180" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="412" cy="1180" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(394 1162) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7.5"></circle><path d="M12 9.5V13l2.4 1.6M9.5 2.5h5"></path></g>
     </g><g id="s1n5" opacity="1">
-      <circle cx="668" cy="1362" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="668" cy="1362" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(650 1344) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.4"></rect><path d="M10.5 18h3"></path></g>
     </g><g id="s1n6" opacity="1">
-      <circle cx="412" cy="1544" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="412" cy="1544" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(394 1526) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 5.5v6c0 4.4 3 7.8 7 9.5 4-1.7 7-5.1 7-9.5v-6L12 3Z"></path><path d="m9 11.5 2.2 2.2L15.5 9"></path></g>
     </g><g id="s1n7" opacity="1">
-      <circle cx="668" cy="1726" r="34" fill="#0f1a20" stroke="#FF9D27" stroke-width="3"></circle>
+      <circle cx="668" cy="1726" r="34" fill="#ffffff" stroke="#FF9D27" stroke-width="3"></circle>
       <g transform="translate(650 1708) scale(1.5)" fill="none" stroke="#FF9D27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="2"></rect><path d="m7.5 12 3 3 6-6"></path></g>
     </g></svg>

@@ -345,9 +345,39 @@ window.CONTENT = {
   "foot": "Designed, built and operated in-house · wssoltech.au"
  },
  "ig": {
-  "s0kicker": "WS Facade Solutions · Technology",
-  "s0headline": "From the site fence to a paid invoice.",
-  "s1headline": "Every hour travels one road.",
-  "finaleCta": "wssoltech.au"
+  "_note": "The Instagram/Reels cut binds this block only (plus the shared facts: shared.stages/codes, the s9 invoice figures and the s10 stats). Every scene's copy is editable here or in the IG frames of the Figma kit.",
+  "s0": {
+   "kicker": "WS Facade Solutions · Technology",
+   "headline": "From the site fence<br>to a paid invoice.",
+   "body": "The WS operations ecosystem — designed, built and run in-house."
+  },
+  "s1": {
+   "kicker": "One pipeline · Eight stages",
+   "headline": "Every hour travels one road."
+  },
+  "s6": {
+   "kicker": "Stage 05 · GeoClock · <span class=\"wst\">WST034</span>",
+   "headline": "Hours validated at the site fence.",
+   "heroLabel": "WS0657 · Padstow",
+   "badgeOut": "Outside fence · 06:57",
+   "badgeIn": "✓ Clocked in · 06:58"
+  },
+  "s9": {
+   "kicker": "Stage 08 · Pay · <span class=\"wst\">WST039 · WST041</span>",
+   "headline": "The clock is the source of truth."
+  },
+  "sbox": {
+   "kicker": "The product · <span class=\"wst\">WS Field Ops</span>",
+   "headline": "Crew, HR and geolocation.<br>One suite for the site.",
+   "body": "One suite carries the crew’s whole day — geofenced clock-ins, site paperwork and HR records, ending in a <b style=\"font-weight:600;color:#1E2F38\">payroll-ready timesheet</b>.",
+   "chip": "agents.wssoltech.au/fieldops-box"
+  },
+  "s10": {
+   "kicker": "The WS operations ecosystem",
+   "headline": "One worked hour — from the<br>site fence to a paid invoice.",
+   "cta": "Read the full article in our bio.",
+   "tagline": "MANY TRADES · ONE STANDARD",
+   "foot": "Designed, built and operated in-house · wssoltech.au"
+  }
  }
 };

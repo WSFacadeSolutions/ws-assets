@@ -78,7 +78,8 @@ window.TIMELINE = {
     112
    ],
    "shimmer": 113.5,
-   "volume": 0.1
+   "volume": 0.1,
+   "sfx_vol": 0.1
   }
  },
  "ig": {
@@ -91,32 +92,38 @@ window.TIMELINE = {
    {
     "id": "s1",
     "start": 6,
-    "end": 13.5
+    "end": 14
    },
    {
     "id": "s6",
-    "start": 13.5,
-    "end": 20.5
+    "start": 14,
+    "end": 21
    },
    {
     "id": "s9",
-    "start": 20.5,
-    "end": 26
+    "start": 21,
+    "end": 27.5
+   },
+   {
+    "id": "sbox",
+    "start": 27.5,
+    "end": 36
    },
    {
     "id": "s10",
-    "start": 26,
-    "end": 32
+    "start": 36,
+    "end": 45
    }
   ],
   "audio": {
    "risers": [
     6,
-    13.5,
-    20.5,
-    26
+    14,
+    21,
+    27.5,
+    36
    ],
-   "shimmer": 26.5,
+   "shimmer": 37.5,
    "volume": 0.9
   }
  }
