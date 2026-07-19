@@ -1,0 +1,27 @@
+{
+ "name": "fieldops-teaser",
+ "title": "WS Field Ops — Instagram Teaser",
+ "dir": "fieldops-teaser",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "fieldops-teaser",
+ "compositions": [
+  {
+   "id": "teaser",
+   "html": "teaser.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS-FieldOps-Teaser.mp4",
+   "deploy": "fieldops-teaser.mp4",
+   "still_times": [
+    1.5,
+    4.2,
+    7.4,
+    10.4,
+    13.0
+   ]
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "_note": "Canonical content for the WS Field Ops Instagram teaser (teaser.html). Strings may contain HTML. Edit here and regenerate content.js with: python3 figma_sync.py --local --project fieldops-teaser",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#FF9D27",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "s0": {
+  "kicker": "WS Facade Solutions · Technology"
+ },
+ "s1": {
+  "flashes": [
+   "Your crew, on site.",
+   "Clock in at the site fence.",
+   "The office sees it live."
+  ]
+ },
+ "s2": {
+  "title": "Field Ops",
+  "sub": "One suite for the site — coming soon.",
+  "foot": "wssoltech.au"
+ }
+}
