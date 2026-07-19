@@ -41,11 +41,13 @@ STEPS
 1. Read /root/ws-assets/video/README.md, projects/ecosystem.json, timeline.json and skim film-ig.html to absorb the engine pattern: every animation is a pure function of the frame via window.seek(frame); the page exposes window.FPS, window.TOTAL_FRAMES, window.readyP and a #stage element; scene windows live in an SC table warped by window.TIMELINE (include the same TL/SC_EDIT/warp block).
 2. Create /root/ws-assets/video/projects/{slug}/ containing:
    - one composition HTML per format the brief asks for (default 1920x1080; Reels is 1080x1920), loading content.js and timeline.js from ITS OWN directory;
-   - content.json — every piece of copy, figure and accent colour (top-level keys: theme, shared, s0..sN), Australian English only;
+   - content.json — every piece of copy, figure and accent colour (top-level keys: theme, shared, s0..sN), Australian English only. EVERY text must be bound in the composition's APPLY CONTENT block — a scene with static-only markup is a defect (its texts become uneditable background pixels in the Figma kit). No dead keys that nothing binds.
    - timeline.json — scene windows per composition id plus audio {{risers, shimmer, volume}}.
+   - brand colours as :root CSS vars applied by a window.applyTheme(theme) boot, with content data binding through the T() mapper — never raw brand hexes in <style> or inline styles;
+   - any 3D box footage read from the pre-rendered libraries in video/footage/<cover>/ via a footage symlink in the project dir (plain footage/... paths, frames from window.FOOTAGE, angle-driven, seek-pure); extend readyP to await every image decode.
 3. Register the project: /root/ws-assets/video/projects/{slug}.json mirroring ecosystem.json (dir "{slug}", media_prefix "{slug}", compositions with html/frames/soundtrack/out/deploy/still_times).
 4. Brand: Saira type; Petroleum Blue #1E2F38, Off-White #F5F2F0, Orange #FF9D27, Lilac #A490FF; official logos ONLY from /root/ws-assets/logos/svg/ (inline the SVG; never compose mark + typed brand text); reuse the fonts/ setup of the existing compositions.
-5. From /root/ws-assets/video run: python3 figma_sync.py --project {slug} --local --stills — fix any PAGE ERROR and iterate until the stills render clean.
+5. From /root/ws-assets/video run: python3 figma_sync.py --project {slug} --local --stills — fix any PAGE ERROR and iterate until the stills render clean. Then run --scaffold and confirm every scene's keys appear, and --template to build and publish the Figma kit.
 6. Do NOT run --render or --deploy, and do not touch other projects or the ecosystem films. Never print secrets. Australian English in every file you write.
 
 Finish with a one-paragraph summary: what was created, the still timestamps to review, and anything the operator must decide."""
