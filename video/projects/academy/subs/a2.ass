@@ -1,0 +1,29 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 576
+PlayResY: 1024
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: WS,Saira SemiBold,29,&H00FFFFFF,&H00FFFFFF,&H00281E14,&H7F101418,0,0,0,0,100,100,0,0,1,1.6,1.2,2,38,38,52,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+
+Dialogue: 0,0:00:03.39,0:00:06.53,WS,,0,0,0,,Outra coisa, só meio informativa, para vocês entenderem.
+Dialogue: 0,0:00:06.73,0:00:09.55,WS,,0,0,0,,Lembra que teve uns build-ups que a gente teve que fazer?
+Dialogue: 0,0:00:10.51,0:00:11.97,WS,,0,0,0,,Por que a gente fez esses build-ups?
+Dialogue: 0,0:00:12.09,0:00:13.99,WS,,0,0,0,,Porque ele precisava instalar essa janela,
+Dialogue: 0,0:00:14.21,0:00:15.79,WS,,0,0,0,,esses frames de janela brancos.
+Dialogue: 0,0:00:16.41,0:00:20.71,WS,,0,0,0,,Então, esse concreto aqui em volta não estava todo igual.
+Dialogue: 0,0:00:20.97,0:00:22.85,WS,,0,0,0,,Então a gente fez um baita de um build-up.
+Dialogue: 0,0:00:23.25,0:00:25.47,WS,,0,0,0,,Notem que a gente só deu uma capinha.
+Dialogue: 0,0:00:25.93,0:00:28.43,WS,,0,0,0,,Olha ali o build-up.
+Dialogue: 0,0:00:28.87,0:00:31.09,WS,,0,0,0,,Ali é o concreto e embaixo é build-up.
+Dialogue: 0,0:00:31.09,0:00:32.97,WS,,0,0,0,,É tudo massa.
+Dialogue: 0,0:00:33.38,0:00:35.32,WS,,0,0,0,,E o procedimento para isso é o quê?
+Dialogue: 0,0:00:36.52,0:00:41.32,WS,,0,0,0,,Parafuso e mesh de metal, e high build em layers.
+Dialogue: 0,0:00:41.94,0:00:48.47,WS,,0,0,0,,Olha o tanto de high build que a gente colocou aqui,
+Dialogue: 0,0:00:48.47,0:00:52.03,WS,,0,0,0,,para igualar, para ficar tudo niveladinho, bonitinho.

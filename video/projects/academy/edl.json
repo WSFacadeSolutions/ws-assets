@@ -1,0 +1,189 @@
+{
+ "_note": "Edit decision lists for the WS Academy edited lessons. Times in source seconds. Each lesson: intro/endcard graphic durations, ordered cuts (in/out), optional punch (static crop-in) sub-ranges inside a cut, and subtitle blocks (src times + corrected text). build.py consumes this file.",
+ "fps": 30,
+ "size": [
+  576,
+  1024
+ ],
+ "a1": {
+  "src": "footage/protecao-piso.mp4",
+  "intro": 3.2,
+  "endcard": 2.65,
+  "cuts": [
+   {
+    "in": 9.7,
+    "out": 18.75
+   },
+   {
+    "in": 18.95,
+    "out": 35.4,
+    "punch": {
+     "until": 27.02,
+     "zoom": 1.2,
+     "ybias": 0.6
+    }
+   },
+   {
+    "in": 35.95,
+    "out": 40.6
+   }
+  ],
+  "subs": [
+   [
+    9.94,
+    12.56,
+    "A gente está fazendo a proteção no piso, né?"
+   ],
+   [
+    13.56,
+    16.12,
+    "Então, toda vez que a gente for fazer a proteção no piso,"
+   ],
+   [
+    16.26,
+    18.56,
+    "a gente tem que selar o plástico em volta."
+   ],
+   [
+    19.16,
+    20.46,
+    "Está vendo aqui que tem esse gap?"
+   ],
+   [
+    21.42,
+    23.1,
+    "Com esse gap aqui, o que acontece?"
+   ],
+   [
+    23.48,
+    27.02,
+    "O vento entra aqui embaixo e arranca o plástico."
+   ],
+   [
+    27.06,
+    29.2,
+    "Então a gente coloca a fita"
+   ],
+   [
+    29.2,
+    31.76,
+    "sempre selando toda a extremidade do plástico,"
+   ],
+   [
+    32.16,
+    35.16,
+    "porque senão a gente acaba perdendo o trampo, basicamente."
+   ],
+   [
+    36.16,
+    39.84,
+    "Então, só uma coisinha para vocês entenderem sobre a proteção."
+   ]
+  ]
+ },
+ "a2": {
+  "src": "footage/highbuild-614.mp4",
+  "intro": 3.2,
+  "endcard": 2.7,
+  "cuts": [
+   {
+    "in": 1.1,
+    "out": 14.1
+   },
+   {
+    "in": 14.6,
+    "out": 31.55,
+    "punch": {
+     "from": 24.1,
+     "zoom": 1.18,
+     "ybias": 0.5
+    }
+   },
+   {
+    "in": 32.6,
+    "out": 41.2
+   },
+   {
+    "in": 49.9,
+    "out": 60.45
+   }
+  ],
+  "subs": [
+   [
+    1.29,
+    4.43,
+    "Outra coisa, só meio informativa, para vocês entenderem."
+   ],
+   [
+    4.63,
+    7.45,
+    "Lembra que teve uns build-ups que a gente teve que fazer?"
+   ],
+   [
+    8.41,
+    9.87,
+    "Por que a gente fez esses build-ups?"
+   ],
+   [
+    9.99,
+    11.89,
+    "Porque ele precisava instalar essa janela,"
+   ],
+   [
+    12.11,
+    13.69,
+    "esses frames de janela brancos."
+   ],
+   [
+    14.81,
+    19.11,
+    "Então, esse concreto aqui em volta não estava todo igual."
+   ],
+   [
+    19.37,
+    21.25,
+    "Então a gente fez um baita de um build-up."
+   ],
+   [
+    21.65,
+    23.87,
+    "Notem que a gente só deu uma capinha."
+   ],
+   [
+    24.33,
+    26.83,
+    "Olha ali o build-up."
+   ],
+   [
+    27.27,
+    29.49,
+    "Ali é o concreto e embaixo é build-up."
+   ],
+   [
+    29.49,
+    31.37,
+    "É tudo massa."
+   ],
+   [
+    32.83,
+    34.77,
+    "E o procedimento para isso é o quê?"
+   ],
+   [
+    35.97,
+    40.77,
+    "Parafuso e mesh de metal, e high build em layers."
+   ],
+   [
+    50.09,
+    56.62,
+    "Olha o tanto de high build que a gente colocou aqui,"
+   ],
+   [
+    56.62,
+    60.18,
+    "para igualar, para ficar tudo niveladinho, bonitinho."
+   ]
+  ]
+ }
+}

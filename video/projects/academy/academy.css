@@ -1,0 +1,60 @@
+/* WS Academy graphics layer — light family: white paper, ink + lilac, Saira. */
+@font-face{font-family:Saira;src:url(fonts/saira-300.woff2) format('woff2');font-weight:300}
+@font-face{font-family:Saira;src:url(fonts/saira-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Saira;src:url(fonts/saira-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Saira;src:url(fonts/saira-600.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Saira;src:url(fonts/saira-700.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Saira;src:url(fonts/saira-800.woff2) format('woff2');font-weight:800}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:transparent}
+#stage{position:relative;width:576px;height:1024px;overflow:hidden;
+  font-family:Saira,sans-serif;background:transparent}
+
+/* full-frame opaque cards (intro + end) */
+.card{position:absolute;inset:0;background:var(--paper,#fff);display:flex;
+  align-items:center;justify-content:center;text-align:center;visibility:hidden;opacity:0}
+.in-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:490px}
+.kick{font-weight:600;font-size:15px;letter-spacing:.42em;text-indent:.42em;
+  color:var(--violet);opacity:0}
+.title{font-weight:700;font-size:44px;line-height:1.04;color:var(--ink);opacity:0}
+.title.accent{color:var(--violet)}
+.end-title{font-size:26px;font-weight:600;color:var(--petrol)}
+.hair{width:180px;height:2px;background:var(--lilac);margin:8px 0 2px;transform:scaleX(0)}
+.sub{font-weight:400;font-size:16px;color:var(--petrol);opacity:.85}
+#end .kick{opacity:1}#end .title{opacity:1}#end .sub{opacity:.85}
+
+/* lower third — top-left so it never fights the burned subtitles */
+#l3{position:absolute;left:24px;top:96px;display:flex;align-items:stretch;gap:12px;
+  background:rgba(255,255,255,.92);border:1px solid var(--mist);border-radius:3px;
+  padding:9px 18px 10px 14px;box-shadow:0 4px 18px rgba(16,20,24,.10);opacity:0}
+.l3-bar{width:4px;border-radius:2px;background:var(--lilac)}
+.l3-name{font-weight:600;font-size:20px;line-height:1.1;color:var(--ink)}
+.l3-role{font-weight:400;font-size:13px;letter-spacing:.06em;color:var(--petrol);opacity:.75}
+
+/* keyword chip — top centre */
+.topchip{position:absolute;top:96px;left:50%;margin-left:-262px;width:524px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:rgba(255,255,255,.94);border:1px solid var(--mist);border-radius:999px;
+  padding:10px 18px;font-weight:500;font-size:16.5px;color:var(--ink);
+  box-shadow:0 4px 18px rgba(16,20,24,.10);opacity:0;visibility:hidden}
+.topchip .dot{width:9px;height:9px;border-radius:50%;background:var(--lilac);flex:0 0 auto}
+
+/* rule / procedure cartela — top centre card */
+.cartela{position:absolute;top:90px;left:50%;transform:translateY(0);margin-left:-256px;width:512px;
+  background:rgba(255,255,255,.95);border:1px solid var(--mist);border-left:5px solid var(--lilac);
+  border-radius:4px;padding:14px 24px 16px;box-shadow:0 6px 22px rgba(16,20,24,.12);
+  opacity:0;visibility:hidden;text-align:left}
+.ca-kick{font-weight:600;font-size:12.5px;letter-spacing:.34em;color:var(--violet);margin-bottom:4px}
+.ca-body{font-weight:600;font-size:20px;line-height:1.2;color:var(--ink)}
+.ca-list{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.ca-item{font-weight:500;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:12px;opacity:0}
+.ca-item .n{font-weight:700;font-size:14px;color:#fff;background:var(--violet);
+  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+
+/* chapter chips — top-left */
+.chchip{position:absolute;left:24px;top:96px;display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.94);border:1px solid var(--mist);border-radius:3px;
+  padding:9px 18px;font-weight:600;font-size:15.5px;letter-spacing:.22em;text-indent:0;
+  color:var(--petrol);box-shadow:0 4px 18px rgba(16,20,24,.10);opacity:0;visibility:hidden}
+.chchip .sq{width:10px;height:10px;background:var(--lilac);flex:0 0 auto}

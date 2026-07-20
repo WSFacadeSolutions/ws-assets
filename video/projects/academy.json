@@ -1,0 +1,30 @@
+{
+ "name": "academy",
+ "title": "WS Academy — aulas editadas (Team Academy)",
+ "dir": "academy",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "academy",
+ "compositions": [
+  {
+   "id": "aula1",
+   "html": "aula1.html",
+   "frames": "frames-a1",
+   "soundtrack": "soundtrack-a1.wav",
+   "out": "WS-Academy-Aula1-graphics.mp4",
+   "deploy": "academy-aula1-graphics.mp4",
+   "still_times": [1.6, 5.5, 18.5, 24.0, 34.8]
+  },
+  {
+   "id": "aula2",
+   "html": "aula2.html",
+   "frames": "frames-a2",
+   "soundtrack": "soundtrack-a2.wav",
+   "out": "WS-Academy-Aula2-graphics.mp4",
+   "deploy": "academy-aula2-graphics.mp4",
+   "still_times": [1.6, 5.5, 17.5, 38.5, 43.0, 53.8]
+  }
+ ]
+}

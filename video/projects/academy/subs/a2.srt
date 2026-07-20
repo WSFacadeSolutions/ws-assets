@@ -1,0 +1,59 @@
+1
+00:00:03,390 --> 00:00:06,530
+Outra coisa, só meio informativa, para vocês entenderem.
+
+2
+00:00:06,730 --> 00:00:09,550
+Lembra que teve uns build-ups que a gente teve que fazer?
+
+3
+00:00:10,510 --> 00:00:11,970
+Por que a gente fez esses build-ups?
+
+4
+00:00:12,090 --> 00:00:13,990
+Porque ele precisava instalar essa janela,
+
+5
+00:00:14,210 --> 00:00:15,790
+esses frames de janela brancos.
+
+6
+00:00:16,410 --> 00:00:20,710
+Então, esse concreto aqui em volta não estava todo igual.
+
+7
+00:00:20,970 --> 00:00:22,850
+Então a gente fez um baita de um build-up.
+
+8
+00:00:23,250 --> 00:00:25,470
+Notem que a gente só deu uma capinha.
+
+9
+00:00:25,930 --> 00:00:28,430
+Olha ali o build-up.
+
+10
+00:00:28,870 --> 00:00:31,090
+Ali é o concreto e embaixo é build-up.
+
+11
+00:00:31,090 --> 00:00:32,970
+É tudo massa.
+
+12
+00:00:33,380 --> 00:00:35,320
+E o procedimento para isso é o quê?
+
+13
+00:00:36,520 --> 00:00:41,320
+Parafuso e mesh de metal, e high build em layers.
+
+14
+00:00:41,940 --> 00:00:48,470
+Olha o tanto de high build que a gente colocou aqui,
+
+15
+00:00:48,470 --> 00:00:52,030
+para igualar, para ficar tudo niveladinho, bonitinho.

@@ -1,0 +1,24 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 576
+PlayResY: 1024
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: WS,Saira SemiBold,29,&H00FFFFFF,&H00FFFFFF,&H00281E14,&H7F101418,0,0,0,0,100,100,0,0,1,1.6,1.2,2,38,38,52,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+
+Dialogue: 0,0:00:03.44,0:00:06.06,WS,,0,0,0,,A gente está fazendo a proteção no piso, né?
+Dialogue: 0,0:00:07.06,0:00:09.62,WS,,0,0,0,,Então, toda vez que a gente for fazer a proteção no piso,
+Dialogue: 0,0:00:09.76,0:00:12.06,WS,,0,0,0,,a gente tem que selar o plástico em volta.
+Dialogue: 0,0:00:12.46,0:00:13.76,WS,,0,0,0,,Está vendo aqui que tem esse gap?
+Dialogue: 0,0:00:14.72,0:00:16.40,WS,,0,0,0,,Com esse gap aqui, o que acontece?
+Dialogue: 0,0:00:16.78,0:00:20.32,WS,,0,0,0,,O vento entra aqui embaixo e arranca o plástico.
+Dialogue: 0,0:00:20.36,0:00:22.50,WS,,0,0,0,,Então a gente coloca a fita
+Dialogue: 0,0:00:22.50,0:00:25.06,WS,,0,0,0,,sempre selando toda a extremidade do plástico,
+Dialogue: 0,0:00:25.46,0:00:28.46,WS,,0,0,0,,porque senão a gente acaba perdendo o trampo, basicamente.
+Dialogue: 0,0:00:28.91,0:00:32.59,WS,,0,0,0,,Então, só uma coisinha para vocês entenderem sobre a proteção.
