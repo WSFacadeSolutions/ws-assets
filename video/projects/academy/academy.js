@@ -42,7 +42,7 @@ function buildDOM() {
     <div class="in-wrap">
       <div class="lock">
         <div id="in-logo" class="logo">${LOGO_SVG}</div>
-        <div id="in-word" class="logo-word">${C.academy.word}</div>
+        <div id="in-word" class="logo-word"><svg viewBox="0 0 430 74"><text x="0" y="71" textLength="430" lengthAdjust="spacing">${C.academy.word}</text></svg></div>
       </div>
       <div id="in-t1" class="title">${a.title1}</div>
       <div id="in-t2" class="title accent">${a.title2}</div>
@@ -78,7 +78,7 @@ function buildDOM() {
     <div class="in-wrap">
       <div class="lock lock-end">
         <div class="logo logo-end">${LOGO_SVG}</div>
-        <div class="logo-word">${C.academy.word}</div>
+        <div class="logo-word"><svg viewBox="0 0 430 74"><text x="0" y="71" textLength="430" lengthAdjust="spacing">${C.academy.word}</text></svg></div>
       </div>
       <div class="title end-title">${a.endtitle}</div>
       <div class="hair" style="transform:scaleX(1)"></div>
