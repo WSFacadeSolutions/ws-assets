@@ -5,6 +5,15 @@
    footage sits UNDER this layer in ffmpeg (build.py) — footage never enters
    the composition (rig rule). Seek-pure: no Date.now, no transitions. */
 
+// Official WS square mark, inlined (art, not copy - not a Figma kit leaf).
+const LOGO_SVG = `<svg width="430" height="294" viewBox="0 0 430 294" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path class="lq lq0" d="M130.333 223.748V289.227C130.333 290.609 129.215 291.741 127.821 291.741H9.18941C4.12643 291.741 0.0234375 287.634 0.0234375 282.566V163.811C0.0234375 162.429 1.14124 161.297 2.53521 161.297H67.92C68.5907 161.297 69.2219 161.56 69.6954 162.034L129.596 221.984C130.07 222.458 130.333 223.09 130.333 223.761V223.748Z" fill="black"/>
+<path class="lq lq1" d="M130.323 2.51438V67.9934C130.323 68.6648 130.06 69.2966 129.586 69.7706L69.6982 129.721C69.2248 130.194 68.5936 130.458 67.9229 130.458H2.51177C1.13096 130.458 0 129.339 0 127.943V9.17549C0 4.10725 4.10299 0 9.16597 0H127.811C129.192 0 130.323 1.11897 130.323 2.51438Z" fill="black"/>
+<path class="lq lq2" d="M291.408 9.17549V127.943C291.408 129.326 290.291 130.458 288.897 130.458H223.486C222.815 130.458 222.184 130.195 221.71 129.721L161.822 69.7442C161.349 69.2703 161.086 68.6384 161.086 67.9671V2.51438C161.086 1.13213 162.204 0 163.598 0H282.242C287.305 0 291.408 4.10725 291.408 9.17549Z" fill="black"/>
+<path class="lw" d="M302.776 161.558L280.657 266.885C280.157 269.097 279.421 270.821 278.198 270.821C276.475 270.821 275.975 269.097 275.489 267.135L256.315 172.629C253.856 160.808 243.783 160.07 239.351 160.07C234.919 160.07 225.096 160.808 222.636 172.629L203.213 267.135C202.713 269.097 202.227 270.821 200.504 270.821C199.281 270.821 198.531 269.097 198.045 266.885L175.926 161.558H155.766L182.317 279.194C184.526 288.54 189.444 293.464 199.768 293.464C210.827 293.464 216.982 287.566 218.704 279.444L237.142 188.874C237.628 186.649 238.365 184.437 239.351 184.437C240.574 184.437 241.074 186.649 241.56 188.874L259.761 279.444C261.47 287.566 268.111 293.464 278.934 293.464C289.008 293.464 294.176 288.54 296.385 279.194L322.936 161.558H302.776Z" fill="black"/>
+<path class="ls" d="M392.624 222.584L376.646 215.699C363.127 209.789 357.472 205.352 357.472 192.069C357.472 181.235 361.891 178.286 373.937 178.286H422.62V161.555H371.727C348.858 161.555 336.812 169.914 336.812 191.819C336.812 212.487 344.19 221.847 367.545 231.694L381.564 237.591C399.751 245.227 408.365 248.676 408.365 261.221C408.365 271.318 403.683 275.254 392.874 275.254H338.535V291.986H398.042C422.87 291.986 429.998 281.652 429.998 261.471C429.998 238.579 417.465 233.418 392.624 222.584Z" fill="black"/>
+</svg>`;
+
 const C = window.CONTENT;
 const L = window.LESSON; // 'a1' | 'a2'
 const TT = C.t[L];
@@ -31,6 +40,7 @@ function buildDOM() {
   stage.innerHTML = `
   <div id="intro" class="card">
     <div class="in-wrap">
+      <div id="in-logo" class="logo">${LOGO_SVG}</div>
       <div id="in-kick" class="kick">${C.academy.kicker}</div>
       <div id="in-t1" class="title">${a.title1}</div>
       <div id="in-t2" class="title accent">${a.title2}</div>
@@ -64,6 +74,7 @@ function buildDOM() {
 
   <div id="end" class="card">
     <div class="in-wrap">
+      <div class="logo logo-end">${LOGO_SVG}</div>
       <div class="kick">${C.academy.kicker}</div>
       <div class="title end-title">${a.endtitle}</div>
       <div class="hair" style="transform:scaleX(1)"></div>
@@ -88,11 +99,23 @@ function seek(frame) {
       n.style.opacity = String(p);
       n.style.transform = `translateY(${(1 - p) * dy}px)`;
     };
-    el('#in-kick', 0.15, 0.5, 14);
-    el('#in-t1', 0.45, 0.6, 22);
-    el('#in-t2', 0.65, 0.6, 22);
-    el('#in-sub', 1.15, 0.5, 12);
-    $('#in-rule').style.transform = `scaleX(${ez((t - 0.95) / 0.6)})`;
+    // WS square mark assembles brick by brick, then the letters land
+    const piece = (sel, t0, dx, dy) => {
+      const p = ez((t - t0) / 0.45);
+      const n = $('#in-logo ' + sel);
+      n.style.opacity = String(p);
+      n.style.transform = `translate(${(1 - p) * dx}px, ${(1 - p) * dy}px)`;
+    };
+    piece('.lq1', 0.10, -12, -12); // top-left, in from its corner
+    piece('.lq2', 0.22, 12, -12);  // top-right
+    piece('.lq0', 0.34, -12, 12);  // bottom-left
+    piece('.lw', 0.55, 0, 10);
+    piece('.ls', 0.68, 0, 10);
+    el('#in-kick', 0.55, 0.5, 14);
+    el('#in-t1', 0.85, 0.6, 22);
+    el('#in-t2', 1.05, 0.6, 22);
+    el('#in-sub', 1.55, 0.5, 12);
+    $('#in-rule').style.transform = `scaleX(${ez((t - 1.35) / 0.6)})`;
   }
 
   // ── lower third ──

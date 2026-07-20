@@ -17,6 +17,12 @@ html,body{background:transparent}
 .in-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:490px}
 .kick{font-weight:600;font-size:15px;letter-spacing:.42em;text-indent:.42em;
   color:var(--violet);opacity:0}
+.logo{width:112px;margin-bottom:14px}
+.logo svg{width:100%;height:auto;display:block}
+.logo path{transform-box:fill-box;transform-origin:center}
+#intro .logo path{opacity:0}
+.logo-end{width:88px}
+#end .logo path{opacity:1}
 .title{font-weight:700;font-size:44px;line-height:1.04;color:var(--ink);opacity:0}
 .title.accent{color:var(--violet)}
 .end-title{font-size:26px;font-weight:600;color:var(--petrol)}
