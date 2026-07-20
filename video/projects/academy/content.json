@@ -9,9 +9,9 @@
   "mist": "#EDEAF6"
  },
  "academy": {
-  "kicker": "WS ACADEMY",
   "brand": "Team Academy · WS Facade Solutions",
-  "endnote": "Aula do grupo Team Academy"
+  "endnote": "Aula do grupo Team Academy",
+  "word": "ACADEMY"
  },
  "lower3": {
   "name": "Thomas",
@@ -47,20 +47,47 @@
   "a1": {
    "dur": 36.0,
    "intro_out": 3.2,
-   "lower3": [3.6, 7.6],
-   "chip": [16.9, 20.2],
-   "rule": [20.7, 28.4],
+   "lower3": [
+    3.6,
+    7.6
+   ],
+   "chip": [
+    16.9,
+    20.2
+   ],
+   "rule": [
+    20.7,
+    28.4
+   ],
    "end_in": 33.35
   },
   "a2": {
    "dur": 55.0,
    "intro_out": 3.2,
-   "lower3": [3.6, 7.6],
-   "ch1": [8.0, 10.8],
-   "ch2": [16.4, 19.2],
-   "ch3": [33.4, 36.2],
-   "proc": [36.5, 41.6],
-   "ch4": [42.0, 44.8],
+   "lower3": [
+    3.6,
+    7.6
+   ],
+   "ch1": [
+    8.0,
+    10.8
+   ],
+   "ch2": [
+    16.4,
+    19.2
+   ],
+   "ch3": [
+    33.4,
+    36.2
+   ],
+   "proc": [
+    36.5,
+    41.6
+   ],
+   "ch4": [
+    42.0,
+    44.8
+   ],
    "end_in": 52.3
   }
  }

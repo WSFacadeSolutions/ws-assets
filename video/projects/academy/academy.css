@@ -17,7 +17,10 @@ html,body{background:transparent}
 .in-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:490px}
 .kick{font-weight:600;font-size:15px;letter-spacing:.42em;text-indent:.42em;
   color:var(--violet);opacity:0}
-.logo{width:112px;margin-bottom:14px}
+.lock{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:18px}
+.logo{width:112px}
+.logo-word{font-weight:700;font-size:25.5px;line-height:1;letter-spacing:.052em;color:var(--ink);margin-top:7px}
+.lock-end .logo-word{font-size:20px;margin-top:6px}
 .logo svg{width:100%;height:auto;display:block}
 .logo path{transform-box:fill-box;transform-origin:center}
 #intro .logo path{opacity:0}

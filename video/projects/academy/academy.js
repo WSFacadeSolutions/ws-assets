@@ -40,8 +40,10 @@ function buildDOM() {
   stage.innerHTML = `
   <div id="intro" class="card">
     <div class="in-wrap">
-      <div id="in-logo" class="logo">${LOGO_SVG}</div>
-      <div id="in-kick" class="kick">${C.academy.kicker}</div>
+      <div class="lock">
+        <div id="in-logo" class="logo">${LOGO_SVG}</div>
+        <div id="in-word" class="logo-word">${C.academy.word}</div>
+      </div>
       <div id="in-t1" class="title">${a.title1}</div>
       <div id="in-t2" class="title accent">${a.title2}</div>
       <div id="in-rule" class="hair"></div>
@@ -74,8 +76,10 @@ function buildDOM() {
 
   <div id="end" class="card">
     <div class="in-wrap">
-      <div class="logo logo-end">${LOGO_SVG}</div>
-      <div class="kick">${C.academy.kicker}</div>
+      <div class="lock lock-end">
+        <div class="logo logo-end">${LOGO_SVG}</div>
+        <div class="logo-word">${C.academy.word}</div>
+      </div>
       <div class="title end-title">${a.endtitle}</div>
       <div class="hair" style="transform:scaleX(1)"></div>
       <div class="sub">${C.academy.brand}</div>
@@ -111,7 +115,7 @@ function seek(frame) {
     piece('.lq0', 0.34, -12, 12);  // bottom-left
     piece('.lw', 0.55, 0, 10);
     piece('.ls', 0.68, 0, 10);
-    el('#in-kick', 0.55, 0.5, 14);
+    el('#in-word', 0.55, 0.5, 10);
     el('#in-t1', 0.85, 0.6, 22);
     el('#in-t2', 1.05, 0.6, 22);
     el('#in-sub', 1.55, 0.5, 12);

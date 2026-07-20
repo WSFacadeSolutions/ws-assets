@@ -10,9 +10,9 @@ window.CONTENT = {
   "mist": "#EDEAF6"
  },
  "academy": {
-  "kicker": "WS ACADEMY",
   "brand": "Team Academy · WS Facade Solutions",
-  "endnote": "Aula do grupo Team Academy"
+  "endnote": "Aula do grupo Team Academy",
+  "word": "ACADEMY"
  },
  "lower3": {
   "name": "Thomas",
