@@ -1,0 +1,30 @@
+{
+ "_": "WS338 golden-hour field story — story-rosebay clone with a photo beat (Ken Burns on field-photo.jpg) and the black-film footage slot. Swap the field video in the Mini-Premiere; the Figma kit ships footage-agnostic (black film).",
+ "name": "story-goldenhour",
+ "title": "WS Field Story — WS338 Golden Hour",
+ "dir": "story-goldenhour",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "story-goldenhour",
+ "compositions": [
+  {
+   "id": "story",
+   "html": "story.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS338-GoldenHour-Story.mp4",
+   "deploy": "story-goldenhour-story.mp4",
+   "still_times": [
+    1.5,
+    6.5,
+    11.8,
+    13.2,
+    14.6,
+    16.4,
+    17.8
+   ]
+  }
+ ]
+}

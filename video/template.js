@@ -35,6 +35,9 @@ const LAUNCH = {
 async function openPage(browser, sentinel) {
   const page = await browser.newPage();
   page.on('pageerror', e => console.error('PAGE ERROR:', e.message));
+  // kit captures are footage-agnostic: compositions with media slots (field
+  // video / photo beats) render them as black film when this flag is set
+  await page.evaluateOnNewDocument(() => { window.KIT_CAPTURE = true; });
   if (sentinel) {
     // swap every leaf (except theme.*, which feeds live colours) for a unique
     // token BEFORE the engine reads window.CONTENT
@@ -89,10 +92,15 @@ async function main() {
     located[sc.id] = await pa.evaluate(rootSel => {
       const root = document.querySelector(rootSel);
       if (!root) return [];
+      const stage = document.getElementById('stage') || document.body;
       const map = window.__SENT_MAP || {};
+      // paths are STAGE-rooted so scene texts and stage-level overlays (persistent
+      // chrome like the story brand block, which lives outside every .scene) share
+      // one addressing scheme; pass B's visibility check keeps each overlay out of
+      // the scenes it is faded out of
       const cssPath = el => {
         const segs = [];
-        while (el && el !== root) {
+        while (el && el !== stage) {
           const p = el.parentElement;
           segs.unshift(`*:nth-child(${[...p.children].indexOf(el) + 1})`);
           el = p;
@@ -100,7 +108,8 @@ async function main() {
         return segs.length ? ':scope > ' + segs.join(' > ') : '';
       };
       const out = [];
-      const els = [root, ...root.querySelectorAll('*')];
+      const els = [root, ...root.querySelectorAll('*'),
+                   ...[...stage.querySelectorAll('*')].filter(el => !el.closest('.scene'))];
       for (const [tok, pth] of Object.entries(map)) {
         const isNum = /^\d+$/.test(tok);
         const has = el => isNum
@@ -229,8 +238,9 @@ async function main() {
         const prev = bySel.get(it.sel);
         if (!prev || (it.num && !prev.num)) bySel.set(it.sel, it);
       }
+      const stage = document.getElementById('stage') || document.body;
       for (const it of bySel.values()) {
-        const el = it.sel ? root.querySelector(it.sel) : root;
+        const el = it.sel ? stage.querySelector(it.sel) : root;
         if (!el) continue;
         const key = it.path + '|' + it.sel;
         if (seen.has(key)) continue;

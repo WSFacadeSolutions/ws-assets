@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>WS Field Story — WS338 Rose Bay</title>
+<title>WS Field Story — WS338 Golden Hour</title>
 <script src="content.js"></script>
 <script src="timeline.js"></script>
 <script src="field/sheet.js"></script>
@@ -33,26 +33,25 @@ canvas.fg{position:absolute;inset:0;width:1080px;height:1920px}
 #brandplace{font-weight:400;font-size:27px;letter-spacing:.2em;opacity:.85;margin-top:5px;text-transform:uppercase}
 
 /* end card — light editorial: white ground, black-text lockup, lilac site */
-#s4{background:#fff;color:var(--petrol)}
-#s4lockup{position:absolute;left:0;right:0;top:786px;text-align:center}
-#s4lockup img{width:600px}
-#s4tag{position:absolute;left:0;right:0;top:1010px;text-align:center;
+#s3{background:#fff;color:var(--petrol)}
+#s3lockup{position:absolute;left:0;right:0;top:786px;text-align:center}
+#s3lockup img{width:600px}
+#s3tag{position:absolute;left:0;right:0;top:1010px;text-align:center;
   font-weight:400;font-size:42px;letter-spacing:.02em;color:var(--petrol)}
-#s4site{position:absolute;left:0;right:0;top:1488px;text-align:center;
+#s3site{position:absolute;left:0;right:0;top:1488px;text-align:center;
   font-weight:600;font-size:32px;letter-spacing:.14em;color:var(--lilac)}
 </style>
 <div id="stage">
-  <!-- footage scenes: one canvas each, painted per frame from field/ (the
-       Mini-Premiere video slot). No <video> — seek purity. -->
+  <!-- footage scenes: s1 plays the field-video slot, s2 is the PHOTO beat
+       (field-photo.jpg, Ken Burns on canvas). No <video> — seek purity. -->
   <div class="scene" id="s1"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
   <div class="scene" id="s2"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
-  <div class="scene" id="s3"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
 
   <!-- end card -->
-  <div class="scene" id="s4">
-    <div id="s4lockup"><img src="assets/endlockup.svg"></div>
-    <div id="s4tag"></div>
-    <div id="s4site"></div>
+  <div class="scene" id="s3">
+    <div id="s3lockup"><img src="assets/endlockup.svg"></div>
+    <div id="s3tag"></div>
+    <div id="s3site"></div>
   </div>
 
   <!-- persistent brand block (official WS square mark — never retype the brand) -->
@@ -85,6 +84,11 @@ const E = {
   oe:p=>p===1?1:1-Math.pow(2,-10*p),
 };
 
+/* KIT capture (figma_sync --template sets window.KIT_CAPTURE): footage and the
+   photo beat render as BLACK FILM so the Figma template stays footage-agnostic —
+   the real media is swapped in the Mini-Premiere field slot, never in Figma. */
+const KIT = !!window.KIT_CAPTURE;
+
 /* theme boot + T() — same contract as film.html */
 const TDEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
 window.applyTheme=function(theme){
@@ -102,12 +106,12 @@ function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0
 function rise(el,t0,dur,dy=60,ease=E.oq){el.style.opacity=0;at(t0,dur,p=>{el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`;},ease);}
 
 /* scene windows — AUTHORED seconds; live windows come from timeline.json
-   (timeline.js) which time-warps the whole cut, mini-Premiere standard. */
+   (timeline.js) which time-warps the whole cut, mini-Premiere standard.
+   s1 = field-video slot · s2 = photo beat (Ken Burns) · s3 = end card */
 const SC=[
-  ['#s1',  0.0,  5.0],
-  ['#s2',  5.0, 12.0],
-  ['#s3', 12.0, 17.0],
-  ['#s4', 17.0, 20.2],
+  ['#s1',  0.0, 12.6],
+  ['#s2', 12.6, 15.4],
+  ['#s3', 15.4, 18.4],
 ];
 const TL=(window.TIMELINE&&window.TIMELINE.story)||null;
 const SC_EDIT=SC.map(([sel,a,b])=>{
@@ -142,13 +146,11 @@ const DUR_A = SC[SC.length-1][2];
 
 /* ============================== FIELD FOOTAGE ==============================
    field/sheet.js (written by the ops "vídeo de campo" slot) declares
-   window.FIELD_FOOTAGE={count,fps,w,h,pattern}. Each footage scene plays the
-   slot video from its SOURCE offset (authored seconds into the source file);
-   only the frames each scene can reach are preloaded. Missing footage
-   degrades to the black-film .fgbg — the composition never crashes. KIT_CAPTURE
-   (set by template.js) forces black film so Figma kits stay footage-agnostic. */
-const F=(!window.KIT_CAPTURE&&window.FIELD_FOOTAGE)||null;
-const SRC={s1:0.4, s2:15.0, s3:44.5};   // source offsets into the slot video
+   window.FIELD_FOOTAGE={count,fps,w,h,pattern}. s1 plays the slot video from
+   its SOURCE offset; only the frames it can reach are preloaded. Missing
+   footage degrades to the black-film .fgbg — the composition never crashes. */
+const F=(!KIT&&window.FIELD_FOOTAGE)||null;
+const SRC={s1:0.05};                     // source offsets into the slot video
 const FRAMES=new Map();                  // idx -> HTMLImageElement
 const loadJobs=[];
 if(F){
@@ -183,28 +185,53 @@ function drawFootage(t){
   }
 }
 
+/* ============================== PHOTO BEAT (s2) ==============================
+   field-photo.jpg + Ken Burns: cover-fit, slow push-in towards the focus point
+   (the sun over the bridge), offsets clamped so the frame never shows a gap. */
+const PHOTO={src:'field-photo.jpg',img:null,focus:{x:.55,y:.72},z0:1.0,z1:1.08};
+if(!KIT){
+  const im=new Image();
+  im.src=PHOTO.src;
+  loadJobs.push(new Promise(res=>{im.onload=()=>{PHOTO.img=im;res();};im.onerror=res;}));
+}
+function drawPhoto(t){
+  const im=PHOTO.img;
+  if(!im||!im.naturalWidth)return;
+  const [sel,a,b]=SC[1];
+  if(t<a-0.02||t>b+0.02)return;
+  const p=c01((t-a)/(b-a));
+  const z=lerp(PHOTO.z0,PHOTO.z1,p);
+  const iw=im.naturalWidth,ih=im.naturalHeight;
+  const s=Math.max(1080/iw,1920/ih)*z,dw=iw*s,dh=ih*s;
+  const ox=clamp(540-dw*PHOTO.focus.x,1080-dw,0);
+  const oy=clamp(1920*PHOTO.focus.y-dh*PHOTO.focus.y,1920-dh,0);
+  const cv=$(sel+' canvas'),ctx=cv.getContext('2d');
+  ctx.filter='contrast(1.04) saturate(1.08)';
+  ctx.drawImage(im,ox,oy,dw,dh);
+}
+
 /* ============================== BRAND BLOCK ==============================
    Subtle entrance: fade + ease-out slide from the left at 0.6 s; leaves
    before the end card. One pure write per tick — scrub-safe both ways. */
 at(0,DUR_A,(_,t)=>{
   const el=$('#brand');
-  const oIn=c01((t-0.6)/0.9), oOut=1-c01((t-(SC[3][1]-0.5))/0.5);
+  const oIn=c01((t-0.6)/0.9), oOut=1-c01((t-(SC[2][1]-0.5))/0.5);
   el.style.opacity=(oIn*oOut).toFixed(4);
   el.style.transform=`translateX(${(-40*Math.exp(-5*Math.max(t-0.6,0))).toFixed(2)}px)`;
 },E.lin);
 
-/* ============================== S4 END CARD ============================== */
-rise($('#s4lockup'),17.55,1.0,44);
-rise($('#s4tag'),18.25,0.9,34);
-rise($('#s4site'),18.85,0.9,24);
+/* ============================== S3 END CARD ============================== */
+rise($('#s3lockup'),15.95,1.0,44);
+rise($('#s3tag'),16.65,0.9,34);
+rise($('#s3site'),17.25,0.9,24);
 
 /* ============================== APPLY CONTENT ============================== */
 {
   const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=T(html);};
   set('#brandcode',C.brand.code);
   set('#brandplace',C.brand.place);
-  set('#s4tag',C.end.tagline);
-  set('#s4site',C.end.site);
+  set('#s3tag',C.end.tagline);
+  set('#s3site',C.end.site);
 }
 
 /* ============================== DRIVER ============================== */
@@ -214,6 +241,7 @@ window.seek=function(frame){
   sceneVis(t);
   tick(t);
   drawFootage(t);
+  drawPhoto(t);
   return true;
 };
 window.readyP=Promise.all(
