@@ -672,6 +672,13 @@ def do_clone(reg, slug):
     footage = HERE / 'footage'
     if footage.is_dir() and not (dst / 'footage').exists():
         (dst / 'footage').symlink_to(os.path.relpath(footage, dst))
+    # the field-footage slot (Mini-Premiere video input) travels with the clone —
+    # the point of duplicating a story template is swapping this footage on the copy
+    fd = reg['_dir'] / 'field'
+    if fd.is_dir():
+        shutil.copytree(fd, dst / 'field')
+    for p in sorted(reg['_dir'].glob('field-src.*')):
+        shutil.copy2(p, dst / p.name)
     # uploaded music referenced by the timeline travels with the clone
     tl = load_timeline(reg)
     for comp in reg['compositions']:

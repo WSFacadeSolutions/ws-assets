@@ -70,6 +70,7 @@ a{color:var(--lilac)}
 <div class="top">
  <h1>🎬 Mini-Premiere</h1>
  <label class="muted">projeto <select id="projSel" onchange="location='/film-editor?project='+this.value"></select></label>
+ <button onclick="dupProject()" title="duplica o projeto inteiro (figma_sync --clone): composições, timeline, tema, música e vídeo de campo — a cópia nunca sobrescreve nada" style="padding:3px 10px;font-size:12px">⧉ duplicar</button>
  <span id="ptitle" class="muted"></span>
  <a href="/" style="margin-left:auto">← voltar ao ops</a>
 </div>
@@ -91,6 +92,11 @@ O preview roda a composição real no browser (zero token, zero render) — usa 
   <button onclick="resetTheme()">↩ paleta padrão</button>
   <span id="thdirty" class="muted"></span>
  </div>
+</div>
+
+<div class="card" id="fieldcard">
+ <h2>🎥 Vídeo de campo — footage do projeto</h2>
+ <div id="fieldbox" class="muted"></div>
 </div>
 
 <h2 style="margin-top:22px">Stills de conferência</h2>
@@ -131,6 +137,7 @@ async function loadAll(){
  document.getElementById('tabs').innerHTML=ids.map(id=>
   `<button class="${id===CUR?'on':''}" onclick="switchCut('${id}')">🎞 ${esc(id)} <span class="muted">${dur(TL[id]).toFixed(0)}s</span></button>`).join('');
  render();
+ renderField();
  document.getElementById('stills').innerHTML=(DATA.stills||[]).map(f=>
   `<figure><img loading="lazy" src="/api/film-still?project=${encodeURIComponent(PROJECT)}&f=${encodeURIComponent(f)}"><figcaption>${esc(f.replace(/^t/,'').replace('_','.').replace('.png',''))} s</figcaption></figure>`).join('')
   ||'<span class="muted">sem stills ainda — corre o trigger.</span>';
@@ -369,6 +376,53 @@ async function upMusic(){
  cut().audio.music_src=j.music_src;
  markDirty();msg('✓ música de fundo trocada — entra no próximo render (o preview já toca ela)');render()}
 function clearMusic(){cut().audio.music_src=null;markDirty();msg('trilha procedural de volta — 💾 guarda a timeline');render()}
+
+/* ---------- duplicate project: figma_sync --clone with an operator-chosen slug;
+   the copy appears in the dropdown by itself and we jump straight into it ---------- */
+async function dupProject(){
+ const sug=PROJECT.replace(/-v?\d+$/,'')+'-2';
+ const slug=(prompt('Nome do novo projeto (2-24 chars: a-z, 0-9, hífen):',sug)||'').trim().toLowerCase();
+ if(!slug)return;
+ if(!/^[a-z0-9](?:[a-z0-9-]{0,22}[a-z0-9])?$/.test(slug)){msg('nome inválido — 2-24 chars de a-z, 0-9 e hífen',1);return}
+ msg('duplicando '+PROJECT+' → '+slug+'…');
+ const r=await fetch('/api/film-clone',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,slug})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ location='/film-editor?project='+encodeURIComponent(j.project||slug)}
+
+/* ---------- field-footage slot: uploaded video → deterministic frame sequence
+   (field/fNNNN.jpg + sheet.js manifest) that story compositions draw per frame ---------- */
+function renderField(){
+ const fd=DATA.field||{};
+ const inp=`<input type="file" id="fieldfile" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.m4v,.webm" style="max-width:200px;font-size:12px">`;
+ document.getElementById('fieldbox').innerHTML=fd.present
+  ?`slot preenchido: <b>${fd.count}</b> frames · ${fd.fps} fps · ${fd.w}×${fd.h}${fd.src?` · <code>${esc(fd.src)}</code>`:''}
+    &nbsp;· ${inp} <button onclick="upField()" style="padding:2px 8px;font-size:12px">⬆ trocar vídeo</button>
+    <button onclick="rmField()" style="padding:2px 8px;font-size:12px">✖ remover</button>
+    <div style="margin-top:4px">as composições leem <code>field/sheet.js</code> (<code>window.FIELD_FOOTAGE</code>) e desenham
+    <code>field/fNNNN.jpg</code> frame a frame — determinístico, sem &lt;video&gt;. Troca aqui + re-render = mesmo template, footage novo.</div>`
+  :`slot vazio · ${inp} <button onclick="upField()" style="padding:2px 8px;font-size:12px">⬆ enviar vídeo (até 90 s / 100 MB)</button>
+    <div style="margin-top:4px">o vídeo vira sequência de frames em <code>field/</code> + manifest <code>sheet.js</code>.
+    Num projeto duplicado (⧉) é só subir o footage novo e re-renderizar.</div>`}
+async function upField(){
+ const f=(document.getElementById('fieldfile')||{}).files?.[0];
+ if(!f){msg('escolhe o arquivo de vídeo primeiro (mp4/mov)',1);return}
+ if(f.size>100*1024*1024){msg('vídeo grande demais (>100 MB) — corta ou comprime antes',1);return}
+ msg('enviando e convertendo '+f.name+'… (pode levar ~1 min)');
+ const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
+ const r=await fetch('/api/film-field',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,name:f.name,data})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ DATA.field=j.field;renderField();msg('✓ vídeo de campo no slot — '+j.field.count+' frames prontos')}
+async function rmField(){
+ if(!confirm('Remover o vídeo de campo deste projeto (frames + original)?'))return;
+ const r=await fetch('/api/film-field',{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({project:PROJECT,remove:true})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){msg('✗ '+(j.error||r.status),1);return}
+ DATA.field=j.field;renderField();msg('slot de vídeo de campo limpo')}
 
 /* ---------- dragging (listeners on document: render() replaces nodes mid-drag) ---------- */
 function bindDrag(){

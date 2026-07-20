@@ -311,6 +311,21 @@ FLOW 3 — 3D cover footage for the film (no Claude session needed)
    already have a library (detached, logged to vibecad-footage-<slug>-auto.log);
    new covers still opt in via the 🎞 button. Old libraries can be deleted from
    the generated-assets inventory on the panel.
+
+FLOW 4 — duplicate a project + swap the field video (story templates)
+1. Mini-Premiere → "⧉ duplicar" next to the project dropdown — it asks the new
+   project's name (2-24 chars: a-z, 0-9, hyphen) and runs figma_sync --clone:
+   compositions, content, timeline, theme, uploaded music and the field-footage
+   slot all travel; deploy names gain the slug so the copy can never overwrite
+   the source's MP4s. The editor jumps into the copy when the clone lands.
+2. "🎥 Vídeo de campo" card → send the new phone video (mp4/mov, up to 90 s /
+   100 MB). It becomes a deterministic frame sequence in <project>/field/
+   (30 fps JPEGs, downscaled to ≤1080 px wide, never upscaled) plus a sheet.js
+   manifest (window.FIELD_FOOTAGE) — the composition draws these frames with
+   seek purity; the engine never plays <video>.
+3. Link a NEW Figma file on the ops card if the copy's texts need visual
+   editing (clones never share the source's file), adjust copy/theme/audio as
+   in flow 2, then stills → render → publish as usual.
 <!-- /ops:film-flows -->
 
 ## Brand assets

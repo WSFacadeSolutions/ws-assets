@@ -1,0 +1,224 @@
+<meta charset="utf-8">
+<title>WS Field Story — WS338 Rose Bay</title>
+<script src="content.js"></script>
+<script src="timeline.js"></script>
+<script src="field/sheet.js"></script>
+<style>
+@font-face{font-family:Saira;src:url(fonts/saira-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Saira;src:url(fonts/saira-600.woff2) format('woff2');font-weight:600}
+/* brand palette vars — same theme contract as film.html (theme boot overwrites from C.theme) */
+:root{
+  --petrol:#1E2F38; --petrol-rgb:30,47,56;
+  --deep:#0f1a20;   --deep-rgb:15,26,32;
+  --off:#F5F2F0;    --off-rgb:245,242,240;
+  --orange:#FF9D27; --orange-rgb:255,157,39;
+  --lilac:#A490FF;  --lilac-rgb:164,144,255;
+  --violet:#6040cc; --violet-rgb:96,64,204;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000;width:1080px;height:1920px;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;
+  font-family:Saira,sans-serif;color:var(--off);background:#0c1216}
+.scene{position:absolute;inset:0;display:none}
+canvas.fg{position:absolute;inset:0;width:1080px;height:1920px}
+/* footage fallback (empty field/ slot): quiet petrol ground so stills never crash */
+.fgbg{position:absolute;inset:0;background:radial-gradient(1200px 1700px at 50% 40%,#22343f 0%,#0c1216 100%)}
+
+/* persistent brand block — mark + project code/place, top-left story safe zone */
+#brand{position:absolute;top:200px;left:64px;display:flex;align-items:center;gap:24px;
+  opacity:0;filter:drop-shadow(0 2px 14px rgba(0,0,0,.45));z-index:5}
+#brand svg{width:104px;height:71px;display:block;flex:none}
+#brandcode{font-weight:600;font-size:42px;letter-spacing:.08em;line-height:1.05;text-transform:uppercase}
+#brandplace{font-weight:400;font-size:27px;letter-spacing:.2em;opacity:.85;margin-top:5px;text-transform:uppercase}
+
+/* end card — light editorial: white ground, black-text lockup, lilac site */
+#s4{background:#fff;color:var(--petrol)}
+#s4lockup{position:absolute;left:0;right:0;top:786px;text-align:center}
+#s4lockup img{width:600px}
+#s4tag{position:absolute;left:0;right:0;top:1010px;text-align:center;
+  font-weight:400;font-size:42px;letter-spacing:.02em;color:var(--petrol)}
+#s4site{position:absolute;left:0;right:0;top:1488px;text-align:center;
+  font-weight:600;font-size:32px;letter-spacing:.14em;color:var(--lilac)}
+</style>
+<div id="stage">
+  <!-- footage scenes: one canvas each, painted per frame from field/ (the
+       Mini-Premiere video slot). No <video> — seek purity. -->
+  <div class="scene" id="s1"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
+  <div class="scene" id="s2"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
+  <div class="scene" id="s3"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
+
+  <!-- end card -->
+  <div class="scene" id="s4">
+    <div id="s4lockup"><img src="assets/endlockup.svg"></div>
+    <div id="s4tag"></div>
+    <div id="s4site"></div>
+  </div>
+
+  <!-- persistent brand block (official WS square mark — never retype the brand) -->
+  <div id="brand">
+    <svg viewBox="0 0 430 294" fill="none">
+      <path d="M130.333 223.748V289.227C130.333 290.609 129.215 291.741 127.821 291.741H9.18941C4.12643 291.741 0.0234375 287.634 0.0234375 282.566V163.811C0.0234375 162.429 1.14124 161.297 2.53521 161.297H67.92C68.5907 161.297 69.2219 161.56 69.6954 162.034L129.596 221.984C130.07 222.458 130.333 223.09 130.333 223.761V223.748Z" fill="var(--off)"/>
+      <path d="M130.323 2.51438V67.9934C130.323 68.6648 130.06 69.2966 129.586 69.7706L69.6982 129.721C69.2248 130.194 68.5936 130.458 67.9229 130.458H2.51177C1.13096 130.458 0 129.339 0 127.943V9.17549C0 4.10725 4.10299 0 9.16597 0H127.811C129.192 0 130.323 1.11897 130.323 2.51438Z" fill="var(--off)"/>
+      <path d="M291.408 9.17549V127.943C291.408 129.326 290.291 130.458 288.897 130.458H223.486C222.815 130.458 222.184 130.195 221.71 129.721L161.822 69.7442C161.349 69.2703 161.086 68.6384 161.086 67.9671V2.51438C161.086 1.13213 162.204 0 163.598 0H282.242C287.305 0 291.408 4.10725 291.408 9.17549Z" fill="var(--off)"/>
+      <path d="M302.776 161.558L280.657 266.885C280.157 269.097 279.421 270.821 278.198 270.821C276.475 270.821 275.975 269.097 275.489 267.135L256.315 172.629C253.856 160.808 243.783 160.07 239.351 160.07C234.919 160.07 225.096 160.808 222.636 172.629L203.213 267.135C202.713 269.097 202.227 270.821 200.504 270.821C199.281 270.821 198.531 269.097 198.045 266.885L175.926 161.558H155.766L182.317 279.194C184.526 288.54 189.444 293.464 199.768 293.464C210.827 293.464 216.982 287.566 218.704 279.444L237.142 188.874C237.628 186.649 238.365 184.437 239.351 184.437C240.574 184.437 241.074 186.649 241.56 188.874L259.761 279.444C261.47 287.566 268.111 293.464 278.934 293.464C289.008 293.464 294.176 288.54 296.385 279.194L322.936 161.558H302.776Z" fill="var(--off)"/>
+      <path d="M392.624 222.584L376.646 215.699C363.127 209.789 357.472 205.352 357.472 192.069C357.472 181.235 361.891 178.286 373.937 178.286H422.62V161.555H371.727C348.858 161.555 336.812 169.914 336.812 191.819C336.812 212.487 344.19 221.847 367.545 231.694L381.564 237.591C399.751 245.227 408.365 248.676 408.365 261.221C408.365 271.318 403.683 275.254 392.874 275.254H338.535V291.986H398.042C422.87 291.986 429.998 281.652 429.998 261.471C429.998 238.579 417.465 233.418 392.624 222.584Z" fill="var(--off)"/>
+    </svg>
+    <div><div id="brandcode"></div><div id="brandplace"></div></div>
+  </div>
+</div>
+
+<script>
+/* ============================== ENGINE (same contract as film-ig/teaser) ============================== */
+const C = window.CONTENT;
+const RGB = h=>parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16);
+const FPS = 30;
+const $ = s => document.querySelector(s);
+const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
+const c01 = x=>clamp(x,0,1);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const E = {
+  lin:p=>p,
+  o:p=>1-Math.pow(1-p,3),
+  io:p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,
+  oq:p=>1-Math.pow(1-p,5),
+  oe:p=>p===1?1:1-Math.pow(2,-10*p),
+};
+
+/* theme boot + T() — same contract as film.html */
+const TDEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
+window.applyTheme=function(theme){
+  const r=document.documentElement.style;
+  for(const k in TDEF){const v=(theme[k]||TDEF[k]);r.setProperty('--'+k,v);r.setProperty('--'+k+'-rgb',RGB(v));}
+};
+window.applyTheme(C.theme);
+const TMAP=[];
+for(const k in TDEF){const v=C.theme[k];if(v&&v.toLowerCase()!==TDEF[k].toLowerCase())TMAP.push([new RegExp(TDEF[k],'gi'),v]);}
+const T=s=>{if(s==null)return s;let o=String(s);for(const[a,b]of TMAP)o=o.replace(a,b);return o;};
+
+const anims=[];
+function at(t0,dur,fn,ease){anims.push({t0,t1:t0+dur,ease:ease||E.o,fn});}
+function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0)):(t>=a.t0?1:0);a.fn(a.ease(p),t);}}
+function rise(el,t0,dur,dy=60,ease=E.oq){el.style.opacity=0;at(t0,dur,p=>{el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`;},ease);}
+
+/* scene windows — AUTHORED seconds; live windows come from timeline.json
+   (timeline.js) which time-warps the whole cut, mini-Premiere standard. */
+const SC=[
+  ['#s1',  0.0,  5.0],
+  ['#s2',  5.0, 12.0],
+  ['#s3', 12.0, 17.0],
+  ['#s4', 17.0, 20.2],
+];
+const TL=(window.TIMELINE&&window.TIMELINE.story)||null;
+const SC_EDIT=SC.map(([sel,a,b])=>{
+  const s=TL&&(TL.scenes||[]).find(x=>'#'+x.id===sel);
+  return s?[sel,+s.start,+s.end]:[sel,a,b];
+});
+const WARP_PTS=SC_EDIT.map(([_,a],i)=>[a,SC[i][1]]).concat([[SC_EDIT[SC_EDIT.length-1][2],SC[SC.length-1][2]]]);
+function warp(t){
+  const P=WARP_PTS;
+  if(t<=P[0][0])return P[0][1]+(t-P[0][0]);
+  for(let i=1;i<P.length;i++)if(t<=P[i][0]){
+    const x0=P[i-1][0],y0=P[i-1][1],x1=P[i][0],y1=P[i][1];
+    return x1>x0?y0+(t-x0)*(y1-y0)/(x1-x0):y1;
+  }
+  return P[P.length-1][1]+(t-P[P.length-1][0]);
+}
+const XF=0.5;
+function sceneVis(t){
+  for(const [sel,a,b] of SC){
+    const el=$(sel);
+    if(t>=a-0.02 && t<=b+0.02){
+      el.style.display='block';
+      let o=1;
+      if(t<a+XF)o=c01((t-a)/XF);
+      if(t>b-XF)o=Math.min(o,c01((b-t)/XF));
+      el.style.opacity=o;
+    } else el.style.display='none';
+  }
+}
+const DUR = SC_EDIT[SC_EDIT.length-1][2];
+const DUR_A = SC[SC.length-1][2];
+
+/* ============================== FIELD FOOTAGE ==============================
+   field/sheet.js (written by the ops "vídeo de campo" slot) declares
+   window.FIELD_FOOTAGE={count,fps,w,h,pattern}. Each footage scene plays the
+   slot video from its SOURCE offset (authored seconds into the source file);
+   only the frames each scene can reach are preloaded. Missing footage
+   degrades to the quiet .fgbg ground — the composition never crashes. */
+const F=window.FIELD_FOOTAGE||null;
+const SRC={s1:0.4, s2:15.0, s3:44.5};   // source offsets into the slot video
+const FRAMES=new Map();                  // idx -> HTMLImageElement
+const loadJobs=[];
+if(F){
+  for(const [sel,a,b] of SC){
+    const id=sel.slice(1);
+    if(!(id in SRC))continue;
+    const i0=clamp(1+Math.floor(SRC[id]*F.fps),1,F.count);
+    const i1=clamp(1+Math.ceil((SRC[id]+(b-a)+0.2)*F.fps),1,F.count);
+    for(let i=i0;i<=i1;i++){
+      if(FRAMES.has(i))continue;
+      const im=new Image();
+      im.src='field/f'+String(i).padStart(4,'0')+'.jpg';
+      FRAMES.set(i,im);
+      loadJobs.push(new Promise(res=>{im.onload=res;im.onerror=res;}));
+    }
+  }
+}
+function drawFootage(t){
+  if(!F)return;
+  for(const [sel,a,b] of SC){
+    const id=sel.slice(1);
+    if(!(id in SRC))continue;
+    if(t<a-0.02||t>b+0.02)continue;               // scene hidden — skip
+    const srcT=SRC[id]+clamp(t-a,0,b-a);
+    const idx=clamp(1+Math.floor(srcT*F.fps),1,F.count);
+    const im=FRAMES.get(idx);
+    if(!im||!im.naturalWidth)continue;
+    const cv=$(sel+' canvas'),ctx=cv.getContext('2d');
+    const s=Math.max(1080/F.w,1920/F.h),dw=F.w*s,dh=F.h*s;
+    ctx.filter='contrast(1.04) saturate(1.08)';
+    ctx.drawImage(im,(1080-dw)/2,(1920-dh)/2,dw,dh);
+  }
+}
+
+/* ============================== BRAND BLOCK ==============================
+   Subtle entrance: fade + ease-out slide from the left at 0.6 s; leaves
+   before the end card. One pure write per tick — scrub-safe both ways. */
+at(0,DUR_A,(_,t)=>{
+  const el=$('#brand');
+  const oIn=c01((t-0.6)/0.9), oOut=1-c01((t-(SC[3][1]-0.5))/0.5);
+  el.style.opacity=(oIn*oOut).toFixed(4);
+  el.style.transform=`translateX(${(-40*Math.exp(-5*Math.max(t-0.6,0))).toFixed(2)}px)`;
+},E.lin);
+
+/* ============================== S4 END CARD ============================== */
+rise($('#s4lockup'),17.55,1.0,44);
+rise($('#s4tag'),18.25,0.9,34);
+rise($('#s4site'),18.85,0.9,24);
+
+/* ============================== APPLY CONTENT ============================== */
+{
+  const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=T(html);};
+  set('#brandcode',C.brand.code);
+  set('#brandplace',C.brand.place);
+  set('#s4tag',C.end.tagline);
+  set('#s4site',C.end.site);
+}
+
+/* ============================== DRIVER ============================== */
+window.DUR=DUR;window.FPS=FPS;window.TOTAL_FRAMES=Math.round(DUR*FPS);
+window.seek=function(frame){
+  const t=warp(frame/FPS);   // real time -> authored time; keyframes stay authored
+  sceneVis(t);
+  tick(t);
+  drawFootage(t);
+  return true;
+};
+window.readyP=Promise.all(
+  [400,600].map(w=>document.fonts.load(`${w} 20px Saira`)).concat(loadJobs)
+).then(()=>document.fonts.ready).then(()=>{window.seek(0);return true;});
+if(location.hash==='#play'){
+  const start=performance.now();
+  (function loop(){const t=(performance.now()-start)/1000;if(t<DUR){window.seek(Math.floor(t*FPS));requestAnimationFrame(loop);}})();
+}
+</script>

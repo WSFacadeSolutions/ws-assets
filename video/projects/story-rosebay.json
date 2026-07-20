@@ -1,0 +1,22 @@
+{
+ "_": "WS field story template — Leo's WS338 Rose Bay footage through the Mini-Premiere field-video slot. Duplicate (⧉) + swap the field video + edit brand.code/brand.place for the next site story. Audio ships muted (music_vol/sfx_vol 0) — stories carry no voice-over; raise the sliders or upload music in the Mini-Premiere if a bed is ever wanted.",
+ "name": "story-rosebay",
+ "title": "WS Field Story — WS338 Rose Bay",
+ "dir": "story-rosebay",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "story-rosebay",
+ "compositions": [
+  {
+   "id": "story",
+   "html": "story.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS338-RoseBay-Story.mp4",
+   "deploy": "story-rosebay-story.mp4",
+   "still_times": [1.5, 6.5, 10.0, 13.5, 16.5, 19.2]
+  }
+ ]
+}
