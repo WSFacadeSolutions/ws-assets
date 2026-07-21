@@ -61,14 +61,15 @@ svg text{font-family:Saira,sans-serif}
   <div class="scene" id="s1">
     <div id="s1k" class="kicker" style="position:absolute;left:0;right:0;top:300px;text-align:center">The differentiator</div>
     <svg id="s1seal" width="1080" height="1920" style="position:absolute;inset:0"></svg>
-    <div id="s1box" style="position:absolute;left:330px;width:420px;top:742px;height:92px;background:#fff;border:1px solid rgba(var(--petrol-rgb),.14);border-radius:16px;box-shadow:0 8px 22px rgba(var(--petrol-rgb),.10)"></div>
+    <div id="s1box" style="position:absolute;left:324px;width:432px;top:742px;height:96px;background:#fff;border:1px solid rgba(var(--petrol-rgb),.14);border-radius:16px;box-shadow:0 8px 22px rgba(var(--petrol-rgb),.10);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px">
+      <div id="s1st" style="font-weight:600;font-size:30px;letter-spacing:.12em;line-height:1;color:var(--petrol)">CERTIFIED INSTALLER</div>
+      <div id="s1sb" style="font-weight:600;font-size:26px;letter-spacing:.12em;line-height:1;color:var(--lilac)">BASROC · NSW</div>
+    </div>
     <div id="s1check" style="position:absolute;left:50%;top:556px;transform:translateX(-50%)">
       <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><path d="M11 24 L20 33 L36 14" stroke="#A490FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <div id="s1mark" style="position:absolute;left:0;right:0;top:588px;text-align:center;font-weight:800;font-size:116px;line-height:1;color:var(--petrol)">1st</div>
     <div id="s1markrule" class="rule" style="position:absolute;left:485px;width:110px;top:724px"></div>
-    <div id="s1st" style="position:absolute;left:0;right:0;top:754px;text-align:center;font-weight:600;font-size:30px;letter-spacing:.12em;color:var(--petrol)">CERTIFIED INSTALLER</div>
-    <div id="s1sb" style="position:absolute;left:0;right:0;top:796px;text-align:center;font-weight:600;font-size:26px;letter-spacing:.12em;color:var(--lilac)">BASROC · NSW</div>
     <h1 id="s1h" style="position:absolute;left:70px;right:70px;top:1070px;text-align:center;font-size:72px">The first certified installer<br>of Basroc in NSW.</h1>
     <div id="s1b" class="body" style="position:absolute;left:0;right:0;top:1330px;text-align:center;font-size:29px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(var(--petrol-rgb),.62)">Certified installer · New South Wales</div>
   </div>
@@ -237,14 +238,12 @@ function traceAll(g,t0,dur,stagger,ease){
   rings.forEach((c,i)=>{const l=c.getTotalLength();c.style.strokeDasharray=l;c.style.strokeDashoffset=l;
     at(5.1+i*0.22,1.0,p=>{c.style.strokeDashoffset=l*(1-p);},E.io);});
   [...g.querySelectorAll('rect')].forEach(r=>{r.style.opacity=0;at(6.3,0.5,p=>{r.style.opacity=p;});});
-  // centre tokens — white nameplate behind the certification text, then the tokens
-  $('#s1box').style.opacity=0;at(6.9,0.5,p=>{$('#s1box').style.opacity=p;});
+  // centre tokens — white nameplate holds the certification text (flex-centred)
   popC($('#s1check'),6.5,0.6);
   rise($('#s1mark'),6.7,0.7,26,E.ob);
   $('#s1markrule').style.opacity=0;
   at(7.1,0.7,p=>{$('#s1markrule').style.opacity=p;$('#s1markrule').style.transform=`scaleX(${p})`;},E.oq);
-  rise($('#s1st'),7.3,0.7,20);
-  rise($('#s1sb'),7.5,0.7,20);
+  rise($('#s1box'),7.2,0.7,20);
   // the message lands after the seal forms
   rise($('#s1h'),8.3,1.0,50);
   rise($('#s1b'),9.3,0.9,30);
