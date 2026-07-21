@@ -1,0 +1,45 @@
+{
+ "_note": "Canonical content for the WS Basroc service spotlight (spotlight.html, 9:16 Reels). Light look. Strings may contain HTML. Every line traces to the WS Source of Truth services file or the vetted capability-statement film; Australian English only. Edit here (or via the Figma kit) and regenerate content.js with: python3 figma_sync.py --local --project basroc-spotlight",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#9670D8",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "s0": {
+  "kicker": "Substrate Installations · Sydney NSW",
+  "headline": "What you don't see is<br>often the most important.",
+  "body": "Substrate integrity is the foundation of the finishing package."
+ },
+ "s1": {
+  "kicker": "The differentiator",
+  "headline": "The first certified installer<br>of Basroc in NSW.",
+  "body": "Certified installer · New South Wales",
+  "sealTop": "CERTIFIED INSTALLER",
+  "sealBottom": "BASROC · NSW",
+  "sealMark": "1st"
+ },
+ "s2": {
+  "kicker": "The material",
+  "headline": "Basroc.<br>Fire-rated mineral sheets.",
+  "body": "Curved and bent to the design.",
+  "tag": "Mineral sheet · fire-rated"
+ },
+ "s3": {
+  "kicker": "The system",
+  "headline": "System-compliant<br>installation.",
+  "body": "Compliance focus in every layer.",
+  "layers": [
+   "System-compliant finish",
+   "Basroc · fire-rated sheet",
+   "Prepared substrate"
+  ]
+ },
+ "s4": {
+  "line": "Precision. Performance. Trust.",
+  "tagline": "MANY TRADES · ONE STANDARD",
+  "url": "wssolutions.au"
+ }
+}

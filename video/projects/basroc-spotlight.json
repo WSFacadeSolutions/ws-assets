@@ -1,0 +1,22 @@
+{
+ "_": "WS Basroc service spotlight — 9:16 Reels, light look (white paper, petrol ink, lilac accents, no orange). Bootstrapped from ecosystem-v3's light 9:16 engine, then rebuilt from scratch for a new subject: one composition, spotlight.html. Figma NOT linked yet — paste a new file key on the ops card before pulling.",
+ "name": "basroc-spotlight",
+ "title": "WS Basroc Spotlight — first certified installer in NSW",
+ "dir": "basroc-spotlight",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "basroc-spotlight",
+ "compositions": [
+  {
+   "id": "spotlight",
+   "html": "spotlight.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS-Basroc-Spotlight.mp4",
+   "deploy": "basroc-spotlight.mp4",
+   "still_times": [3.0, 6.5, 10.0, 15.0, 18.5, 24.0, 27.5, 31.5, 33.5]
+  }
+ ]
+}
