@@ -29,6 +29,8 @@ window.TIMELINE = {
    }
   ],
   "audio": {
+   "music_src": "music-basroc.wav",
+   "music_vol": 1,
    "risers": [
     4.5,
     12,
@@ -36,8 +38,8 @@ window.TIMELINE = {
     29.5
    ],
    "shimmer": 30.5,
-   "volume": 0.1,
-   "sfx_vol": 0.1
+   "volume": 0.85,
+   "sfx_vol": 0
   }
  }
 };
