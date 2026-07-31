@@ -1,0 +1,51 @@
+{
+ "_": "Cloned from project \"ecosystem-v3\" by figma_sync.py --clone \u2014 the CLIENT-FACING v4 re-cut (31 Jul 2026). Compare against the source in the Mini-Premiere.",
+ "name": "ecosystem-v4",
+ "title": "WS Ecosystem Film (ecosystem-v4 \u00b7 client cut)",
+ "dir": "ecosystem-v4",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "ecosystem-v4",
+ "compositions": [
+  {
+   "id": "film",
+   "html": "film.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "WS-Ecosystem-Film.mp4",
+   "deploy": "ecosystem-v4-film.mp4",
+   "still_times": [
+    4,
+    19,
+    26,
+    40,
+    49,
+    58,
+    67,
+    80,
+    93,
+    102,
+    109,
+    120
+   ]
+  },
+  {
+   "id": "ig",
+   "html": "film-ig.html",
+   "frames": "frames-ig",
+   "soundtrack": "soundtrack-ig.wav",
+   "out": "WS-Ecosystem-Film-IG.mp4",
+   "deploy": "ecosystem-v4-ig.mp4",
+   "still_times": [
+    3.5,
+    10,
+    17.5,
+    24.5,
+    31.5,
+    43
+   ]
+  }
+ ]
+}
