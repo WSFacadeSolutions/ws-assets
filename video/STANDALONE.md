@@ -28,7 +28,7 @@ brew install python node ffmpeg
 Install Google Chrome, Chromium or Brave, then clone and set up:
 
 ```bash
-git clone <ws-assets-repository-url> ws-assets
+git clone https://github.com/WSFacadeSolutions/ws-assets.git
 cd ws-assets/video
 ./scripts/setup-macos.sh
 ./run.command
