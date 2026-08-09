@@ -149,10 +149,6 @@ non-fatal: the trigger continues with local content and says so in the log.
 
 ## Timeline + Mini-Premiere
 
-The editor also has a standalone macOS backend and launcher; see
-[`STANDALONE.md`](STANDALONE.md). It uses the same project files and render
-engine while replacing the WST038/VPS routes with a loopback-only local server.
-
 `timeline.json` is the single home of scene windows (real seconds) and audio data
 (`risers`, `shimmer`, `volume`, `music_src`, `music_vol`, `sfx_vol`) per composition.
 The compositions keep their authored keyframes and **time-warp** them

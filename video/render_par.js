@@ -3,9 +3,8 @@
 const puppeteer = require('puppeteer-core');
 const path = require('path');
 const fs = require('fs');
-const { browserPath } = require('./browser_path');
 
-const CHROME = browserPath();
+const CHROME = '/root/.cache/puppeteer/chrome-headless-shell/linux-148.0.7778.97/chrome-headless-shell-linux64/chrome-headless-shell';
 const FILM = 'file://' + path.resolve(__dirname, process.argv[3] || 'film.html');
 const OUT = path.resolve(__dirname, process.argv[4] || 'frames');
 

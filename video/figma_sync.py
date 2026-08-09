@@ -37,7 +37,6 @@ import argparse
 import base64
 import html as html_mod
 import json
-import os
 import re
 import subprocess
 import sys
@@ -46,22 +45,11 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PROJECTS_DIR = HERE / 'projects'
-MEDIA_DIR = Path(os.environ.get(
-    'WS_FILM_MEDIA_DIR',
-    '/var/www/wssoltech/media' if Path('/var/www/wssoltech/media').is_dir()
-    else str(HERE / '.local' / 'media')))
-PUBLIC_BASE = os.environ.get('WS_FILM_PUBLIC_BASE', 'https://app.wssoltech.au/media/').rstrip('/') + '/'
+MEDIA_DIR = Path('/var/www/wssoltech/media')
+PUBLIC_BASE = 'https://app.wssoltech.au/media/'
 CF_ZONE_NAME = 'wssoltech.au'
-_vps_figma = Path('/root/.secrets/ws-vibecad.env')
-_vps_cf = Path('/root/.secrets/cf.env')
-SECRETS = {
-    'figma': Path(os.environ.get('WS_FILM_FIGMA_ENV',
-                                 _vps_figma if _vps_figma.exists() else Path.home() / '.config/ws-film/figma.env')),
-    'cf': Path(os.environ.get('WS_FILM_CF_ENV',
-                              _vps_cf if _vps_cf.exists() else Path.home() / '.config/ws-film/cloudflare.env')),
-}
-_vps_python = Path('/root/ws-agents/bin/python3')
-VENV_PY = os.environ.get('WS_FILM_PYTHON', str(_vps_python if _vps_python.exists() else Path(sys.executable)))
+SECRETS = {'figma': Path('/root/.secrets/ws-vibecad.env'), 'cf': Path('/root/.secrets/cf.env')}
+VENV_PY = '/root/ws-agents/bin/python3'   # numpy lives here (soundtrack.py)
 
 
 def read_env(path):
