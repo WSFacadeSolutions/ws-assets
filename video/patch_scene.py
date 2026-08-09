@@ -28,7 +28,10 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SECRETS_DIR = Path('/root/.secrets/anthropic')
+_vps_secrets = Path('/root/.secrets/anthropic')
+SECRETS_DIR = Path(os.environ.get(
+    'WS_FILM_ANTHROPIC_DIR',
+    _vps_secrets if _vps_secrets.is_dir() else Path.home() / '.config' / 'ws-film' / 'anthropic'))
 DEFAULT_MODEL = 'claude-fable-5'
 
 CONTRACT = """SCENE CONTRACT (read carefully — the composition engine depends on it)
@@ -179,6 +182,10 @@ def main():
     else:
         mode_steps = EDIT_STEPS.format(scene=scene, html=html, project=a.project)
     prompt = PROMPT.format(brief=brief, mode_steps=mode_steps, contract=contract)
+    # The creative contract predates the desktop edition and names the VPS
+    # checkout explicitly. Keep one prompt, but point every path at this clone.
+    prompt = prompt.replace('/root/ws-assets/video', str(HERE))
+    prompt = prompt.replace('on the WS Facade Solutions VPS', 'in the local WS Film checkout')
 
     envp = SECRETS_DIR / f'{a.env}.env'
     if a.dry_run:
@@ -196,7 +203,7 @@ def main():
     log = HERE / 'projects' / f'{a.project}.{comp}.{scene}.patch.log'
     log.parent.mkdir(exist_ok=True)
     print(f'patching {a.project}/{comp}/{scene} headless · model {model} · log {log}')
-    cmd = ['claude', '-p', prompt, '--model', model,
+    cmd = [os.environ.get('WS_FILM_CLAUDE_BIN', 'claude'), '-p', prompt, '--model', model,
            '--permission-mode', 'acceptEdits',
            '--allowedTools', 'Read,Glob,Grep,Write,Edit,Bash(node:*),Bash(python3:*),Bash(/usr/bin/python3:*),Bash(ls:*),Bash(mkdir:*),Bash(cp:*),Bash(cmp:*)',
            '--output-format', 'stream-json', '--verbose']

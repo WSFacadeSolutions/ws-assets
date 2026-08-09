@@ -72,7 +72,7 @@ a{color:var(--lilac)}
  <label class="muted">projeto <select id="projSel" onchange="location='/film-editor?project='+this.value"></select></label>
  <button onclick="dupProject()" title="duplica o projeto inteiro (figma_sync --clone): composições, timeline, tema, música e vídeo de campo — a cópia nunca sobrescreve nada" style="padding:3px 10px;font-size:12px">⧉ duplicar</button>
  <span id="ptitle" class="muted"></span>
- <a href="/" style="margin-left:auto">← voltar ao ops</a>
+ <a href="/" id="backlink" style="margin-left:auto">← voltar ao ops</a>
 </div>
 <div class="muted">Um corte de cada vez (abas). Arrasta as <b style="color:var(--orange)">bordas laranja</b> no Gantt — as animações
 internas acompanham (time-warp). Na trilha de áudio, <b style="color:var(--lilac)">lilás</b> = risers, <b style="color:var(--ok)">verde</b> = shimmer.
@@ -106,7 +106,7 @@ O preview roda a composição real no browser (zero token, zero render) — usa 
  <button class="primary" onclick="save()">💾 Guardar timeline</button>
  <button onclick="trig('stills')">▶ Stills (~3 min)</button>
  <button class="primary" onclick="saveRender()">🎞 Guardar + render SEM publicar (~12 min)</button>
- <button onclick="trig('deploy')">🚀 Render + publicar (~12 min)</button>
+ <button id="deploybtn" onclick="trig('deploy')">🚀 Render + publicar (~12 min)</button>
  <button onclick="loadAll()">↺ Recarregar do disco</button>
  <span id="msg"></span>
 </div>
@@ -127,6 +127,10 @@ async function loadAll(){
  const r=await fetch('/api/film-timeline?project='+encodeURIComponent(PROJECT));
  if(!r.ok){msg('não deu para carregar: '+((await r.json().catch(()=>({}))).error||r.status),1);return}
  DATA=await r.json(); TL=DATA.timeline;
+ if(DATA.capabilities&&DATA.capabilities.standalone){
+  document.getElementById('deploybtn').style.display='none';
+  const back=document.getElementById('backlink');back.textContent='← início local';
+ }
  THM=Object.assign({},DATA.theme_stock||{},DATA.theme||{});THMDIRTY=false;renderTheme();
  document.getElementById('projSel').innerHTML=(DATA.projects||[PROJECT]).map(p=>
   `<option ${p===PROJECT?'selected':''}>${esc(p)}</option>`).join('');
@@ -212,6 +216,7 @@ function render(){
     Guarda a timeline e o preview recarrega sozinho com a edição aplicada.</div>
    </div>
   </div>
+  <div id="aipatch" style="${DATA.capabilities&&DATA.capabilities.ai_patch===false?'display:none':''}">
   <h2 style="margin-top:22px">🤖 Cena com IA <span class="muted" style="text-transform:none;letter-spacing:0">— ➕ adicionar ou ✏️ substituir (patch de UMA cena, headless)</span></h2>
   <div class="muted">Escreve o briefing. ➕ adiciona depois da cena que escolheres; ✏️ (no Gantt) substitui a cena —
    numa <b>cópia nova do projeto</b> (original intocado) ou aqui mesmo. O patch mexe só nessa cena e deixa
@@ -232,6 +237,7 @@ function render(){
    <span id="pmsg" class="muted"></span>
   </div>
   <pre class="plog" id="plog"></pre>
+  </div>
  </div>`;
  bindDrag();
  loadPreview(comp,PV._force);PV._force=false;

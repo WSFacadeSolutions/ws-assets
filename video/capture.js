@@ -3,8 +3,9 @@ const puppeteer = require('puppeteer-core');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const { browserPath } = require('./browser_path');
 
-const CHROME = '/root/.cache/puppeteer/chrome-headless-shell/linux-148.0.7778.97/chrome-headless-shell-linux64/chrome-headless-shell';
+const CHROME = browserPath();
 // usage: node capture.js [stills|render] [times|out.mp4] [composition.html]
 // The composition path may live in a project subdir (projects/<slug>/); stills
 // land in a stills/ dir NEXT TO the composition so projects never mix.

@@ -17,11 +17,14 @@ auth_info*
 
 # video pipeline — heavy build artifacts (code and sources only in git)
 video/node_modules/
+video/.venv/
+video/.local/
 video/frames*/
 video/stills/
 video/template/
 video/figma-upload/
 video/__pycache__/
+video/**/__pycache__/
 video/*.mp4
 video/*.wav
 video/music/
