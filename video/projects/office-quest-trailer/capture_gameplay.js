@@ -64,6 +64,13 @@ async function captureCanvas(page, filename) {
   fs.writeFileSync(filename, Buffer.from(dataUrl.split(',')[1], 'base64'));
 }
 
+async function captureInterface(page, filename) {
+  // UI feature shots deliberately include the production shell: these are the
+  // English panels a player actually operates, layered over the same Hi-Res
+  // world. The throwaway DEV save has no cloud identity or personal media.
+  await page.screenshot({ path: filename, type: 'png' });
+}
+
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await puppeteer.launch({
@@ -73,6 +80,7 @@ async function captureCanvas(page, filename) {
   });
   const page = await browser.newPage();
   page.on('pageerror', error => console.error('WS Game page error:', error.message));
+  await page.evaluateOnNewDocument(() => localStorage.setItem('wsgame-lang', 'en'));
   // The production renderer only offers Hi-Res/New Graphics to Guilherme while
   // the rollout is private. This capture client receives that same positive
   // policy verdict locally; no Access identity or production data is required.
@@ -110,7 +118,7 @@ async function captureCanvas(page, filename) {
         skin: '#D69A6A',
         hair: '#1A120C',
         hairStyle: 'fade',
-        beard: 'cavanhaque',
+        beard: 'nenhuma',
         eyes: 'chill',
         outfit: 'bomber-petroleum',
         pantsStyle: 'default',
@@ -134,6 +142,29 @@ async function captureCanvas(page, filename) {
   }
   console.log(`presentation ${presentation.hires.backing.w}x${presentation.hires.backing.h} · art ${presentation.art.built}x`);
 
+  // Capture two production UI surfaces before the world tour, while the
+  // protagonist is still in the office. Every visible label is English.
+  await page.evaluate(() => {
+    window.__WS.openHub();
+    window.__WS.hubGo('quests');
+  });
+  await new Promise(resolve => setTimeout(resolve, 500));
+  await captureInterface(page, path.join(OUT, 'career.png'));
+  console.log('captured career interface');
+  await page.evaluate(() => {
+    while (window.__WS.shell().depth) window.__WS.esc();
+    ['Nova', 'Atlas', 'Mia', 'Leo', 'Iris'].forEach((name, index) => {
+      if (window.__WS.world.npcs[index]) window.__WS.world.npcs[index].name = name;
+    });
+    window.__WS.openCall();
+    const captureNotice = document.querySelector('.q3.dim');
+    if (captureNotice) captureNotice.textContent = 'Synthetic capture · no personal media loaded.';
+  });
+  await new Promise(resolve => setTimeout(resolve, 700));
+  await captureInterface(page, path.join(OUT, 'calls.png'));
+  console.log('captured calls interface');
+  await page.evaluate(() => { while (window.__WS.shell().depth) window.__WS.esc(); });
+
   for (const shot of SHOTS) {
     await page.evaluate((spec) => {
       if (spec.viaOffice && window.__WS.area() !== 'office') window.__WS.goDoor(spec.viaOffice);
@@ -152,6 +183,21 @@ async function captureCanvas(page, filename) {
     }
     await captureCanvas(page, path.join(OUT, `${shot.id}.png`));
     console.log(`captured ${shot.id} from ${area}`);
+
+    if (shot.id === 'games') {
+      await page.evaluate(() => window.__WS.lounge.open('dj'));
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await captureInterface(page, path.join(OUT, 'lounge.png'));
+      console.log('captured lounge interface');
+      await page.evaluate(() => { while (window.__WS.shell().depth) window.__WS.esc(); });
+    }
+    if (shot.id === 'estimating-lab') {
+      await page.evaluate(() => window.__WS.estimatingLab.open('quotes'));
+      await new Promise(resolve => setTimeout(resolve, 700));
+      await captureInterface(page, path.join(OUT, 'estimating-tools.png'));
+      console.log('captured estimating interface');
+      await page.evaluate(() => { while (window.__WS.shell().depth) window.__WS.esc(); });
+    }
   }
 
   await browser.close();

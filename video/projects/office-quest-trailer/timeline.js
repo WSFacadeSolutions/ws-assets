@@ -10,23 +10,71 @@ window.TIMELINE = {
    {
     "id": "s1",
     "start": 7,
-    "end": 78
+    "end": 12.5
    },
    {
     "id": "s2",
+    "start": 12.5,
+    "end": 21
+   },
+   {
+    "id": "s3",
+    "start": 21,
+    "end": 29
+   },
+   {
+    "id": "s4",
+    "start": 29,
+    "end": 38
+   },
+   {
+    "id": "s5",
+    "start": 38,
+    "end": 48
+   },
+   {
+    "id": "s6",
+    "start": 48,
+    "end": 58
+   },
+   {
+    "id": "s7",
+    "start": 58,
+    "end": 67
+   },
+   {
+    "id": "s8",
+    "start": 67,
+    "end": 73
+   },
+   {
+    "id": "s9",
+    "start": 73,
+    "end": 78
+   },
+   {
+    "id": "s10",
     "start": 78,
     "end": 85
    }
   ],
   "audio": {
-   "music_src": "",
-   "music_vol": 1,
-   "sfx_vol": 1,
+   "music_src": "music/office-quest-score.wav",
+   "music_vol": 0.96,
+   "sfx_vol": 0.82,
    "risers": [
     7,
+    12.5,
+    21,
+    29,
+    38,
+    48,
+    58,
+    67,
+    73,
     78
    ],
-   "shimmer": 81.5,
+   "shimmer": 80.2,
    "volume": 0.92
   }
  }
