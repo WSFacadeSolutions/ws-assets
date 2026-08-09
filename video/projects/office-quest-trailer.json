@@ -1,0 +1,21 @@
+{
+ "name": "office-quest-trailer",
+ "title": "Office Quest — Official Trailer",
+ "dir": "office-quest-trailer",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "office-quest-trailer",
+ "compositions": [
+  {
+   "id": "film",
+   "html": "film.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+   "out": "Office-Quest-Official-Trailer.mp4",
+   "deploy": "office-quest-official-trailer.mp4",
+   "still_times": [3.6, 42.5, 82]
+  }
+ ]
+}

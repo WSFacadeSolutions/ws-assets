@@ -1,0 +1,164 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Office Quest — Official Trailer</title>
+<script src="content.js"></script>
+<script src="timeline.js"></script>
+<style>
+@font-face{font-family:Saira;src:url(../../fonts/saira-300.woff2) format('woff2');font-weight:300}
+@font-face{font-family:Saira;src:url(../../fonts/saira-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Saira;src:url(../../fonts/saira-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Saira;src:url(../../fonts/saira-600.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Saira;src:url(../../fonts/saira-700.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Saira;src:url(../../fonts/saira-800.woff2) format('woff2');font-weight:800}
+:root{
+  --petrol:#1E2F38;--petrol-rgb:30,47,56;--deep:#0F1A20;--deep-rgb:15,26,32;
+  --off:#F5F2F0;--off-rgb:245,242,240;--orange:#FF9D27;--orange-rgb:255,157,39;
+  --lilac:#A490FF;--lilac-rgb:164,144,255;--violet:#6040CC;--violet-rgb:96,64,204;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--deep)}
+body{font-family:Saira,sans-serif}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--deep);color:var(--off)}
+.scene{position:absolute;inset:0;display:none;overflow:hidden}
+.scene::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(2,8,12,.42) 110%)}
+.grid{position:absolute;inset:-1px;background-image:linear-gradient(rgba(var(--lilac-rgb),.045) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--lilac-rgb),.045) 1px,transparent 1px);background-size:64px 64px}
+.scan{position:absolute;inset:0;z-index:20;pointer-events:none;opacity:.13;background:repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent 4px);mix-blend-mode:soft-light}
+.grain{position:absolute;inset:0;z-index:21;pointer-events:none;opacity:.055;mix-blend-mode:screen}
+.kicker{font-size:22px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)}
+.proof{font-size:16px;font-weight:700;letter-spacing:.18em;color:rgba(var(--off-rgb),.5)}
+.chamfer{clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px))}
+.plate{position:absolute;background:#071015;filter:drop-shadow(0 35px 70px rgba(0,0,0,.48))}
+.plate::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border:2px solid rgba(var(--lilac-rgb),.72);clip-path:inherit}
+.plate img{width:100%;height:100%;display:block;object-fit:cover;image-rendering:pixelated}
+.corner{position:absolute;width:72px;height:72px;border-color:var(--orange);border-style:solid;z-index:5;opacity:.95}
+.corner.tl{left:-10px;top:-10px;border-width:4px 0 0 4px}.corner.br{right:-10px;bottom:-10px;border-width:0 4px 4px 0}
+.chip{height:42px;padding:0 22px;display:inline-flex;align-items:center;border-radius:999px;border:1px solid rgba(var(--off-rgb),.18);background:rgba(var(--deep-rgb),.78);font-size:16px;font-weight:700;letter-spacing:.14em;color:var(--off);white-space:nowrap}
+
+/* S0 — the ordinary morning becomes the opening shot. */
+#s0{background:radial-gradient(1000px 760px at 76% 45%,rgba(var(--violet-rgb),.28),transparent 72%),linear-gradient(118deg,#0A141A 0%,#13252E 57%,#0C181E 100%)}
+#s0copy{position:absolute;z-index:8;left:108px;top:212px;width:620px}
+#s0copy h1{margin-top:30px;font-size:82px;font-weight:800;line-height:.98;letter-spacing:-.035em}
+#s0copy h1 span{display:block}#s0copy h1 .accent{color:var(--lilac)}
+#s0proof{margin-top:52px;display:flex;align-items:center;gap:16px}
+#s0proof i{width:10px;height:10px;border-radius:50%;background:#35d07f;box-shadow:0 0 0 7px rgba(53,208,127,.12)}
+#s0plate{z-index:4;left:758px;top:114px;width:1080px;height:850px;padding:16px;background:linear-gradient(145deg,rgba(var(--lilac-rgb),.5),rgba(var(--orange-rgb),.22) 45%,rgba(7,16,21,.95) 46%)}
+#s0plate .inner{position:absolute;inset:16px;overflow:hidden;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px))}
+#s0plate img{transform:scale(1.08);transform-origin:51% 47%}
+#s0route{position:absolute;z-index:2;left:520px;top:50px;width:850px;height:980px;opacity:.56}
+
+/* S1 — multiple real rooms, one coherent world. */
+#s1{background:radial-gradient(900px 650px at 50% 48%,rgba(var(--lilac-rgb),.2),transparent 72%),linear-gradient(180deg,#101F27,#081116)}
+#s1head{position:absolute;z-index:10;left:0;right:0;top:62px;text-align:center}
+#s1head h2{font-size:58px;font-weight:800;letter-spacing:-.025em;margin-top:12px}
+#s1head h2 em{font-style:normal;color:var(--lilac)}
+#s1main{z-index:6;left:460px;top:214px;width:1000px;height:690px;padding:12px;transform:rotate(-.3deg);background:rgba(var(--off-rgb),.08)}
+#s1main img{object-position:center 43%}
+#s1left{z-index:4;left:70px;top:326px;width:565px;height:470px;padding:10px;transform:rotate(-3.4deg);background:rgba(var(--off-rgb),.08)}
+#s1right{z-index:4;right:64px;top:326px;width:565px;height:470px;padding:10px;transform:rotate(3.2deg);background:rgba(var(--off-rgb),.08)}
+#s1main .label,#s1left .label,#s1right .label{position:absolute;z-index:4;left:22px;bottom:20px;padding:8px 13px;background:rgba(8,17,22,.86);font-size:14px;font-weight:700;letter-spacing:.16em;color:var(--off)}
+#s1features{position:absolute;z-index:12;left:0;right:0;bottom:62px;display:flex;justify-content:center;gap:14px}
+#s1features .chip:nth-child(2){border-color:rgba(var(--lilac-rgb),.55)}#s1features .chip:nth-child(3){border-color:rgba(var(--orange-rgb),.55)}
+#s1orbit{position:absolute;z-index:1;left:157px;top:180px;width:1606px;height:760px;opacity:.6}
+
+/* S2 — product hero, using the existing VibeCAD box. */
+#s2{background:radial-gradient(850px 850px at 72% 47%,rgba(var(--lilac-rgb),.22),transparent 65%),linear-gradient(116deg,#0B151B 0%,#152832 49%,#0B151B 100%)}
+#s2copy{position:absolute;z-index:10;left:136px;top:218px;width:820px}
+#s2copy .eyebrow{font-size:24px;font-weight:700;letter-spacing:.42em;color:var(--lilac)}
+#s2copy h1{margin-top:24px;font-size:138px;font-weight:800;line-height:.78;letter-spacing:-.055em}
+#s2copy h1 span{display:block}#s2copy h1 .quest{color:var(--orange);margin-top:30px}
+#s2tag{margin-top:58px;font-size:35px;font-weight:400;letter-spacing:-.01em;color:rgba(var(--off-rgb),.82)}
+#s2cta{margin-top:38px;display:flex;align-items:center;gap:18px;font-size:18px;font-weight:700;letter-spacing:.24em;color:var(--off)}
+#s2cta i{display:block;width:84px;height:3px;background:linear-gradient(90deg,var(--orange),var(--lilac))}
+#s2box{position:absolute;z-index:7;right:76px;top:56px;width:900px;height:900px;object-fit:contain;filter:drop-shadow(0 54px 60px rgba(0,0,0,.5))}
+#s2chips{position:absolute;z-index:11;right:122px;bottom:82px;display:flex;gap:12px}
+#s2chips .chip:nth-child(1){color:#111;background:var(--orange);border-color:var(--orange)}#s2chips .chip:nth-child(3){background:var(--lilac);border-color:var(--lilac);color:#111}
+#s2mark{position:absolute;z-index:10;left:140px;top:82px;width:54px;height:54px;filter:brightness(0) invert(1);opacity:.9}
+#s2halo{position:absolute;z-index:1;right:82px;top:98px;width:800px;height:800px;border:1px solid rgba(var(--lilac-rgb),.22);border-radius:50%;box-shadow:0 0 0 60px rgba(var(--lilac-rgb),.025),0 0 0 140px rgba(var(--lilac-rgb),.018)}
+
+#progress{position:absolute;left:0;right:0;bottom:0;height:5px;z-index:40;background:rgba(255,255,255,.06)}
+#progress i{display:block;height:100%;background:linear-gradient(90deg,var(--lilac),var(--orange));transform-origin:left center}
+</style>
+
+<div id="stage">
+  <section class="scene" id="s0">
+    <div class="grid"></div>
+    <svg id="s0route" viewBox="0 0 850 980" fill="none" data-asset="s0.route">
+      <path d="M40 930V678H188V454H390V214H810" stroke="#A490FF" stroke-width="3" stroke-dasharray="12 16"/>
+      <circle cx="40" cy="930" r="8" fill="#FF9D27"/><circle cx="188" cy="678" r="7" fill="#A490FF"/><circle cx="390" cy="454" r="7" fill="#A490FF"/><circle cx="810" cy="214" r="8" fill="#FF9D27"/>
+    </svg>
+    <div id="s0copy"><div id="s0k" class="kicker"></div><h1><span id="s0l1"></span><span id="s0l2"></span><span id="s0l3" class="accent"></span></h1><div id="s0proof" class="proof"><i></i><span></span></div></div>
+    <div id="s0plate" class="plate chamfer"><div class="corner tl"></div><div class="corner br"></div><div class="inner"><img alt="Office Quest office gameplay"></div></div>
+  </section>
+
+  <section class="scene" id="s1">
+    <div class="grid"></div>
+    <svg id="s1orbit" viewBox="0 0 1606 760" fill="none" data-asset="s1.orbit"><ellipse cx="803" cy="380" rx="720" ry="310" stroke="#A490FF" stroke-width="2" stroke-dasharray="8 18"/><path d="M84 380H1522M803 70V690" stroke="#FF9D27" stroke-opacity=".32"/></svg>
+    <div id="s1head"><div id="s1k" class="kicker"></div><h2 id="s1t"></h2></div>
+    <div id="s1left" class="plate chamfer"><img alt="Office Quest games room gameplay"><span class="label">AFTER HOURS</span></div>
+    <div id="s1right" class="plate chamfer"><img alt="Office Quest Estimating Lab gameplay"><span class="label">BUILD THE WORK</span></div>
+    <div id="s1main" class="plate chamfer"><div class="corner tl"></div><div class="corner br"></div><img alt="Office Quest street gameplay"><span class="label">THE WS PRECINCT</span></div>
+    <div id="s1features"></div>
+  </section>
+
+  <section class="scene" id="s2">
+    <div class="grid"></div><div id="s2halo" data-asset="s2.halo"></div>
+    <img id="s2mark" src="../../../logos/svg/WS_SQUARE_OFFWHITE.svg" alt="WS">
+    <div id="s2copy"><div id="s2ey" class="eyebrow"></div><h1><span id="s2t1"></span><span id="s2t2" class="quest"></span></h1><div id="s2tag"></div><div id="s2cta"><i></i><span></span></div></div>
+    <img id="s2box" alt="Office Quest game box">
+    <div id="s2chips"></div>
+  </section>
+
+  <div class="scan"></div>
+  <svg class="grain" width="1920" height="1080"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="14"/></filter><rect width="1920" height="1080" filter="url(#noise)"/></svg>
+  <div id="progress"><i></i></div>
+</div>
+
+<script>
+const C=window.CONTENT;
+const FPS=30;
+const $=s=>document.querySelector(s);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const c01=x=>clamp(x,0,1);
+const ease=x=>1-Math.pow(1-c01(x),3);
+const RGB=h=>parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16);
+const TDEF={petrol:'#1E2F38',deep:'#0F1A20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040CC'};
+window.applyTheme=function(theme){const root=document.documentElement.style;for(const key in TDEF){const value=(theme&&theme[key])||TDEF[key];root.setProperty('--'+key,value);root.setProperty('--'+key+'-rgb',RGB(value));}};
+window.applyTheme(C.theme);
+
+const SC=[['#s0',0,7],['#s1',7,78],['#s2',78,85]];
+const TL=(window.TIMELINE&&window.TIMELINE.film)||null;
+const SC_EDIT=SC.map(([sel,a,b])=>{const row=TL&&(TL.scenes||[]).find(x=>'#'+x.id===sel);return row?[sel,+row.start,+row.end]:[sel,a,b];});
+const WARP_PTS=SC_EDIT.map(([_,a],i)=>[a,SC[i][1]]).concat([[SC_EDIT[SC_EDIT.length-1][2],SC[SC.length-1][2]]]);
+function warp(t){const p=WARP_PTS;if(t<=p[0][0])return p[0][1]+(t-p[0][0]);for(let i=1;i<p.length;i++)if(t<=p[i][0]){const [x0,y0]=p[i-1],[x1,y1]=p[i];return x1>x0?y0+(t-x0)*(y1-y0)/(x1-x0):y1;}return p[p.length-1][1]+(t-p[p.length-1][0]);}
+const DUR=SC_EDIT[SC_EDIT.length-1][2];
+
+function setText(sel,value){const el=$(sel);if(el&&value!=null)el.textContent=value;}
+setText('#s0k',C.s0.kicker);setText('#s0l1',C.s0.line1);setText('#s0l2',C.s0.line2);setText('#s0l3',C.s0.line3);setText('#s0proof span',C.s0.proof);$('#s0plate img').src=C.s0.plate;
+setText('#s1k',C.s1.kicker);$('#s1t').innerHTML=C.s1.title.replace('Build your story.','<em>Build your story.</em>');$('#s1main img').src=C.s1.primary;$('#s1left img').src=C.s1.left;$('#s1right img').src=C.s1.right;$('#s1features').innerHTML=C.s1.features.map(value=>`<span class="chip">${value}</span>`).join('');
+setText('#s2ey',C.s2.eyebrow);setText('#s2t1',C.s2.title1);setText('#s2t2',C.s2.title2);setText('#s2tag',C.s2.tagline);setText('#s2cta span',C.s2.cta);$('#s2box').src=C.s2.box;$('#s2chips').innerHTML=C.s2.chips.map(value=>`<span class="chip">${value}</span>`).join('');
+
+function sceneVis(t){for(const [sel,a,b] of SC){const el=$(sel);const on=t>=a-.01&&t<=b+.01;el.style.display=on?'block':'none';if(on){const fadeIn=c01((t-a)/.5),fadeOut=c01((b-t)/.5);el.style.opacity=Math.min(fadeIn,fadeOut);}}}
+function render(t){
+  sceneVis(t);
+  const p0=ease(t/2.3);
+  $('#s0copy').style.opacity=p0;$('#s0copy').style.transform=`translateX(${(1-p0)*-54}px)`;
+  $('#s0plate').style.opacity=ease((t-.45)/1.35);$('#s0plate').style.transform=`translateX(${(1-ease((t-.45)/1.35))*90}px) rotate(.35deg)`;
+  const p1=ease((t-7.3)/1.4),drift=c01((t-7)/(78-7));
+  $('#s1head').style.opacity=p1;$('#s1head').style.transform=`translateY(${(1-p1)*-28}px)`;
+  $('#s1main').style.opacity=p1;$('#s1main img').style.transform=`scale(${1.08-drift*.035})`;
+  $('#s1left').style.opacity=ease((t-8.1)/1.2);$('#s1right').style.opacity=ease((t-8.45)/1.2);$('#s1features').style.opacity=ease((t-9.2)/1.0);
+  const p2=ease((t-78.15)/1.25);
+  $('#s2copy').style.opacity=p2;$('#s2copy').style.transform=`translateX(${(1-p2)*-60}px)`;
+  $('#s2box').style.opacity=ease((t-78.4)/1.25);$('#s2box').style.transform=`translateY(${(1-ease((t-78.4)/1.25))*70}px) scale(${.96+ease((t-78.4)/1.25)*.04})`;
+  $('#s2chips').style.opacity=ease((t-79.7)/.9);
+  $('#progress i').style.transform=`scaleX(${c01(t/85)})`;
+}
+
+window.DUR=DUR;window.FPS=FPS;window.TOTAL_FRAMES=Math.round(DUR*FPS);
+window.seek=function(frame){const t=warp(frame/FPS);render(t);return true;};
+window.readyP=Promise.all([
+  ...[300,400,500,600,700,800].map(weight=>document.fonts.load(`${weight} 20px Saira`)),
+  ...Array.from(document.images).map(img=>img.decode().catch(()=>true)),
+]).then(()=>document.fonts.ready).then(()=>{window.seek(0);return true;});
+if(location.hash==='#play'){const started=performance.now();(function loop(){const t=(performance.now()-started)/1000;if(t<DUR){window.seek(Math.floor(t*FPS));requestAnimationFrame(loop);}})();}
+</script>
