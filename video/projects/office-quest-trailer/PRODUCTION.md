@@ -12,9 +12,11 @@ Lock-up:
 
 The film has no voice-over. Gameplay, an original deterministic synth score, transition sound design and restrained typography carry the story.
 
-Final local master: `Office-Quest-Official-Trailer.mp4`
+Final master: `Office-Quest-Official-Trailer.mp4`
 
-The master is intentionally not deployed. It can be published later through the registered WS Films action without changing the source project.
+Published behind WS Cloudflare Access at:
+
+`https://app.wssoltech.au/media/office-quest-official-trailer.mp4`
 
 ## Sequence
 
@@ -63,3 +65,5 @@ Gameplay pixels are intentionally not reconstructed as vector art. Change the ca
 - Fast-start metadata is enabled.
 - No page error, missing asset, prolonged black frame or accidental silence was detected.
 - Four decoded checkpoints from the final MP4 were visually inspected, including the opening character, call surface and two box-turntable angles.
+- The deployed file matches the rendered master at SHA-256 `3da118977920c21a731ca7ece7232624bb22d6de35893aaeceb13e9c8fb073f0`.
+- Cloudflare cache purge completed successfully after publication.
