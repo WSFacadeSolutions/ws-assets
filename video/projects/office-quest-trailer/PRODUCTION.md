@@ -27,7 +27,8 @@ The macro scene windows already total 85 seconds in `timeline.json`. The middle 
 - Copy, image-slot paths and brand colours live in `content.json`.
 - Scene lengths, scene cuts, music, SFX and volume live in `timeline.json` and are editable in the WS Films Mini-Premiere.
 - Gameplay plates live in `gameplay/` and are replaceable footage slots.
-- `capture_gameplay.js` re-shoots those slots from the real DEV renderer. It does not copy or reimplement the game engine.
+- `capture_gameplay.js` re-shoots those slots from the real DEV renderer. It activates the engine's gated 4× Hi-Res and 4× New Graphics presentation locally, without an Access identity or production data. It does not copy or reimplement the game engine.
+- The trailer protagonist uses the real creator catalogue: petroleum bomber, orange shirt, fade, chill eyes and sunglasses. Their saved sector is Estimating so the transient player workstation cannot overlap Thiago's real Tech station in the cold-open composition.
 - The box hero uses the existing WS VibeCAD turntable footage in `video/footage/ws-game/`.
 - Full rendering and publishing remain gated behind still review.
 

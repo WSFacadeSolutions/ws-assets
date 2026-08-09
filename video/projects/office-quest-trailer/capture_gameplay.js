@@ -16,7 +16,10 @@ const SHOTS = [
     door: null,
     x: 505,
     y: 430,
-    zoom: 0.65,
+    // Tighter than the world montage: the cold open needs to sell the styled
+    // protagonist as well as the office around him.
+    zoom: 0.88,
+    dir: 'down',
     bubbles: [
       ['Guilherme', 'Ready?', 'Ready?'],
       ['Thiago', 'Let\'s build it.', 'Let\'s build it.'],
@@ -28,6 +31,7 @@ const SHOTS = [
     x: 270,
     y: 185,
     zoom: 0.62,
+    dir: 'down',
     bubbles: [],
   },
   {
@@ -37,6 +41,7 @@ const SHOTS = [
     x: 255,
     y: 185,
     zoom: 0.72,
+    dir: 'down',
     bubbles: [],
   },
   {
@@ -46,6 +51,7 @@ const SHOTS = [
     x: 250,
     y: 185,
     zoom: 0.72,
+    dir: 'down',
     bubbles: [],
   },
 ];
@@ -67,22 +73,66 @@ async function captureCanvas(page, filename) {
   });
   const page = await browser.newPage();
   page.on('pageerror', error => console.error('WS Game page error:', error.message));
+  // The production renderer only offers Hi-Res/New Graphics to Guilherme while
+  // the rollout is private. This capture client receives that same positive
+  // policy verdict locally; no Access identity or production data is required.
+  await page.setRequestInterception(true);
+  page.on('request', request => {
+    if (request.url().includes('/api/studio/hires-policy')) {
+      request.respond({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          ok: true,
+          schemaVersion: 1,
+          allowed: true,
+          everyone: false,
+          canEdit: false,
+          emails: [],
+          limit: 200,
+        }),
+      });
+      return;
+    }
+    request.continue();
+  });
   await page.goto(GAME, { waitUntil: 'networkidle0' });
   await page.waitForFunction(() => window.__WS && window.__WS.start);
   await page.evaluate(() => {
     window.__WS.start({
       name: 'Quest',
       path: 'office',
-      sectorId: 'tech',
+      // Keep the protagonist's transient workstation in Estimating. The Tech
+      // shot then shows Thiago's real station once, rather than a second player
+      // desk landing in the same composition.
+      sectorId: 'estimating',
       look: {
-        skin: '#C98A5E',
-        hair: '#241019',
-        hairStyle: 'curto',
-        top: '#A490FF',
+        skin: '#D69A6A',
+        hair: '#1A120C',
+        hairStyle: 'fade',
+        beard: 'cavanhaque',
+        eyes: 'chill',
+        outfit: 'bomber-petroleum',
+        pantsStyle: 'default',
+        shoesStyle: 'default',
+        acc: 'nenhum',
+        specs: 'escuros',
+        top: '#FF9D27',
       },
     });
     window.__WS.setViewport(true);
+    window.__WS.setHiRes(true);
+    window.__WS.setRenderScale(4);
+    window.__WS.setNewArt(true);
   });
+  const presentation = await page.evaluate(() => ({
+    hires: window.__WS.hires(),
+    art: window.__WS.newArt(),
+  }));
+  if (!presentation.hires.live || presentation.hires.scale !== 4 || !presentation.art.active) {
+    throw new Error(`Hi-Res capture did not activate: ${JSON.stringify(presentation)}`);
+  }
+  console.log(`presentation ${presentation.hires.backing.w}x${presentation.hires.backing.h} · art ${presentation.art.built}x`);
 
   for (const shot of SHOTS) {
     await page.evaluate((spec) => {
@@ -90,6 +140,7 @@ async function captureCanvas(page, filename) {
       if (spec.door) window.__WS.goDoor(spec.door);
       window.__WS.setZoom(spec.zoom);
       window.__WS.place(spec.x, spec.y);
+      window.__WS.world.player.dir = spec.dir || 'down';
       for (const bubble of spec.bubbles) window.__WS.pushBubble(...bubble);
     }, shot);
     // Door transitions paint the room name into the game canvas; the trailer
