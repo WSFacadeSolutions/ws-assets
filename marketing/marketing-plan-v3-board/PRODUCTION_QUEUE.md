@@ -38,9 +38,23 @@ Wednesday 10:00 and Friday 13:00 Sydney time, with Rydalmere proposed for 09:15 
 
 | Date | Project | Media | Treatment |
 |---|---|---|---|
-| 14 August 2026 · 13:00 | Vaucluse, NSW | `assets/production/magnified/vaucluse/video-v2-neutral-bed.mp4` | Existing bed lowered and delayed until after the opening zoom |
-| 31 August 2026 · 08:30 | Rydalmere, NSW | `assets/production/magnified/rydalmere/video-v2-neutral-bed.mp4` | Sparse piano bed, no pulse-led edit cues |
-| 4 September 2026 · 13:00 | The Crescent, Vaucluse, NSW | `assets/production/magnified/the-crescent/video-v2-neutral-bed.mp4` | Restrained tonal bed with a soft transition near the visual change |
+| 14 August 2026 · 13:00 | Vaucluse, NSW | `assets/production/magnified/vaucluse/video-v3-clean-loop.mp4` | Approved quiet bed retained; opens and closes on a fully visible image |
+| 31 August 2026 · 08:30 | Rydalmere, NSW | `assets/production/magnified/rydalmere/video-v4-continuous-motion.mp4` | Sparse piano bed; two continuous camera passes with no held zoom or black reset |
+| 4 September 2026 · 13:00 | The Crescent, Vaucluse, NSW | `assets/production/magnified/the-crescent/video-v4-continuous-motion.mp4` | Restrained tonal bed; continuous movement through both images with no held zoom or black reset |
+
+## Next-production opportunities · not scheduled
+
+| Direction | Position | Gate |
+|---|---|---|
+| Peakhurst interior editorial | Strong enough to produce first: room, finish and detail | Confirm exact WS scope and project credits |
+| The Crescent covered outdoor room | Spatial post, not an interior claim | Confirm scope and credits |
+| Drummoyne indoor–outdoor threshold | Secondary feed-rhythm option | Confirm exact WS scope |
+| Serginho field craft | Process-led films using hard cuts and new restrained audio | Confirm WS project, client marketing permission and Serginho remix permission for every source |
+
+Historical WhatsApp group video is not available as a complete archive on the VPS. Future
+marketing intake should accept only explicitly nominated or forwarded clips, for example through
+a dedicated group or a `#marketing` reply/forward trigger, and record project, sender and
+permission status before the media enters production.
 
 ## App Family replacement
 

@@ -99,6 +99,28 @@
     .cadence-day li + li { margin-top: 7px; }
     .status-chip { color: var(--ink); background: var(--lime); padding: 5px 7px; border-radius: 4px; }
 
+    .opportunities { padding: 76px 0 92px; border-bottom: 1px solid var(--line); }
+    .opportunity-grid { margin-top: 34px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .opportunity-card { min-width: 0; overflow: hidden; border-radius: var(--radius); background: var(--white); }
+    .opportunity-card.wide { grid-column: span 2; }
+    .opportunity-media { display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 16 / 9; background: #d8d5cc; }
+    .opportunity-media.single { display: block; }
+    .opportunity-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .opportunity-body { padding: 20px; }
+    .opportunity-body h3 { margin: 9px 0 8px; font-size: clamp(24px, 2.35vw, 36px); line-height: 1; letter-spacing: -.045em; }
+    .opportunity-body p { margin: 0; color: #48514b; font-size: 13px; }
+    .decision-note { margin-top: 24px; padding: 16px 18px; border-left: 3px solid var(--orange); background: rgba(232,97,48,.08); font-size: 13px; }
+    .field-bank { margin-top: 54px; }
+    .field-bank-head { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: end; }
+    .field-bank-head h3 { margin: 0; font-size: clamp(31px, 4vw, 52px); line-height: 1; letter-spacing: -.05em; }
+    .field-bank-head p { margin: 0; color: #48514b; }
+    .field-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--line); gap: 1px; }
+    .field-card { padding: 22px; background: var(--paper); }
+    .field-card span { color: var(--orange); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .field-card h4 { margin: 12px 0 8px; font-size: 21px; line-height: 1.05; letter-spacing: -.035em; }
+    .field-card p { margin: 0; color: #48514b; font-size: 13px; }
+    .field-card a { display: inline-block; margin-top: 15px; font-size: 12px; text-underline-offset: 3px; }
+
     .controls { padding: 50px 0 26px; position: sticky; top: 0; z-index: 20; background: rgba(243,240,232,.94); backdrop-filter: blur(15px); }
     .controls-top { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
     .controls h2 { margin: 0; font-size: clamp(30px, 4vw, 52px); letter-spacing: -.05em; }
@@ -165,6 +187,8 @@
       .cadence-grid { grid-template-columns: 1fr; }
       .cadence-day { border-right: 0; border-bottom: 1px solid var(--line); }
       .cadence-day:last-child { border-bottom: 0; }
+      .opportunity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 680px) {
       .masthead { min-height: 78vh; background: linear-gradient(0deg, rgba(20,38,32,.84), rgba(20,38,32,.18)), url("assets/rydalmere-hero.jpg") center / cover; }
@@ -175,6 +199,8 @@
       .card, .card.wide { grid-column: 1 / -1; }
       .inventory { grid-template-columns: 1fr; }
       .production-grid, .production-summary { grid-template-columns: 1fr; }
+      .opportunity-grid, .field-grid, .field-bank-head { grid-template-columns: 1fr; }
+      .opportunity-card.wide { grid-column: auto; }
       .shortlist-toggle { display: none; }
       footer { flex-direction: column; }
     }
@@ -213,12 +239,12 @@
           <p class="eyebrow">Production review · scheduler unchanged</p>
           <h2 class="section-title">A five-week runway, staged for approval.</h2>
         </div>
-        <p>This is the next expression of the reset: nine clean Website carousels, three revised Magnified videos and the existing App Family ecosystem v5. The images below are final 4:5 exports. Magnified now uses three distinct, quiet audio treatments and opens without a logo or title card.</p>
+        <p>This is the next expression of the reset: nine clean Website carousels, three revised Magnified videos and the existing App Family ecosystem v5. The images below are final 4:5 exports. Magnified now uses three distinct, quiet audio treatments and opens immediately on the work.</p>
       </div>
 
       <div class="production-summary" aria-label="Production summary">
         <div><b>9</b><span>Website carousels</span></div>
-        <div><b>3</b><span>Magnified v2 videos</span></div>
+        <div><b>3</b><span>Magnified clean-loop videos</span></div>
         <div><b>1</b><span>Ecosystem v5 replacement</span></div>
         <div><b>15</b><span>Proposed Instagram slots</span></div>
       </div>
@@ -336,8 +362,8 @@ Full project on our website. Link in bio.</p></details></div>
         </article>
 
         <article class="prod-card">
-          <div class="prod-media single"><video src="assets/production/magnified/vaucluse/video-v2-neutral-bed.mp4" poster="assets/production/magnified/vaucluse/poster.jpg" controls playsinline preload="metadata"></video></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>14 Aug · 13:00 proposed</span></div><h3>Vaucluse · direct cut v2</h3><p>The original character remains, but the audio now enters softly after the opening zoom and dissolves before the loop resets.</p><details><summary>Final caption</summary><p class="caption">Seen closely, the finish is deliberately irregular.
+          <div class="prod-media single"><video src="assets/production/magnified/vaucluse/video-v3-clean-loop.mp4" poster="assets/production/magnified/vaucluse/poster-v3.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>14 Aug · 13:00 proposed</span></div><h3>Vaucluse · clean loop v3</h3><p>The approved quiet audio remains. The video now begins and ends on a fully visible image, with no black frame or visual fade at the loop point.</p><details><summary>Final caption</summary><p class="caption">Seen closely, the finish is deliberately irregular.
 
 Hand-worked acrylic render follows the curve of the facade, meeting the concrete slab edge as part of one continuous exterior system.
 
@@ -345,8 +371,8 @@ Vaucluse, NSW.</p></details></div>
         </article>
 
         <article class="prod-card">
-          <div class="prod-media single"><video src="assets/production/magnified/rydalmere/video-v2-neutral-bed.mp4" poster="assets/production/magnified/rydalmere/poster.jpg" controls playsinline preload="metadata"></video></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>31 Aug · 08:30 proposed</span></div><h3>Rydalmere · arch and return v2</h3><p>The pulse-heavy track is replaced with a quiet, sparse piano bed that does not compete with the image changes.</p><details><summary>Final caption</summary><p class="caption">One elevation, read through its details.
+          <div class="prod-media single"><video src="assets/production/magnified/rydalmere/video-v4-continuous-motion.mp4" poster="assets/production/magnified/rydalmere/poster-v4.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>31 Aug · 08:30 proposed</span></div><h3>Rydalmere · continuous motion v4</h3><p>The quiet piano bed remains. The arch and return now move continuously through two restrained camera passes, with no held zoom and no black reset.</p><details><summary>Final caption</summary><p class="caption">One elevation, read through its details.
 
 The curved opening, decorative bands and deep returns give Rydalmere its street presence. The finish has to hold each line without flattening the architecture.
 
@@ -354,8 +380,8 @@ Rydalmere, NSW.</p></details></div>
         </article>
 
         <article class="prod-card">
-          <div class="prod-media single"><video src="assets/production/magnified/the-crescent/video-v2-neutral-bed.mp4" poster="assets/production/magnified/the-crescent/poster.jpg" controls playsinline preload="metadata"></video></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>4 Sep · 13:00 proposed</span></div><h3>The Crescent · junction to space v2</h3><p>The pulse-heavy track is replaced with a restrained tonal bed; the only chord change near the centre supports the visual transition.</p><details><summary>Final caption</summary><p class="caption">Magnified: the junction first, the space second.
+          <div class="prod-media single"><video src="assets/production/magnified/the-crescent/video-v4-continuous-motion.mp4" poster="assets/production/magnified/the-crescent/poster-v4.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>4 Sep · 13:00 proposed</span></div><h3>The Crescent · continuous motion v4</h3><p>The restrained tonal bed remains. Both the junction and the finished space now move continuously, without a held zoom or black reset.</p><details><summary>Final caption</summary><p class="caption">Magnified: the junction first, the space second.
 
 At The Crescent, render, decorative finishes, paint and caulking sit behind the architecture rather than on top of it. The closer view is where that restraint becomes visible.
 
@@ -369,6 +395,46 @@ The Crescent, Vaucluse, NSW.</p></details></div>
       </div>
 
       <p class="production-note"><strong>No scheduler changes have been made yet.</strong> The revised media and proposed dates are here for one final visual and audio check. “The useful eight seconds”, “Under the edge” and the floor-protection report clip remain demoted to Stories, Academy or a future recut.</p>
+    </section>
+
+    <section class="opportunities" id="spatial-and-field-opportunities">
+      <div class="production-head">
+        <div>
+          <p class="eyebrow">Archive finding · not scheduled</p>
+          <h2 class="section-title">Use the space we genuinely have.</h2>
+        </div>
+        <p>The archive does not support a broad interiors category yet. It does support one convincing Peakhurst editorial feature and two accurate indoor–outdoor readings. These can diversify the feed without pretending WS has photographed work it has not.</p>
+      </div>
+
+      <div class="opportunity-grid">
+        <article class="opportunity-card wide">
+          <div class="opportunity-media"><img src="assets/opportunities/peakhurst-room.jpg" alt="Peakhurst interior with decorative wall finish"><img src="assets/opportunities/peakhurst-detail.jpg" alt="Peakhurst decorative finish detail"></div>
+          <div class="opportunity-body"><div class="prod-meta"><span class="campaign-chip">Strongest opportunity</span><span>Interior editorial</span></div><h3>Peakhurst · surface as atmosphere</h3><p>A proper editorial carousel: room first, material detail second, then one restrained paragraph about how the decorative finish changes the space. This is strong enough for the feed after scope and credits are confirmed.</p></div>
+        </article>
+        <article class="opportunity-card">
+          <div class="opportunity-media single"><img src="assets/opportunities/the-crescent-outdoor-room.jpg" alt="Covered outdoor room at The Crescent"></div>
+          <div class="opportunity-body"><div class="prod-meta"><span class="campaign-chip">Accurate framing</span><span>Covered outdoor room</span></div><h3>The Crescent · room without a door</h3><p>Use it as architecture and atmosphere, not as an interior. The curved seating, deep shade and garden edge give us a distinct spatial post beyond another facade.</p></div>
+        </article>
+        <article class="opportunity-card">
+          <div class="opportunity-media single"><img src="assets/opportunities/drummoyne-threshold.jpg" alt="Indoor–outdoor threshold at Drummoyne"></div>
+          <div class="opportunity-body"><div class="prod-meta"><span class="campaign-chip">Secondary option</span><span>Indoor–outdoor threshold</span></div><h3>Drummoyne · the edge of the room</h3><p>A quieter supporting post about the transition between the protected interior and the external deck. Useful for feed rhythm once the exact WS scope is confirmed.</p></div>
+        </article>
+      </div>
+      <p class="decision-note"><strong>Recommendation:</strong> produce Peakhurst first. Keep The Crescent and Drummoyne in the next-production bank. Do not label the broader WS archive as an interiors portfolio until future shoots deliberately capture more completed rooms.</p>
+
+      <div class="field-bank">
+        <div class="field-bank-head">
+          <h3>Field craft can become premium content.</h3>
+          <p>Serginho's archive contains strong gestures and process, but not every project is necessarily WS work. The right treatment is a calm, hard-cut edit with fresh licensed or original sound — no CapCut marks, stickers, third-party Instagram music or generic report footage.</p>
+        </div>
+        <div class="field-grid">
+          <article class="field-card"><span>01 · 10–14 seconds</span><h4>The finish is in the pressure</h4><p>One precise wall-finishing action, tightly reframed. Let hand, tool and material carry the film; keep the English caption minimal.</p><a href="https://www.instagram.com/reel/DaccBuWzHm2/" target="_blank" rel="noopener">Review source reel</a></article>
+          <article class="field-card"><span>02 · 15–20 seconds</span><h4>One wall, four moments</h4><p>Preparation, application, levelling and the finished surface in four clean cuts. Use one verified WS site so the sequence remains truthful.</p><a href="https://www.instagram.com/reel/DakshDwzdnc/" target="_blank" rel="noopener">Review curved-wall source</a></article>
+          <article class="field-card"><span>03 · 15–25 seconds</span><h4>The room before the reveal</h4><p>Start with the architectural wide, then move through people at work and one close texture. This is the strongest bridge between project imagery and the team behind it.</p><a href="https://www.instagram.com/reel/DbNQQC8zN81/" target="_blank" rel="noopener">Review team source reel</a></article>
+          <article class="field-card"><span>04 · 12–18 seconds</span><h4>Hands behind the finish</h4><p>Three to five precise gestures from approved WS sites. Different projects may be combined only when the caption clearly presents them as a craft study, not one job.</p><a href="https://www.instagram.com/reel/DTfLdc1E62c/" target="_blank" rel="noopener">Review preparation source</a></article>
+        </div>
+      </div>
+      <p class="production-note"><strong>Gate before editing or scheduling:</strong> Heron or Serginho confirms that each selected project is WS work, the client/project may be used in marketing, and Serginho approves the remix. A Portuguese talking-head is not the first choice; if speech becomes useful later, it should be manually verified and subtitled in English.</p>
     </section>
 
     <section class="controls" id="options">
@@ -595,7 +661,7 @@ The Crescent, Vaucluse, NSW.</p></details></div>
         </div>
         <div>
           <h3>WhatsApp reality</h3>
-          <p>Historical WS group video is not mirrored to the VPS, so it cannot be fully audited from here today. The clips already filed do contain usable moments. A future intake should accept nominated project groups or explicitly forwarded media, then stage it for privacy and client checks before marketing use.</p>
+          <p>Historical WS group video is not mirrored to the VPS, so it cannot be fully audited from here today. The clips already filed do contain usable moments. The safe next step is a dedicated marketing-intake group or an explicit <code>#marketing</code> reply/forward trigger. Only nominated clips should be staged, with project, sender and permission status recorded before marketing use.</p>
         </div>
       </div>
     </section>
