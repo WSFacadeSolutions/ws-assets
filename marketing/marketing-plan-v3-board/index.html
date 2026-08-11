@@ -87,6 +87,17 @@
     .prod-card details { margin-top: 14px; padding-top: 12px; }
     .prod-card .caption { margin-top: 12px; white-space: pre-line; }
     .production-note { margin-top: 24px; padding: 16px 18px; border-left: 3px solid var(--lime); background: rgba(20,38,32,.055); font-size: 13px; }
+    .cadence { margin: 34px 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+    .cadence-head { padding: 20px; display: flex; justify-content: space-between; gap: 22px; align-items: end; border-bottom: 1px solid var(--line); }
+    .cadence-head h3 { margin: 5px 0 0; font-size: 27px; letter-spacing: -.04em; }
+    .cadence-head p { margin: 0; max-width: 520px; color: var(--muted); font-size: 13px; }
+    .cadence-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .cadence-day { padding: 18px 20px 20px; border-right: 1px solid var(--line); }
+    .cadence-day:last-child { border-right: 0; }
+    .cadence-day > b { display: block; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; }
+    .cadence-day ol { margin: 0; padding-left: 20px; color: #48514b; font-size: 12px; }
+    .cadence-day li + li { margin-top: 7px; }
+    .status-chip { color: var(--ink); background: var(--lime); padding: 5px 7px; border-radius: 4px; }
 
     .controls { padding: 50px 0 26px; position: sticky; top: 0; z-index: 20; background: rgba(243,240,232,.94); backdrop-filter: blur(15px); }
     .controls-top { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
@@ -151,6 +162,9 @@
       .inventory { grid-template-columns: repeat(2, 1fr); }
       .production-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .production-summary { grid-template-columns: repeat(2, 1fr); }
+      .cadence-grid { grid-template-columns: 1fr; }
+      .cadence-day { border-right: 0; border-bottom: 1px solid var(--line); }
+      .cadence-day:last-child { border-bottom: 0; }
     }
     @media (max-width: 680px) {
       .masthead { min-height: 78vh; background: linear-gradient(0deg, rgba(20,38,32,.84), rgba(20,38,32,.18)), url("assets/rydalmere-hero.jpg") center / cover; }
@@ -196,23 +210,35 @@
     <section class="production" id="scheduled-production">
       <div class="production-head">
         <div>
-          <p class="eyebrow">Approved production direction</p>
-          <h2 class="section-title">Eight weeks, ready for the scheduler.</h2>
+          <p class="eyebrow">Production review · scheduler unchanged</p>
+          <h2 class="section-title">A five-week runway, staged for approval.</h2>
         </div>
-        <p>This is the first live expression of the reset: eight clean Website carousels and three direct-to-material Magnified videos. The images below are the final 4:5 exports. Every video includes an audio bed and opens without a logo or title card.</p>
+        <p>This is the next expression of the reset: nine clean Website carousels, three revised Magnified videos and the existing App Family ecosystem v5. The images below are final 4:5 exports. Magnified now uses three distinct, quiet audio treatments and opens without a logo or title card.</p>
       </div>
 
       <div class="production-summary" aria-label="Production summary">
-        <div><b>8</b><span>Website carousels</span></div>
-        <div><b>3</b><span>Magnified videos with sound</span></div>
-        <div><b>20 Aug</b><span>First new-format post</span></div>
-        <div><b>8 Oct</b><span>Last booked post in this batch</span></div>
+        <div><b>9</b><span>Website carousels</span></div>
+        <div><b>3</b><span>Magnified v2 videos</span></div>
+        <div><b>1</b><span>Ecosystem v5 replacement</span></div>
+        <div><b>15</b><span>Proposed Instagram slots</span></div>
+      </div>
+
+      <div class="cadence" aria-label="Proposed publishing cadence">
+        <div class="cadence-head">
+          <div><span class="status-chip">Awaiting final approval</span><h3>Three repeatable publishing windows</h3></div>
+          <p>The times are a structured five-week test, not a claim of a definitive best hour. Existing Golden Hour and App Family work is mixed into the new project-led feed.</p>
+        </div>
+        <div class="cadence-grid">
+          <div class="cadence-day"><b>Monday · 08:30</b><ol><li>17 Aug · Golden Hour, Rose Bay</li><li>24 Aug · Bossley Park</li><li>31 Aug · Rydalmere Magnified</li><li>7 Sep · Vaucluse close view</li><li>14 Sep · Vaucluse in context</li></ol></div>
+          <div class="cadence-day"><b>Wednesday · 10:00</b><ol><li>12 Aug · Rydalmere at 09:15</li><li>19 Aug · Dover Heights</li><li>26 Aug · App Family ecosystem v5</li><li>2 Sep · Denistone</li><li>9 Sep · Rosebery</li></ol></div>
+          <div class="cadence-day"><b>Friday · 13:00</b><ol><li>14 Aug · Vaucluse Magnified</li><li>21 Aug · Field Ops, first of the family</li><li>28 Aug · Baulkham Hills</li><li>4 Sep · The Crescent Magnified</li><li>11 Sep · The Crescent spaces</li></ol></div>
+        </div>
       </div>
 
       <div class="production-grid">
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/rydalmere/slide_1.jpg" alt="Rydalmere completed facade"><img src="assets/production/website/rydalmere/slide_2.jpg" alt="Rydalmere arch detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>20 Aug · 12:00</span></div><h3>Rydalmere</h3><p>Establishing view followed by the arch detail.</p><details><summary>Final caption</summary><p class="caption">Rydalmere, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>12 Aug · 09:15 proposed</span></div><h3>Rydalmere</h3><p>Establishing view followed by the arch detail.</p><details><summary>Final caption</summary><p class="caption">Rydalmere, NSW
 
 A renewed street presence, resolved through render, decorative finishes and a full repaint.
 
@@ -223,7 +249,7 @@ Full project on our website. Link in bio.</p></details></div>
 
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/dover-heights/slide_1.jpg" alt="Dover Heights balcony and facade"><img src="assets/production/website/dover-heights/slide_2.jpg" alt="Dover Heights facade detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>27 Aug · 12:00</span></div><h3>Dover Heights</h3><p>Maintenance shown through an architectural wide and a closer elevation.</p><details><summary>Final caption</summary><p class="caption">Dover Heights, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>19 Aug · 10:00 proposed</span></div><h3>Dover Heights</h3><p>Maintenance shown through an architectural wide and a closer elevation.</p><details><summary>Final caption</summary><p class="caption">Dover Heights, NSW
 
 Maintenance is most valuable before it becomes repair.
 
@@ -234,7 +260,7 @@ Full project on our website. Link in bio.</p></details></div>
 
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/bossley-park/slide_1.jpg" alt="Bossley Park completed facade"><img src="assets/production/website/bossley-park/slide_2.jpg" alt="Bossley Park facade detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>3 Sep · 12:00</span></div><h3>Bossley Park</h3><p>The complete elevation, then the surface at pedestrian scale.</p><details><summary>Final caption</summary><p class="caption">Bossley Park, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>24 Aug · 08:30 proposed</span></div><h3>Bossley Park</h3><p>The complete elevation, then the surface at pedestrian scale.</p><details><summary>Final caption</summary><p class="caption">Bossley Park, NSW
 
 A complete exterior build-up: substrate installed, rendered and sealed.
 
@@ -245,7 +271,7 @@ Full project on our website. Link in bio.</p></details></div>
 
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/baulkham-hills/slide_1.jpg" alt="Baulkham Hills completed facade"><img src="assets/production/website/baulkham-hills/slide_2.jpg" alt="Baulkham Hills entrance detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>10 Sep · 12:00</span></div><h3>Baulkham Hills</h3><p>Facade depth followed by the finished entrance composition.</p><details><summary>Final caption</summary><p class="caption">Baulkham Hills, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>28 Aug · 13:00 proposed</span></div><h3>Baulkham Hills</h3><p>Facade depth followed by the finished entrance composition.</p><details><summary>Final caption</summary><p class="caption">Baulkham Hills, NSW
 
 New substrate, render and paint, carried across the full exterior as one coordinated scope.
 
@@ -256,7 +282,7 @@ Full project on our website. Link in bio.</p></details></div>
 
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/denistone/slide_1.jpg" alt="Denistone completed facade"><img src="assets/production/website/denistone/slide_2.jpg" alt="Denistone material junction detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>17 Sep · 12:00</span></div><h3>Denistone</h3><p>A restrained elevation and the material junction that gives it depth.</p><details><summary>Final caption</summary><p class="caption">Denistone, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>2 Sep · 10:00 proposed</span></div><h3>Denistone</h3><p>A restrained elevation and the material junction that gives it depth.</p><details><summary>Final caption</summary><p class="caption">Denistone, NSW
 
 Rendered, finished and painted for a clean, considered result.
 
@@ -267,7 +293,7 @@ Full project on our website. Link in bio.</p></details></div>
 
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/vaucluse/slide_1.jpg" alt="Vaucluse completed facade"><img src="assets/production/website/vaucluse/slide_2.jpg" alt="Vaucluse hand-worked finish detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>24 Sep · 12:00</span></div><h3>Vaucluse</h3><p>The street reading and the hand-worked surface in one swipe.</p><details><summary>Final caption</summary><p class="caption">Vaucluse, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>7 Sep · 08:30 proposed</span></div><h3>Vaucluse · close view</h3><p>The street reading and the hand-worked surface in one swipe.</p><details><summary>Final caption</summary><p class="caption">Vaucluse, NSW
 
 From the street, the facade reads as one quiet surface. Up close, the hand-worked acrylic render reveals its deliberate undulation.
 
@@ -277,8 +303,19 @@ Full project on our website. Link in bio.</p></details></div>
         </article>
 
         <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/vaucluse-context/slide_1.jpg" alt="Vaucluse concrete slab and glass geometry"><img src="assets/production/website/vaucluse-context/slide_2.jpg" alt="Vaucluse rendered surface with Macquarie Lighthouse beyond"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>14 Sep · 08:30 proposed</span></div><h3>Vaucluse · in context</h3><p>A genuinely different reading of the same project: material geometry, then place.</p><details><summary>Proposed caption</summary><p class="caption">Vaucluse, NSW
+
+Raw concrete, clear glass and hand-worked render, held in one frame.
+
+The facade succeeds at the transitions: where the slab edge meets the rendered plane, and where material gives way to context.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/the-crescent/slide_1.jpg" alt="Sheltered terrace at The Crescent"><img src="assets/production/website/the-crescent/slide_2.jpg" alt="Garden transition at The Crescent"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>1 Oct · 12:00</span></div><h3>The Crescent</h3><p>Surface work shown through the spaces it supports.</p><details><summary>Final caption</summary><p class="caption">The Crescent, Vaucluse, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>11 Sep · 13:00 proposed</span></div><h3>The Crescent</h3><p>Surface work shown through the spaces it supports.</p><details><summary>Final caption</summary><p class="caption">The Crescent, Vaucluse, NSW
 
 Surface work succeeds when it supports the architecture.
 
@@ -289,7 +326,7 @@ Full project on our website. Link in bio.</p></details></div>
 
         <article class="prod-card">
           <div class="prod-media"><img src="assets/production/website/rosebery/slide_1.jpg" alt="Rosebery completed facade"><img src="assets/production/website/rosebery/slide_2.jpg" alt="Rosebery texture and screen detail"></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>8 Oct · 12:00</span></div><h3>Rosebery</h3><p>The composed elevation followed by texture, stone and screen.</p><details><summary>Final caption</summary><p class="caption">Rosebery, NSW
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>9 Sep · 10:00 proposed</span></div><h3>Rosebery</h3><p>The composed elevation followed by texture, stone and screen.</p><details><summary>Final caption</summary><p class="caption">Rosebery, NSW
 
 The character comes from the relationship between smooth planes, textured render and the vertical screen.
 
@@ -299,8 +336,8 @@ Full project on our website. Link in bio.</p></details></div>
         </article>
 
         <article class="prod-card">
-          <div class="prod-media single"><video src="assets/production/magnified/vaucluse/video.mp4" poster="assets/production/magnified/vaucluse/poster.jpg" controls playsinline preload="metadata"></video></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>25 Aug · 12:00</span></div><h3>Vaucluse · direct cut</h3><p>Existing motion source, recut to 9.6 seconds with the branded opening and closing removed.</p><details><summary>Final caption</summary><p class="caption">Seen closely, the finish is deliberately irregular.
+          <div class="prod-media single"><video src="assets/production/magnified/vaucluse/video-v2-neutral-bed.mp4" poster="assets/production/magnified/vaucluse/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>14 Aug · 13:00 proposed</span></div><h3>Vaucluse · direct cut v2</h3><p>The original character remains, but the audio now enters softly after the opening zoom and dissolves before the loop resets.</p><details><summary>Final caption</summary><p class="caption">Seen closely, the finish is deliberately irregular.
 
 Hand-worked acrylic render follows the curve of the facade, meeting the concrete slab edge as part of one continuous exterior system.
 
@@ -308,8 +345,8 @@ Vaucluse, NSW.</p></details></div>
         </article>
 
         <article class="prod-card">
-          <div class="prod-media single"><video src="assets/production/magnified/rydalmere/video.mp4" poster="assets/production/magnified/rydalmere/poster.jpg" controls playsinline preload="metadata"></video></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>15 Sep · 12:00</span></div><h3>Rydalmere · arch and return</h3><p>Two new photographs, restrained upward and horizontal motion, audio retained.</p><details><summary>Final caption</summary><p class="caption">One elevation, read through its details.
+          <div class="prod-media single"><video src="assets/production/magnified/rydalmere/video-v2-neutral-bed.mp4" poster="assets/production/magnified/rydalmere/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>31 Aug · 08:30 proposed</span></div><h3>Rydalmere · arch and return v2</h3><p>The pulse-heavy track is replaced with a quiet, sparse piano bed that does not compete with the image changes.</p><details><summary>Final caption</summary><p class="caption">One elevation, read through its details.
 
 The curved opening, decorative bands and deep returns give Rydalmere its street presence. The finish has to hold each line without flattening the architecture.
 
@@ -317,16 +354,21 @@ Rydalmere, NSW.</p></details></div>
         </article>
 
         <article class="prod-card">
-          <div class="prod-media single"><video src="assets/production/magnified/the-crescent/video.mp4" poster="assets/production/magnified/the-crescent/poster.jpg" controls playsinline preload="metadata"></video></div>
-          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>6 Oct · 12:00</span></div><h3>The Crescent · junction to space</h3><p>An abstract close view opens into the sheltered terrace it helps define.</p><details><summary>Final caption</summary><p class="caption">Magnified: the junction first, the space second.
+          <div class="prod-media single"><video src="assets/production/magnified/the-crescent/video-v2-neutral-bed.mp4" poster="assets/production/magnified/the-crescent/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>4 Sep · 13:00 proposed</span></div><h3>The Crescent · junction to space v2</h3><p>The pulse-heavy track is replaced with a restrained tonal bed; the only chord change near the centre supports the visual transition.</p><details><summary>Final caption</summary><p class="caption">Magnified: the junction first, the space second.
 
 At The Crescent, render, decorative finishes, paint and caulking sit behind the architecture rather than on top of it. The closer view is where that restraint becomes visible.
 
 The Crescent, Vaucluse, NSW.</p></details></div>
         </article>
+
+        <article class="prod-card">
+          <div class="prod-media single"><video src="assets/production/app-family/ecosystem-v5/video.mp4" poster="assets/production/app-family/ecosystem-v5/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">App Family</span><span>26 Aug · 10:00 proposed</span></div><h3>Full ecosystem · v5</h3><p>The pending Instagram post will use the existing final v5 render, replacing the older hosted export. No re-render is required.</p></div>
+        </article>
       </div>
 
-      <p class="production-note"><strong>Deliberate demotion:</strong> “The useful eight seconds”, “Under the edge” and the floor-protection report clip remain in the concept bank below, but are not part of the scheduled feed. They are better suited to Stories, Academy or a future recut when stronger source material is available.</p>
+      <p class="production-note"><strong>No scheduler changes have been made yet.</strong> The revised media and proposed dates are here for one final visual and audio check. “The useful eight seconds”, “Under the edge” and the floor-protection report clip remain demoted to Stories, Academy or a future recut.</p>
     </section>
 
     <section class="controls" id="options">
