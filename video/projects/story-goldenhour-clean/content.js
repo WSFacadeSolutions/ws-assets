@@ -1,0 +1,4 @@
+/* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.CONTENT = {
+ "_note": "Clean, footage-led Golden Hour Story. The field-video slot and field-photo.jpg remain operator-editable; there is intentionally no public copy or graphic overlay. Regenerate local artefacts with: python3 figma_sync.py --local --project story-goldenhour-clean."
+};

@@ -1,0 +1,31 @@
+{
+  "_": "Clean Golden Hour field story — no overlay, logo, end card or visual fade. It opens on the field footage and closes on the photographic sunset beat. Swap the field video in the Mini-Premiere; the Figma kit remains footage-agnostic.",
+ "name": "story-goldenhour-clean",
+  "title": "WS Field Story — Golden Hour, Rose Bay · clean",
+ "dir": "story-goldenhour-clean",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "story-goldenhour-clean",
+ "compositions": [
+  {
+   "id": "story",
+   "html": "story.html",
+   "frames": "frames",
+   "soundtrack": "soundtrack.wav",
+      "out": "WS338-GoldenHour-Clean-Story.mp4",
+      "deploy": "story-goldenhour-clean-story.mp4",
+      "still_times": [
+        0,
+        1.5,
+        6.5,
+        11.8,
+        12.6,
+        13.2,
+        14.6,
+        15.36
+      ]
+  }
+ ]
+}

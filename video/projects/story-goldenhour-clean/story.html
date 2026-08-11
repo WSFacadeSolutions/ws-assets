@@ -1,0 +1,125 @@
+<meta charset="utf-8">
+<title>WS Field Story — Golden Hour, Rose Bay</title>
+<script src="content.js"></script>
+<script src="timeline.js"></script>
+<script src="field/sheet.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000;width:1080px;height:1920px;overflow:hidden}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#0c1216}
+.scene{position:absolute;inset:0;display:none;opacity:1}
+.fgbg{position:absolute;inset:0;background:#000}
+canvas.fg{position:absolute;inset:0;width:1080px;height:1920px}
+</style>
+<div id="stage">
+  <!-- The operator-editable field-video slot leads from frame one. -->
+  <div class="scene" id="s1"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
+  <!-- The closing photographic beat remains replaceable as field-photo.jpg. -->
+  <div class="scene" id="s2"><div class="fgbg"></div><canvas class="fg" width="1080" height="1920"></canvas></div>
+</div>
+
+<script>
+const FPS=30;
+const $=s=>document.querySelector(s);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const c01=x=>clamp(x,0,1);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const KIT=!!window.KIT_CAPTURE;
+
+/* Authored timing stays seek-pure; the Mini-Premiere remains the timing source. */
+const SC=[
+  ['#s1',0.0,12.6],
+  ['#s2',12.6,15.4],
+];
+const TL=(window.TIMELINE&&window.TIMELINE.story)||null;
+const SC_EDIT=SC.map(([sel,a,b])=>{
+  const s=TL&&(TL.scenes||[]).find(x=>'#'+x.id===sel);
+  return s?[sel,+s.start,+s.end]:[sel,a,b];
+});
+const WARP_PTS=SC_EDIT.map(([_,a],i)=>[a,SC[i][1]])
+  .concat([[SC_EDIT[SC_EDIT.length-1][2],SC[SC.length-1][2]]]);
+function warp(t){
+  const P=WARP_PTS;
+  if(t<=P[0][0])return P[0][1]+(t-P[0][0]);
+  for(let i=1;i<P.length;i++)if(t<=P[i][0]){
+    const x0=P[i-1][0],y0=P[i-1][1],x1=P[i][0],y1=P[i][1];
+    return x1>x0?y0+(t-x0)*(y1-y0)/(x1-x0):y1;
+  }
+  return P[P.length-1][1]+(t-P[P.length-1][0]);
+}
+function sceneVis(t){
+  const active=t<SC[1][1]?'#s1':'#s2';
+  for(const [sel] of SC)$(sel).style.display=sel===active?'block':'none';
+}
+const DUR=SC_EDIT[SC_EDIT.length-1][2];
+
+/* The field slot is a deterministic frame sequence, never a live video element. */
+const F=(!KIT&&window.FIELD_FOOTAGE)||null;
+const SOURCE_OFFSET=0.05;
+const FRAMES=new Map();
+const loadJobs=[];
+if(F){
+  const i0=clamp(1+Math.floor(SOURCE_OFFSET*F.fps),1,F.count);
+  const i1=clamp(1+Math.ceil((SOURCE_OFFSET+(SC[0][2]-SC[0][1])+0.2)*F.fps),1,F.count);
+  for(let i=i0;i<=i1;i++){
+    const im=new Image();
+    FRAMES.set(i,im);
+    loadJobs.push(new Promise(res=>{im.onload=res;im.onerror=res;}));
+    im.src='field/f'+String(i).padStart(4,'0')+'.jpg';
+  }
+}
+function drawFootage(t){
+  if(!F||t>=SC[0][2])return;
+  const srcT=SOURCE_OFFSET+clamp(t,0,SC[0][2]-SC[0][1]);
+  const idx=clamp(1+Math.floor(srcT*F.fps),1,F.count);
+  const im=FRAMES.get(idx);
+  if(!im||!im.naturalWidth)return;
+  const cv=$('#s1 canvas'),ctx=cv.getContext('2d');
+  const scale=Math.max(1080/F.w,1920/F.h),dw=F.w*scale,dh=F.h*scale;
+  ctx.filter='contrast(1.04) saturate(1.08)';
+  ctx.drawImage(im,(1080-dw)/2,(1920-dh)/2,dw,dh);
+}
+
+/* A restrained in-place push gives the still life without moving down-screen. */
+const PHOTO={src:'field-photo.jpg',img:null,focus:{x:.55,y:.72},z0:1.0,z1:1.08};
+if(!KIT){
+  const im=new Image();
+  loadJobs.push(new Promise(res=>{
+    im.onload=()=>{PHOTO.img=im;res();};
+    im.onerror=res;
+  }));
+  im.src=PHOTO.src;
+}
+function drawPhoto(t){
+  const im=PHOTO.img;
+  if(!im||!im.naturalWidth||t<SC[1][1])return;
+  const p=c01((t-SC[1][1])/(SC[1][2]-SC[1][1]));
+  const zoom=lerp(PHOTO.z0,PHOTO.z1,p);
+  const iw=im.naturalWidth,ih=im.naturalHeight;
+  const scale=Math.max(1080/iw,1920/ih)*zoom,dw=iw*scale,dh=ih*scale;
+  const ox=clamp(540-dw*PHOTO.focus.x,1080-dw,0);
+  const oy=clamp(1920*PHOTO.focus.y-dh*PHOTO.focus.y,1920-dh,0);
+  const cv=$('#s2 canvas'),ctx=cv.getContext('2d');
+  ctx.filter='contrast(1.04) saturate(1.08)';
+  ctx.drawImage(im,ox,oy,dw,dh);
+}
+
+window.DUR=DUR;
+window.FPS=FPS;
+window.TOTAL_FRAMES=Math.round(DUR*FPS);
+window.seek=function(frame){
+  const t=warp(frame/FPS);
+  sceneVis(t);
+  drawFootage(t);
+  drawPhoto(t);
+  return true;
+};
+window.readyP=Promise.all(loadJobs).then(()=>{window.seek(0);return true;});
+if(location.hash==='#play'){
+  const start=performance.now();
+  (function loop(){
+    const t=(performance.now()-start)/1000;
+    if(t<DUR){window.seek(Math.floor(t*FPS));requestAnimationFrame(loop);}
+  })();
+}
+</script>
