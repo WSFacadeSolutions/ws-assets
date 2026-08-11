@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142620">
+  <title>WS Marketing Plan v3 · Content Production Board</title>
+  <style>
+    :root {
+      --ink: #142620;
+      --paper: #f3f0e8;
+      --paper-2: #e7e2d6;
+      --white: #fffdf7;
+      --lime: #d7f24a;
+      --orange: #e86130;
+      --blue: #7195b2;
+      --muted: #6f756d;
+      --line: rgba(20, 38, 32, .17);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behaviour: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    button, a { font: inherit; }
+    a { color: inherit; }
+
+    .masthead {
+      min-height: 88vh;
+      padding: 28px clamp(22px, 5vw, 72px) 44px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(20,38,32,.96) 0 44%, rgba(20,38,32,.30) 75%, rgba(20,38,32,.08)),
+        url("assets/rydalmere-hero.jpg") center 57% / cover;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .wordmark { font-weight: 800; letter-spacing: -.055em; font-size: 25px; }
+    .date { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; opacity: .78; }
+    .hero-copy { align-self: center; max-width: 720px; padding: 70px 0; }
+    .eyebrow { margin: 0 0 18px; font-size: 12px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(50px, 7.7vw, 116px); line-height: .86; letter-spacing: -.07em; max-width: 10ch; }
+    .hero-copy p { max-width: 520px; margin: 28px 0 0; font-size: clamp(17px, 1.7vw, 23px); color: rgba(255,253,247,.84); }
+    .principle { display: flex; align-items: center; gap: 16px; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; }
+    .principle::before { content: ""; width: 54px; height: 2px; background: var(--lime); }
+
+    main { padding: 0 clamp(18px, 4vw, 58px) 96px; }
+    .intro {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: clamp(34px, 7vw, 110px);
+      padding: clamp(64px, 9vw, 126px) 0 74px;
+      border-bottom: 1px solid var(--line);
+    }
+    .intro h2, .section-title { margin: 0; font-size: clamp(34px, 5vw, 70px); line-height: .98; letter-spacing: -.055em; }
+    .intro-copy { font-size: clamp(17px, 1.5vw, 21px); max-width: 740px; }
+    .intro-copy p:first-child { margin-top: 0; }
+    .intro-copy strong { font-weight: 750; }
+    .shift-list { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 28px; }
+    .shift { background: var(--paper); padding: 16px 18px; display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
+    .shift span:first-child { color: var(--orange); font-weight: 800; }
+
+    .controls { padding: 50px 0 26px; position: sticky; top: 0; z-index: 20; background: rgba(243,240,232,.94); backdrop-filter: blur(15px); }
+    .controls-top { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+    .controls h2 { margin: 0; font-size: clamp(30px, 4vw, 52px); letter-spacing: -.05em; }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .filter, .shortlist-toggle {
+      border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 9px 14px; border-radius: 999px;
+      cursor: pointer; transition: .18s ease; font-size: 13px; font-weight: 650;
+    }
+    .filter:hover, .filter.active, .shortlist-toggle:hover { background: var(--ink); color: var(--white); }
+    .count { font-variant-numeric: tabular-nums; }
+
+    .cards { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 22px; }
+    .card { grid-column: span 4; background: var(--white); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+    .card.wide { grid-column: span 8; }
+    .card.hidden { display: none; }
+    .visual { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #c8c6bf; }
+    .wide .visual { aspect-ratio: 16 / 10; }
+    .visual img, .visual video { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
+    .card:hover .visual img, .card:hover .visual video { transform: scale(1.025); }
+    .visual.contain img { object-fit: contain; background: #d8d5cc; }
+    .number { position: absolute; top: 14px; left: 14px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--lime); font-size: 12px; font-weight: 800; }
+    .ready { position: absolute; bottom: 14px; left: 14px; padding: 7px 10px; border-radius: 4px; background: var(--ink); color: var(--white); font-size: 10px; font-weight: 750; letter-spacing: .11em; text-transform: uppercase; }
+    .ready.confirm { background: var(--orange); }
+    .card-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
+    .meta { color: var(--muted); font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: .11em; }
+    .card h3 { margin: 9px 0 10px; font-size: clamp(24px, 2.35vw, 38px); line-height: 1; letter-spacing: -.045em; }
+    .premise { margin: 0; min-height: 3.1em; color: #48514b; }
+    details { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--line); }
+    summary { cursor: pointer; font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .09em; }
+    .detail-grid { display: grid; gap: 14px; margin-top: 15px; font-size: 13px; }
+    .detail-grid dt { color: var(--muted); font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: .1em; }
+    .detail-grid dd { margin: 3px 0 0; }
+    .caption { padding-left: 13px; border-left: 2px solid var(--blue); }
+    .card-actions { margin-top: auto; padding-top: 20px; display: flex; align-items: center; gap: 9px; }
+    .pick { flex: 1; border: 1px solid var(--ink); color: var(--ink); background: transparent; padding: 10px 13px; border-radius: 5px; cursor: pointer; font-weight: 720; font-size: 12px; }
+    .pick.selected { color: var(--ink); background: var(--lime); border-color: var(--lime); }
+    .download { font-size: 11px; text-underline-offset: 3px; }
+
+    .audit { margin-top: 104px; padding: clamp(28px, 5vw, 64px); color: var(--white); background: var(--ink); border-radius: 24px; }
+    .audit-head { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: end; }
+    .audit .section-title { max-width: 9ch; }
+    .audit-intro { color: rgba(255,253,247,.72); font-size: 18px; max-width: 600px; }
+    .inventory { margin-top: 55px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.18); }
+    .inventory article { background: var(--ink); padding: 24px; }
+    .inventory b { display: block; color: var(--lime); font-size: 36px; letter-spacing: -.05em; }
+    .inventory span { display: block; margin-top: 6px; color: rgba(255,253,247,.7); font-size: 13px; }
+    .gaps { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 44px; }
+    .gaps h3 { font-size: 20px; }
+    .gaps ul { margin: 0; padding-left: 1.1em; color: rgba(255,253,247,.78); }
+    .gaps li + li { margin-top: 9px; }
+
+    .shortlist-bar { position: fixed; z-index: 50; right: 22px; bottom: 22px; max-width: calc(100vw - 44px); display: none; gap: 16px; align-items: center; padding: 13px 14px 13px 18px; color: var(--white); background: var(--ink); border-radius: 999px; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
+    .shortlist-bar.visible { display: flex; }
+    .shortlist-bar b { color: var(--lime); }
+    .copy-list { border: 0; border-radius: 999px; padding: 8px 12px; color: var(--ink); background: var(--lime); font-weight: 750; cursor: pointer; }
+    footer { padding: 54px 0 0; display: flex; justify-content: space-between; gap: 30px; color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 980px) {
+      .card, .card.wide { grid-column: span 6; }
+      .wide .visual { aspect-ratio: 4 / 5; }
+      .inventory { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .masthead { min-height: 78vh; background: linear-gradient(0deg, rgba(20,38,32,.84), rgba(20,38,32,.18)), url("assets/rydalmere-hero.jpg") center / cover; }
+      .date { max-width: 16ch; text-align: right; }
+      .intro, .audit-head, .gaps { grid-template-columns: 1fr; }
+      .controls { position: static; }
+      .controls-top { align-items: start; flex-direction: column; }
+      .card, .card.wide { grid-column: 1 / -1; }
+      .inventory { grid-template-columns: 1fr; }
+      .shortlist-toggle { display: none; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <nav class="nav">
+      <div class="wordmark">WS Solutions</div>
+      <div class="date">Content production board · 11 August 2026</div>
+    </nav>
+    <div class="hero-copy">
+      <p class="eyebrow">Marketing Plan v3</p>
+      <h1>Let the work lead.</h1>
+      <p>A practical editorial reset for Instagram and LinkedIn, built from real WS projects and designed for the capacity available now.</p>
+    </div>
+    <div class="principle">Reference, not replication</div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Less campaign on the image. More evidence in the frame.</h2>
+      <div class="intro-copy">
+        <p>Blue Label is useful as a reference for <strong>confidence in photography and visual variety</strong>. The opportunity for WS is not to borrow their identity. It is to give our own projects, details and point of view enough space to be seen.</p>
+        <div class="shift-list">
+          <div class="shift"><span>01</span><span>Keep the system backstage: selection, crop, fact checking and caption structure.</span></div>
+          <div class="shift"><span>02</span><span>Remove routine logos, blurred panels and repeated title screens.</span></div>
+          <div class="shift"><span>03</span><span>Use designed editorial covers only when the idea earns the treatment.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls" id="options">
+      <div class="controls-top">
+        <div>
+          <p class="eyebrow">First production batch</p>
+          <h2>12 executable post options</h2>
+        </div>
+        <button class="shortlist-toggle" type="button" data-filter="shortlisted">Show shortlist <span class="count">(0)</span></button>
+      </div>
+      <div class="filter-row" aria-label="Filter post options">
+        <button class="filter active" type="button" data-filter="all">All</button>
+        <button class="filter" type="button" data-filter="ready">Ready now</button>
+        <button class="filter" type="button" data-filter="photo">Photography</button>
+        <button class="filter" type="button" data-filter="video">Video</button>
+        <button class="filter" type="button" data-filter="instagram">Instagram</button>
+        <button class="filter" type="button" data-filter="linkedin">LinkedIn</button>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card wide" data-tags="ready photo instagram" data-id="01" data-title="Rydalmere, unframed">
+        <div class="visual"><img src="assets/rydalmere-hero.jpg" alt="Completed Rydalmere facade"><span class="number">01</span><span class="ready">Ready now</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram · Evidence · 20 minutes</div>
+          <h3>Rydalmere, unframed</h3>
+          <p class="premise">The first clean Website pilot. One strong 4:5 photograph, no logo and no title block.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">A renewed street presence in Rydalmere. WS completed the render, decorative finishes and full repaint, bringing the facade back as one considered composition.</dd></div>
+            <div><dt>Source</dt><dd>Frame.io Photoshoot #1 and optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm project credit line and whether the suburb may be named.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rydalmere-hero.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="ready photo instagram" data-id="02" data-title="The Rydalmere arch">
+        <div class="visual"><img src="assets/rydalmere-detail.jpg" alt="Rendered arch detail at Rydalmere"><span class="number">02</span><span class="ready">Ready now</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram · Detail carousel · 30 minutes</div>
+          <h3>The arch after the wide view</h3>
+          <p class="premise">A two-image carousel with the completed elevation first and the arch detail second.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">The wider result is built from smaller decisions. At Rydalmere, the decorative finish carries through the curved opening without losing the line of the facade.</dd></div>
+            <div><dt>Source</dt><dd>Frame.io Photoshoot #1 and optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Use the image from option 01 as slide one. Confirm terminology for the finish.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rydalmere-detail.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="ready photo instagram linkedin" data-id="03" data-title="Dover Heights maintenance">
+        <div class="visual"><img src="assets/dover-heights.jpg" alt="Residential project at Dover Heights"><span class="number">03</span><span class="ready">Ready now</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram + LinkedIn · Evidence · 25 minutes</div>
+          <h3>Maintenance as a design decision</h3>
+          <p class="premise">A completed project image with a useful point: good maintenance protects the original intent.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">Preventive maintenance is quieter than repair, and usually more valuable. At Dover Heights, repainting and resealing helped protect the building envelope while preserving the original architectural reading.</dd></div>
+            <div><dt>Source</dt><dd>Optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm the building-envelope wording against the recorded scope.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/dover-heights.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="photo instagram" data-id="04" data-title="Paddington heritage finish">
+        <div class="visual"><img src="assets/paddington.jpg" alt="Terrace project at Paddington"><span class="number">04</span><span class="ready confirm">Confirm scope</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram · Evidence · 30 minutes</div>
+          <h3>Old geometry, clean finish</h3>
+          <p class="premise">Let the terrace fill the frame. The caption can carry the technical work without covering the image.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">Heritage character depends on the lines staying legible. At Paddington, the finish was worked around existing edges and openings so the surface reads cleanly without flattening the original geometry.</dd></div>
+            <div><dt>Source</dt><dd>Frame.io project archive and optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm exact WS scope, finish terminology and project credit.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/paddington.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card wide" data-tags="ready photo instagram" data-id="05" data-title="Vaucluse close view">
+        <div class="visual"><img src="assets/vaucluse-detail.jpg" alt="Hand-worked render texture at Vaucluse"><span class="number">05</span><span class="ready">Ready now</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram · WS Magnified · 30 minutes</div>
+          <h3>Texture at one inch</h3>
+          <p class="premise">The Magnified reset: open directly on the material, with no branded title screen.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">Seen closely, the Vaucluse finish is deliberately irregular. The acrylic render was worked by hand to create an undulated texture, with slab edges and sealed joints resolved as part of the same surface system.</dd></div>
+            <div><dt>Source</dt><dd>Optimised Drive export and existing Magnified campaign notes.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Verify whether the microcement entry belongs in a second slide or should remain a separate post.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/vaucluse-detail.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="ready video instagram" data-id="06" data-title="Rose Bay apex field note">
+        <div class="visual"><video src="assets/rose-bay-apex.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">06</span><span class="ready">Clip ready</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram Reel · Field Note · 35 minutes</div>
+          <h3>The useful eight seconds</h3>
+          <p class="premise">A video report does not need to become a report post. Extract one clear movement or site view.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">A field view from Chamberlain Road, Rose Bay. The clip is short, but it records what still photography often misses: access, scale and the relationship between the finished plane and the structure around it.</dd></div>
+            <div><dt>Source</dt><dd>Existing WhatsApp-derived WS field media.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm site status, scope, client privacy and whether the street reference can be published.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rose-bay-apex.mp4" download>Download clip</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="ready video instagram" data-id="07" data-title="Rose Bay soffit detail">
+        <div class="visual"><video src="assets/rose-bay-soffit.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">07</span><span class="ready">Clip ready</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram Reel or Story · Process · 25 minutes</div>
+          <h3>Under the edge</h3>
+          <p class="premise">A tight material view creates variety and can work as a Reel or a low-production Story.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">A close field view of the soffit finish at Rose Bay. Tight angles are useful because they expose the junctions, returns and consistency that disappear in a wide project photograph.</dd></div>
+            <div><dt>Source</dt><dd>Existing WhatsApp-derived WS field media.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm material, application stage and approved project naming.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rose-bay-soffit.mp4" download>Download clip</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="ready video instagram linkedin" data-id="08" data-title="Floor protection process note">
+        <div class="visual"><video src="assets/floor-protection.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">08</span><span class="ready">Clip ready</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram + LinkedIn · Process · 30 minutes</div>
+          <h3>The finish starts before the finish</h3>
+          <p class="premise">Protection and preparation are credible proof of method, even when the clip came from a report.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">The finish starts before the finish. Protecting adjoining surfaces is part of controlling the result, not a separate housekeeping task. It reduces avoidable rework and gives the application team a cleaner working edge.</dd></div>
+            <div><dt>Source</dt><dd>Existing WS field and training media.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm the project and whether this is an active site or training demonstration.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/floor-protection.mp4" download>Download clip</a></div>
+        </div>
+      </article>
+
+      <article class="card wide" data-tags="photo instagram linkedin" data-id="09" data-title="The Crescent editorial cover">
+        <div class="visual"><img src="assets/the-crescent-detail.jpg" alt="Architectural detail at The Crescent"><span class="number">09</span><span class="ready confirm">Confirm scope</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram + LinkedIn · Editorial · 60 minutes</div>
+          <h3>The occasional cover</h3>
+          <p class="premise">A magazine-like treatment can stay in the system, but only for a genuine point of view. This image already behaves like a cover without needing a central tile.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">A building is often read first through silhouette, shadow and proportion. The close view at The Crescent is a reminder that surface work succeeds when it supports the architecture rather than competing with it.</dd></div>
+            <div><dt>Source</dt><dd>Optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm WS scope and architect or builder credit. Add only a small issue line if used as a cover.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/the-crescent-detail.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="ready photo instagram linkedin" data-id="10" data-title="Many trades one standard">
+        <div class="visual"><img src="assets/baulkham-hills.jpg" alt="Baulkham Hills exterior project"><span class="number">10</span><span class="ready">Ready to assemble</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram + LinkedIn · Value proposition · 50 minutes</div>
+          <h3>Many trades, one standard</h3>
+          <p class="premise">The value-proposition campaign becomes evidence-led: three projects, one operating idea, minimal type.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">Many trades only become one solution when the standard carries across every handover. Baulkham Hills moved from new substrate through render and paint as one coordinated scope, with fewer boundaries for the client to manage.</dd></div>
+            <div><dt>Source</dt><dd>Optimised project exports. Add Rydalmere and Dover Heights as supporting slides.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm the final scope sequence and avoid claims about programme or cost without evidence.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/baulkham-hills.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="photo instagram" data-id="11" data-title="Drummoyne project portrait">
+        <div class="visual"><img src="assets/drummoyne.jpg" alt="Completed residence at Drummoyne"><span class="number">11</span><span class="ready confirm">Confirm scope</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram · Evidence · 25 minutes</div>
+          <h3>A project portrait</h3>
+          <p class="premise">A clean single-image post for feed rhythm. The architecture carries the visual; the caption stays factual.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">Drummoyne, photographed after completion. A restrained palette puts the emphasis on proportion, openings and the transition between each volume.</dd></div>
+            <div><dt>Source</dt><dd>Frame.io project archive and optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm the exact WS scope, completion date and project credits before adding technical detail.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/drummoyne.jpg" download>Download image</a></div>
+        </div>
+      </article>
+
+      <article class="card" data-tags="photo instagram linkedin" data-id="12" data-title="Rosebery quiet evidence">
+        <div class="visual"><img src="assets/rosebery.jpg" alt="Residential architecture at Rosebery"><span class="number">12</span><span class="ready confirm">Confirm scope</span></div>
+        <div class="card-body">
+          <div class="meta">Instagram + LinkedIn · Evidence · 30 minutes</div>
+          <h3>Quiet evidence</h3>
+          <p class="premise">Not every post needs a lesson. A strong completed-work image can simply document the standard.</p>
+          <details><summary>Production note and caption</summary><dl class="detail-grid">
+            <div><dt>Draft caption</dt><dd class="caption">Completed work at Rosebery. Clean planes, controlled junctions and a finish that lets the form remain the focus.</dd></div>
+            <div><dt>Source</dt><dd>Optimised Drive export.</dd></div>
+            <div><dt>Before scheduling</dt><dd>Confirm exact WS scope, finish system and project credits.</dd></div>
+          </dl></details>
+          <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rosebery.jpg" download>Download image</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="audit">
+      <div class="audit-head">
+        <h2 class="section-title">Material position</h2>
+        <p class="audit-intro">There is enough strong material to begin the reset now. The main constraint is not volume; it is factual metadata and repeatable capture of people, process and matched sequences.</p>
+      </div>
+      <div class="inventory">
+        <article><b>3</b><span>Frame.io views checked: Photoshoot #1, Peakhurst proofs and project archive.</span></article>
+        <article><b>14</b><span>Named project folders in the optimised Drive mirror.</span></article>
+        <article><b>3</b><span>Useful WhatsApp-derived Rose Bay clips already stored locally.</span></article>
+        <article><b>12</b><span>Post options in this first board, including six ready or near-ready executions.</span></article>
+      </div>
+      <div class="gaps">
+        <div>
+          <h3>Material to request next</h3>
+          <ul>
+            <li>Wide, detail and process from the same site visit.</li>
+            <li>Before-and-after pairs shot from matching positions.</li>
+            <li>Stable five to ten-second vertical clips without report narration.</li>
+            <li>More people-at-work imagery with permission confirmed.</li>
+            <li>Scope and credit notes attached to older project folders.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>WhatsApp reality</h3>
+          <p>Historical WS group video is not mirrored to the VPS, so it cannot be fully audited from here today. The clips already filed do contain usable moments. A future intake should accept nominated project groups or explicitly forwarded media, then stage it for privacy and client checks before marketing use.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>WS Solutions · Internal production board</span>
+      <span>Shortlist choices are saved only in this browser.</span>
+    </footer>
+  </main>
+
+  <div class="shortlist-bar" aria-live="polite">
+    <span><b class="shortlist-count">0</b> selected</span>
+    <button class="copy-list" type="button">Copy shortlist</button>
+  </div>
+
+  <script>
+    const key = 'ws-marketing-v3-shortlist';
+    const cards = [...document.querySelectorAll('.card')];
+    const filters = [...document.querySelectorAll('.filter')];
+    const picks = [...document.querySelectorAll('.pick')];
+    const shortlistToggle = document.querySelector('.shortlist-toggle');
+    const shortlistBar = document.querySelector('.shortlist-bar');
+    let selected = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+    let activeFilter = 'all';
+
+    function sync() {
+      cards.forEach(card => {
+        const isSelected = selected.has(card.dataset.id);
+        const button = card.querySelector('.pick');
+        button.classList.toggle('selected', isSelected);
+        button.textContent = isSelected ? 'Shortlisted' : 'Add to shortlist';
+        const match = activeFilter === 'all' ||
+          (activeFilter === 'shortlisted' && isSelected) ||
+          card.dataset.tags.split(' ').includes(activeFilter);
+        card.classList.toggle('hidden', !match);
+      });
+      const count = selected.size;
+      document.querySelectorAll('.count').forEach(el => el.textContent = `(${count})`);
+      document.querySelector('.shortlist-count').textContent = count;
+      shortlistBar.classList.toggle('visible', count > 0);
+      localStorage.setItem(key, JSON.stringify([...selected]));
+    }
+
+    picks.forEach(button => button.addEventListener('click', () => {
+      const id = button.closest('.card').dataset.id;
+      selected.has(id) ? selected.delete(id) : selected.add(id);
+      sync();
+    }));
+
+    filters.forEach(button => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filters.forEach(item => item.classList.toggle('active', item === button));
+      sync();
+    }));
+
+    shortlistToggle.addEventListener('click', () => {
+      activeFilter = activeFilter === 'shortlisted' ? 'all' : 'shortlisted';
+      filters.forEach(item => item.classList.remove('active'));
+      shortlistToggle.textContent = activeFilter === 'shortlisted' ? `Show all (${selected.size})` : `Show shortlist (${selected.size})`;
+      sync();
+    });
+
+    document.querySelector('.copy-list').addEventListener('click', async event => {
+      const lines = cards.filter(card => selected.has(card.dataset.id)).map(card => `${card.dataset.id}. ${card.dataset.title}`);
+      await navigator.clipboard.writeText(`WS Marketing Plan v3 shortlist\n${lines.join('\n')}`);
+      const original = event.currentTarget.textContent;
+      event.currentTarget.textContent = 'Copied';
+      setTimeout(() => event.currentTarget.textContent = original, 1400);
+    });
+
+    sync();
+  </script>
+</body>
+</html>
