@@ -67,6 +67,27 @@
     .shift { background: var(--paper); padding: 16px 18px; display: grid; grid-template-columns: 28px 1fr; gap: 10px; }
     .shift span:first-child { color: var(--orange); font-weight: 800; }
 
+    .production { padding: 76px 0 92px; border-bottom: 1px solid var(--line); }
+    .production-head { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 7vw, 108px); align-items: end; }
+    .production-head p { max-width: 650px; margin: 0; color: #48514b; font-size: clamp(16px, 1.45vw, 20px); }
+    .production-summary { margin: 34px 0 28px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: var(--line); gap: 1px; }
+    .production-summary div { padding: 18px; background: var(--paper); }
+    .production-summary b { display: block; font-size: 28px; letter-spacing: -.045em; }
+    .production-summary span { color: var(--muted); font-size: 12px; }
+    .production-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .prod-card { min-width: 0; overflow: hidden; border-radius: var(--radius); background: var(--white); }
+    .prod-media { display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 8 / 5; background: #d8d5cc; }
+    .prod-media.single { display: block; }
+    .prod-media img, .prod-media video { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .prod-body { padding: 19px 20px 21px; }
+    .prod-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: 10px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+    .campaign-chip { padding: 5px 7px; border-radius: 4px; color: var(--white); background: var(--ink); }
+    .prod-card h3 { margin: 10px 0 7px; font-size: 25px; line-height: 1; letter-spacing: -.04em; }
+    .prod-card p { margin: 0; color: #48514b; font-size: 13px; }
+    .prod-card details { margin-top: 14px; padding-top: 12px; }
+    .prod-card .caption { margin-top: 12px; white-space: pre-line; }
+    .production-note { margin-top: 24px; padding: 16px 18px; border-left: 3px solid var(--lime); background: rgba(20,38,32,.055); font-size: 13px; }
+
     .controls { padding: 50px 0 26px; position: sticky; top: 0; z-index: 20; background: rgba(243,240,232,.94); backdrop-filter: blur(15px); }
     .controls-top { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
     .controls h2 { margin: 0; font-size: clamp(30px, 4vw, 52px); letter-spacing: -.05em; }
@@ -128,15 +149,18 @@
       .card, .card.wide { grid-column: span 6; }
       .wide .visual { aspect-ratio: 4 / 5; }
       .inventory { grid-template-columns: repeat(2, 1fr); }
+      .production-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .production-summary { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 680px) {
       .masthead { min-height: 78vh; background: linear-gradient(0deg, rgba(20,38,32,.84), rgba(20,38,32,.18)), url("assets/rydalmere-hero.jpg") center / cover; }
       .date { max-width: 16ch; text-align: right; }
-      .intro, .audit-head, .gaps { grid-template-columns: 1fr; }
+      .intro, .audit-head, .gaps, .production-head { grid-template-columns: 1fr; }
       .controls { position: static; }
       .controls-top { align-items: start; flex-direction: column; }
       .card, .card.wide { grid-column: 1 / -1; }
       .inventory { grid-template-columns: 1fr; }
+      .production-grid, .production-summary { grid-template-columns: 1fr; }
       .shortlist-toggle { display: none; }
       footer { flex-direction: column; }
     }
@@ -169,11 +193,147 @@
       </div>
     </section>
 
+    <section class="production" id="scheduled-production">
+      <div class="production-head">
+        <div>
+          <p class="eyebrow">Approved production direction</p>
+          <h2 class="section-title">Eight weeks, ready for the scheduler.</h2>
+        </div>
+        <p>This is the first live expression of the reset: eight clean Website carousels and three direct-to-material Magnified videos. The images below are the final 4:5 exports. Every video includes an audio bed and opens without a logo or title card.</p>
+      </div>
+
+      <div class="production-summary" aria-label="Production summary">
+        <div><b>8</b><span>Website carousels</span></div>
+        <div><b>3</b><span>Magnified videos with sound</span></div>
+        <div><b>20 Aug</b><span>First new-format post</span></div>
+        <div><b>8 Oct</b><span>Last booked post in this batch</span></div>
+      </div>
+
+      <div class="production-grid">
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/rydalmere/slide_1.jpg" alt="Rydalmere completed facade"><img src="assets/production/website/rydalmere/slide_2.jpg" alt="Rydalmere arch detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>20 Aug · 12:00</span></div><h3>Rydalmere</h3><p>Establishing view followed by the arch detail.</p><details><summary>Final caption</summary><p class="caption">Rydalmere, NSW
+
+A renewed street presence, resolved through render, decorative finishes and a full repaint.
+
+The broad result is built from smaller decisions: clean returns, a consistent surface and curved openings that hold their line from every angle.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/dover-heights/slide_1.jpg" alt="Dover Heights balcony and facade"><img src="assets/production/website/dover-heights/slide_2.jpg" alt="Dover Heights facade detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>27 Aug · 12:00</span></div><h3>Dover Heights</h3><p>Maintenance shown through an architectural wide and a closer elevation.</p><details><summary>Final caption</summary><p class="caption">Dover Heights, NSW
+
+Maintenance is most valuable before it becomes repair.
+
+Repainting and resealing renewed the facade while preserving the building's existing form and keeping exposed junctions protected.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/bossley-park/slide_1.jpg" alt="Bossley Park completed facade"><img src="assets/production/website/bossley-park/slide_2.jpg" alt="Bossley Park facade detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>3 Sep · 12:00</span></div><h3>Bossley Park</h3><p>The complete elevation, then the surface at pedestrian scale.</p><details><summary>Final caption</summary><p class="caption">Bossley Park, NSW
+
+A complete exterior build-up: substrate installed, rendered and sealed.
+
+The finish is only as reliable as the layers beneath it. Here, the groundwork and final surface were managed as one scope.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/baulkham-hills/slide_1.jpg" alt="Baulkham Hills completed facade"><img src="assets/production/website/baulkham-hills/slide_2.jpg" alt="Baulkham Hills entrance detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>10 Sep · 12:00</span></div><h3>Baulkham Hills</h3><p>Facade depth followed by the finished entrance composition.</p><details><summary>Final caption</summary><p class="caption">Baulkham Hills, NSW
+
+New substrate, render and paint, carried across the full exterior as one coordinated scope.
+
+One team followed the work from the first layer to the final surface, keeping the standard consistent at every handover.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/denistone/slide_1.jpg" alt="Denistone completed facade"><img src="assets/production/website/denistone/slide_2.jpg" alt="Denistone material junction detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>17 Sep · 12:00</span></div><h3>Denistone</h3><p>A restrained elevation and the material junction that gives it depth.</p><details><summary>Final caption</summary><p class="caption">Denistone, NSW
+
+Rendered, finished and painted for a clean, considered result.
+
+The close view shows how every edge and change in material contributes to the whole without competing for attention.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/vaucluse/slide_1.jpg" alt="Vaucluse completed facade"><img src="assets/production/website/vaucluse/slide_2.jpg" alt="Vaucluse hand-worked finish detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>24 Sep · 12:00</span></div><h3>Vaucluse</h3><p>The street reading and the hand-worked surface in one swipe.</p><details><summary>Final caption</summary><p class="caption">Vaucluse, NSW
+
+From the street, the facade reads as one quiet surface. Up close, the hand-worked acrylic render reveals its deliberate undulation.
+
+Concrete slab edges, microcement at the entry and sealed joints were resolved as part of the same exterior system.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/the-crescent/slide_1.jpg" alt="Sheltered terrace at The Crescent"><img src="assets/production/website/the-crescent/slide_2.jpg" alt="Garden transition at The Crescent"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>1 Oct · 12:00</span></div><h3>The Crescent</h3><p>Surface work shown through the spaces it supports.</p><details><summary>Final caption</summary><p class="caption">The Crescent, Vaucluse, NSW
+
+Surface work succeeds when it supports the architecture.
+
+Render, decorative finishes, paint and caulking were brought together across a home defined by curved walls, deep shade and framed views.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media"><img src="assets/production/website/rosebery/slide_1.jpg" alt="Rosebery completed facade"><img src="assets/production/website/rosebery/slide_2.jpg" alt="Rosebery texture and screen detail"></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD001 · Website</span><span>8 Oct · 12:00</span></div><h3>Rosebery</h3><p>The composed elevation followed by texture, stone and screen.</p><details><summary>Final caption</summary><p class="caption">Rosebery, NSW
+
+The character comes from the relationship between smooth planes, textured render and the vertical screen.
+
+WS built the facade from substrate through render, decorative finishes and sealed joints, keeping the material changes clear.
+
+Full project on our website. Link in bio.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media single"><video src="assets/production/magnified/vaucluse/video.mp4" poster="assets/production/magnified/vaucluse/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>25 Aug · 12:00</span></div><h3>Vaucluse · direct cut</h3><p>Existing motion source, recut to 9.6 seconds with the branded opening and closing removed.</p><details><summary>Final caption</summary><p class="caption">Seen closely, the finish is deliberately irregular.
+
+Hand-worked acrylic render follows the curve of the facade, meeting the concrete slab edge as part of one continuous exterior system.
+
+Vaucluse, NSW.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media single"><video src="assets/production/magnified/rydalmere/video.mp4" poster="assets/production/magnified/rydalmere/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>15 Sep · 12:00</span></div><h3>Rydalmere · arch and return</h3><p>Two new photographs, restrained upward and horizontal motion, audio retained.</p><details><summary>Final caption</summary><p class="caption">One elevation, read through its details.
+
+The curved opening, decorative bands and deep returns give Rydalmere its street presence. The finish has to hold each line without flattening the architecture.
+
+Rydalmere, NSW.</p></details></div>
+        </article>
+
+        <article class="prod-card">
+          <div class="prod-media single"><video src="assets/production/magnified/the-crescent/video.mp4" poster="assets/production/magnified/the-crescent/poster.jpg" controls playsinline preload="metadata"></video></div>
+          <div class="prod-body"><div class="prod-meta"><span class="campaign-chip">WSD003 · Magnified</span><span>6 Oct · 12:00</span></div><h3>The Crescent · junction to space</h3><p>An abstract close view opens into the sheltered terrace it helps define.</p><details><summary>Final caption</summary><p class="caption">Magnified: the junction first, the space second.
+
+At The Crescent, render, decorative finishes, paint and caulking sit behind the architecture rather than on top of it. The closer view is where that restraint becomes visible.
+
+The Crescent, Vaucluse, NSW.</p></details></div>
+        </article>
+      </div>
+
+      <p class="production-note"><strong>Deliberate demotion:</strong> “The useful eight seconds”, “Under the edge” and the floor-protection report clip remain in the concept bank below, but are not part of the scheduled feed. They are better suited to Stories, Academy or a future recut when stronger source material is available.</p>
+    </section>
+
     <section class="controls" id="options">
       <div class="controls-top">
         <div>
-          <p class="eyebrow">First production batch</p>
-          <h2>12 executable post options</h2>
+          <p class="eyebrow">Concept bank</p>
+          <h2>12 original directions and source notes</h2>
         </div>
         <button class="shortlist-toggle" type="button" data-filter="shortlisted">Show shortlist <span class="count">(0)</span></button>
       </div>
@@ -263,46 +423,46 @@
         </div>
       </article>
 
-      <article class="card" data-tags="ready video instagram" data-id="06" data-title="Rose Bay apex field note">
-        <div class="visual"><video src="assets/rose-bay-apex.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">06</span><span class="ready">Clip ready</span></div>
+      <article class="card" data-tags="video instagram" data-id="06" data-title="Rose Bay apex field note">
+        <div class="visual"><video src="assets/rose-bay-apex.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">06</span><span class="ready confirm">Support bank</span></div>
         <div class="card-body">
-          <div class="meta">Instagram Reel · Field Note · 35 minutes</div>
+          <div class="meta">Stories or archive · Field Note</div>
           <h3>The useful eight seconds</h3>
-          <p class="premise">A video report does not need to become a report post. Extract one clear movement or site view.</p>
+          <p class="premise">Useful evidence, but the movement and image quality are below the new feed standard. Keep for Stories or future context.</p>
           <details><summary>Production note and caption</summary><dl class="detail-grid">
             <div><dt>Draft caption</dt><dd class="caption">A field view from Chamberlain Road, Rose Bay. The clip is short, but it records what still photography often misses: access, scale and the relationship between the finished plane and the structure around it.</dd></div>
             <div><dt>Source</dt><dd>Existing WhatsApp-derived WS field media.</dd></div>
-            <div><dt>Before scheduling</dt><dd>Confirm site status, scope, client privacy and whether the street reference can be published.</dd></div>
+            <div><dt>Decision</dt><dd>Not scheduled in this batch. Revisit only with a stronger stabilised source or as a short-lived Story.</dd></div>
           </dl></details>
           <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rose-bay-apex.mp4" download>Download clip</a></div>
         </div>
       </article>
 
-      <article class="card" data-tags="ready video instagram" data-id="07" data-title="Rose Bay soffit detail">
-        <div class="visual"><video src="assets/rose-bay-soffit.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">07</span><span class="ready">Clip ready</span></div>
+      <article class="card" data-tags="video instagram" data-id="07" data-title="Rose Bay soffit detail">
+        <div class="visual"><video src="assets/rose-bay-soffit.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">07</span><span class="ready confirm">Support bank</span></div>
         <div class="card-body">
-          <div class="meta">Instagram Reel or Story · Process · 25 minutes</div>
+          <div class="meta">Stories or archive · Detail</div>
           <h3>Under the edge</h3>
-          <p class="premise">A tight material view creates variety and can work as a Reel or a low-production Story.</p>
+          <p class="premise">The subject is useful, but the source is too soft and unstable to represent the new feed standard.</p>
           <details><summary>Production note and caption</summary><dl class="detail-grid">
             <div><dt>Draft caption</dt><dd class="caption">A close field view of the soffit finish at Rose Bay. Tight angles are useful because they expose the junctions, returns and consistency that disappear in a wide project photograph.</dd></div>
             <div><dt>Source</dt><dd>Existing WhatsApp-derived WS field media.</dd></div>
-            <div><dt>Before scheduling</dt><dd>Confirm material, application stage and approved project naming.</dd></div>
+            <div><dt>Decision</dt><dd>Not scheduled in this batch. Retain for Stories or as a reference for the next field capture request.</dd></div>
           </dl></details>
           <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/rose-bay-soffit.mp4" download>Download clip</a></div>
         </div>
       </article>
 
-      <article class="card" data-tags="ready video instagram linkedin" data-id="08" data-title="Floor protection process note">
-        <div class="visual"><video src="assets/floor-protection.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">08</span><span class="ready">Clip ready</span></div>
+      <article class="card" data-tags="video instagram linkedin" data-id="08" data-title="Floor protection process note">
+        <div class="visual"><video src="assets/floor-protection.mp4" muted loop playsinline controls preload="metadata"></video><span class="number">08</span><span class="ready confirm">Academy first</span></div>
         <div class="card-body">
-          <div class="meta">Instagram + LinkedIn · Process · 30 minutes</div>
+          <div class="meta">Academy · Possible future public recut</div>
           <h3>The finish starts before the finish</h3>
-          <p class="premise">Protection and preparation are credible proof of method, even when the clip came from a report.</p>
+          <p class="premise">The idea is strong, but the original explanation is in Portuguese and already belongs naturally to Academy.</p>
           <details><summary>Production note and caption</summary><dl class="detail-grid">
             <div><dt>Draft caption</dt><dd class="caption">The finish starts before the finish. Protecting adjoining surfaces is part of controlling the result, not a separate housekeeping task. It reduces avoidable rework and gives the application team a cleaner working edge.</dd></div>
             <div><dt>Source</dt><dd>Existing WS field and training media.</dd></div>
-            <div><dt>Before scheduling</dt><dd>Confirm the project and whether this is an active site or training demonstration.</dd></div>
+            <div><dt>Decision</dt><dd>Not scheduled in this batch. A public version would need a deliberate 4–6 second English recut, not simply the report clip without sound.</dd></div>
           </dl></details>
           <div class="card-actions"><button class="pick" type="button">Add to shortlist</button><a class="download" href="assets/floor-protection.mp4" download>Download clip</a></div>
         </div>
