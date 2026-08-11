@@ -44,3 +44,19 @@ All posts publish at 12:00 Sydney time.
 The final media is derived from the WS project photography held in the Marketing shared
 drive and the existing Vaucluse Magnified render. Every published artefact is a new file;
 the historical campaign outputs remain unchanged.
+
+### Exact source map
+
+| Output | Source files |
+|---|---|
+| Website · Rydalmere | Rydalmere_Graded-1.jpg, Rydalmere_Graded-3.jpg |
+| Website · Dover Heights | DoverHeights_24.jpg, DoverHeights_22.jpg |
+| Website · Bossley Park | Bossley_Park_Graded-2.jpg, Bossley_Park_Graded-5.jpg |
+| Website · Baulkham Hills | Baulkham_Hills_Graded-2.jpg, Baulkham_Hills_Graded-3.jpg |
+| Website · Denistone | Denistone_Graded-11.jpg, Denistone_Graded-7.jpg |
+| Website · Vaucluse | Vaucluse_12.jpg, Vaucluse_14.jpg |
+| Website · The Crescent | The Crescent15_lightroom+magnific.jpg, The Crescent21.jpg |
+| Website · Rosebery | Roseberry_6(better).jpg, Roseberry_2.jpg |
+| Magnified · Vaucluse | full_v9-name-change-dif-image-vaucluse.mp4 plus the existing WSD003 audio mix |
+| Magnified · Rydalmere | Rydalmere_Graded-3.jpg, Rydalmere_Graded-8.jpg |
+| Magnified · The Crescent | The Crescent22.jpg, The Crescent15_lightroom+magnific.jpg |
