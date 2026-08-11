@@ -14,33 +14,33 @@ Channels: Instagram feed and Reels
 - The three lower-quality field clips from the concept bank are support material for Stories,
   Academy or future recutting, not scheduled feed posts.
 
-## Proposed five-week cadence
+## Scheduled five-week cadence
 
-The scheduler remains unchanged pending final review. The test uses Monday 08:30,
-Wednesday 10:00 and Friday 13:00 Sydney time, with Rydalmere proposed for 09:15 on
-12 August as the launch exception.
+The scheduler is populated and remains editable during review. The test uses Monday
+08:30, Wednesday 10:00 and Friday 13:00 Sydney time. The first automatic publication
+is held until Monday 17 August.
 
 ## WSD001 · Website
 
 | Date | Project | Media |
 |---|---|---|
-| 12 August 2026 · 09:15 | Rydalmere, NSW | `assets/production/website/rydalmere/` |
-| 19 August 2026 · 10:00 | Dover Heights, NSW | `assets/production/website/dover-heights/` |
-| 24 August 2026 · 08:30 | Bossley Park, NSW | `assets/production/website/bossley-park/` |
-| 28 August 2026 · 13:00 | Baulkham Hills, NSW | `assets/production/website/baulkham-hills/` |
-| 2 September 2026 · 10:00 | Denistone, NSW | `assets/production/website/denistone/` |
-| 7 September 2026 · 08:30 | Vaucluse, NSW | `assets/production/website/vaucluse/` |
-| 9 September 2026 · 10:00 | Rosebery, NSW | `assets/production/website/rosebery/` |
-| 11 September 2026 · 13:00 | The Crescent, Vaucluse, NSW | `assets/production/website/the-crescent/` |
-| 14 September 2026 · 08:30 | Vaucluse, NSW · in context | `assets/production/website/vaucluse-context/` |
+| 17 August 2026 · 08:30 | Rydalmere, NSW | `assets/production/website/rydalmere/` |
+| 24 August 2026 · 08:30 | Dover Heights, NSW | `assets/production/website/dover-heights/` |
+| 28 August 2026 · 13:00 | Bossley Park, NSW | `assets/production/website/bossley-park/` |
+| 2 September 2026 · 10:00 | Baulkham Hills, NSW | `assets/production/website/baulkham-hills/` |
+| 7 September 2026 · 08:30 | Denistone, NSW | `assets/production/website/denistone/` |
+| 11 September 2026 · 13:00 | Vaucluse, NSW | `assets/production/website/vaucluse/` |
+| 14 September 2026 · 08:30 | Rosebery, NSW | `assets/production/website/rosebery/` |
+| 16 September 2026 · 10:00 | The Crescent, Vaucluse, NSW | `assets/production/website/the-crescent/` |
+| 18 September 2026 · 13:00 | Vaucluse, NSW · in context | `assets/production/website/vaucluse-context/` |
 
 ## WSD003 · WS Magnified
 
 | Date | Project | Media | Treatment |
 |---|---|---|---|
-| 14 August 2026 · 13:00 | Vaucluse, NSW | `assets/production/magnified/vaucluse/video-v3-clean-loop.mp4` | Approved quiet bed retained; opens and closes on a fully visible image |
-| 31 August 2026 · 08:30 | Rydalmere, NSW | `assets/production/magnified/rydalmere/video-v4-continuous-motion.mp4` | Sparse piano bed; two continuous camera passes with no held zoom or black reset |
-| 4 September 2026 · 13:00 | The Crescent, Vaucluse, NSW | `assets/production/magnified/the-crescent/video-v4-continuous-motion.mp4` | Restrained tonal bed; continuous movement through both images with no held zoom or black reset |
+| 19 August 2026 · 10:00 | Vaucluse, NSW | `assets/production/magnified/vaucluse/video-v3-clean-loop.mp4` | Approved quiet bed retained; opens and closes on a fully visible image |
+| 4 September 2026 · 13:00 | Rydalmere, NSW | `assets/production/magnified/rydalmere/video-v4-continuous-motion.mp4` | Sparse piano bed; two continuous camera passes with no held zoom or black reset |
+| 9 September 2026 · 10:00 | The Crescent, Vaucluse, NSW | `assets/production/magnified/the-crescent/video-v4-continuous-motion.mp4` | Restrained tonal bed; continuous movement through both images with no held zoom or black reset |
 
 ## Next-production opportunities · not scheduled
 
@@ -60,7 +60,7 @@ permission status before the media enters production.
 
 | Date | Post | Media |
 |---|---|---|
-| 26 August 2026 · 10:00 | Full ecosystem · v5 | `assets/production/app-family/ecosystem-v5/video.mp4` |
+| 31 August 2026 · 08:30 | Full ecosystem · v5 | `assets/production/app-family/ecosystem-v5/video.mp4` |
 
 ## Source position
 
