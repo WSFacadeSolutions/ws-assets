@@ -30,6 +30,7 @@ cadence: Monday 08:30, Wednesday 10:00 and Friday 13:00, Sydney time.
 | 2 October | Peakhurst, NSW | Single image | `peakhurst-finish-detail` |
 | 5 October | St Ives, NSW | Single image | `st-ives-angle` |
 | 7 October | Baulkham Hills, NSW | Single image | `baulkham-hills-junction` |
+| 12 October | The Crescent, Vaucluse, NSW | Single landscape image | `the-crescent-waterfront` |
 
 The 9 October feed slot remains intentionally open for a field-craft Reel rather
 than being filled with a weaker archive image.
@@ -44,6 +45,7 @@ than being filled with a weaker archive image.
 | `drummoyne-threshold` | `Drummoyne_Graded-8` — `1-lgmuT5qrfvwWaVzvG9azkalNPdF8zqP`; `Drummoyne_Graded-7` — `1vEBo6I_6aI0QX878awNbNYrXAksPbLaJ` |
 | `bossley-park-lines` | `Bossley_Park_Graded-4` — full-resolution Drive mirror reviewed on 12 August 2026 |
 | `the-crescent-outdoor-room` | `The Crescent11` — `1YDMgDWnTElcVzhon1bMLGuhzTIop4sun`; `The Crescent14` — `1Y9M7pUvuz7bbwuDvRUx8ORLIpbuu2eOQ`; `The Crescent19` — `1jQpQ5yPgDosdewX6Zvuq6DvekdNh3lmO` |
+| `the-crescent-waterfront` | `The Crescent18.jpg` — `1TBqYhSNGGtGT1IPPLvkHSVyGXHimEOMe` |
 | `paddington-heritage-elevation` | `Paddington_Graded-1` — `1kVY3w6nGm25K-d7rOX7UjbkSPwX6gdAa` |
 | `dover-heights-geometry` | `DoverHeights_17` — full-resolution Drive mirror reviewed on 12 August 2026 |
 | `peakhurst-finish-detail` | `Peakhurst_Graded-17` — `1C7DId7QjykxvIc0nSoUtH8nQDQ1uoal9` |
