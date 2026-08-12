@@ -42,6 +42,16 @@ async function saveQr(base64Qr, attempt) {
   console.log(`QR ready at ${qrFile} (attempt ${attempt})`);
 }
 
+async function saveLinkCode(code) {
+  await writePrivateJson(path.join(SESSION_ROOT, 'status.json'), {
+    status: 'awaiting_link_code',
+    link_code: String(code),
+    generated_at: new Date().toISOString(),
+    allowed_group: ALLOWED_GROUP_NAME,
+  });
+  console.log(`Link code ready: ${code}`);
+}
+
 async function installBrowserWriteGuards(client) {
   await client.page.evaluate(() => {
     window.__WS_READ_ONLY_BLOCKS = [];
@@ -78,8 +88,31 @@ async function installBrowserWriteGuards(client) {
   });
 }
 
+async function waitForInterfaceReady(client, timeoutMs = 600000) {
+  const startedAt = Date.now();
+  let lastState = null;
+  while (Date.now() - startedAt < timeoutMs) {
+    const state = await client.page.evaluate(() => {
+      const stream = window.WPP?.conn?.getStreamData?.() || {};
+      return { mode: stream.mode || null, info: stream.info || null };
+    });
+    const serialised = JSON.stringify(state);
+    if (serialised !== lastState) {
+      console.log(`WhatsApp interface: ${state.mode || 'unknown'} (${state.info || 'unknown'})`);
+      lastState = serialised;
+    }
+    if (state.mode === 'MAIN' && state.info === 'NORMAL') return;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  throw new Error('WhatsApp interface did not reach MAIN (NORMAL) within 10 minutes');
+}
+
 async function main() {
   const maxPages = parseMaxPages(process.argv.slice(2));
+  const linkPhone = process.env.WS_WHATSAPP_LINK_PHONE?.replace(/\D/g, '');
+  if (process.env.WS_WHATSAPP_LINK_PHONE && !/^\d{8,15}$/.test(linkPhone)) {
+    throw new Error('WS_WHATSAPP_LINK_PHONE must contain 8 to 15 digits');
+  }
   await fs.mkdir(SESSION_ROOT, { recursive: true, mode: 0o700 });
   await fs.mkdir(GROUP_INTAKE_ROOT, { recursive: true, mode: 0o700 });
   await fs.chmod(SESSION_ROOT, 0o700);
@@ -102,16 +135,23 @@ async function main() {
       disableWelcome: true,
       updatesLog: false,
       autoClose: 0,
-      deviceSyncTimeout: 300000,
+      deviceSyncTimeout: 0,
       deviceName: 'WS Marketing Intake (read-only)',
+      ...(linkPhone ? { phoneNumber: linkPhone } : {}),
       folderNameToken: path.join(SESSION_ROOT, 'tokens'),
       puppeteerOptions: {
         userDataDir: path.join(SESSION_ROOT, 'browser-profile'),
+        protocolTimeout: 600000,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
       },
       catchQR: (base64Qr, _asciiQr, attempt) => {
         void saveQr(base64Qr, attempt).catch((error) => {
           console.error(`Could not save QR: ${error.message}`);
+        });
+      },
+      catchLinkCode: (code) => {
+        void saveLinkCode(code).catch((error) => {
+          console.error(`Could not save link code: ${error.message}`);
         });
       },
       statusFind: (status) => {
@@ -122,6 +162,7 @@ async function main() {
     await fs.rm(path.join(SESSION_ROOT, 'qr.png'), { force: true });
     await rawClient.setOnlinePresence(false);
     await installBrowserWriteGuards(rawClient);
+    await waitForInterfaceReady(rawClient);
     const client = createReadOnlyClient(rawClient);
 
     await writePrivateJson(path.join(SESSION_ROOT, 'status.json'), {
@@ -139,6 +180,11 @@ async function main() {
       onProgress: ({ pagesAttempted, loadedMessages, added }) => {
         console.log(
           `History page ${pagesAttempted}: ${loadedMessages} messages observed (${added} newly exposed)`,
+        );
+      },
+      onChatSyncProgress: ({ attempts, groupChatsObserved, elapsedMs }) => {
+        console.log(
+          `Chat sync check ${attempts}: ${groupChatsObserved} groups visible after ${Math.round(elapsedMs / 1000)}s`,
         );
       },
     });

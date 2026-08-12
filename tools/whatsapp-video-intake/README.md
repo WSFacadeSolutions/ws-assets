@@ -20,6 +20,9 @@ Nothing in that runtime directory is an approved marketing asset.
   download, contact lookup and close operations. Any other WPPConnect method is blocked.
 - A second browser-side guard replaces send, reply, reaction, forward, delete, revoke,
   clear, archive, pin, mute, mark and set operations with throwing functions.
+- Loaded messages are retrieved with WPPConnect's `getMessages` path. The deprecated
+  `getAllMessagesInChat` path is deliberately not exposed because it attempted an internal
+  `markIsRead` call during the live proof and was blocked by the browser guard.
 - The collector never opens the visual chat UI and never calls `sendSeen`,
   `markUnseenMessage`, `markPlayed` or any sender method.
 - The allowlisted chat's unread count is sampled before and after the probe and recorded.
@@ -54,11 +57,24 @@ logs, a public web root or a third-party service. If the process is stopped befo
 is scanned, the code and empty intake remain safe; run the same command again for a fresh
 QR.
 
+If QR scanning repeatedly fails, the same isolated session can request WhatsApp's numeric
+linked-device code. Supply the account phone number only as the private process environment
+variable `WS_WHATSAPP_LINK_PHONE`; the phone number is not written to reports or manifests.
+The current short-lived code is saved only in the private session status file and is
+replaced by the normal collection status after login.
+
 ## What the probe records
 
-The collector repeatedly requests earlier messages until three consecutive requests
-expose no additional IDs, or until the page limit/error stops it. It then considers only
-`video` and `ptv` messages. Each successful message contributes only:
+The collector pages backwards with WPPConnect's current `getMessages` `before` cursor until
+three consecutive requests expose no additional IDs, or until the page limit/error stops
+it. The deprecated `loadEarlierMessages` route is not used. It then considers only `video`
+and `ptv` messages. Each successful message contributes only:
+
+Immediately after first-device pairing, the WhatsApp chat list can still be empty while
+the linked-device synchronisation catches up. The collector waits up to five minutes for
+the one exact allowlisted group to appear; it never falls back to a partial-title match.
+Before listing chats, it also waits for WhatsApp Web's interface to report `MAIN (NORMAL)`;
+the first-device synchronisation is not forced through a short browser timeout.
 
 - group title;
 - UTC date;

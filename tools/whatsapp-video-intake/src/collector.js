@@ -6,11 +6,9 @@ const VIDEO_TYPES = new Set(['video', 'ptv']);
 const READ_ONLY_METHODS = new Set([
   'close',
   'downloadMedia',
-  'getAllMessagesInChat',
   'getContact',
   'getMessages',
   'listChats',
-  'loadEarlierMessages',
 ]);
 
 function serialisedId(value) {
@@ -43,8 +41,28 @@ function senderName(message) {
   );
 }
 
+function normaliseCaption(value) {
+  const text = String(value ?? '').trim();
+  if (!text) return '';
+  if (text.startsWith('data:image/') || text.startsWith('/9j/')) return '';
+  if (text.length > 512 && /^[A-Za-z0-9+/=\r\n]+$/.test(text)) return '';
+  return text;
+}
+
+function describeError(error) {
+  if (error?.message) return String(error.message);
+  if (typeof error === 'string') return error;
+  try {
+    const encoded = JSON.stringify(error);
+    if (encoded && encoded !== '{}') return encoded;
+  } catch {
+    // Fall through to the constructor name when the upstream object is cyclic.
+  }
+  return error?.constructor?.name || String(error);
+}
+
 function captionOf(message) {
-  return String(message.caption ?? message.body ?? '').trim();
+  return normaliseCaption(message.caption ?? message.body ?? '');
 }
 
 function mimeExtension(mime) {
@@ -86,6 +104,10 @@ async function loadManifest(file, groupName) {
     if (parsed.group !== groupName || !Array.isArray(parsed.items)) {
       throw new Error('Existing manifest does not match the allowlisted group');
     }
+    parsed.items = parsed.items.map((item) => ({
+      ...item,
+      caption: normaliseCaption(item.caption),
+    }));
     return parsed;
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
@@ -104,6 +126,12 @@ function dateRange(messages) {
     oldest: isoDate(Math.min(...timestamps)),
     newest: isoDate(Math.max(...timestamps)),
   };
+}
+
+function oldestStableMessage(messages) {
+  return messages
+    .filter((message) => messageId(message))
+    .sort((left, right) => (timestampOf(left) || 0) - (timestampOf(right) || 0))[0] || null;
 }
 
 export function createReadOnlyClient(client) {
@@ -135,6 +163,37 @@ export function resolveAllowedGroup(chats, allowedGroupName) {
   return { chat: exact[0], groupId };
 }
 
+export async function waitForAllowedGroup({
+  client,
+  allowedGroupName,
+  timeoutMs = 300000,
+  pollMs = 5000,
+  sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay)),
+  nowMs = () => Date.now(),
+  onProgress = () => {},
+}) {
+  const startedAt = nowMs();
+  let attempts = 0;
+  while (true) {
+    attempts += 1;
+    const chats = await client.listChats({ onlyGroups: true });
+    const exact = chats.filter(
+      (chat) => chat.isGroup === true && chat.name === allowedGroupName,
+    );
+    if (exact.length === 1) return resolveAllowedGroup(chats, allowedGroupName);
+    if (exact.length > 1) return resolveAllowedGroup(chats, allowedGroupName);
+
+    const elapsedMs = nowMs() - startedAt;
+    onProgress({ attempts, groupChatsObserved: chats.length, elapsedMs });
+    if (elapsedMs >= timeoutMs) {
+      throw new Error(
+        `Allowlisted group did not appear after ${attempts} chat-sync checks (${chats.length} group chats observed on the last check)`,
+      );
+    }
+    await sleep(pollMs);
+  }
+}
+
 export async function collectHistory({
   client,
   allowedGroupName,
@@ -143,6 +202,7 @@ export async function collectHistory({
   noProgressLimit,
   now = () => new Date(),
   onProgress = () => {},
+  onChatSyncProgress = () => {},
 }) {
   await fs.mkdir(path.join(intakeRoot, 'videos'), { recursive: true, mode: 0o700 });
   await fs.mkdir(path.join(intakeRoot, 'reports'), { recursive: true, mode: 0o700 });
@@ -151,13 +211,16 @@ export async function collectHistory({
     mode: 0o700,
   });
 
-  const chats = await client.listChats({ onlyGroups: true });
-  const { chat, groupId } = resolveAllowedGroup(chats, allowedGroupName);
+  const { chat, groupId } = await waitForAllowedGroup({
+    client,
+    allowedGroupName,
+    onProgress: onChatSyncProgress,
+  });
   const unreadBefore = Number.isFinite(Number(chat.unreadCount))
     ? Number(chat.unreadCount)
     : null;
 
-  let messages = await client.getAllMessagesInChat(groupId, true, false);
+  let messages = await client.getMessages(groupId, { count: -1 });
   let knownIds = new Set(messages.map(messageId).filter(Boolean));
   let pagesAttempted = 0;
   let consecutiveNoProgress = 0;
@@ -165,21 +228,33 @@ export async function collectHistory({
   let historyError = null;
 
   while (pagesAttempted < maxPages) {
+    const cursor = oldestStableMessage(messages);
+    if (!cursor) {
+      stopReason = 'no_stable_history_cursor';
+      break;
+    }
     pagesAttempted += 1;
+    let next;
     try {
-      await client.loadEarlierMessages(groupId);
+      next = await client.getMessages(groupId, {
+        count: 100,
+        direction: 'before',
+        id: messageId(cursor),
+      });
     } catch (error) {
       stopReason = 'history_load_error';
-      historyError = String(error?.message || error);
+      historyError = describeError(error);
       break;
     }
 
-    const next = await client.getAllMessagesInChat(groupId, true, false);
-    const nextIds = new Set(next.map(messageId).filter(Boolean));
     let added = 0;
-    for (const id of nextIds) if (!knownIds.has(id)) added += 1;
-    messages = next;
-    knownIds = nextIds;
+    for (const message of next) {
+      const id = messageId(message);
+      if (!id || knownIds.has(id)) continue;
+      knownIds.add(id);
+      messages.push(message);
+      added += 1;
+    }
     consecutiveNoProgress = added === 0 ? consecutiveNoProgress + 1 : 0;
     onProgress({ pagesAttempted, loadedMessages: messages.length, added });
 
@@ -275,7 +350,7 @@ export async function collectHistory({
       await writeJsonAtomic(manifestFile, manifest);
     } catch (error) {
       counters.unavailable += 1;
-      unavailable.push({ message_id: id, reason: String(error?.message || error) });
+      unavailable.push({ message_id: id, reason: describeError(error) });
     }
   }
 

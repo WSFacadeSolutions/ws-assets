@@ -8,6 +8,7 @@ import {
   collectHistory,
   createReadOnlyClient,
   resolveAllowedGroup,
+  waitForAllowedGroup,
 } from '../src/collector.js';
 
 const GROUP = 'WS614_11 Weonga rd, Dover Heights';
@@ -63,6 +64,25 @@ test('the client facade blocks every method not explicitly read-only', async () 
   assert.deepEqual(calls, ['listChats']);
 });
 
+test('initial chat sync waits for the exact allowlisted group', async () => {
+  const snapshots = [[], [chat('Different group')], [chat()]];
+  let index = 0;
+  const result = await waitForAllowedGroup({
+    client: {
+      async listChats() {
+        return snapshots[Math.min(index++, snapshots.length - 1)];
+      },
+    },
+    allowedGroupName: GROUP,
+    timeoutMs: 100,
+    pollMs: 1,
+    sleep: async () => {},
+    nowMs: () => index,
+  });
+  assert.equal(result.groupId, GROUP_ID);
+  assert.equal(index, 3);
+});
+
 test('history probing downloads videos only and deduplicates by checksum', async () => {
   const intakeRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'ws-wa-intake-'));
   const first = message('m1', 'chat', 1000, 'text');
@@ -81,11 +101,11 @@ test('history probing downloads videos only and deduplicates by checksum', async
     async listChats() {
       return [chat()];
     },
-    async getAllMessagesInChat() {
+    async getMessages(_groupId, params) {
+      if (params.direction === 'before') {
+        page = Math.min(page + 1, pages.length - 1);
+      }
       return pages[page];
-    },
-    async loadEarlierMessages() {
-      page = Math.min(page + 1, pages.length - 1);
     },
     async downloadMedia() {
       return payload;
@@ -122,10 +142,10 @@ test('media failures are reported without creating manifest records', async () =
     async listChats() {
       return [chat(GROUP, 0)];
     },
-    async getAllMessagesInChat() {
+    async getMessages(_groupId, params) {
+      if (params.direction === 'before') return [];
       return [message('unavailable', 'video', 600)];
     },
-    async loadEarlierMessages() {},
     async downloadMedia() {
       throw new Error('media no longer available');
     },
@@ -143,4 +163,31 @@ test('media failures are reported without creating manifest records', async () =
   assert.equal(report.media.unavailable, 1);
   assert.match(report.unavailable[0].reason, /no longer available/);
   assert.deepEqual(manifest.items, []);
+});
+
+test('encoded media thumbnails are never stored as captions', async () => {
+  const intakeRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'ws-wa-intake-'));
+  const encodedThumbnail = `/9j/${'A'.repeat(800)}`;
+  const media = message('thumbnail', 'video', 700, encodedThumbnail);
+  const client = {
+    async listChats() {
+      return [chat(GROUP, 0)];
+    },
+    async getMessages(_groupId, params) {
+      return params.direction === 'before' ? [] : [media];
+    },
+    async downloadMedia() {
+      return `data:video/mp4;base64,${Buffer.from('video').toString('base64')}`;
+    },
+  };
+
+  const { manifestFile } = await collectHistory({
+    client,
+    allowedGroupName: GROUP,
+    intakeRoot,
+    maxPages: 1,
+    noProgressLimit: 3,
+  });
+  const manifest = JSON.parse(await fs.readFile(manifestFile, 'utf8'));
+  assert.equal(manifest.items[0].caption, '');
 });
