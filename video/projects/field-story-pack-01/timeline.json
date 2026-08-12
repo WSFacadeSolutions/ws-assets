@@ -22,6 +22,6 @@
       {"id": "s1", "start": 2.7, "end": 5.7},
       {"id": "s2", "start": 5.7, "end": 9.0}
     ],
-    "audio": {"risers": [], "volume": 0.82, "music_src": "music-high-build.wav", "music_vol": 1.0, "sfx_vol": 0.0}
+    "audio": {"risers": [], "volume": 0.76, "music_src": "music-high-build-v2.wav", "music_vol": 1.0, "sfx_vol": 0.0}
   }
 }

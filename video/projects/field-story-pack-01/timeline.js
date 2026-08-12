@@ -77,8 +77,8 @@ window.TIMELINE = {
   ],
   "audio": {
    "risers": [],
-   "volume": 0.82,
-   "music_src": "music-high-build.wav",
+   "volume": 0.76,
+   "music_src": "music-high-build-v2.wav",
    "music_vol": 1.0,
    "sfx_vol": 0.0
   }

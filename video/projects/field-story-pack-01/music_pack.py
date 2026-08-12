@@ -5,14 +5,14 @@ import wave
 import numpy as np
 
 parser=argparse.ArgumentParser()
-parser.add_argument('--cue', choices=['serginho','floor','high'], required=True)
+parser.add_argument('--cue', choices=['serginho','floor','high','high2'], required=True)
 parser.add_argument('--dur', type=float, required=True)
 parser.add_argument('--out', required=True)
 args=parser.parse_args()
 sr=48000
 n=int(args.dur*sr)
 t=np.arange(n)/sr
-rng=np.random.default_rng({'serginho':41,'floor':53,'high':67}[args.cue])
+rng=np.random.default_rng({'serginho':41,'floor':53,'high':67,'high2':79}[args.cue])
 mix=np.zeros((n,2),dtype=np.float64)
 
 def lp(x,cut):
@@ -48,7 +48,7 @@ elif args.cue=='floor':
         put(tone(73.4 if i%4<2 else 82.4,.62,5.8),at,.20,-.08)
         if i%2: put(tap(.24),at+.32,.045,.24)
     for at,note in [(1.3,220),(3.9,246.9),(6.5,293.7)]:put(tone(note,1.3,2.7),at,.07,-.2)
-else:
+elif args.cue=='high':
     bpm=86; beat=60/bpm
     bed=lp(rng.standard_normal(n),260)*.028
     mix[:,0]+=bed; mix[:,1]+=np.roll(bed,3100)
@@ -56,6 +56,20 @@ else:
         put(tone(61.7 if i%6<3 else 69.3,.8,4.7),at,.25,-.1)
         put(tap(.13),at+beat*.5,.04,.16)
     for at,note in [(1.7,185),(4.4,207.7),(7.0,233.1)]:put(tone(note,1.5,2.3),at,.075,.2)
+else:
+    # Architectural ambient bed: no half-beat percussion and no obvious loop pulse.
+    # Slow overlapping tones support the material close-ups without calling attention
+    # to the edit points.
+    bed=lp(rng.standard_normal(n),190)*.020
+    mix[:,0]+=bed; mix[:,1]+=np.roll(bed,4200)
+    for at,note,pan in [
+        (0.0,69.3,-.12), (0.0,103.8,.12),
+        (2.1,82.4,.10), (3.8,123.5,-.10),
+        (5.4,92.5,-.08), (6.7,138.6,.10),
+    ]:
+        put(tone(note,3.4,1.05),at,.115,pan)
+    for at,note,pan in [(1.5,277.2,.18),(4.6,311.1,-.16),(7.2,246.9,.12)]:
+        put(tone(note,1.8,2.0),at,.030,pan)
 
 fade=min(int(.35*sr),n//3)
 mix[:fade]*=np.linspace(0,1,fade)[:,None]; mix[-fade:]*=np.linspace(1,0,fade)[:,None]
