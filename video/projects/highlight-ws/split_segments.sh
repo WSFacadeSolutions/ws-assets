@@ -35,7 +35,7 @@ for index in "${!names[@]}"; do
   ffmpeg -hide_banner -loglevel error -y \
     -i "$input" \
     -vf "trim=start_frame=${start_frame}:end_frame=${end_frame},setpts=PTS-STARTPTS,fps=30,format=yuv420p" \
-    -af "atrim=start=${start_seconds}:end=$((start_seconds + 6)),asetpts=PTS-STARTPTS" \
+    -af "atrim=start=${start_seconds}:end=$((start_seconds + 6)),asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.025,afade=t=out:st=5.975:d=0.025" \
     -c:v libx264 -preset slow -crf 18 -profile:v high -level 4.1 \
     -c:a aac -b:a 192k -ar 48000 -ac 2 -movflags +faststart \
     "$output_dir/${names[$index]}.mp4"

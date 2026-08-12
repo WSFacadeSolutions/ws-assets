@@ -28,9 +28,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 .photo{position:absolute;overflow:hidden;background:rgba(var(--petrol-rgb),.08)}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center}
 .rule{width:62px;height:4px;background:var(--lilac)}
-.progress{position:absolute;left:68px;right:68px;top:122px;display:flex;gap:9px;z-index:8}
-.progress i{height:4px;flex:1;background:rgba(var(--petrol-rgb),.14)}
-.progress i.on{background:var(--lilac)}
 
 /* 01 — evidence first. */
 #s0{background:var(--deep);color:var(--white)}
@@ -41,7 +38,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 #s0 .kicker{color:var(--lilac)}
 #s0title{font-size:91px;max-width:850px;margin-top:38px}
 #s0 .index{color:rgba(255,255,255,.68)}
-#s0 .progress i{background:rgba(255,255,255,.24)}
 
 /* 02 — people. */
 #s1{background:var(--white)}
@@ -75,7 +71,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 #s3list{position:absolute;left:68px;right:68px;top:660px;z-index:4;display:flex;flex-direction:column;gap:20px}
 #s3 .service{min-height:145px;color:var(--white);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);backdrop-filter:blur(8px)}
 #s3 .index{color:rgba(255,255,255,.68)}
-#s3 .progress i{background:rgba(255,255,255,.24)}
 
 /* 05 — operating principle. */
 #s4{background:var(--white)}
@@ -103,7 +98,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 .quality{display:flex;align-items:center;gap:28px;padding:35px 0;border-top:1px solid rgba(255,255,255,.25);font-size:34px;font-weight:600}
 .quality b{font-size:20px;letter-spacing:.18em;color:var(--lilac)}
 #s6 .index{color:rgba(255,255,255,.68)}
-#s6 .progress i{background:rgba(255,255,255,.24)}
 
 /* 08 — credentials. */
 #s7{background:var(--white)}
@@ -120,14 +114,14 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 </style>
 
 <div id="stage">
-  <div class="scene" id="s0"><div class="progress"></div><div class="index"></div><div class="photo"><img></div><div id="s0shade"></div><div id="s0copy"><div class="kicker"></div><h1 id="s0title"></h1></div></div>
-  <div class="scene" id="s1"><div class="progress"></div><div class="index"></div><div class="photo" id="s1photo"><img></div><div id="s1copy"><div class="kicker"></div><h2 id="s1title"></h2><div id="s1people"></div></div></div>
-  <div class="scene" id="s2"><div class="progress"></div><div class="index"></div><div class="photo" id="s2photo"><img></div><div id="s2head"><div class="kicker"></div><h2 id="s2title"></h2></div><div id="s2list"></div></div>
-  <div class="scene" id="s3"><div class="progress"></div><div class="index"></div><div class="photo" id="s3photo"><img></div><div id="s3shade"></div><div id="s3head"><div class="kicker"></div><h2 id="s3title"></h2></div><div id="s3list"></div></div>
-  <div class="scene" id="s4"><div class="progress"></div><div class="index"></div><div class="photo" id="s4photo"><img></div><div id="s4copy"><div class="kicker"></div><h2 id="s4title"></h2><div id="s4items"></div></div></div>
-  <div class="scene" id="s5"><div class="progress"></div><div class="index"></div><div id="s5head"><div class="kicker"></div><h2 id="s5title"></h2></div><div id="s5grid"></div></div>
-  <div class="scene" id="s6"><div class="progress"></div><div class="index"></div><div id="s6copy"><div class="kicker"></div><h2 id="s6title"></h2></div><div id="s6items"></div></div>
-  <div class="scene" id="s7"><div class="progress"></div><div class="index"></div><div id="s7lock"><img src="logos/lockup-blacktext-lilacbrick.svg"></div><div id="s7company"></div><div id="s7line"></div><div id="s7creds"></div><div id="s7contact"></div><div id="s7url"></div></div>
+  <div class="scene" id="s0"><div class="index"></div><div class="photo"><img></div><div id="s0shade"></div><div id="s0copy"><div class="kicker"></div><h1 id="s0title"></h1></div></div>
+  <div class="scene" id="s1"><div class="index"></div><div class="photo" id="s1photo"><img></div><div id="s1copy"><div class="kicker"></div><h2 id="s1title"></h2><div id="s1people"></div></div></div>
+  <div class="scene" id="s2"><div class="index"></div><div class="photo" id="s2photo"><img></div><div id="s2head"><div class="kicker"></div><h2 id="s2title"></h2></div><div id="s2list"></div></div>
+  <div class="scene" id="s3"><div class="index"></div><div class="photo" id="s3photo"><img></div><div id="s3shade"></div><div id="s3head"><div class="kicker"></div><h2 id="s3title"></h2></div><div id="s3list"></div></div>
+  <div class="scene" id="s4"><div class="index"></div><div class="photo" id="s4photo"><img></div><div id="s4copy"><div class="kicker"></div><h2 id="s4title"></h2><div id="s4items"></div></div></div>
+  <div class="scene" id="s5"><div class="index"></div><div id="s5head"><div class="kicker"></div><h2 id="s5title"></h2></div><div id="s5grid"></div></div>
+  <div class="scene" id="s6"><div class="index"></div><div id="s6copy"><div class="kicker"></div><h2 id="s6title"></h2></div><div id="s6items"></div></div>
+  <div class="scene" id="s7"><div class="index"></div><div id="s7lock"><img src="logos/lockup-blacktext-lilacbrick.svg"></div><div id="s7company"></div><div id="s7line"></div><div id="s7creds"></div><div id="s7contact"></div><div id="s7url"></div></div>
   <svg id="grain" width="1080" height="1920"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/></filter><rect width="1080" height="1920" filter="url(#noise)"/></svg>
 </div>
 
@@ -157,8 +151,7 @@ function at(t0,dur,fn,ease=E.o){anims.push({t0,t1:t0+dur,fn,ease});}
 function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0)):(t>=a.t0?1:0);a.fn(a.ease(p),t);}}
 function enter(el,t0,dur=0.6,dx=-34){el.style.opacity=.35;at(t0,dur,p=>{el.style.opacity=.35+.65*p;el.style.transform=`translateX(${(1-p)*dx}px)`;},E.oq);}
 function zoom(img,a,b,z0=1.055,z1=1){at(a,b-a,p=>{img.style.transform=`scale(${lerp(z0,z1,p)})`;},E.lin);}
-function progress(scene,n){scene.querySelector('.progress').innerHTML=Array.from({length:8},(_,i)=>`<i${i===n?' class="on"':''}></i>`).join('');}
-function bindBase(scene,data,n){progress(scene,n);set(scene.querySelector('.index'),data.index);set(scene.querySelector('.kicker'),data.kicker);}
+function bindBase(scene,data){set(scene.querySelector('.index'),data.index);set(scene.querySelector('.kicker'),data.kicker);}
 function services(items){return items.map(x=>`<div class="service"><span>${x}</span></div>`).join('');}
 
 bindBase($('#s0'),C.open,0);set('#s0title',C.open.title);$('#s0 .photo img').src='photos/'+C.open.photo;
@@ -183,7 +176,7 @@ enter($('#s5 .kicker'),30.16);enter($('#s5title'),30.3,.68,-42);[...document.que
 bindBase($('#s6'),C.compliance,6);set('#s6title',C.compliance.title);$('#s6items').innerHTML=C.compliance.items.map((x,i)=>`<div class="quality"><b>0${i+1}</b><span>${x}</span></div>`).join('');
 enter($('#s6 .kicker'),36.16);enter($('#s6title'),36.32,.74,-48);[...document.querySelectorAll('.quality')].forEach((el,i)=>enter(el,36.76+i*.18,.58,-34));
 
-progress($('#s7'),7);set($('#s7 .index'),C.final.index);set('#s7company',C.final.company);set('#s7line',C.final.line);set('#s7contact',C.final.contact+'\n'+C.final.phone);set('#s7url',C.final.url);
+set($('#s7 .index'),C.final.index);set('#s7company',C.final.company);set('#s7line',C.final.line);set('#s7contact',C.final.contact+'\n'+C.final.phone);set('#s7url',C.final.url);
 $('#s7creds').innerHTML=`<div class="credential">${C.final.abn}</div><div class="credential">${C.final.licence}</div>`;
 enter($('#s7lock'),42.16,.64,-34);enter($('#s7company'),42.3,.56,-26);enter($('#s7line'),42.44,.64,-36);[...document.querySelectorAll('.credential')].forEach((el,i)=>enter(el,42.72+i*.14,.55,-24));enter($('#s7contact'),43.04,.56,-24);enter($('#s7url'),43.2,.58,-24);
 
