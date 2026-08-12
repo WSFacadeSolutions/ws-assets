@@ -1,0 +1,46 @@
+{
+  "approval": "Guilherme confirmed that Heron approved a WS re-edit of suitable Serginho Seara material, provided the result is strong. The derivative makes no project, client or location claim.",
+  "audio": "All inherited Instagram audio is removed. The Reel uses a new original WS score.",
+  "sources": [
+    {
+      "scene": "s0",
+      "purpose": "Team-scale opening",
+      "instagram": "https://www.instagram.com/reel/DbNQQC8zN81/",
+      "source_file": "2026-07-25_18096221597009577.mp4",
+      "source_in": 0.0,
+      "source_out": 3.2
+    },
+    {
+      "scene": "s1",
+      "purpose": "Methodical preparation and cutting",
+      "instagram": "https://www.instagram.com/reel/DTfLdc1E62c/",
+      "source_file": "2026-01-14_18025630172607124.mp4",
+      "source_in": 44.0,
+      "source_out": 47.2
+    },
+    {
+      "scene": "s2",
+      "purpose": "Curved-wall application",
+      "instagram": "https://www.instagram.com/reel/DakshDwzdnc/",
+      "source_file": "2026-07-09_17860244946660118.mp4",
+      "source_in": 15.4,
+      "source_out": 18.8
+    },
+    {
+      "scene": "s3",
+      "purpose": "Close finishing pass",
+      "instagram": "https://www.instagram.com/reel/DaccBuWzHm2/",
+      "source_file": "2026-07-06_18603922909027924.mp4",
+      "source_in": 10.3,
+      "source_out": 14.4
+    },
+    {
+      "scene": "s4",
+      "purpose": "Team-scale closing beat",
+      "instagram": "https://www.instagram.com/reel/DbNQQC8zN81/",
+      "source_file": "2026-07-25_18096221597009577.mp4",
+      "source_in": 6.8,
+      "source_out": 10.1
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "reel": {
+    "scenes": [
+      {"id": "s0", "start": 0.0, "end": 3.2},
+      {"id": "s1", "start": 3.2, "end": 6.4},
+      {"id": "s2", "start": 6.4, "end": 9.8},
+      {"id": "s3", "start": 9.8, "end": 13.9},
+      {"id": "s4", "start": 13.9, "end": 17.2}
+    ],
+    "audio": {
+      "risers": [],
+      "volume": 0.88,
+      "music_src": "music-field-craft.wav",
+      "music_vol": 1.0,
+      "sfx_vol": 0.0
+    }
+  }
+}

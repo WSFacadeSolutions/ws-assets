@@ -1,0 +1,113 @@
+<meta charset="utf-8">
+<title>WS Field Craft — Serginho Seara</title>
+<script src="content.js"></script>
+<script src="timeline.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--background:#0c1216}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--background)}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--background)}
+.scene{position:absolute;inset:0;display:none;background:var(--background)}
+.scene canvas{position:absolute;inset:0;width:1080px;height:1920px}
+</style>
+<div id="stage">
+  <div class="scene" id="s0"><canvas width="1080" height="1920"></canvas></div>
+  <div class="scene" id="s1"><canvas width="1080" height="1920"></canvas></div>
+  <div class="scene" id="s2"><canvas width="1080" height="1920"></canvas></div>
+  <div class="scene" id="s3"><canvas width="1080" height="1920"></canvas></div>
+  <div class="scene" id="s4"><canvas width="1080" height="1920"></canvas></div>
+</div>
+<script>
+const FPS=30;
+const C=window.CONTENT||{};
+const $=selector=>document.querySelector(selector);
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+const T=value=>value;
+
+window.applyTheme=function(theme){
+  document.documentElement.style.setProperty('--background',T(theme.background));
+};
+window.applyTheme(C.theme);
+
+/* Authored scene table mirrors timeline.json; the editor owns real timings. */
+const SC=[
+  ['#s0',0.0,3.2],
+  ['#s1',3.2,6.4],
+  ['#s2',6.4,9.8],
+  ['#s3',9.8,13.9],
+  ['#s4',13.9,17.2],
+];
+const TL=(window.TIMELINE&&window.TIMELINE.reel)||null;
+const SC_EDIT=SC.map(([selector,start,end])=>{
+  const scene=TL&&(TL.scenes||[]).find(item=>'#'+item.id===selector);
+  return scene?[selector,+scene.start,+scene.end]:[selector,start,end];
+});
+const WARP_PTS=SC_EDIT.map(([_,start],index)=>[start,SC[index][1]])
+  .concat([[SC_EDIT[SC_EDIT.length-1][2],SC[SC.length-1][2]]]);
+function warp(time){
+  if(time<=WARP_PTS[0][0])return WARP_PTS[0][1]+time-WARP_PTS[0][0];
+  for(let index=1;index<WARP_PTS.length;index++)if(time<=WARP_PTS[index][0]){
+    const [x0,y0]=WARP_PTS[index-1], [x1,y1]=WARP_PTS[index];
+    return x1>x0?y0+(time-x0)*(y1-y0)/(x1-x0):y1;
+  }
+  const last=WARP_PTS[WARP_PTS.length-1];
+  return last[1]+time-last[0];
+}
+
+/* APPLY CONTENT — footage slots and the complete grade are data-bound. */
+const CLIPS=C.clips.map((clip,index)=>({
+  ...clip,
+  scene:SC[index][0],
+  authoredStart:SC[index][1],
+  authoredEnd:SC[index][2],
+  frames:new Map(),
+}));
+const GRADE=`contrast(${T(C.grade.contrast)}) saturate(${T(C.grade.saturation)}) brightness(${T(C.grade.brightness)})`;
+
+const loadJobs=[];
+for(const clip of CLIPS){
+  const image=new Image();
+  clip.frames.set(1,image);
+  loadJobs.push(new Promise(resolve=>{image.onload=resolve;image.onerror=resolve;}));
+  image.src=`${clip.dir}/f0001.jpg`;
+}
+function frameImage(clip,frame){
+  if(clip.frames.has(frame))return clip.frames.get(frame);
+  const image=new Image();
+  image.src=`${clip.dir}/f${String(frame).padStart(4,'0')}.jpg`;
+  clip.frames.set(frame,image);
+  return image;
+}
+function activeClip(time){
+  return CLIPS.find((clip,index)=>time<(SC[index][2]-1e-7))||CLIPS[CLIPS.length-1];
+}
+function draw(time){
+  const clip=activeClip(time);
+  for(const item of CLIPS)$(item.scene).style.display=item===clip?'block':'none';
+  const local=clamp(time-clip.authoredStart,0,clip.authoredEnd-clip.authoredStart-1/FPS);
+  const frame=clamp(1+Math.floor(local*clip.fps),1,clip.count);
+  const image=frameImage(clip,frame);
+  if(!image||!image.naturalWidth)return;
+  const canvas=$(clip.scene+' canvas'), context=canvas.getContext('2d');
+  const scale=Math.max(1080/clip.width,1920/clip.height);
+  const width=clip.width*scale, height=clip.height*scale;
+  const x=clamp(540-width*clip.focusX,1080-width,0);
+  const y=clamp(960-height*clip.focusY,1920-height,0);
+  context.filter=GRADE;
+  context.drawImage(image,x,y,width,height);
+}
+
+const DUR=SC_EDIT[SC_EDIT.length-1][2];
+window.DUR=DUR;
+window.FPS=FPS;
+window.TOTAL_FRAMES=Math.round(DUR*FPS);
+window.seek=function(frame){draw(warp(frame/FPS));return true;};
+window.readyP=Promise.all(loadJobs).then(()=>{window.seek(0);return true;});
+if(location.hash==='#play'){
+  const started=performance.now();
+  (function play(){
+    const elapsed=(performance.now()-started)/1000;
+    if(elapsed<DUR){window.seek(Math.floor(elapsed*FPS));requestAnimationFrame(play);}
+  })();
+}
+</script>

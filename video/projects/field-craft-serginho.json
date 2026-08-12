@@ -1,0 +1,22 @@
+{
+  "_": "Footage-led field-craft Reel built from five approved Serginho Seara process excerpts. The composition is deliberately clean: no logo, title card, overlay or inherited Instagram audio.",
+  "name": "field-craft-serginho",
+  "title": "WS Field Craft — Serginho Seara",
+  "dir": "field-craft-serginho",
+  "content": "content.json",
+  "timeline": "timeline.json",
+  "figma_env": "figma.env",
+  "figma_env_var": "FILM_FIGMA_FILE_KEY",
+  "media_prefix": "field-craft-serginho",
+  "compositions": [
+    {
+      "id": "reel",
+      "html": "reel.html",
+      "frames": "frames",
+      "soundtrack": "soundtrack.wav",
+      "out": "WS-Field-Craft-Serginho-Reel.mp4",
+      "deploy": "field-craft-serginho-reel.mp4",
+      "still_times": [0, 1.6, 3.2, 4.8, 6.4, 8.1, 9.8, 11.8, 13.9, 15.55, 17.1]
+    }
+  ]
+}

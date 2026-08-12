@@ -1,0 +1,63 @@
+/* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.CONTENT = {
+ "theme": {
+  "background": "#0C1216"
+ },
+ "grade": {
+  "contrast": 1.04,
+  "saturation": 0.94,
+  "brightness": 1.01
+ },
+ "clips": [
+  {
+   "id": "team-open",
+   "dir": "footage/team-open",
+   "fps": 30,
+   "count": 96,
+   "width": 720,
+   "height": 1280,
+   "focusX": 0.5,
+   "focusY": 0.5
+  },
+  {
+   "id": "preparation",
+   "dir": "footage/preparation",
+   "fps": 30,
+   "count": 96,
+   "width": 720,
+   "height": 1280,
+   "focusX": 0.5,
+   "focusY": 0.5
+  },
+  {
+   "id": "curved-wall",
+   "dir": "footage/curved-wall",
+   "fps": 30,
+   "count": 102,
+   "width": 720,
+   "height": 1280,
+   "focusX": 0.5,
+   "focusY": 0.5
+  },
+  {
+   "id": "finish-close",
+   "dir": "footage/finish-close",
+   "fps": 30,
+   "count": 123,
+   "width": 576,
+   "height": 1024,
+   "focusX": 0.5,
+   "focusY": 0.5
+  },
+  {
+   "id": "team-close",
+   "dir": "footage/team-close",
+   "fps": 30,
+   "count": 99,
+   "width": 720,
+   "height": 1280,
+   "focusX": 0.5,
+   "focusY": 0.5
+  }
+ ]
+};
