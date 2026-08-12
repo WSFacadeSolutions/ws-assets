@@ -33,4 +33,17 @@ its date, caption and campaign stay unchanged.
 
 ## Render and scheduler status
 
-Pending the full still, render and scheduler verification gates.
+All five masters passed the same-pipeline template and render gates, composition-specific
+still review, ffprobe validation and black-frame detection. The unchanged site-walkthrough
+reference reproduced the v1 master checksum exactly.
+
+- Reel v2: `b1968f43c6995bb6d122e11604841cdb353a3e4a7d7f4df2cab9ddb34c3045a2`
+- Site-walkthrough reference: `0acddedc701960d8372b86262a7d01b528c0e69b8ffafec3d97bfb74d930518e`
+- Setting out: `85737985bfd998e56c10bdaf6e57155ada94a61c0b82c91f196f03570651374e`
+- Field craft: `9959f5e5b23f70237a52abc2489b573f7709d70778bfacc2b6f66b3656c146b9`
+- Façade progress: `609d3d63f8923f6060d4162f21e22e6de9b481a4ddf889b05b79d2be7ab28a33`
+
+WST010 now carries the refined Reel at its original 23 October 2026, 13:00 Sydney
+slot. The three new Stories are pending as 01/03–03/03 for 24 October 2026, 17:30
+Sydney. Hosted-media checksums match the local masters. The earlier floor-protection
+and site-walkthrough scheduler entries were not changed.
