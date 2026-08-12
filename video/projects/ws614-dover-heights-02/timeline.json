@@ -1,0 +1,76 @@
+{
+  "reel": {
+    "grade": {"contrast": 1.06, "saturation": 0.95, "brightness": 1.02},
+    "clips": [
+      {"id": "hero-open", "dir": "footage/reel/hero-open", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
+      {"id": "measure", "dir": "footage/reel/measure", "fps": 30, "count": 72, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "scaffold", "dir": "footage/reel/scaffold", "fps": 30, "count": 75, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
+      {"id": "corridor", "dir": "footage/reel/corridor", "fps": 30, "count": 84, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
+      {"id": "hero-close-v2", "dir": "footage/reel-v2/hero-close", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5}
+    ],
+    "scenes": [
+      {"id": "s0", "start": 0.0, "end": 2.7},
+      {"id": "s1", "start": 2.7, "end": 5.1},
+      {"id": "s2", "start": 5.1, "end": 7.6},
+      {"id": "s3", "start": 7.6, "end": 10.4},
+      {"id": "s4", "start": 10.4, "end": 13.1}
+    ],
+    "audio": {"risers": [], "volume": 0.78, "music_src": "music-reel.wav", "music_vol": 1.0, "sfx_vol": 0.0}
+  },
+  "story": {
+    "grade": {"contrast": 1.06, "saturation": 0.95, "brightness": 1.02},
+    "clips": [
+      {"id": "parapet", "dir": "footage/story/parapet", "fps": 30, "count": 84, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "junction", "dir": "footage/story/junction", "fps": 30, "count": 84, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "context", "dir": "footage/story/context", "fps": 30, "count": 102, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5}
+    ],
+    "scenes": [
+      {"id": "s0", "start": 0.0, "end": 2.8},
+      {"id": "s1", "start": 2.8, "end": 5.6},
+      {"id": "s2", "start": 5.6, "end": 9.0}
+    ],
+    "audio": {"risers": [], "volume": 0.74, "music_src": "music-story.wav", "music_vol": 1.0, "sfx_vol": 0.0}
+  },
+  "setting-out": {
+    "grade": {"contrast": 1.05, "saturation": 0.97, "brightness": 1.02},
+    "clips": [
+      {"id": "line-a", "dir": "footage/story-setting-out/line-a", "fps": 30, "count": 81, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "line-b", "dir": "footage/story-setting-out/line-b", "fps": 30, "count": 81, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "line-c", "dir": "footage/story-setting-out/line-c", "fps": 30, "count": 81, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5}
+    ],
+    "scenes": [
+      {"id": "s0", "start": 0.0, "end": 2.7},
+      {"id": "s1", "start": 2.7, "end": 5.4},
+      {"id": "s2", "start": 5.4, "end": 8.1}
+    ],
+    "audio": {"risers": [], "volume": 0.72, "music_src": "music-setting-out.wav", "music_vol": 1.0, "sfx_vol": 0.0}
+  },
+  "field-craft": {
+    "grade": {"contrast": 1.08, "saturation": 0.96, "brightness": 1.02},
+    "clips": [
+      {"id": "return", "dir": "footage/story-field-craft/return", "fps": 30, "count": 81, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "application", "dir": "footage/story-field-craft/application", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
+      {"id": "context", "dir": "footage/story-field-craft/context", "fps": 30, "count": 81, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5}
+    ],
+    "scenes": [
+      {"id": "s0", "start": 0.0, "end": 2.7},
+      {"id": "s1", "start": 2.7, "end": 5.4},
+      {"id": "s2", "start": 5.4, "end": 8.1}
+    ],
+    "audio": {"risers": [], "volume": 0.73, "music_src": "music-field-craft.wav", "music_vol": 1.0, "sfx_vol": 0.0}
+  },
+  "facade-progress": {
+    "grade": {"contrast": 1.06, "saturation": 0.98, "brightness": 1.03},
+    "clips": [
+      {"id": "parapet", "dir": "footage/story-facade-progress/parapet", "fps": 30, "count": 81, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
+      {"id": "glazing", "dir": "footage/story-facade-progress/glazing", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
+      {"id": "opening", "dir": "footage/story-facade-progress/opening", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5}
+    ],
+    "scenes": [
+      {"id": "s0", "start": 0.0, "end": 2.7},
+      {"id": "s1", "start": 2.7, "end": 5.4},
+      {"id": "s2", "start": 5.4, "end": 8.1}
+    ],
+    "audio": {"risers": [], "volume": 0.74, "music_src": "music-facade-progress.wav", "music_vol": 1.0, "sfx_vol": 0.0}
+  }
+}

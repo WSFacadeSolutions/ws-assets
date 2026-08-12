@@ -1,0 +1,98 @@
+{
+ "_": "A non-destructive v2 of the recovered WS614 footage cuts. It replaces the Reel's abrupt final camera move and adds three tightly selected, lightly stabilised field Stories. The source project's walkthrough remains an unchanged reference composition.",
+ "name": "ws614-dover-heights-02",
+ "title": "WS614 Dover Heights — Polished Field Cuts",
+ "dir": "ws614-dover-heights-02",
+ "content": "content.json",
+ "timeline": "timeline.json",
+ "figma_env": "figma.env",
+ "figma_env_var": "FILM_FIGMA_FILE_KEY",
+ "media_prefix": "ws614-dover-heights-02",
+ "compositions": [
+  {
+   "id": "reel",
+   "html": "reel.html",
+   "frames": "frames-reel",
+   "soundtrack": "soundtrack-reel.wav",
+   "out": "WS614-Dover-Heights-Field-Progress-Reel-v2.mp4",
+   "deploy": "ws614-dover-heights-02-reel.mp4",
+   "still_times": [
+    0.2,
+    2.1,
+    3.8,
+    6.2,
+    8.9,
+    11.9,
+    13.0
+   ]
+  },
+  {
+   "id": "story",
+   "html": "story.html",
+   "frames": "frames-story",
+   "soundtrack": "soundtrack-story.wav",
+   "out": "WS614-Dover-Heights-Site-Walkthrough-Story-reference.mp4",
+   "deploy": "ws614-dover-heights-02-story.mp4",
+   "still_times": [
+    0.2,
+    2.2,
+    3.2,
+    5.2,
+    6.2,
+    8.2,
+    8.9
+   ]
+  },
+  {
+   "id": "setting-out",
+   "html": "setting-out.html",
+   "frames": "frames-setting-out",
+   "soundtrack": "soundtrack-setting-out.wav",
+   "out": "WS614-Dover-Heights-Setting-Out-Story.mp4",
+   "deploy": "ws614-dover-heights-02-setting-out.mp4",
+   "still_times": [
+    0.2,
+    2.2,
+    3.0,
+    5.2,
+    5.8,
+    7.8,
+    8.0
+   ]
+  },
+  {
+   "id": "field-craft",
+   "html": "field-craft.html",
+   "frames": "frames-field-craft",
+   "soundtrack": "soundtrack-field-craft.wav",
+   "out": "WS614-Dover-Heights-Field-Craft-Story.mp4",
+   "deploy": "ws614-dover-heights-02-field-craft.mp4",
+   "still_times": [
+    0.2,
+    2.2,
+    3.0,
+    5.2,
+    5.8,
+    7.8,
+    8.0
+   ]
+  },
+  {
+   "id": "facade-progress",
+   "html": "facade-progress.html",
+   "frames": "frames-facade-progress",
+   "soundtrack": "soundtrack-facade-progress.wav",
+   "out": "WS614-Dover-Heights-Facade-Progress-Story.mp4",
+   "deploy": "ws614-dover-heights-02-facade-progress.mp4",
+   "still_times": [
+    0.2,
+    2.2,
+    3.0,
+    5.2,
+    5.8,
+    7.8,
+    8.0
+   ]
+  }
+ ]
+}
