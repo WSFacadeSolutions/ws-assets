@@ -1,0 +1,189 @@
+/* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.CONTENT = {
+ "_note": "Canonical content for the service-led WS capability statement v2. Public copy is Australian English. The Labour Hire image slot remains deliberately blocked until Heron supplies the approved field photograph.",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#FF9D27",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "rendering": {
+  "eyebrow": "Solutions · 01 / 08",
+  "name": "Rendering",
+  "photo": "drummoyne-3.jpg",
+  "markers": [
+   "High Complexity Rendering",
+   "Acrylic Render and Texture Finishes",
+   "Pool Rendering",
+   "Sand and Cement and Lime Render"
+  ]
+ },
+ "team": {
+  "kicker": "Leading the way",
+  "title": "The W and S",
+  "photo": "team-rooftop.jpg",
+  "people": [
+   {
+    "name": "Heron de Freitas Santiago",
+    "role": "Chief Executive Officer",
+    "expertise": "Materials engineer · Project management · Business operations"
+   },
+   {
+    "name": "Thomas Wilhelm",
+    "role": "Chief Operating Officer",
+    "expertise": "Rendering · Site logistics · Workforce performance"
+   }
+  ]
+ },
+ "deliver": {
+  "kicker": "Solutions"
+ },
+ "svc": [
+  {
+   "eyebrow": "02 / 08",
+   "name": "Decorative Finishes",
+   "photo": "peakhurst-17.jpg",
+   "markers": [
+    "Forcrete / Microcement",
+    "Venetian Plaster and Marmorino",
+    "Concrete Finishes",
+    "White Set",
+    "Lime / French Wash"
+   ]
+  },
+  {
+   "eyebrow": "03 / 08",
+   "name": "Painting",
+   "photo": "peakhurst-21.jpg",
+   "markers": [
+    "Exterior Painting",
+    "Interior Painting",
+    "Epoxy Paint"
+   ]
+  },
+  {
+   "eyebrow": "04 / 08",
+   "name": "Substrate Installation",
+   "photo": "substrate.jpg",
+   "markers": [
+    "Hebel Installation (AAC)",
+    "Moulding Installation",
+    "EPS Cladding Systems",
+    "Fibre Cement Sheet Installation",
+    "Basroc Installation"
+   ]
+  },
+  {
+   "eyebrow": "05 / 08",
+   "name": "Caulking and Sealant Application",
+   "photo": "the-crescent-8.jpg",
+   "markers": [
+    "Caulking",
+    "Sealant",
+    "Fire-Rated Caulking"
+   ]
+  },
+  {
+   "eyebrow": "06 / 08",
+   "name": "Remedial Services & Concrete Repair",
+   "photo": "remedial.jpg",
+   "markers": [
+    "Concrete Repair & Demolition",
+    "Rendering over Waterproofing Membrane"
+   ]
+  },
+  {
+   "eyebrow": "07 / 08",
+   "name": "Asset Conservation and Maintenance",
+   "photo": "dover-heights-15.jpg",
+   "markers": [
+    "Strata Services",
+    "Facade Maintenance"
+   ]
+  },
+  {
+   "eyebrow": "08 / 08",
+   "name": "Labour Hire",
+   "photo": "",
+   "markers": [
+    "Specialised Trade Workforce",
+    "Project-Based Allocation",
+    "Trained to WS Standards"
+   ],
+   "reviewNote": "Approved WS field image pending"
+  }
+ ],
+ "logos": {
+  "kicker": "Certified applicators",
+  "title": "Systems we are certified to apply."
+ },
+ "about": {
+  "kicker": "The WS standard",
+  "title": "Precision through care.",
+  "cards": [
+   {
+    "number": "01",
+    "heading": "Care for our people",
+    "body": "The same standard of respect for our workers, our clients and ourselves."
+   },
+   {
+    "number": "02",
+    "heading": "Care for client resources",
+    "body": "Precise estimating supports a robust budget. Precise execution keeps it steady."
+   },
+   {
+    "number": "03",
+    "heading": "Care for relationships",
+    "body": "We bid for relationships, not just projects."
+   }
+  ]
+ },
+ "who": {
+  "kicker": "Who we are",
+  "title": "One contractor for the whole finishing package.",
+  "lead": "Specialist facade contractors delivering finishing packages across high-end residential, commercial and industrial projects.",
+  "points": [
+   "Many trades",
+   "One contract",
+   "One managed standard"
+  ]
+ },
+ "governance": {
+  "kicker": "The WS Way",
+  "title": "Governance built into delivery.",
+  "points": [
+   "Performance-Based Partnerships",
+   "Proven Expertise in Every Task",
+   "Compliance-Driven Innovation",
+   "Practical Sustainability"
+  ]
+ },
+ "compliance": {
+  "kicker": "The WS standard",
+  "title": "Compliance focus in every layer.",
+  "pillars": [
+   {
+    "number": "01",
+    "heading": "Strict compliance"
+   },
+   {
+    "number": "02",
+    "heading": "On-site presence"
+   },
+   {
+    "number": "03",
+    "heading": "Precise execution"
+   }
+  ]
+ },
+ "final": {
+  "company": "WS Facade Solutions Pty Ltd",
+  "line": "Precision. Performance. Trust.",
+  "abn": "ABN 43 654 594 644",
+  "licence": "NSW Contractor Licence 451338C",
+  "contact": "admin@wssolutions.au · (02) 8005 7756",
+  "url": "wssolutions.au"
+ }
+};

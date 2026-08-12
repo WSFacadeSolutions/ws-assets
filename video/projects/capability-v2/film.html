@@ -1,0 +1,289 @@
+<meta charset="utf-8">
+<title>WS Facade Solutions — Capability Statement v2</title>
+<script src="content.js"></script>
+<script src="timeline.js"></script>
+<style>
+@font-face{font-family:Saira;src:url(fonts/saira-300.woff2) format('woff2');font-weight:300}
+@font-face{font-family:Saira;src:url(fonts/saira-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Saira;src:url(fonts/saira-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Saira;src:url(fonts/saira-600.woff2) format('woff2');font-weight:600}
+@font-face{font-family:Saira;src:url(fonts/saira-700.woff2) format('woff2');font-weight:700}
+@font-face{font-family:Saira;src:url(fonts/saira-800.woff2) format('woff2');font-weight:800}
+:root{
+  --petrol:#1E2F38;--petrol-rgb:30,47,56;
+  --deep:#0f1a20;--deep-rgb:15,26,32;
+  --off:#F5F2F0;--off-rgb:245,242,240;
+  --orange:#FF9D27;--orange-rgb:255,157,39;
+  --lilac:#A490FF;--lilac-rgb:164,144,255;
+  --violet:#6040cc;--violet-rgb:96,64,204;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#fff}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:Saira,sans-serif;color:var(--petrol);
+  background:radial-gradient(2100px 1300px at 45% 38%,#fff 30%,rgba(var(--off-rgb),.82) 100%)}
+.scene{position:absolute;inset:0;display:none}
+.kicker{font-size:23px;font-weight:700;letter-spacing:.38em;text-transform:uppercase;color:var(--violet)}
+h1,h2,h3{font-weight:800;line-height:1.04;letter-spacing:-.018em;color:var(--petrol)}
+.body{font-size:27px;font-weight:300;line-height:1.52;color:rgba(var(--petrol-rgb),.72)}
+.brick{width:14px;height:19px;clip-path:polygon(12% 0,100% 0,100% 88%,88% 100%,0 100%,0 12%);background:var(--lilac);flex:0 0 auto}
+.marker{display:flex;align-items:center;gap:17px;font-size:25px;font-weight:600;line-height:1.25;color:var(--petrol)}
+.marker .rule{width:36px;height:2px;background:var(--lilac);flex:0 0 auto}
+.photo-card{position:absolute;background:#fff;border:1px solid rgba(var(--petrol-rgb),.12);border-radius:18px;padding:14px;
+  box-shadow:0 34px 80px rgba(var(--petrol-rgb),.13)}
+.photo-card .crop{width:100%;height:100%;overflow:hidden;border-radius:10px;background:rgba(var(--petrol-rgb),.08)}
+.photo-card img{display:block;width:100%;height:100%;object-fit:cover;transform-origin:center}
+
+/* Rendering opens immediately on evidence. */
+#s0photo{left:94px;top:88px;width:990px;height:904px}
+#s0photo img{object-position:center}
+#s0copy{position:absolute;left:1170px;top:172px;width:620px}
+#s0name{font-size:88px;margin-top:28px;margin-bottom:68px}
+#s0markers{display:flex;flex-direction:column;gap:30px}
+
+/* Team is the second slide, using the real rooftop working image. */
+#s1photo{left:94px;top:88px;width:1010px;height:904px}
+#s1photo img{object-position:center 47%}
+#s1copy{position:absolute;left:1180px;top:160px;width:610px}
+#s1title{font-size:78px;margin:28px 0 70px}
+.person{padding:0 0 34px;margin-bottom:34px;border-bottom:1px solid rgba(var(--petrol-rgb),.14)}
+.person:last-child{border-bottom:0}
+.person h3{font-size:32px;margin-bottom:8px}
+.person .role{font-size:18px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--violet);margin-bottom:13px}
+.person .expertise{font-size:22px;font-weight:400;line-height:1.4;color:rgba(var(--petrol-rgb),.66)}
+
+/* Service sequence: exact public subservice names, no explanatory paragraphs. */
+.svc-copy{position:absolute;left:145px;top:196px;width:785px}
+.svc-name{font-size:62px;margin:29px 0 64px;max-width:790px}
+.svc-markers{display:flex;flex-direction:column;gap:22px;max-width:790px}
+.svc-photo{left:1030px;top:150px;width:750px;height:710px}
+.svc-dots{position:absolute;left:145px;top:890px;display:flex;gap:13px}
+.svc-dots i{width:11px;height:11px;border-radius:50%;background:rgba(var(--petrol-rgb),.15)}
+.svc-dots i.on{background:var(--lilac);box-shadow:0 0 0 5px rgba(var(--lilac-rgb),.22)}
+.pending-slot{position:absolute;inset:14px;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;
+  background:repeating-linear-gradient(135deg,rgba(var(--lilac-rgb),.09) 0,rgba(var(--lilac-rgb),.09) 20px,rgba(var(--petrol-rgb),.035) 20px,rgba(var(--petrol-rgb),.035) 40px)}
+.pending-slot span{padding:15px 28px;border-radius:999px;border:1px solid rgba(var(--petrol-rgb),.18);background:rgba(255,255,255,.9);
+  font-size:18px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--violet)}
+
+/* Logo wall. */
+#s9head{position:absolute;left:0;right:0;top:130px;text-align:center}
+#s9title{font-size:62px;margin-top:26px}
+#s9grid{position:absolute;left:130px;right:130px;top:350px;height:520px;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,1fr)}
+.logo-cell{display:flex;align-items:center;justify-content:center}
+.logo-cell img{display:block;max-width:205px;max-height:74px;object-fit:contain;filter:brightness(0);opacity:.75}
+
+/* About, who we are, governance and compliance move to the final act. */
+.centred-head{position:absolute;left:0;right:0;top:132px;text-align:center}
+.centred-head h2{font-size:64px;margin-top:27px}
+#s10cards{position:absolute;left:142px;right:142px;top:390px;display:flex;gap:34px}
+.care-card{position:relative;flex:1;height:370px;padding:42px 42px 38px;background:#fff;border:1px solid rgba(var(--petrol-rgb),.12);border-radius:18px;
+  box-shadow:0 22px 52px rgba(var(--petrol-rgb),.08)}
+.care-card .n{font-size:21px;font-weight:800;letter-spacing:.2em;color:var(--lilac);margin-bottom:29px}
+.care-card h3{font-size:34px;margin-bottom:20px}
+.care-card p{font-size:23px;font-weight:300;line-height:1.45;color:rgba(var(--petrol-rgb),.68)}
+.care-card:after{content:"";position:absolute;right:0;bottom:0;width:48px;height:48px;background:linear-gradient(135deg,transparent 49%,var(--lilac) 50%,var(--lilac) 54%,transparent 55%)}
+
+#s11copy{position:absolute;left:154px;top:165px;width:930px}
+#s11title{font-size:70px;margin:29px 0 54px}
+#s11lead{width:900px}
+#s11points{position:absolute;left:1185px;top:264px;width:560px;display:flex;flex-direction:column;gap:27px}
+.big-point{padding:24px 30px;border-left:4px solid var(--lilac);font-size:31px;font-weight:700;background:rgba(255,255,255,.62)}
+
+#s12grid{position:absolute;left:150px;right:150px;top:380px;display:grid;grid-template-columns:repeat(2,1fr);gap:28px 34px}
+.gov-point{height:178px;display:flex;align-items:center;gap:25px;padding:30px 35px;background:#fff;border:1px solid rgba(var(--petrol-rgb),.12);border-radius:16px;
+  box-shadow:0 18px 40px rgba(var(--petrol-rgb),.07)}
+.gov-point b{font-size:31px;line-height:1.2}
+
+#s13cards{position:absolute;left:150px;right:150px;top:395px;display:flex;gap:36px}
+.compliance-card{flex:1;height:270px;padding:42px 38px;border:1px solid rgba(var(--petrol-rgb),.13);background:#fff;border-radius:17px;
+  box-shadow:0 20px 44px rgba(var(--petrol-rgb),.08)}
+.compliance-card .n{font-size:22px;font-weight:800;letter-spacing:.2em;color:var(--lilac);margin-bottom:35px}
+.compliance-card h3{font-size:36px}
+
+/* Final credentials remain visible on the final frame. */
+#s14lock{position:absolute;left:0;right:0;top:192px;text-align:center}
+#s14lock img{width:620px;display:inline-block}
+#s14company{position:absolute;left:0;right:0;top:463px;text-align:center;font-size:23px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(var(--petrol-rgb),.58)}
+#s14line{position:absolute;left:0;right:0;top:525px;text-align:center;font-size:45px;font-weight:800;letter-spacing:.025em}
+#s14credentials{position:absolute;left:0;right:0;top:641px;display:flex;justify-content:center;gap:20px}
+.credential{padding:13px 25px;border:1px solid rgba(var(--petrol-rgb),.17);border-radius:999px;background:#fff;font-size:21px;font-weight:600}
+#s14contact{position:absolute;left:0;right:0;top:754px;text-align:center;font-size:22px;font-weight:400;color:rgba(var(--petrol-rgb),.62)}
+#s14url{position:absolute;left:0;right:0;top:823px;text-align:center;font-size:28px;font-weight:700;letter-spacing:.12em;color:var(--violet)}
+
+#grid{position:absolute;inset:0;opacity:.46;background-image:linear-gradient(rgba(var(--petrol-rgb),.042) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--petrol-rgb),.042) 1px,transparent 1px);background-size:96px 96px}
+#vig{position:absolute;inset:0;background:radial-gradient(1500px 920px at 50% 45%,transparent 58%,rgba(var(--petrol-rgb),.085) 100%);pointer-events:none}
+#grain{position:absolute;inset:0;opacity:.03;mix-blend-mode:multiply;pointer-events:none}
+#wm{position:absolute;top:43px;right:50px;opacity:0}
+#wm img{display:block;width:62px}
+</style>
+
+<div id="stage">
+  <div id="grid"></div>
+
+  <div class="scene" id="s0">
+    <div class="photo-card" id="s0photo"><div class="crop"><img id="s0img"></div></div>
+    <div id="s0copy"><div class="kicker" id="s0eyebrow"></div><h1 id="s0name"></h1><div id="s0markers"></div></div>
+  </div>
+
+  <div class="scene" id="s1">
+    <div class="photo-card" id="s1photo"><div class="crop"><img id="s1img"></div></div>
+    <div id="s1copy"><div class="kicker" id="s1kicker"></div><h2 id="s1title"></h2><div id="s1people"></div></div>
+  </div>
+
+  <div class="scene" id="s2"></div>
+  <div class="scene" id="s3"></div>
+  <div class="scene" id="s4"></div>
+  <div class="scene" id="s5"></div>
+  <div class="scene" id="s6"></div>
+  <div class="scene" id="s7"></div>
+  <div class="scene" id="s8"></div>
+
+  <div class="scene" id="s9">
+    <div id="s9head"><div class="kicker" id="s9kicker"></div><h2 id="s9title"></h2></div>
+    <div id="s9grid"></div>
+  </div>
+
+  <div class="scene" id="s10">
+    <div class="centred-head"><div class="kicker" id="s10kicker"></div><h2 id="s10title"></h2></div>
+    <div id="s10cards"></div>
+  </div>
+
+  <div class="scene" id="s11">
+    <div id="s11copy"><div class="kicker" id="s11kicker"></div><h2 id="s11title"></h2><div class="body" id="s11lead"></div></div>
+    <div id="s11points"></div>
+  </div>
+
+  <div class="scene" id="s12">
+    <div class="centred-head"><div class="kicker" id="s12kicker"></div><h2 id="s12title"></h2></div>
+    <div id="s12grid"></div>
+  </div>
+
+  <div class="scene" id="s13">
+    <div class="centred-head"><div class="kicker" id="s13kicker"></div><h2 id="s13title"></h2></div>
+    <div id="s13cards"></div>
+  </div>
+
+  <div class="scene" id="s14">
+    <div id="s14lock"><img src="logos/lockup-blacktext-lilacbrick.svg"></div>
+    <div id="s14company"></div><div id="s14line"></div>
+    <div id="s14credentials"></div><div id="s14contact"></div><div id="s14url"></div>
+  </div>
+
+  <div id="vig"></div>
+  <svg id="grain" width="1920" height="1080"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/></filter><rect width="1920" height="1080" filter="url(#noise)"/></svg>
+  <div id="wm"><img src="logos/ws-square-black.svg"></div>
+</div>
+
+<script>
+const C=window.CONTENT;
+const FPS=30;
+const $=s=>document.querySelector(s);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const c01=x=>clamp(x,0,1);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const RGB=h=>parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16);
+const E={o:p=>1-Math.pow(1-p,3),oq:p=>1-Math.pow(1-p,5),io:p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,lin:p=>p};
+
+const TDEF={petrol:'#1E2F38',deep:'#0f1a20',off:'#F5F2F0',orange:'#FF9D27',lilac:'#A490FF',violet:'#6040cc'};
+window.applyTheme=function(theme){const r=document.documentElement.style;for(const k in TDEF){const v=theme[k]||TDEF[k];r.setProperty('--'+k,v);r.setProperty('--'+k+'-rgb',RGB(v));}};
+window.applyTheme(C.theme);
+const TMAP=[];
+for(const k in TDEF){const v=C.theme[k];if(v&&v.toLowerCase()!==TDEF[k].toLowerCase())TMAP.push([new RegExp(TDEF[k],'gi'),v]);}
+const T=s=>{if(s==null)return s;let o=String(s);for(const[a,b]of TMAP)o=o.replace(a,b);return o;};
+const set=(sel,html)=>{const el=$(sel);if(el&&html!=null)el.innerHTML=T(html);};
+
+const anims=[];
+function at(t0,dur,fn,ease=E.o){anims.push({t0,t1:t0+dur,fn,ease});}
+function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0)):(t>=a.t0?1:0);a.fn(a.ease(p),t);}}
+function rise(el,t0,dur,dy=34,ease=E.oq){el.style.opacity=0;at(t0,dur,p=>{el.style.opacity=p;el.style.transform=`translateY(${(1-p)*dy}px)`;},ease);}
+
+const SC=[
+  ['#s0',0,7],['#s1',7,12.5],['#s2',12.5,16],['#s3',16,19.5],['#s4',19.5,23],
+  ['#s5',23,26.5],['#s6',26.5,30],['#s7',30,33.5],['#s8',33.5,37],['#s9',37,42.5],
+  ['#s10',42.5,49],['#s11',49,55.5],['#s12',55.5,62],['#s13',62,68.5],['#s14',68.5,72]
+];
+const TL=(window.TIMELINE&&window.TIMELINE.film)||null;
+const SC_EDIT=SC.map(([sel,a,b])=>{const s=TL&&(TL.scenes||[]).find(x=>'#'+x.id===sel);return s?[sel,+s.start,+s.end]:[sel,a,b];});
+const WARP_PTS=SC_EDIT.map(([_,a],i)=>[a,SC[i][1]]).concat([[SC_EDIT[SC_EDIT.length-1][2],SC[SC.length-1][2]]]);
+function warp(t){const P=WARP_PTS;if(t<=P[0][0])return P[0][1]+(t-P[0][0]);for(let i=1;i<P.length;i++)if(t<=P[i][0]){const x0=P[i-1][0],y0=P[i-1][1],x1=P[i][0],y1=P[i][1];return x1>x0?y0+(t-x0)*(y1-y0)/(x1-x0):y1;}return P[P.length-1][1]+(t-P[P.length-1][0]);}
+const XF=.34;
+function sceneVis(t){for(const [sel,a,b] of SC){const el=$(sel);if(t>=a-.02&&t<=b+.02){el.style.display='block';let o=1;if(a>0&&t<a+XF)o=c01((t-a)/XF);if(t>b-XF)o=Math.min(o,c01((b-t)/XF));el.style.opacity=o;}else el.style.display='none';}}
+const DUR=SC_EDIT[SC_EDIT.length-1][2];
+
+const marker=txt=>`<div class="marker"><span class="rule"></span><span>${T(txt)}</span></div>`;
+
+/* Rendering: visible at frame zero, with a deliberately fast first-page build. */
+$('#s0img').src='photos/'+C.rendering.photo;
+set('#s0eyebrow',C.rendering.eyebrow);set('#s0name',C.rendering.name);
+$('#s0markers').innerHTML=C.rendering.markers.map(marker).join('');
+rise($('#s0eyebrow'),.10,.42,16);rise($('#s0name'),.18,.48,24);
+[...document.querySelectorAll('#s0markers .marker')].forEach((el,i)=>rise(el,.42+i*.16,.42,18));
+at(0,7,p=>{$('#s0img').style.transform=`scale(${lerp(1.055,1,p)})`;},E.lin);
+
+/* Team slide. */
+$('#s1img').src='photos/'+C.team.photo;set('#s1kicker',C.team.kicker);set('#s1title',C.team.title);
+$('#s1people').innerHTML=C.team.people.map(p=>`<div class="person"><h3>${T(p.name)}</h3><div class="role">${T(p.role)}</div><div class="expertise">${T(p.expertise)}</div></div>`).join('');
+rise($('#s1kicker'),7.16,.48,18);rise($('#s1title'),7.28,.56,25);
+[...document.querySelectorAll('.person')].forEach((el,i)=>rise(el,7.65+i*.26,.58,24));
+at(7,5.5,p=>{$('#s1img').style.transform=`scale(${lerp(1.05,1,p)})`;},E.lin);
+
+/* Remaining services, with equal weight. Basroc is one marker among the substrate services. */
+const SERVICE_STARTS=[12.5,16,19.5,23,26.5,30,33.5];
+C.svc.forEach((s,i)=>{
+  const sc=$('#s'+(2+i)),a=SERVICE_STARTS[i];
+  const visual=s.photo?`<div class="crop"><img src="photos/${T(s.photo)}"></div>`:`<div class="pending-slot"><span>${T(s.reviewNote)}</span></div>`;
+  sc.innerHTML=`<div class="svc-copy"><div class="kicker svc-eyebrow">${T(C.deliver.kicker)} · ${T(s.eyebrow)}</div><h2 class="svc-name">${T(s.name)}</h2><div class="svc-markers">${s.markers.map(marker).join('')}</div></div>`+
+    `<div class="photo-card svc-photo">${visual}</div><div class="svc-dots">${C.svc.map((_,j)=>`<i${j===i?' class="on"':''}></i>`).join('')}</div>`;
+  rise(sc.querySelector('.svc-eyebrow'),a+.08,.42,17);rise(sc.querySelector('.svc-name'),a+.16,.5,27);
+  [...sc.querySelectorAll('.marker')].forEach((el,j)=>rise(el,a+.34+j*.11,.42,18));
+  rise(sc.querySelector('.svc-photo'),a+.05,.55,30);rise(sc.querySelector('.svc-dots'),a+.28,.42,13);
+  const img=sc.querySelector('img');if(img)at(a,3.5,p=>{img.style.transform=`scale(${lerp(1.07,1,p)})`;},E.lin);
+});
+
+/* Logo wall follows the services immediately; no Basroc feature caption. */
+set('#s9kicker',C.logos.kicker);set('#s9title',C.logos.title);
+const LOGOS=[['sto.png',66],['dulux.png',44],['calce.png',76],['cemher.png',35],['murobond.png',35],['euromix.svg',32],['unitex.svg',44],['basroc.svg',25],['rockcote.svg',32],['knauf.svg',50],['pietra-marble.svg',47],['mineral-fox.svg',19]];
+$('#s9grid').innerHTML=LOGOS.map(([f,h])=>`<div class="logo-cell"><img src="applicators/${f}" style="height:${h}px"></div>`).join('');
+rise($('#s9kicker'),37.15,.48,18);rise($('#s9title'),37.28,.56,26);
+[...document.querySelectorAll('.logo-cell')].forEach((el,i)=>rise(el,37.72+(i%6)*.11+Math.floor(i/6)*.25,.48,20));
+
+/* About / WS Way. */
+set('#s10kicker',C.about.kicker);set('#s10title',C.about.title);
+$('#s10cards').innerHTML=C.about.cards.map(c=>`<div class="care-card"><div class="n">${T(c.number)}</div><h3>${T(c.heading)}</h3><p>${T(c.body)}</p></div>`).join('');
+rise($('#s10kicker'),42.68,.5,18);rise($('#s10title'),42.82,.58,27);
+[...document.querySelectorAll('.care-card')].forEach((el,i)=>rise(el,43.24+i*.2,.62,34));
+
+/* Who we are. */
+set('#s11kicker',C.who.kicker);set('#s11title',C.who.title);set('#s11lead',C.who.lead);
+$('#s11points').innerHTML=C.who.points.map(p=>`<div class="big-point">${T(p)}</div>`).join('');
+rise($('#s11kicker'),49.18,.5,18);rise($('#s11title'),49.34,.6,28);rise($('#s11lead'),49.62,.62,28);
+[...document.querySelectorAll('.big-point')].forEach((el,i)=>rise(el,49.9+i*.22,.58,25));
+
+/* Governance. */
+set('#s12kicker',C.governance.kicker);set('#s12title',C.governance.title);
+$('#s12grid').innerHTML=C.governance.points.map(p=>`<div class="gov-point"><span class="brick"></span><b>${T(p)}</b></div>`).join('');
+rise($('#s12kicker'),55.68,.5,18);rise($('#s12title'),55.84,.58,27);
+[...document.querySelectorAll('.gov-point')].forEach((el,i)=>rise(el,56.28+i*.18,.58,28));
+
+/* Compliance title kept verbatim. */
+set('#s13kicker',C.compliance.kicker);set('#s13title',C.compliance.title);
+$('#s13cards').innerHTML=C.compliance.pillars.map(p=>`<div class="compliance-card"><div class="n">${T(p.number)}</div><h3>${T(p.heading)}</h3></div>`).join('');
+rise($('#s13kicker'),62.18,.5,18);rise($('#s13title'),62.34,.58,27);
+[...document.querySelectorAll('.compliance-card')].forEach((el,i)=>rise(el,62.82+i*.2,.6,32));
+
+/* Final legal identity and contact details. */
+set('#s14company',C.final.company);set('#s14line',C.final.line);set('#s14contact',C.final.contact);set('#s14url',C.final.url);
+$('#s14credentials').innerHTML=`<div class="credential">${T(C.final.abn)}</div><div class="credential">${T(C.final.licence)}</div>`;
+rise($('#s14lock'),68.62,.48,20);rise($('#s14company'),68.78,.46,17);rise($('#s14line'),68.94,.5,22);
+[...document.querySelectorAll('.credential')].forEach((el,i)=>rise(el,69.2+i*.12,.46,17));
+rise($('#s14contact'),69.5,.46,17);rise($('#s14url'),69.7,.46,17);
+
+at(12.55,.5,p=>{$('#wm').style.opacity=p*.52;});
+at(68.18,.45,p=>{$('#wm').style.opacity=(1-p)*.52;});
+
+window.DUR=DUR;window.FPS=FPS;window.TOTAL_FRAMES=Math.round(DUR*FPS);
+window.seek=function(frame){const t=warp(frame/FPS);sceneVis(t);tick(t);return true;};
+window.readyP=Promise.all([300,400,500,600,700,800].map(w=>document.fonts.load(`${w} 20px Saira`))).then(()=>document.fonts.ready)
+  .then(()=>Promise.all([...document.images].map(im=>im.decode().catch(()=>{}))))
+  .then(()=>{window.seek(0);return true;});
+if(location.hash==='#play'){const start=performance.now();(function loop(){const t=(performance.now()-start)/1000;if(t<DUR){window.seek(Math.floor(t*FPS));requestAnimationFrame(loop);}})();}
+</script>
