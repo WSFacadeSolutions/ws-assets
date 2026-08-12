@@ -30,6 +30,6 @@ Highlight beneath the cover.
 
 The `WS` cover uses the official square mark without alteration. `Work` and
 `Services` use the existing icon artwork published on `wssolutions.au`; no new
-symbol language was invented for them. `Team` uses Bootstrap Icons' `people-fill`
-glyph under the MIT licence. All four covers deliberately use one icon, one
-colour and no decorative frame.
+symbol language was invented for them. `Team` uses a simple three-person outline
+matched to the same two-unit line weight as the site icons. All four covers
+deliberately use one icon, one colour and no decorative frame.

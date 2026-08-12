@@ -1,0 +1,22 @@
+{
+  "_": "Story-native eight-part WS Highlight derived from the approved capability argument. It is not a crop of the desktop master; the rendered sequence is split into eight independently publishable Stories.",
+  "name": "highlight-ws",
+  "title": "Instagram Highlight — WS",
+  "dir": "highlight-ws",
+  "content": "content.json",
+  "timeline": "timeline.json",
+  "figma_env": "figma.env",
+  "figma_env_var": "FILM_FIGMA_FILE_KEY",
+  "media_prefix": "highlight-ws",
+  "compositions": [
+    {
+      "id": "story",
+      "html": "story.html",
+      "frames": "frames",
+      "soundtrack": "soundtrack.wav",
+      "out": "WS-Highlight-Story-Sequence.mp4",
+      "deploy": "highlight-ws-story-sequence.mp4",
+      "still_times": [0, 1.6, 6, 7.6, 12, 13.6, 18, 19.6, 24, 25.6, 30, 31.6, 36, 37.6, 42, 43.6, 47.8]
+    }
+  ]
+}
