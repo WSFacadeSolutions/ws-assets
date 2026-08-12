@@ -1,0 +1,40 @@
+{
+  "_": "Three footage-led vertical field stories: approved Serginho Seara craft excerpts and two verified WS614 Dover Heights site notes. No logo cards, inherited audio or generic stock imagery.",
+  "name": "field-story-pack-01",
+  "title": "WS Field Stories — Pack 01",
+  "dir": "field-story-pack-01",
+  "content": "content.json",
+  "timeline": "timeline.json",
+  "figma_env": "figma.env",
+  "figma_env_var": "FILM_FIGMA_FILE_KEY",
+  "media_prefix": "field-story-pack-01",
+  "compositions": [
+    {
+      "id": "serginho",
+      "html": "serginho.html",
+      "frames": "frames-serginho",
+      "soundtrack": "soundtrack-serginho.wav",
+      "out": "WS-Field-Story-Serginho.mp4",
+      "deploy": "field-story-serginho.mp4",
+      "still_times": [0, 2.4, 4.9, 7.4, 10.6, 12.7]
+    },
+    {
+      "id": "floor-protection",
+      "html": "floor-protection.html",
+      "frames": "frames-floor-protection",
+      "soundtrack": "soundtrack-floor-protection.wav",
+      "out": "WS-Field-Story-Dover-Floor-Protection.mp4",
+      "deploy": "field-story-dover-floor-protection.mp4",
+      "still_times": [0.1, 2.6, 4.8, 7.2, 8.8]
+    },
+    {
+      "id": "high-build",
+      "html": "high-build.html",
+      "frames": "frames-high-build",
+      "soundtrack": "soundtrack-high-build.wav",
+      "out": "WS-Field-Story-Dover-High-Build.mp4",
+      "deploy": "field-story-dover-high-build.mp4",
+      "still_times": [0.2, 2.5, 4.7, 7.1, 8.4]
+    }
+  ]
+}

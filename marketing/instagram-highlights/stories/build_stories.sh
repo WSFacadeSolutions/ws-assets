@@ -71,9 +71,22 @@ EOF
 }
 
 make_team() {
-  local number="$1" source="$2" title="$3" line1="$4" line2="$5" output="$6"
+  local number="$1" source="$2" title="$3" line1="$4" line2="$5" output="$6" layout="${7:-cover}"
   local bg="$TMP/team-${number}.jpg"
-  convert "$source" -auto-orient -resize '1080x1920^' -gravity center -extent 1080x1920 -strip "$bg"
+  local photo
+  if [[ "$layout" == "contain" ]]; then
+    photo="$TMP/team-${number}-photo.jpg"
+    convert "$source" -auto-orient -resize '1080x1920^' -gravity center -extent 1080x1920 \
+      -blur 0x28 -modulate 82,72,100 -strip "$bg"
+    convert "$source" -auto-orient -resize '1080x1080>' -strip "$photo"
+  else
+    convert "$source" -auto-orient -resize '1080x1920^' -gravity center -extent 1080x1920 -strip "$bg"
+    photo="$bg"
+  fi
+  local photo_markup="<image width=\"1080\" height=\"1920\" preserveAspectRatio=\"xMidYMid slice\" xlink:href=\"file://$photo\"/>"
+  if [[ "$layout" == "contain" ]]; then
+    photo_markup="<image x=\"0\" y=\"278\" width=\"1080\" height=\"1080\" preserveAspectRatio=\"xMidYMid meet\" xlink:href=\"file://$photo\"/>"
+  fi
   cat > "$TMP/team-${number}.svg" <<EOF
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1920" viewBox="0 0 1080 1920">
   <defs>
@@ -84,6 +97,7 @@ make_team() {
     </linearGradient>
   </defs>
   <image width="1080" height="1920" preserveAspectRatio="xMidYMid slice" xlink:href="file://$bg"/>
+  $photo_markup
   <rect width="1080" height="1920" fill="url(#shade)"/>
   <text x="88" y="166" fill="#fff" font-family="$FONT" font-size="23" font-weight="700" letter-spacing="5">OUR TEAM</text>
   <line x1="88" y1="1370" x2="172" y2="1370" stroke="$ORANGE" stroke-width="7"/>
@@ -118,8 +132,8 @@ make_service 7 "$ROOT/services/source/07-asset-conservation.jpg" "Asset Conserva
 make_service 8 "$ROOT/services/source/08-labour-hire.jpg" "Labour Hire" "$ROOT/services/final/08-labour-hire.jpg" \
   "Specialised Trade Workforce" "Project-Based Allocation" "Trained to WS Standards"
 
-make_team 1 "$ROOT/team/source/01-leadership.jpg" "Leadership on site." "Heron de Freitas Santiago · Chief Executive Officer" "Thomas Wilhelm · Chief Operating Officer" "$ROOT/team/final/01-leadership.jpg"
-make_team 2 "$ROOT/team/source/02-field-craft.jpg" "Craft in the details." "Real site conditions. Controlled execution." "Featuring Serginho Seara and the field team." "$ROOT/team/final/02-field-craft.jpg"
+make_team 1 "$ROOT/team/source/01-leadership.jpg" "Leadership on site." "Heron de Freitas Santiago · Chief Executive Officer" "Thomas Wilhelm · Chief Operating Officer" "$ROOT/team/final/01-leadership.jpg" "contain"
+make_team 2 "$ROOT/team/source/02-field-craft.jpg" "Craft in the details." "Site preparation. Controlled execution." "Dover Heights, NSW · WS field team." "$ROOT/team/final/02-field-craft.jpg"
 make_team 3 "$ROOT/team/source/03-shared-standard.jpg" "One shared standard." "Different hands. One managed finish." "Precision is built together." "$ROOT/team/final/03-shared-standard.jpg"
 
 identify "$ROOT"/{work,services,team}/final/*.jpg

@@ -13,7 +13,9 @@ Highlights. Public-facing copy uses Australian English.
   website.
 - `Team` — three real-photo pages: site leadership, field craft and the shared
   standard. AI-generated portraits were audited and deliberately excluded from
-  this permanent trust surface.
+  this permanent trust surface. The set favours recognisably Australian site
+  context; field craft uses a real Dover Heights, NSW protection sequence rather
+  than a casual portrait.
 
 All text and essential visual content sits inside the Instagram Story safe area.
 The sets are silent by design: they are reference content browsed at the viewer's

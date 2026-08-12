@@ -1,0 +1,184 @@
+/* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.CONTENT = {
+ "theme": {
+  "background": "#0C1216",
+  "text": "#F5F2F0",
+  "muted": "#D9DEDF",
+  "accent": "#FF9D27"
+ },
+ "grade": {
+  "contrast": 1.04,
+  "saturation": 0.94,
+  "brightness": 1.01
+ },
+ "compositions": {
+  "serginho": {
+   "clips": [
+    {
+     "id": "team-open",
+     "dir": "footage/serginho/team-open",
+     "fps": 30,
+     "count": 96,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "preparation",
+     "dir": "footage/serginho/preparation",
+     "fps": 30,
+     "count": 96,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "curved-wall",
+     "dir": "footage/serginho/curved-wall",
+     "fps": 30,
+     "count": 102,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "team-close",
+     "dir": "footage/serginho/team-close",
+     "fps": 30,
+     "count": 99,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    }
+   ],
+   "scenes": [
+    {
+     "kicker": "FIELD CRAFT",
+     "headline": "Specialist rendering, in motion.",
+     "detail": "Featuring Serginho Seara"
+    },
+    {
+     "kicker": "PREPARATION",
+     "headline": "Every cut set before application.",
+     "detail": "Measure · cut · place"
+    },
+    {
+     "kicker": "CONTROLLED PASSES",
+     "headline": "Working the curve without rushing the surface.",
+     "detail": "Application · alignment · finish"
+    },
+    {
+     "kicker": "ONE STANDARD",
+     "headline": "Different hands. One finish.",
+     "detail": "WS field craft"
+    }
+   ]
+  },
+  "floor-protection": {
+   "clips": [
+    {
+     "id": "overview",
+     "dir": "footage/floor-overview",
+     "fps": 30,
+     "count": 81,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "edge",
+     "dir": "footage/floor-edge",
+     "fps": 30,
+     "count": 90,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "team",
+     "dir": "footage/floor-team",
+     "fps": 30,
+     "count": 96,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    }
+   ],
+   "scenes": [
+    {
+     "kicker": "DOVER HEIGHTS, NSW",
+     "headline": "Protection starts at the edge.",
+     "detail": "WS614 · site preparation"
+    },
+    {
+     "kicker": "PERIMETER CONTROL",
+     "headline": "Every exposed edge sealed.",
+     "detail": "No loose gap for wind to lift"
+    },
+    {
+     "kicker": "READY FOR WORK",
+     "headline": "A protected surface for the next trade.",
+     "detail": "Prepared before production begins"
+    }
+   ]
+  },
+  "high-build": {
+   "clips": [
+    {
+     "id": "context",
+     "dir": "footage/high-context",
+     "fps": 30,
+     "count": 81,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "junction",
+     "dir": "footage/high-junction",
+     "fps": 30,
+     "count": 90,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    },
+    {
+     "id": "layers",
+     "dir": "footage/high-layers",
+     "fps": 30,
+     "count": 99,
+     "width": 720,
+     "height": 1280,
+     "focusX": 0.5,
+     "focusY": 0.5
+    }
+   ],
+   "scenes": [
+    {
+     "kicker": "DOVER HEIGHTS, NSW",
+     "headline": "A junction built in layers.",
+     "detail": "WS614 · façade interface"
+    },
+    {
+     "kicker": "BUILD-UP",
+     "headline": "Each layer has a job.",
+     "detail": "Fixings · metal mesh · high build"
+    },
+    {
+     "kicker": "CONTROLLED DEPTH",
+     "headline": "Built up before the finishing system begins.",
+     "detail": "Substrate prepared for the next stage"
+    }
+   ]
+  }
+ }
+};
