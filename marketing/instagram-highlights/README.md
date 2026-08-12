@@ -16,6 +16,8 @@ with consistently strong material.
 
 - `covers/svg/` contains the editable vector masters.
 - `covers/png/` contains 1080 × 1920 upload files.
+- `stories/` contains the finished `Work`, `Services` and `Team` Story sets,
+  their real source photographs and a reproducible build script.
 
 The visible artwork is centred inside the safe circular crop around the Story
 canvas centre. This allows the same file to be uploaded as a Story and selected
