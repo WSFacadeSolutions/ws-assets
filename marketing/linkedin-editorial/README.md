@@ -5,7 +5,8 @@ LinkedIn: more operational context and professional judgement than the Instagram
 captions, without corporate filler or unsupported claims.
 
 LinkedIn publishing is still manual in WST010, so each scheduler card contains
-the final copy plus the local asset filename to attach from desktop.
+the final copy and a downloadable reference image. The exact paste-ready copy is
+also stored in `captions/`.
 
 ## 1 — The finishing package is a coordination problem
 
