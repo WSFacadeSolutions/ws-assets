@@ -25,4 +25,18 @@ high-build junction cut because it completes the sequence with wider project pro
 The Reel is a separate discovery asset and should not displace the floor-protection
 Story.
 
-No scheduler, Highlight or canonical media has been changed by this project build.
+## Completed render and scheduler placement
+
+Both compositions passed the still gate and were rendered locally at 1080 × 1920,
+30 fps with H.264 video and 48 kHz AAC stereo audio. No black interval was detected.
+The Reel is 13.1 seconds with SHA-256
+`207f3a4c96cb4dbd54d121af8345c737e74103b1494014d6a22a57573788653a`;
+the Story is 9 seconds with SHA-256
+`0acddedc701960d8372b86262a7d01b528c0e69b8ffafec3d97bfb74d930518e`.
+
+The scheduler now keeps **Dover Heights — floor protection · 01/02** unchanged and
+uses the new **site walkthrough · 02/02** in place of the earlier high-build cut at
+17 October 2026, 17:30 Sydney. The separate **Dover Heights — field progress** Reel
+is pending for 23 October 2026, 13:00 Sydney. The scheduler media copies match the
+master hashes above. The original high-build master remains recoverable in its source
+WS Film project.

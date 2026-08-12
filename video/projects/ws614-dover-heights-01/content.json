@@ -5,20 +5,8 @@
     "muted": "#D9DEDF",
     "accent": "#A490FF"
   },
-  "grade": {
-    "contrast": 1.06,
-    "saturation": 0.95,
-    "brightness": 1.02
-  },
   "compositions": {
     "reel": {
-      "clips": [
-        {"id": "hero-open", "dir": "footage/reel/hero-open", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
-        {"id": "measure", "dir": "footage/reel/measure", "fps": 30, "count": 72, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
-        {"id": "scaffold", "dir": "footage/reel/scaffold", "fps": 30, "count": 75, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
-        {"id": "corridor", "dir": "footage/reel/corridor", "fps": 30, "count": 84, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5},
-        {"id": "hero-close", "dir": "footage/reel/hero-close", "fps": 30, "count": 81, "width": 576, "height": 1024, "focusX": 0.5, "focusY": 0.5}
-      ],
       "scenes": [
         {"kicker": "DOVER HEIGHTS, NSW", "headline": "The details define the whole."},
         {},
@@ -28,11 +16,6 @@
       ]
     },
     "story": {
-      "clips": [
-        {"id": "parapet", "dir": "footage/story/parapet", "fps": 30, "count": 84, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
-        {"id": "junction", "dir": "footage/story/junction", "fps": 30, "count": 84, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5},
-        {"id": "context", "dir": "footage/story/context", "fps": 30, "count": 102, "width": 480, "height": 848, "focusX": 0.5, "focusY": 0.5}
-      ],
       "scenes": [
         {"kicker": "SITE WALKTHROUGH", "headline": "Parapets, edges and junctions.", "detail": "Dover Heights, NSW"},
         {},

@@ -61,8 +61,9 @@ function warp(time){
   return last[1]+time-last[0];
 }
 
-const clips=(COMP.clips||[]).map((clip,index)=>({...clip,scene:'#'+AUTHORED[index][0],authoredStart:AUTHORED[index][1],authoredEnd:AUTHORED[index][2],frames:new Map()}));
-const grade=`contrast(${T(C.grade.contrast)}) saturate(${T(C.grade.saturation)}) brightness(${T(C.grade.brightness)})`;
+const clips=(TL.clips||[]).map((clip,index)=>({...clip,scene:'#'+AUTHORED[index][0],authoredStart:AUTHORED[index][1],authoredEnd:AUTHORED[index][2],frames:new Map()}));
+const gradeData=TL.grade||{};
+const grade=`contrast(${gradeData.contrast??1}) saturate(${gradeData.saturation??1}) brightness(${gradeData.brightness??1})`;
 const loadJobs=[];
 for(const clip of clips)for(let frame=1;frame<=clip.count;frame++){
   const image=new Image();clip.frames.set(frame,image);
