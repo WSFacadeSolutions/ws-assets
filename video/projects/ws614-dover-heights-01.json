@@ -1,0 +1,31 @@
+{
+  "_": "Two selective, footage-led vertical cuts from the isolated WS614 Dover Heights WhatsApp intake. Source audio is removed; no logo card or unverified technical claim is used.",
+  "name": "ws614-dover-heights-01",
+  "title": "WS614 Dover Heights — Field Progress 01",
+  "dir": "ws614-dover-heights-01",
+  "content": "content.json",
+  "timeline": "timeline.json",
+  "figma_env": "figma.env",
+  "figma_env_var": "FILM_FIGMA_FILE_KEY",
+  "media_prefix": "ws614-dover-heights-01",
+  "compositions": [
+    {
+      "id": "reel",
+      "html": "reel.html",
+      "frames": "frames-reel",
+      "soundtrack": "soundtrack-reel.wav",
+      "out": "WS614-Dover-Heights-Field-Progress-Reel.mp4",
+      "deploy": "ws614-dover-heights-field-progress-reel.mp4",
+      "still_times": [0.2, 2.1, 3.8, 6.2, 8.9, 11.9, 13.0]
+    },
+    {
+      "id": "story",
+      "html": "story.html",
+      "frames": "frames-story",
+      "soundtrack": "soundtrack-story.wav",
+      "out": "WS614-Dover-Heights-Site-Walkthrough-Story.mp4",
+      "deploy": "ws614-dover-heights-site-walkthrough-story.mp4",
+      "still_times": [0.2, 2.2, 3.2, 5.2, 6.2, 8.2, 8.9]
+    }
+  ]
+}
