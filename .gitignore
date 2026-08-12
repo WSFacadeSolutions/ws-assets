@@ -33,6 +33,7 @@ video/projects/*/stills/
 video/projects/*/figma-upload/
 video/projects/*/*.mp4
 video/projects/*/*.wav
+video/projects/*/segments/
 video/mock-fieldops/*.png
 video/projects/*/template/
 video/projects/*/field/
