@@ -1,6 +1,6 @@
 /* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
 window.CONTENT = {
- "_note": "Canonical content for the service-led WS capability statement v2. Public copy is Australian English. The Labour Hire image slot remains deliberately blocked until Heron supplies the approved field photograph.",
+ "_note": "Canonical content for the service-led WS capability statement v2. Public copy is Australian English. Labour Hire uses a provisional real WS team photograph from the public About page and may be replaced when a stronger field image is supplied.",
  "theme": {
   "petrol": "#1E2F38",
   "deep": "#0f1a20",
@@ -106,13 +106,12 @@ window.CONTENT = {
   {
    "eyebrow": "08 / 08",
    "name": "Labour Hire",
-   "photo": "",
+   "photo": "labour-hire-provisional.jpg",
    "markers": [
     "Specialised Trade Workforce",
     "Project-Based Allocation",
     "Trained to WS Standards"
-   ],
-   "reviewNote": "Approved WS field image pending"
+   ]
   }
  ],
  "logos": {
