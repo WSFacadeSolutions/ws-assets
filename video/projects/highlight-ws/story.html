@@ -23,7 +23,6 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--off)}
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:Saira,sans-serif;color:var(--petrol);background:var(--off)}
 .scene{position:absolute;inset:0;display:none;overflow:hidden}
 .kicker{font-size:25px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--violet)}
-.index{position:absolute;right:68px;top:168px;font-size:21px;font-weight:700;letter-spacing:.2em;color:rgba(var(--petrol-rgb),.48);z-index:7}
 h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 .photo{position:absolute;overflow:hidden;background:rgba(var(--petrol-rgb),.08)}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center}
@@ -37,7 +36,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 #s0copy{position:absolute;left:70px;right:70px;top:780px;z-index:4}
 #s0 .kicker{color:var(--lilac)}
 #s0title{font-size:91px;max-width:850px;margin-top:38px}
-#s0 .index{color:rgba(255,255,255,.68)}
 
 /* 02 — people. */
 #s1{background:var(--white)}
@@ -57,8 +55,8 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 #s2head{position:absolute;left:68px;right:68px;top:790px}
 #s2title{font-size:64px;margin-top:22px}
 #s2list{position:absolute;left:68px;right:68px;top:1070px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.service{min-height:156px;padding:28px 26px;background:var(--white);border:1px solid rgba(var(--petrol-rgb),.12);display:flex;align-items:flex-end;font-size:29px;font-weight:700;line-height:1.16}
-.service:before{content:"";align-self:flex-start;width:12px;height:16px;margin-right:17px;background:var(--lilac);clip-path:polygon(12% 0,100% 0,100% 88%,88% 100%,0 100%,0 12%);flex:0 0 auto}
+.service{min-height:156px;padding:28px 26px;background:var(--white);border:1px solid rgba(var(--petrol-rgb),.12);display:flex;align-items:center;font-size:29px;font-weight:700;line-height:1.16}
+.service:before{content:"";width:12px;height:16px;margin:0 17px 0 0;background:var(--lilac);clip-path:polygon(12% 0,100% 0,100% 88%,88% 100%,0 100%,0 12%);flex:0 0 auto}
 
 /* 04 — second half, visually distinct. */
 #s3{background:var(--deep);color:var(--white)}
@@ -70,7 +68,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 #s3title{font-size:70px;margin-top:26px;max-width:850px}
 #s3list{position:absolute;left:68px;right:68px;top:660px;z-index:4;display:flex;flex-direction:column;gap:20px}
 #s3 .service{min-height:145px;color:var(--white);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);backdrop-filter:blur(8px)}
-#s3 .index{color:rgba(255,255,255,.68)}
 
 /* 05 — operating principle. */
 #s4{background:var(--white)}
@@ -97,7 +94,6 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 #s6items{position:absolute;left:68px;right:68px;top:1000px}
 .quality{display:flex;align-items:center;gap:28px;padding:35px 0;border-top:1px solid rgba(255,255,255,.25);font-size:34px;font-weight:600}
 .quality b{font-size:20px;letter-spacing:.18em;color:var(--lilac)}
-#s6 .index{color:rgba(255,255,255,.68)}
 
 /* 08 — credentials. */
 #s7{background:var(--white)}
@@ -114,14 +110,14 @@ h1,h2{font-weight:800;line-height:1.02;letter-spacing:-.025em}
 </style>
 
 <div id="stage">
-  <div class="scene" id="s0"><div class="index"></div><div class="photo"><img></div><div id="s0shade"></div><div id="s0copy"><div class="kicker"></div><h1 id="s0title"></h1></div></div>
-  <div class="scene" id="s1"><div class="index"></div><div class="photo" id="s1photo"><img></div><div id="s1copy"><div class="kicker"></div><h2 id="s1title"></h2><div id="s1people"></div></div></div>
-  <div class="scene" id="s2"><div class="index"></div><div class="photo" id="s2photo"><img></div><div id="s2head"><div class="kicker"></div><h2 id="s2title"></h2></div><div id="s2list"></div></div>
-  <div class="scene" id="s3"><div class="index"></div><div class="photo" id="s3photo"><img></div><div id="s3shade"></div><div id="s3head"><div class="kicker"></div><h2 id="s3title"></h2></div><div id="s3list"></div></div>
-  <div class="scene" id="s4"><div class="index"></div><div class="photo" id="s4photo"><img></div><div id="s4copy"><div class="kicker"></div><h2 id="s4title"></h2><div id="s4items"></div></div></div>
-  <div class="scene" id="s5"><div class="index"></div><div id="s5head"><div class="kicker"></div><h2 id="s5title"></h2></div><div id="s5grid"></div></div>
-  <div class="scene" id="s6"><div class="index"></div><div id="s6copy"><div class="kicker"></div><h2 id="s6title"></h2></div><div id="s6items"></div></div>
-  <div class="scene" id="s7"><div class="index"></div><div id="s7lock"><img src="logos/lockup-blacktext-lilacbrick.svg"></div><div id="s7company"></div><div id="s7line"></div><div id="s7creds"></div><div id="s7contact"></div><div id="s7url"></div></div>
+  <div class="scene" id="s0"><div class="photo"><img></div><div id="s0shade"></div><div id="s0copy"><div class="kicker"></div><h1 id="s0title"></h1></div></div>
+  <div class="scene" id="s1"><div class="photo" id="s1photo"><img></div><div id="s1copy"><div class="kicker"></div><h2 id="s1title"></h2><div id="s1people"></div></div></div>
+  <div class="scene" id="s2"><div class="photo" id="s2photo"><img></div><div id="s2head"><div class="kicker"></div><h2 id="s2title"></h2></div><div id="s2list"></div></div>
+  <div class="scene" id="s3"><div class="photo" id="s3photo"><img></div><div id="s3shade"></div><div id="s3head"><div class="kicker"></div><h2 id="s3title"></h2></div><div id="s3list"></div></div>
+  <div class="scene" id="s4"><div class="photo" id="s4photo"><img></div><div id="s4copy"><div class="kicker"></div><h2 id="s4title"></h2><div id="s4items"></div></div></div>
+  <div class="scene" id="s5"><div id="s5head"><div class="kicker"></div><h2 id="s5title"></h2></div><div id="s5grid"></div></div>
+  <div class="scene" id="s6"><div id="s6copy"><div class="kicker"></div><h2 id="s6title"></h2></div><div id="s6items"></div></div>
+  <div class="scene" id="s7"><div id="s7lock"><img src="logos/lockup-blacktext-lilacbrick.svg"></div><div id="s7company"></div><div id="s7line"></div><div id="s7creds"></div><div id="s7contact"></div><div id="s7url"></div></div>
   <svg id="grain" width="1080" height="1920"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/></filter><rect width="1080" height="1920" filter="url(#noise)"/></svg>
 </div>
 
@@ -151,7 +147,7 @@ function at(t0,dur,fn,ease=E.o){anims.push({t0,t1:t0+dur,fn,ease});}
 function tick(t){for(const a of anims){const p=a.t1>a.t0?c01((t-a.t0)/(a.t1-a.t0)):(t>=a.t0?1:0);a.fn(a.ease(p),t);}}
 function enter(el,t0,dur=0.6,dx=-34){el.style.opacity=.35;at(t0,dur,p=>{el.style.opacity=.35+.65*p;el.style.transform=`translateX(${(1-p)*dx}px)`;},E.oq);}
 function zoom(img,a,b,z0=1.055,z1=1){at(a,b-a,p=>{img.style.transform=`scale(${lerp(z0,z1,p)})`;},E.lin);}
-function bindBase(scene,data){set(scene.querySelector('.index'),data.index);set(scene.querySelector('.kicker'),data.kicker);}
+function bindBase(scene,data){set(scene.querySelector('.kicker'),data.kicker);}
 function services(items){return items.map(x=>`<div class="service"><span>${x}</span></div>`).join('');}
 
 bindBase($('#s0'),C.open,0);set('#s0title',C.open.title);$('#s0 .photo img').src='photos/'+C.open.photo;
@@ -176,7 +172,7 @@ enter($('#s5 .kicker'),30.16);enter($('#s5title'),30.3,.68,-42);[...document.que
 bindBase($('#s6'),C.compliance,6);set('#s6title',C.compliance.title);$('#s6items').innerHTML=C.compliance.items.map((x,i)=>`<div class="quality"><b>0${i+1}</b><span>${x}</span></div>`).join('');
 enter($('#s6 .kicker'),36.16);enter($('#s6title'),36.32,.74,-48);[...document.querySelectorAll('.quality')].forEach((el,i)=>enter(el,36.76+i*.18,.58,-34));
 
-set($('#s7 .index'),C.final.index);set('#s7company',C.final.company);set('#s7line',C.final.line);set('#s7contact',C.final.contact+'\n'+C.final.phone);set('#s7url',C.final.url);
+set('#s7company',C.final.company);set('#s7line',C.final.line);set('#s7contact',C.final.contact+'\n'+C.final.phone);set('#s7url',C.final.url);
 $('#s7creds').innerHTML=`<div class="credential">${C.final.abn}</div><div class="credential">${C.final.licence}</div>`;
 enter($('#s7lock'),42.16,.64,-34);enter($('#s7company'),42.3,.56,-26);enter($('#s7line'),42.44,.64,-36);[...document.querySelectorAll('.credential')].forEach((el,i)=>enter(el,42.72+i*.14,.55,-24));enter($('#s7contact'),43.04,.56,-24);enter($('#s7url'),43.2,.58,-24);
 

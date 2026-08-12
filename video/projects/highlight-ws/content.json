@@ -11,8 +11,7 @@
   "open": {
     "kicker": "WS Facade Solutions",
     "title": "Finishing packages. One managed standard.",
-    "photo": "drummoyne-3.jpg",
-    "index": "01 / 08"
+    "photo": "drummoyne-graded-7.jpg"
   },
   "team": {
     "kicker": "Leading the way",
@@ -21,29 +20,25 @@
     "people": [
       {"name": "Heron de Freitas Santiago", "role": "Chief Executive Officer"},
       {"name": "Thomas Wilhelm", "role": "Chief Operating Officer"}
-    ],
-    "index": "02 / 08"
+    ]
   },
   "servicesA": {
     "kicker": "What we deliver",
     "title": "One finishing package.",
     "photo": "peakhurst-7.jpg",
-    "items": ["Rendering", "Decorative Finishes", "Painting", "Substrate Installation"],
-    "index": "03 / 08"
+    "items": ["Rendering", "Decorative Finishes", "Painting", "Substrate Installation"]
   },
   "servicesB": {
     "kicker": "What we deliver",
     "title": "Eight specialist solutions.",
-    "photo": "the-crescent-8.jpg",
-    "items": ["Caulking and Sealant Application", "Remedial Services & Concrete Repair", "Asset Conservation and Maintenance", "Labour Hire"],
-    "index": "04 / 08"
+    "photo": "the-crescent-19.jpg",
+    "items": ["Caulking and Sealant Application", "Remedial Services & Concrete Repair", "Asset Conservation and Maintenance", "Labour Hire"]
   },
   "care": {
     "kicker": "The WS standard",
     "title": "Precision through care.",
-    "photo": "peakhurst-17.jpg",
-    "items": ["People", "Client resources", "Relationships"],
-    "index": "05 / 08"
+    "photo": "peakhurst-graded-17.jpg",
+    "items": ["People", "Client resources", "Relationships"]
   },
   "systems": {
     "kicker": "Certified applicators",
@@ -61,14 +56,12 @@
       {"file": "pietra-marble.svg", "name": "Pietra Marble"},
       {"file": "mineral-fox.svg", "name": "Mineral Fox"},
       {"file": "basroc.svg", "name": "Basroc"}
-    ],
-    "index": "06 / 08"
+    ]
   },
   "compliance": {
     "kicker": "The WS standard",
     "title": "Compliance focus in every layer.",
-    "items": ["Strict compliance", "On-site presence", "Precise execution"],
-    "index": "07 / 08"
+    "items": ["Strict compliance", "On-site presence", "Precise execution"]
   },
   "final": {
     "company": "WS Facade Solutions Pty Ltd",
@@ -77,7 +70,6 @@
     "licence": "NSW Contractor Licence 451338C",
     "contact": "admin@wssolutions.au",
     "phone": "(02) 8005 7756",
-    "url": "wssolutions.au",
-    "index": "08 / 08"
+    "url": "wssolutions.au"
   }
 }

@@ -12,8 +12,7 @@ window.CONTENT = {
  "open": {
   "kicker": "WS Facade Solutions",
   "title": "Finishing packages. One managed standard.",
-  "photo": "drummoyne-3.jpg",
-  "index": "01 / 08"
+  "photo": "drummoyne-graded-7.jpg"
  },
  "team": {
   "kicker": "Leading the way",
@@ -28,8 +27,7 @@ window.CONTENT = {
     "name": "Thomas Wilhelm",
     "role": "Chief Operating Officer"
    }
-  ],
-  "index": "02 / 08"
+  ]
  },
  "servicesA": {
   "kicker": "What we deliver",
@@ -40,31 +38,28 @@ window.CONTENT = {
    "Decorative Finishes",
    "Painting",
    "Substrate Installation"
-  ],
-  "index": "03 / 08"
+  ]
  },
  "servicesB": {
   "kicker": "What we deliver",
   "title": "Eight specialist solutions.",
-  "photo": "the-crescent-8.jpg",
+  "photo": "the-crescent-19.jpg",
   "items": [
    "Caulking and Sealant Application",
    "Remedial Services & Concrete Repair",
    "Asset Conservation and Maintenance",
    "Labour Hire"
-  ],
-  "index": "04 / 08"
+  ]
  },
  "care": {
   "kicker": "The WS standard",
   "title": "Precision through care.",
-  "photo": "peakhurst-17.jpg",
+  "photo": "peakhurst-graded-17.jpg",
   "items": [
    "People",
    "Client resources",
    "Relationships"
-  ],
-  "index": "05 / 08"
+  ]
  },
  "systems": {
   "kicker": "Certified applicators",
@@ -118,8 +113,7 @@ window.CONTENT = {
     "file": "basroc.svg",
     "name": "Basroc"
    }
-  ],
-  "index": "06 / 08"
+  ]
  },
  "compliance": {
   "kicker": "The WS standard",
@@ -128,8 +122,7 @@ window.CONTENT = {
    "Strict compliance",
    "On-site presence",
    "Precise execution"
-  ],
-  "index": "07 / 08"
+  ]
  },
  "final": {
   "company": "WS Facade Solutions Pty Ltd",
@@ -138,7 +131,6 @@ window.CONTENT = {
   "licence": "NSW Contractor Licence 451338C",
   "contact": "admin@wssolutions.au",
   "phone": "(02) 8005 7756",
-  "url": "wssolutions.au",
-  "index": "08 / 08"
+  "url": "wssolutions.au"
  }
 };
