@@ -11,7 +11,7 @@ vertical crop of the 72-second capability film.
 | Story | Role | Primary copy | Visual direction |
 |---|---|---|---|
 | 01 | Open with evidence | `WS Facade Solutions` / `Finishing packages. One managed standard.` | Full-screen completed-project photograph; company name restrained, no logo panel. |
-| 02 | Put people behind the standard | `Led by Heron and Thomas.` | Rooftop team photograph with names and roles only. |
+| 02 | Put people behind the standard | `Heron and Thomas` | Rooftop team photograph with names and roles only. |
 | 03 | Service map, part one | `Rendering` · `Decorative Finishes` · `Painting` · `Substrate Installation` | One strong project image plus four large service markers. |
 | 04 | Service map, part two | `Caulking and Sealant Application` · `Remedial Services & Concrete Repair` · `Asset Conservation and Maintenance` · `Labour Hire` | A second, visually distinct project image plus four large service markers. No Labour Hire photograph is implied. |
 | 05 | State the operating principle | `Precision through care.` / `People. Client resources. Relationships.` | Quiet editorial composition with one human or material detail. |

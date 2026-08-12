@@ -16,7 +16,7 @@ window.CONTENT = {
  },
  "team": {
   "kicker": "Leading the way",
-  "title": "Led by Heron and Thomas.",
+  "title": "Heron and Thomas",
   "photo": "team-rooftop.jpg",
   "people": [
    {
