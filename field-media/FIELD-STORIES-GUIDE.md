@@ -1,6 +1,6 @@
 # WS Field Stories. Capture and publishing guide
 
-Second edition, 20 July 2026. Covers Instagram Stories built from field footage sent by the crew over WhatsApp. First run: WS338, 29 Chamberlain Rd, Rose Bay (Leo's footage, April 2026).
+Second edition, 20 July 2026. Covers Instagram Stories built from field footage sent by the crew over WhatsApp. First run: WS338, 29 Chamberlain Rd, Rose Bay (April 2026). That batch sits in `leo-2026-07/` and the folder name is misleading: Leo forwarded it, he did not shoot it, and the plastering in it is another tradesman's. Credit it to the WS site crew. Leo's own work is the October 2026 batch in `leo-2026-10/`.
 
 ## Format decision
 
