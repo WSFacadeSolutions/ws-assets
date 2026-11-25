@@ -1,0 +1,210 @@
+/* GENERATED from content.json — do not edit by hand. Regenerate: figma_sync.py --local */
+window.CONTENT = {
+ "_note": "Canonical content for the WS capability statement v3, regrouped after Heron's review on 25 Nov 2026: two or three services per slide, about three seconds each. Service names and sub-items are v2's own. Public copy is Australian English. final.licenceQld stays empty until the Queensland licence number is confirmed; while empty the closing card shows nothing in its place. Fill it with the full line, written the way final.licence is.",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#FF9D27",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "deliver": {
+  "kicker": "Solutions"
+ },
+ "groups": [
+  {
+   "eyebrow": "01 / 04",
+   "photo": "peakhurst-7.jpg",
+   "services": [
+    {
+     "name": "Cladding",
+     "markers": []
+    },
+    {
+     "name": "Rendering",
+     "markers": [
+      "High Complexity Rendering",
+      "Acrylic Render and Texture Finishes",
+      "Pool Rendering",
+      "Sand and Cement and Lime Render"
+     ]
+    },
+    {
+     "name": "Painting",
+     "markers": []
+    }
+   ]
+  },
+  {
+   "eyebrow": "02 / 04",
+   "photo": "peakhurst-17.jpg",
+   "services": [
+    {
+     "name": "Decorative Finishes",
+     "markers": [
+      "Forcrete / Microcement",
+      "Venetian Plaster and Marmorino",
+      "Concrete Finishes",
+      "White Set",
+      "Lime / French Wash"
+     ]
+    },
+    {
+     "name": "Interior Painting",
+     "markers": [
+      "Epoxy Paint"
+     ]
+    },
+    {
+     "name": "Exterior Painting",
+     "markers": []
+    }
+   ]
+  },
+  {
+   "eyebrow": "03 / 04",
+   "photo": "substrate.jpg",
+   "services": [
+    {
+     "name": "Substrate Installation",
+     "markers": [
+      "Hebel Installation (AAC)",
+      "EPS Cladding Systems",
+      "Fibre Cement Sheet Installation",
+      "Basroc Installation"
+     ]
+    },
+    {
+     "name": "Moulding Installation",
+     "markers": []
+    },
+    {
+     "name": "Caulking and Sealant Application",
+     "markers": [
+      "Caulking",
+      "Sealant",
+      "Fire-Rated Caulking"
+     ]
+    }
+   ]
+  },
+  {
+   "eyebrow": "04 / 04",
+   "photo": "remedial.jpg",
+   "services": [
+    {
+     "name": "Remedial Services & Concrete Repair",
+     "markers": [
+      "Concrete Repair & Demolition",
+      "Rendering over Waterproofing Membrane"
+     ]
+    },
+    {
+     "name": "Asset Conservation and Maintenance",
+     "markers": [
+      "Strata Services",
+      "Facade Maintenance"
+     ]
+    },
+    {
+     "name": "Labour Hire",
+     "markers": [
+      "Specialised Trade Workforce",
+      "Project-Based Allocation",
+      "Trained to WS Standards"
+     ]
+    }
+   ]
+  }
+ ],
+ "logos": {
+  "kicker": "Certified applicators",
+  "title": "Systems we are certified to apply."
+ },
+ "about": {
+  "kicker": "The WS standard",
+  "title": "Precision through care.",
+  "cards": [
+   {
+    "number": "01",
+    "heading": "Care for our people",
+    "body": "The same standard of respect for our workers, our clients and ourselves."
+   },
+   {
+    "number": "02",
+    "heading": "Care for client resources",
+    "body": "Precise estimating supports a robust budget. Precise execution keeps it steady."
+   },
+   {
+    "number": "03",
+    "heading": "Care for relationships",
+    "body": "We bid for relationships, not just projects."
+   }
+  ]
+ },
+ "team": {
+  "kicker": "Leading the way",
+  "title": "The W and S",
+  "photo": "team-rooftop.jpg",
+  "people": [
+   {
+    "name": "Heron de Freitas Santiago",
+    "role": "Chief Executive Officer",
+    "expertise": "Materials engineer · Project management · Business operations"
+   },
+   {
+    "name": "Thomas Wilhelm",
+    "role": "Chief Operating Officer",
+    "expertise": "Rendering · Site logistics · Workforce performance"
+   }
+  ]
+ },
+ "who": {
+  "kicker": "Who we are",
+  "title": "One contractor for the whole finishing package.",
+  "lead": "Specialist facade contractors delivering finishing packages across high-end residential, commercial and industrial projects.",
+  "points": [
+   "Many trades",
+   "One contract",
+   "One managed standard"
+  ]
+ },
+ "governance": {
+  "kicker": "The WS Way",
+  "title": "Governance built into delivery.",
+  "points": [
+   "Performance-Based Partnerships",
+   "Proven Expertise in Every Task",
+   "Compliance-Driven Innovation",
+   "Practical Sustainability"
+  ]
+ },
+ "compliance": {
+  "kicker": "The WS standard",
+  "title": "Compliance focus in every layer.",
+  "pillars": [
+   {
+    "number": "01",
+    "heading": "Strict compliance"
+   },
+   {
+    "number": "02",
+    "heading": "On-site presence"
+   },
+   {
+    "number": "03",
+    "heading": "Precise execution"
+   }
+  ]
+ },
+ "final": {
+  "company": "WS Facade Solutions Pty Ltd",
+  "line": "Precision. Performance. Trust.",
+  "abn": "ABN 43 654 594 644",
+  "licence": "NSW Contractor Licence 451338C",
+  "licenceQld": "",
+  "contact": "admin@wssolutions.au · (02) 8005 7756",
+  "url": "wssolutions.au"
+ }
+};
