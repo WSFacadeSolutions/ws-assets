@@ -1,0 +1,539 @@
+{
+ "_note": "Canonical content for the WS Ecosystem Film family (film.html + film-ig.html). Strings may contain HTML. Edit here (or in the Figma content file via figma_sync.py) and regenerate content.js with: python3 figma_sync.py --local",
+ "theme": {
+  "petrol": "#1E2F38",
+  "deep": "#0f1a20",
+  "off": "#F5F2F0",
+  "orange": "#9670D8",
+  "lilac": "#A490FF",
+  "violet": "#6040cc"
+ },
+ "shared": {
+  "stages": [
+   "Estimate",
+   "Scope definition",
+   "Compliance",
+   "Schedule",
+   "GeoClock",
+   "Crew",
+   "HR",
+   "Pay"
+  ],
+  "codes": [
+   "CostX",
+   "WST002",
+   "WST026",
+   "WST025",
+   "WST034",
+   "WST030",
+   "WST030",
+   "WST039/41"
+  ]
+ },
+ "road": {
+  "stages": [
+   "Estimate",
+   "Scope definition",
+   "Contract admin",
+   "Compliance",
+   "Schedule",
+   "GeoClock",
+   "Crew",
+   "HR",
+   "Pay",
+   "Handover"
+  ],
+  "codes": [
+   "CostX",
+   "WST002",
+   "",
+   "WST026",
+   "WST025",
+   "WST034",
+   "WST030",
+   "WST030",
+   "WST039/41",
+   ""
+  ],
+  "brackets": [
+   [
+    "Sales",
+    "pre-sales and sales"
+   ],
+   [
+    "Operations",
+    "post-sales"
+   ],
+   [
+    "Handover",
+    ""
+   ]
+  ],
+  "signed": "Contract signed"
+ },
+ "s0": {
+  "headline": "How do we go from the first<br>enquiry to the handover?",
+  "body": "In our new self-built platform."
+ },
+ "sT": {
+  "kicker": "The tech team",
+  "headline": "A dedicated team builds<br>and runs our systems.",
+  "body": "Plenty of contractors still run a job on paper. WS has its own team that builds and runs every system in this film.",
+  "placeholder": "Photo placeholder",
+  "people": [
+   [
+    "Guilherme Tuan Manera",
+    "Head of Tech"
+   ],
+   [
+    "Jefferson Costa Martins",
+    "Head of Compliance"
+   ]
+  ]
+ },
+ "s1": {
+  "kicker": "From the first enquiry to the handover",
+  "headline": "Every job travels the same road.",
+  "startLabel": "First enquiry",
+  "endLabel": "Handover",
+  "clientLine": "What the client sees: the scope agreed, the programme, the work verified on site and every claim backed by the record."
+ },
+ "s2": {
+  "kicker": "Sales · Estimate · <span class=\"wst\">CostX</span>",
+  "headline": "We measure the way<br>we build it.",
+  "body": "Every quantity is taken off in <b style=\"font-weight:600;color:#1E2F38\">CostX</b>, elevation by elevation, the way the crew will build it, so nothing is guessed.",
+  "chip": "For the builder: a clear scope and a sharper price",
+  "screen": {
+   "title": "CostX · WS0194 · facade package",
+   "rows": [
+    [
+     "Render, levels 1 to 4",
+     "2,410 m²"
+    ],
+    [
+     "Substrate (Hebel)",
+     "1,180 m²"
+    ],
+    [
+     "Caulking &amp; sealant",
+     "640 lm"
+    ],
+    [
+     "Remedial concrete",
+     "96 m²"
+    ]
+   ],
+   "note": "Measured off the drawings, elevation by elevation."
+  },
+  "photoCaption": "Wildes Meadow · Southern Highlands NSW"
+ },
+ "s3": {
+  "kicker": "Sales · Scope definition · <span class=\"wst\">WST002</span>",
+  "headline": "Scope and price<br>agreed in one place.",
+  "chips": [
+   "Priced by engineers and architects who specialise in facades",
+   "Two peer reviews before anything leaves the office",
+   "Every revision tracked in the platform",
+   "Two-party e-signature with a tamper-evident audit trail",
+   "For the builder: the agreed scope and price behind one link"
+  ],
+  "waAttach": "“Can you price WS0194?”",
+  "waLink": "wssoltech.au/q/ws0194-a3f9c2",
+  "browserUrl": "quotesystem.wssoltech.au/q/ws0194-a3f9c2",
+  "client": "HARBOURLINE<span style=\"font-weight:300;color:rgba(30,47,56,.55)\"> · Builders</span>",
+  "preparedBy": "Prepared by WS",
+  "title": "Facade package · WS0194",
+  "rows": [
+   [
+    "Rendering, levels 1 to 4",
+    "A$ 96,400"
+   ],
+   [
+    "Substrate installation (Hebel)",
+    "A$ 52,800"
+   ],
+   [
+    "Caulking &amp; sealant",
+    "A$ 21,300"
+   ],
+   [
+    "Remedial concrete repair",
+    "A$ 14,100"
+   ]
+  ],
+  "totalLabel": "Total (ex GST)",
+  "total": "A$ 184,600",
+  "signLabel": "Accept &amp; sign",
+  "signature": "Sam Whitford",
+  "signedNote": "✓ Signed · both parties"
+ },
+ "sC": {
+  "kicker": "Sales · Contract administration",
+  "headline": "Legal review before<br>the contract is signed.",
+  "steps": [
+   [
+    "01",
+    "Legal review"
+   ],
+   [
+    "02",
+    "Mark-ups"
+   ],
+   [
+    "03",
+    "Contract negotiation"
+   ]
+  ],
+  "benefit": "For the builder: the terms are settled before the first day on site",
+  "signed": "Contract signed",
+  "after": "After signing",
+  "roles": [
+   [
+    "TW",
+    "Thomas Wilhelm",
+    "COO",
+    "Leads execution on site"
+   ],
+   [
+    "HS",
+    "Heron Santiago",
+    "CEO",
+    "Oversees the job, invoices and talks to the client"
+   ]
+  ]
+ },
+ "sO": {
+  "kicker": "Operations · Post-sales",
+  "verified": "Verified",
+  "headline": "WS has a dedicated system to run project<br>management and site execution.",
+  "steps": [
+   [
+    "doc",
+    "Planning goes into the system",
+    "The programme is set in the office"
+   ],
+   [
+    "app",
+    "The worker gets everything in the app",
+    "The day's job lands on the phone"
+   ],
+   [
+    "pin",
+    "Arrives on site",
+    "The site fence is already in the app"
+   ],
+   [
+    "clock",
+    "The shift starts by itself",
+    "Phone in the pocket"
+   ]
+  ],
+  "benefit": "For the worker: the whole day is in the app before the shift starts"
+ },
+ "s4": {
+  "kicker": "Operations · Set-up and compliance · <span class=\"wst\">WST026</span>",
+  "label": "Documents, approvals and site records sit under it. The same number follows the job from the schedule to the invoice.",
+  "complianceChip": "SWMS, ITPs, insurances and licences filed against the job",
+  "token": "WS0194",
+  "headline": "Every job gets its own number.",
+  "benefit": "For the builder: the job's compliance records in one place"
+ },
+ "s5": {
+  "kicker": "Operations · Schedule · <span class=\"wst\">WST025</span>",
+  "headline": "The executive team plans the week. The system carries it.",
+  "body": "Every task on the programme lands on each worker's phone as “My day”. What happens on site comes back the same way, so progress, ITPs and claims rest on the record instead of memory.",
+  "chip": "For the worker: the app shows where to be each day",
+  "chip2": "For the builder: every claim traced back to the hours behind it",
+  "ganttUrl": "schedule.wssoltech.au · Field Operations Gantt",
+  "tasks": [
+   [
+    "WS0194 · Rendering ",
+    "#FF9D27",
+    0.06,
+    0.44
+   ],
+   [
+    "WS0192 · Caulking",
+    "#A490FF",
+    0.3,
+    0.58
+   ],
+   [
+    "WS0196 · Hebel ",
+    "#FF9D27",
+    0.44,
+    0.86
+   ],
+   [
+    "WS0197 · Remedial",
+    "#6040cc",
+    0.12,
+    0.36
+   ],
+   [
+    "WS0194 · Rendering ",
+    "#FF9D27",
+    0.58,
+    0.94
+   ],
+   [
+    "WS0198 · Painting",
+    "#A490FF",
+    0.66,
+    0.92
+   ]
+  ],
+  "cap": "⟳ bridge sync → work_day · every 15 minutes"
+ },
+ "s6": {
+  "kicker": "Operations · GeoClock · <span class=\"wst\">WST034</span>",
+  "headline": "Verified at<br>the site fence.",
+  "body": "The phone confirms the worker is inside the site fence and starts the shift. Every hour is <span style=\"white-space:nowrap\">geo-referenced</span> and validated, so the record depends less on people and avoids errors and disputes with the client.",
+  "chips": [
+   "For the worker: the shift starts by itself, phone in the pocket",
+   "For the builder: fewer errors in the hours behind each claim",
+   "For the end client: hours that can be checked against the site"
+  ],
+  "heroLabel": "WS0194 · Padstow",
+  "badgeOut": "Outside fence · 06:57",
+  "badgeIn": "✓ Clocked in · 06:58"
+ },
+ "s7": {
+  "kicker": "Operations · Crew · <span class=\"wst\">WS Crew</span>",
+  "headline": "One app for every worker.",
+  "features": [
+   [
+    "app",
+    "Installable on any phone",
+    "a web app plus a native shell, and it updates itself on every deploy"
+   ],
+   [
+    "lang",
+    "Bilingual by design",
+    "Portuguese first, English always one tap away"
+   ],
+   [
+    "gps",
+    "Background auto clock-in",
+    "live on Android: arrive on site and the shift starts itself"
+   ],
+   [
+    "doc",
+    "Site records, captured on the spot",
+    "site diary, materials, equipment and incidents, filed against the job as they happen"
+   ]
+  ],
+  "hub": {
+   "title": "WS Crew",
+   "lang": "PT · EN",
+   "sub": "Many trades · one standard.",
+   "academyPct": 78,
+   "academyLabel": "Academy",
+   "banner": "● On site · WS0194 · shift running",
+   "version": "Updates itself on every deploy",
+   "manual": [
+    [
+     "book",
+     "Handbook",
+     "Rules, gear and site standards"
+    ],
+    [
+     "star",
+     "WS Academy",
+     "Trade training, in your language",
+     "beta"
+    ]
+   ],
+   "ops": [
+    [
+     "pin",
+     "My day",
+     "Thursday · WS0194 · Padstow"
+    ],
+    [
+     "clock",
+     "GeoClock",
+     "On site · shift running"
+    ],
+    [
+     "doc",
+     "Timesheet",
+     "This week · 41.9 h"
+    ]
+   ]
+  },
+  "day": {
+   "title": "My day",
+   "sub": "Thursday · from the Vikunja schedule",
+   "code": "WS0194",
+   "job": "Facade package · Padstow",
+   "time": "07:00 to 15:30 · Rendering, level 2",
+   "tomorrow": "Tomorrow · WS0192 · Caulking",
+   "actions": [
+    [
+     "doc",
+     "Copy address"
+    ],
+    [
+     "car",
+     "Waze"
+    ]
+   ]
+  },
+  "clock": {
+   "title": "GeoClock",
+   "sub": "On site · WS0194 · 14 m inside the fence",
+   "btn": "CLOCK IN",
+   "auto": "Auto mode: clock-in on arrival and clock-out on leaving, even with the app closed.",
+   "state": "ON SITE",
+   "prox": "INSIDE",
+   "unit": "in progress",
+   "obra": "Facade package · Padstow"
+  },
+  "ts": {
+   "title": "Timesheet",
+   "sub": "This week · from the clock, nothing typed",
+   "rows": [
+    [
+     "Mon",
+     "WS0194",
+     "8.0 h"
+    ],
+    [
+     "Tue",
+     "WS0194",
+     "8.4 h"
+    ],
+    [
+     "Wed",
+     "WS0192",
+     "8.1 h"
+    ],
+    [
+     "Thu",
+     "WS0194",
+     "9.2 h"
+    ],
+    [
+     "Fri",
+     "WS0196",
+     "8.2 h"
+    ]
+   ],
+   "totalLabel": "Week total",
+   "total": "41.9 h",
+   "approve": "Approve the week"
+  },
+  "benefit": "For the worker: everything for the day on one phone"
+ },
+ "s8": {
+  "kicker": "Operations · HR · <span class=\"wst\">WST030</span>",
+  "headline": "Everyone on site, inducted and verified.",
+  "body": "Every builder runs a different induction system. The platform carries that difference, so every WS worker still meets one standard.",
+  "chips": [
+   "For the builder: nobody on site works unverified",
+   "Inductions and task-specific training in one place",
+   "Toolbox meetings filed against the job, not on loose paper",
+   "WS Academy: bilingual modules, quiz pass mark 100%"
+  ],
+  "queueUrl": "hr.wssoltech.au · approval queue",
+  "rows": [
+   [
+    "J. Silva",
+    "White Card ✓ · Visa ✓",
+    "approve"
+   ],
+   [
+    "M. Santos",
+    "White Card ✓ · Bank ✓",
+    "approve"
+   ],
+   [
+    "R. Costa",
+    "Awaiting White Card",
+    "wait"
+   ]
+  ],
+  "btnApprove": "Approve",
+  "btnApproved": "✓ Approved",
+  "btnPending": "Approve",
+  "pdfNote": "Induction agreement counter-signed and filed as a PDF"
+ },
+ "s9": {
+  "kicker": "Operations · Pay · <span class=\"wst\">WST039 · WST041</span>",
+  "headline": "The clock is the source of truth.",
+  "steps": [
+   "GPS clock",
+   "Timesheet",
+   "Approval",
+   "Invoice PDF",
+   "“Paid.”"
+  ],
+  "invTitle": "TAX INVOICE",
+  "invRef": "WS0194 · week 28",
+  "invRows": [
+   [
+    "Site hours (GPS-verified)",
+    "8.0 h + 2.38 OT"
+   ],
+   [
+    "GST 10%",
+    "included"
+   ]
+  ],
+  "invTotalLabel": "Total payable",
+  "amount": 1479.76,
+  "currency": "A$",
+  "chips": [
+   "For the worker: paid on the hours the clock recorded",
+   "Live in production since 2 July 2026"
+  ]
+ },
+ "sbox": {
+  "kicker": "The product · <span class=\"wst\">WS Field Ops</span>",
+  "headline": "One suite<br>for the site.",
+  "body": "One suite carries the crew’s day, from the clock-in at the site fence to a <b style=\"font-weight:600;color:#1E2F38\">payroll-ready timesheet</b>.",
+  "chip": "agents.wssoltech.au/fieldops-box"
+ },
+ "s10": {
+  "kicker": "From the first enquiry to the handover",
+  "headline": "The job runs easier for the builder,<br>the worker and the end client.",
+  "tagline": "MANY TRADES · ONE STANDARD",
+  "foot": "Built and run in-house by the WS tech team · wssoltech.au"
+ },
+ "ig": {
+  "_note": "The Instagram/Reels cut binds this block only (plus the shared facts: shared.stages/codes and the s9 invoice figures). Every scene's copy is editable here or in the IG frames of the Figma kit.",
+  "s0": {
+   "headline": "How do we go from<br>the first enquiry<br>to the handover?",
+   "body": "In our new self-built platform."
+  },
+  "s1": {
+   "kicker": "First enquiry → handover",
+   "headline": "Every hour travels one road."
+  },
+  "s6": {
+   "kicker": "Stage 05 · GeoClock · <span class=\"wst\">WST034</span>",
+   "headline": "Hours validated at the site fence.",
+   "heroLabel": "WS0194 · Padstow",
+   "badgeOut": "Outside fence · 06:57",
+   "badgeIn": "✓ Clocked in · 06:58"
+  },
+  "s9": {
+   "kicker": "Stage 08 · Pay · <span class=\"wst\">WST039 · WST041</span>",
+   "headline": "The clock is the source of truth."
+  },
+  "sbox": {
+   "kicker": "The product · <span class=\"wst\">WS Field Ops</span>",
+   "headline": "Crew, HR and geolocation.<br>One suite for the site.",
+   "body": "One suite carries the crew’s whole day — geofenced clock-ins, site paperwork and HR records, ending in a <b style=\"font-weight:600;color:#1E2F38\">payroll-ready timesheet</b>.",
+   "chip": "agents.wssoltech.au/fieldops-box"
+  },
+  "s10": {
+   "kicker": "One platform",
+   "headline": "The client, the crew<br>and the office —<br>all reading the same job.",
+   "cta": "Read the full article in our bio.",
+   "tagline": "MANY TRADES · ONE STANDARD",
+   "foot": "Designed, built and operated in-house · wssoltech.au"
+  }
+ }
+}

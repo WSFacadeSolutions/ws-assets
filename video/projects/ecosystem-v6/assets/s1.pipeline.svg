@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080"><g transform="translate(0.00 0.00)" fill="none"><g xmlns="http://www.w3.org/2000/svg" id="asset.s1.pipeline">
+<path id="s1path" d="M253 566C336.0 566 336.0 714 419 714C502.0 714 502.0 566 585 566C668.0 566 668.0 714 751 714C834.0 714 834.0 566 917 566C1000.0 566 1000.0 714 1083 714C1166.0 714 1166.0 566 1249 566C1332.0 566 1332.0 714 1415 714C1498.0 714 1498.0 566 1581 566C1664.0 566 1664.0 714 1747 714" stroke="#FF9D27" stroke-opacity="0.85" stroke-width="4" stroke-linecap="round" />
+<g id="s1n0"><circle cx="253" cy="566" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(-2 0)"><g id="Group_2">
+<path id="Vector_3" d="M244.333 557.333C244.333 556.449 244.684 555.601 245.309 554.976C245.934 554.351 246.782 554 247.666 554H265.666V574.666H247.666C246.782 574.666 245.934 575.017 245.309 575.642C244.684 576.267 244.333 577.115 244.333 577.999V557.333Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_4" d="M249.666 560.666H260.332M249.666 565.333H256.333" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n1"><circle cx="419" cy="714" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(-38 0)"><g id="Group_3">
+<path id="Vector_6" d="M449 702H459.666L465 707.333V725.999H449V702Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_7" d="M459.666 702V707.333H465M453 714H461M453 719.333H461" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n2"><circle cx="585" cy="566" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(585 566)"><path d="M-9 -12H3L9 -6V12H-9Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 -12V-6H9" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" /><path d="M-5 6C-3 2 -1 9 1 5C2 3 3 7 5 5" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" /><path d="M-5 -4H1M-5 0H4" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" /></g></g>
+<g id="s1n3"><circle cx="751" cy="714" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(92 148)"><g id="Group_4">
+<path id="Vector_9" d="M658.999 560C664.154 560 668.332 558.507 668.332 556.667C668.332 554.826 664.154 553.333 658.999 553.333C653.845 553.333 649.666 554.826 649.666 556.667C649.666 558.507 653.845 560 658.999 560Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_10" d="M649.666 556.667V575.333C649.666 577.199 653.799 578.666 658.999 578.666C664.199 578.666 668.332 577.199 668.332 575.333V556.667" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_11" d="M649.666 566C649.666 567.866 653.799 569.333 658.999 569.333C664.199 569.333 668.332 567.866 668.332 566" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n4"><circle cx="917" cy="566" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(56 -148)"><g id="Group_5">
+<path id="Vector_13" d="M850.333 708.666H871.666M850.333 719.333H871.666" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_14" d="M857 711.6C858.62 711.6 859.933 710.286 859.933 708.666C859.933 707.046 858.62 705.733 857 705.733C855.38 705.733 854.066 707.046 854.066 708.666C854.066 710.286 855.38 711.6 857 711.6Z" fill="#ffffff" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_15" d="M865 722.266C866.62 722.266 867.933 720.953 867.933 719.333C867.933 717.713 866.62 716.4 865 716.4C863.38 716.4 862.066 717.713 862.066 719.333C862.066 720.953 863.38 722.266 865 722.266Z" fill="#ffffff" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n5"><circle cx="1083" cy="714" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(20 148)"><g id="Group_6">
+<path id="Vector_17" d="M1063 577.333C1068.52 577.333 1073 572.856 1073 567.333C1073 561.81 1068.52 557.333 1063 557.333C1057.48 557.333 1053 561.81 1053 567.333C1053 572.856 1057.48 577.333 1063 577.333Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_18" d="M1063 562.666V567.333L1066.2 569.466M1059.67 553.333H1066.33" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n6"><circle cx="1249" cy="566" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(-16 -148)"><g id="Group_7">
+<path id="Vector_20" d="M1268.47 702H1261.53C1259.77 702 1258.33 703.433 1258.33 705.2V722.799C1258.33 724.567 1259.77 725.999 1261.53 725.999H1268.47C1270.23 725.999 1271.67 724.567 1271.67 722.799V705.2C1271.67 703.433 1270.23 702 1268.47 702Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_21" d="M1263 721.999H1267" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n7"><circle cx="1415" cy="714" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(-52 148)"><g id="Group_8">
+<path id="Vector_23" d="M1467 554L1457.67 557.333V565.333C1457.67 571.199 1461.67 575.733 1467 577.999C1472.33 575.733 1476.33 571.199 1476.33 565.333V557.333L1467 554Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_24" d="M1463 565.333L1465.93 568.266L1471.67 562" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n8"><circle cx="1581" cy="566" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(-88 -148)"><g id="Group_9">
+<path id="Vector_26" d="M1677.67 704H1660.33C1658.86 704 1657.67 705.194 1657.67 706.666V721.333C1657.67 722.806 1658.86 723.999 1660.33 723.999H1677.67C1679.14 723.999 1680.33 722.806 1680.33 721.333V706.666C1680.33 705.194 1679.14 704 1677.67 704Z" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+<path id="Vector_27" d="M1663 714L1667 717.999L1675 710" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" />
+</g></g></g>
+<g id="s1n9"><circle cx="1747" cy="714" r="30" fill="#ffffff" stroke="#9670D8" stroke-width="3" /><g transform="translate(1747 714)"><circle cx="-5" cy="5" r="5.5" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" /><path d="M-1 1L10 -10M5 -5L8.5 -1.5M8 -8L11 -5" stroke="#9670D8" stroke-width="2.13328" stroke-linecap="round" stroke-linejoin="round" /></g></g>
+</g></g></svg>
