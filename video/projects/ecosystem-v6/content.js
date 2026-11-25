@@ -316,7 +316,7 @@ window.CONTENT = {
    [
     "gps",
     "Background auto clock-in",
-    "live on Android: arrive on site and the shift starts itself"
+    "arrive on site and the shift starts itself"
    ],
    [
     "doc",
