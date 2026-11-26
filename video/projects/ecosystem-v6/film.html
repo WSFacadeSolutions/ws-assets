@@ -3,7 +3,7 @@
 <script src="content.js"></script>
 <script src="timeline.js"></script>
 <script src="assets.js"></script>
-<script src="footage/ws-fieldops/sheet.js"></script>
+<script src="footage/ws-fieldops-tech/sheet.js"></script>
 <!-- optional CostX screen capture for s2, uploaded on the Mini-Premiere "vídeo de campo"
      card: field/sheet.js declares window.FIELD_FOOTAGE and the scene plays those frames
      instead of the authored placeholder screen. Absent file = authored screen, no crash. -->
@@ -469,7 +469,7 @@ svg text{font-family:Saira,sans-serif}
     </div>
   </div>
 
-  <!-- ============ SBOX PRODUCT (Field Ops box · footage/ws-fieldops) ============ -->
+  <!-- ============ SBOX PRODUCT (Field Ops box · footage/ws-fieldops-tech) ============ -->
   <div class="scene" id="sbox">
     <div id="sboxk" class="kicker" style="position:absolute;left:140px;top:248px">The product · <span class="wst">WS Field Ops</span></div>
     <h1 id="sboxh" style="position:absolute;left:140px;top:302px;font-size:78px;width:860px">One suite<br>for the site.</h1>
@@ -1132,7 +1132,9 @@ at(19.0,0.8,p=>{$('#wm').style.opacity=p*0.9;});
 
 /* ============================== SBOX PRODUCT (Field Ops turntable) ============================== */
 {
-  // Transparent turntable library from footage/ws-fieldops (gen_footage.sh — the
+  // Transparent turntable library from footage/ws-fieldops-tech: the same box as
+  // footage/ws-fieldops with every old «WS» mark swapped for the official WS·TECH
+  // mark (patch_box_mark.py on the published Figma variant). Was gen_footage.sh — the
   // 🎞 button on the VibeCAD card regenerates it and this scene follows with no code
   // change). Frame count comes from sheet.js, so denser libraries play smoother
   // automatically; the box turns exactly one 360° across the scene, angle-driven —
@@ -1140,12 +1142,12 @@ at(19.0,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   // Paths go through the projects/<slug>/footage -> ../../footage symlink so the
   // URL stays inside /film-comp for the Mini-Premiere live preview.
   const tt=$('#sboxtt');
-  const SHEET=(window.FOOTAGE||{})['ws-fieldops'];
+  const SHEET=(window.FOOTAGE||{})['ws-fieldops-tech'];
   const N=SHEET?SHEET.frames:0,imgs=[];
   const SBOX_T0=104.0+SHIFT,SBOX_LEN=8.0;
   for(let i=0;i<N;i++){
     const im=document.createElement('img');
-    im.src=`footage/ws-fieldops/f${String(i).padStart(3,'0')}.png`;
+    im.src=`footage/ws-fieldops-tech/f${String(i).padStart(3,'0')}.png`;
     im.style.cssText='position:absolute;inset:0;width:100%;height:100%;visibility:hidden';
     tt.appendChild(im);imgs.push(im);
   }
