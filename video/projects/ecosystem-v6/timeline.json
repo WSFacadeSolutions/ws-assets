@@ -78,71 +78,97 @@
    }
   ],
   "audio": {
-   "risers": [
-    8.5,
-    19.0,
-    31,
-    41,
-    54,
-    65,
-    75.5,
-    84,
-    93.5,
-    104.5,
-    119,
-    127.5,
-    137,
-    145
-   ],
-   "shimmer": 146.5,
-   "volume": 0.1,
-   "sfx_vol": 0.1
+   "risers": [],
+   "volume": 1.0,
+   "sfx_vol": 0.0,
+   "music_src": "music/score-film.flac",
+   "music_vol": 1.0
   }
  },
  "ig": {
   "scenes": [
    {
     "id": "s0",
-    "start": 0,
-    "end": 6
+    "start": 0.0,
+    "end": 6.5
+   },
+   {
+    "id": "sT",
+    "start": 6.5,
+    "end": 14.5
    },
    {
     "id": "s1",
-    "start": 6,
-    "end": 14
+    "start": 14.5,
+    "end": 24.5
+   },
+   {
+    "id": "s2",
+    "start": 24.5,
+    "end": 32.5
+   },
+   {
+    "id": "s3",
+    "start": 32.5,
+    "end": 42.5
+   },
+   {
+    "id": "sC",
+    "start": 42.5,
+    "end": 51.0
+   },
+   {
+    "id": "sO",
+    "start": 51.0,
+    "end": 59.0
+   },
+   {
+    "id": "s4",
+    "start": 59.0,
+    "end": 65.5
+   },
+   {
+    "id": "s5",
+    "start": 65.5,
+    "end": 73.0
    },
    {
     "id": "s6",
-    "start": 14,
-    "end": 21
+    "start": 73.0,
+    "end": 81.5
+   },
+   {
+    "id": "s7",
+    "start": 81.5,
+    "end": 92.5
+   },
+   {
+    "id": "s8",
+    "start": 92.5,
+    "end": 99.5
    },
    {
     "id": "s9",
-    "start": 21,
-    "end": 27.5
+    "start": 99.5,
+    "end": 107.0
    },
    {
     "id": "sbox",
-    "start": 27.5,
-    "end": 36
+    "start": 107.0,
+    "end": 113.5
    },
    {
     "id": "s10",
-    "start": 36,
-    "end": 45
+    "start": 113.5,
+    "end": 122.5
    }
   ],
   "audio": {
-   "risers": [
-    6,
-    14,
-    21,
-    27.5,
-    36
-   ],
-   "shimmer": 37.5,
-   "volume": 0.1,
-   "sfx_vol": 0.1
+   "risers": [],
+   "volume": 1.0,
+   "sfx_vol": 0.0,
+   "music_src": "music/score-ig.flac",
+   "music_vol": 1.0
   }
  }
 }

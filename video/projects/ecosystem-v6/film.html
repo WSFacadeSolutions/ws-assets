@@ -81,6 +81,10 @@ svg text{font-family:Saira,sans-serif}
 #wm svg{width:64px;height:64px;display:block}
 .techmark{border-radius:22%;overflow:hidden;box-shadow:0 30px 70px rgba(24,27,30,.22)}
 .techmark svg{width:100%;height:100%;display:block}
+/* v6 team portraits: one treatment for every face in the scene, so a colour phone photo
+   dropped into the Jefferson slot matches the black-and-white LinkedIn portrait. Same
+   4:5 frame, same crop anchor (centre, upper third), same black-and-white grade. */
+.sTimg{object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(1.06)}
 /* browser + phone frames */
 .browser{background:#fff;border:1px solid rgba(var(--petrol-rgb),.14);border-radius:18px;overflow:hidden;
   box-shadow:0 40px 90px rgba(var(--petrol-rgb),.16)}
@@ -136,8 +140,9 @@ svg text{font-family:Saira,sans-serif}
   </div>
 
   <!-- ============ ST TECH TEAM (v6) ============ -->
-  <!-- Two bound photo slots. ST_PHOTOS (script) names the files; until a file exists the
-       slot shows its neutral placeholder panel with the name label. No stand-in faces. -->
+  <!-- Two bound photo slots. ST_PHOTOS (script) names the files: photos/team-guilherme.jpg
+       and photos/team-jefferson.jpg. Until a file exists the slot shows its neutral, labelled
+       placeholder panel; dropping the file in place is the whole swap. No stand-in faces. -->
   <div class="scene" id="sT">
     <div id="sTk" class="kicker" style="position:absolute;left:140px;top:250px">The tech team</div>
     <h1 id="sTh" style="position:absolute;left:140px;top:302px;font-size:74px;width:860px">A dedicated team builds<br>and runs our systems.</h1>
@@ -146,7 +151,7 @@ svg text{font-family:Saira,sans-serif}
       <div class="sTslot" data-slot="guilherme" style="width:360px">
         <div class="sTph" style="position:relative;width:360px;height:450px;border-radius:18px;overflow:hidden;background:rgba(var(--petrol-rgb),.05);border:2px dashed rgba(var(--petrol-rgb),.22)">
           <div class="sTph-l" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(var(--petrol-rgb),.42)">Photo placeholder</div>
-          <img class="sTimg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none">
+          <img class="sTimg" alt="" style="position:absolute;inset:0;width:100%;height:100%;display:none">
         </div>
         <div class="sTn" style="margin-top:22px;font-weight:700;font-size:28px">Guilherme Tuan Manera</div>
         <div class="sTr body" style="margin-top:2px;font-size:23px">Head of Tech</div>
@@ -154,7 +159,7 @@ svg text{font-family:Saira,sans-serif}
       <div class="sTslot" data-slot="jefferson" style="width:360px">
         <div class="sTph" style="position:relative;width:360px;height:450px;border-radius:18px;overflow:hidden;background:rgba(var(--petrol-rgb),.05);border:2px dashed rgba(var(--petrol-rgb),.22)">
           <div class="sTph-l" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(var(--petrol-rgb),.42)">Photo placeholder</div>
-          <img class="sTimg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none">
+          <img class="sTimg" alt="" style="position:absolute;inset:0;width:100%;height:100%;display:none">
         </div>
         <div class="sTn" style="margin-top:22px;font-weight:700;font-size:28px">Jefferson Costa Martins</div>
         <div class="sTr body" style="margin-top:2px;font-size:23px">Head of Compliance</div>
@@ -677,7 +682,10 @@ at(19.0,0.8,p=>{$('#wm').style.opacity=p*0.9;});
   /* bound photo slots: drop a portrait at these paths and it replaces the neutral
      placeholder panel with no code change. Until then the slot shows the name label on
      a plain panel; nobody else's face ever stands in. */
-  const ST_PHOTOS={guilherme:'photos/sT-guilherme.jpg',jefferson:'photos/sT-jefferson.jpg'};
+  /* one-file swap: a portrait saved at either path replaces its placeholder on the next
+     stills or render. Any size or colour works; .sTimg gives every face the same crop and
+     black-and-white grade. The film never waits on a missing file. */
+  const ST_PHOTOS={guilherme:'photos/team-guilherme.jpg',jefferson:'photos/team-jefferson.jpg'};
   const slots=[...document.querySelectorAll('.sTslot')];
   const jobs=slots.map(sl=>new Promise(res=>{
     const src=ST_PHOTOS[sl.dataset.slot];const im=sl.querySelector('.sTimg');
