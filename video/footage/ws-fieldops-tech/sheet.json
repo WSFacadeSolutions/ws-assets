@@ -8,8 +8,8 @@
  "model": "box-lite.glb",
  "sheet": "sheet.png",
  "source_glb": "footage/ws-fieldops-tech/box-lite.glb",
- "glb_md5": "33f3c6dfa5330110eb2256053981fdeb",
+ "glb_md5": "1563c17f1d54511fe77a2a70f318ab9c",
  "patched_from": "/var/www/ws-agents-hotsite/vibecad/ws-fieldops/20260718-114821-figma/box-lite.glb (md5 eab6a0d6e1e832c59af594ff00e0e4aa)",
- "patch": "patch_box_mark.py: old WS mark -> official WS-TECH mark on spine, right side, front and back bands, top and bottom",
- "generated": "2026-11-26T02:42:00+00:00"
+ "patch": "patch_box_app_mark.py: every old WS mark (seven places) -> the WS-TECH app mark (projects/ecosystem-v6/assets/wm.svg), aligned to the text beside it",
+ "generated": "2026-11-28T11:52:48+00:00"
 }
